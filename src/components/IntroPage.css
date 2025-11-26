@@ -158,8 +158,8 @@
     width: 150px;
     margin-bottom: 1rem;
     animation: float 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
-    opacity: 0.6;
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.12));
+    opacity: 0.4;
 }
 
 .enter-text {
