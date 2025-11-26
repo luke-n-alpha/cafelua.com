@@ -156,10 +156,10 @@
 
 .intro-logo {
     width: 150px;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     animation: float 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35));
-    opacity: 0.8;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+    opacity: 0.6;
 }
 
 .enter-text {
