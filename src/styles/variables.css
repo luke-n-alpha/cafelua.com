@@ -1,0 +1,47 @@
+:root {
+  /* 
+   * Café Luα Design System 
+   * Concept: "Where Technology meets Emotion"
+   */
+
+  /* Palette: Coffee & Wood */
+  --color-espresso: #3B2F2F;   /* Primary Text / Dark Accents */
+  --color-latte: #D4C4B7;      /* Secondary Background / Borders */
+  --color-cream: #F5F1E6;      /* Main Background (Paper-like) */
+  --color-wood: #8D6E63;       /* UI Elements / Buttons */
+  
+  /* Palette: Nature (Luke's Forest) */
+  --color-sage: #8FBC8F;       /* Accents / Links */
+  --color-forest: #2F4F4F;     /* Headers / Footer */
+
+  /* Palette: Tech (Alpha) */
+  --color-tech-blue: #5DADE2;  /* Subtle tech highlights */
+  --color-amber: #FFBF00;      /* Warm lighting / Notifications */
+
+  /* Typography */
+  --font-sans: 'Pretendard', 'Inter', sans-serif; /* Readability */
+  --font-serif: 'Merriweather', serif;            /* Storytelling / Novels */
+  --font-hand: 'Nanum Pen Script', cursive;       /* Menu Board / Notes */
+
+  /* Spacing & Layout */
+  --spacing-unit: 8px;
+  --cafe-width: 1200px;
+  --header-height: 80px;
+
+  /* Effects */
+  --shadow-paper: 2px 2px 10px rgba(0, 0, 0, 0.05);
+  --shadow-depth: 4px 4px 20px rgba(59, 47, 47, 0.2);
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-espresso);
+  font-family: var(--font-sans);
+  margin: 0;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--color-forest);
+}

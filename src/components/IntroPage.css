@@ -1,0 +1,239 @@
+/* src/src/components/IntroPage.css */
+.intro-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #222;
+    /* Fallback color */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 0.8s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.control-bar {
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    align-items: center;
+    z-index: 10;
+}
+
+.icon-select-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.icon-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.icon-select-trigger:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.icon-select-dropdown {
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 12px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 50px;
+    align-items: center;
+}
+
+.icon-select-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.2s ease;
+}
+
+.icon-select-option:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.icon-select-option.active {
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.refresh-btn-icon {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.refresh-btn-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: rotate(180deg);
+}
+
+.xmas-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+.xmas-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    filter: grayscale(0%);
+    opacity: 0.8;
+}
+
+.xmas-toggle.active {
+    background: rgba(255, 255, 255, 0.3);
+    filter: grayscale(0%);
+    opacity: 1;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.center-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.intro-logo {
+    width: 150px;
+    margin-bottom: 2rem;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+.enter-text {
+    font-size: 1.2rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    animation: pulse 2s infinite;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.intro-footer {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: white;
+    z-index: 100;
+}
+
+.intro-footer a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.intro-footer a:hover {
+    text-decoration: underline;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+.enter-btn {
+    padding: 1rem 3rem;
+    font-size: 1.5rem;
+    color: white;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.enter-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
