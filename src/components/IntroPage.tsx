@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './IntroPage.css';
 import logoImg from '../assets/logo.png';
 import {
@@ -165,7 +164,6 @@ const IconSelect = ({
 };
 
 const IntroPage: React.FC = () => {
-    const navigate = useNavigate();
     const assetBase = (import.meta.env.BASE_URL || '/');
 
     // State
@@ -304,11 +302,7 @@ const IntroPage: React.FC = () => {
         }
     };
 
-    const handleEnter = () => {
-        setTimeout(() => {
-            navigate('/main');
-        }, 800);
-    };
+    const handleEnter = () => { /* Landing only for now */ };
 
     return (
         <div
