@@ -1,15 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './IntroPage.css';
-import logoImg from '../assets/logo.png';
+import logoImg from '../assets/intro-logo.png';
 import {
     Sun, Moon, CloudRain, CloudSnow, CloudLightning,
     Flower2, Leaf, Snowflake, Sunset, DoorClosed, RefreshCw
 } from 'lucide-react';
+import BackgroundMusic from './BackgroundMusic';
+import { getWeatherByCoords } from '../services/WeatherService';
+import type { AppWeather, AppTimeOfDay } from '../services/WeatherService';
 
 // Types
 type Season = 'spring' | 'summer' | 'autumn' | 'winter';
-type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
-type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
+type TimeOfDay = AppTimeOfDay;
+type Weather = AppWeather;
 
 // Known asset filenames (without extension)
 const AVAILABLE_BACKGROUNDS = new Set([
@@ -164,19 +169,40 @@ const IconSelect = ({
 };
 
 const IntroPage: React.FC = () => {
-    const assetBase = (import.meta.env.BASE_URL || '/');
-
-    // State
+    const { t } = useTranslation();
+    const navigate = useNavigate();
     const [season, setSeason] = useState<Season>('spring');
     const [time, setTime] = useState<TimeOfDay>('day');
     const [weather, setWeather] = useState<Weather>('sunny');
     const [isChristmas, setIsChristmas] = useState(false);
     const [bgImage, setBgImage] = useState<string>('');
 
+    // Audio ref
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+
     // Auto-detect on mount
     useEffect(() => {
         handleRefresh();
+        // Preload sound if available
+        audioRef.current = new Audio('/sounds/footsteps.mp3');
     }, []);
+
+    const fetchRealWeather = async () => {
+        if (!navigator.geolocation) return;
+
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const { latitude, longitude } = position.coords;
+            const data = await getWeatherByCoords(latitude, longitude);
+            
+            if (data) {
+                setTime(data.time);
+                setWeather(data.weather);
+            }
+        }, (error) => {
+            console.log("Geolocation blocked or failed:", error);
+            // Fallback to default time-based logic is already handled by handleRefresh initial call
+        });
+    };
 
     // Check if current date is in Christmas period (Dec 1-25)
     const isChristmasPeriod = (): boolean => {
@@ -284,15 +310,51 @@ const IntroPage: React.FC = () => {
         candidates.push(baseName(season, 'day', 'sunny', false));
 
         const chosen = candidates.find((name) => AVAILABLE_BACKGROUNDS.has(name)) ?? candidates[candidates.length - 1];
-        setBgImage(`${assetBase}intro-background-img/${chosen}.png`);
-    }, [season, time, weather, isChristmas, assetBase]);
+        setBgImage(`/intro-background-img/${chosen}.webp`);
+    }, [season, time, weather, isChristmas]);
+
+    // Preload all available backgrounds (Intro & Lounge)
+    useEffect(() => {
+        const preloadImage = (path: string) => {
+            const img = new Image();
+            img.src = path;
+        };
+
+        // 1. Intro backgrounds (prioritize current season)
+        Array.from(AVAILABLE_BACKGROUNDS)
+            .sort((a, b) => {
+                const aIsCurrent = a.includes(season);
+                const bIsCurrent = b.includes(season);
+                if (aIsCurrent && !bIsCurrent) return -1;
+                if (!aIsCurrent && bIsCurrent) return 1;
+                return 0;
+            })
+            .forEach(name => preloadImage(`/intro-background-img/${name}.webp`));
+
+        // 2. Lounge backgrounds
+        const loungeImages = [
+            'lounge-christmas.webp',
+            'lounge-evening.webp',
+            'lounge-night.webp',
+            'lounge-rain.webp',
+            'lounge-snow.webp',
+            'lounge-sunny.webp'
+        ];
+        loungeImages.forEach(img => preloadImage(`/lounge-background-img/${img}`));
+        
+    }, [season]); // Re-sort priority when season changes
 
     const handleRefresh = async () => {
         const now = new Date();
         const s = getSeason(now.getMonth());
+        
+        // 1. Basic time/season setting
         const t = getTimeOfDay(now.getHours());
         setSeason(s);
         setTime(t);
+
+        // 2. Try to get real weather/sunset time
+        await fetchRealWeather();
 
         // Auto-enable Christmas during Dec 1-25 if winter
         if (s === 'winter' && isChristmasPeriod()) {
@@ -302,17 +364,32 @@ const IntroPage: React.FC = () => {
         }
     };
 
-    const handleEnter = () => { /* Landing only for now */ };
+    const handleEnter = () => {
+        if (audioRef.current) {
+            audioRef.current.play().catch(e => console.log("Audio play failed", e));
+        }
+        
+        // Navigate to Lounge with current environmental state
+        navigate('/lounge', {
+            state: {
+                season,
+                time,
+                weather,
+                isChristmas
+            }
+        });
+    };
 
     return (
         <div
             className="intro-container"
             style={{ backgroundImage: `url('${bgImage}')` }}
-            onClick={handleEnter}
         >
-            <div className="control-bar glass" onClick={(e) => e.stopPropagation()}>
+            <BackgroundMusic src="/sounds/intro.mp3" />
+            
+            <div className="control-bar glass">
                 <IconSelect
-                    label="Season"
+                    label={t('season.spring')} // Just label, not translated yet in IconSelect
                     value={season}
                     options={['spring', 'summer', 'autumn', 'winter']}
                     onChange={(v) => setSeason(v as Season)}
@@ -339,7 +416,7 @@ const IntroPage: React.FC = () => {
                         <button
                             className={`xmas-toggle ${isChristmas ? 'active' : ''}`}
                             onClick={() => setIsChristmas(!isChristmas)}
-                            title="Christmas Mode"
+                            title={t('intro.christmasMode')}
                         >
                             🎄
                         </button>
@@ -348,14 +425,21 @@ const IntroPage: React.FC = () => {
 
                 <div className="divider" />
 
-                <button className="refresh-btn-icon" onClick={handleRefresh} title="Auto Detect">
+                <button className="refresh-btn-icon" onClick={handleRefresh} title={t('intro.autoDetect')}>
                     <RefreshCw size={20} />
                 </button>
             </div>
 
             <div className="center-content">
-                <img src={logoImg} alt="Cafelua Logo" className="intro-logo" />
-                <div className="enter-text">Click to Enter</div>
+                <img 
+                    src={logoImg} 
+                    alt="Cafelua Logo" 
+                    className="intro-logo" 
+                    onClick={handleEnter}
+                />
+                <button className="enter-text" onClick={handleEnter}>
+                    {t('intro.clickToEnter')}
+                </button>
             </div>
 
             <div className="intro-footer glass" onClick={(e) => e.stopPropagation()}>

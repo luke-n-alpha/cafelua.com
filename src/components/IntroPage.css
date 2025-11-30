@@ -152,14 +152,18 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
 .intro-logo {
     width: 150px;
-    margin-bottom: 1rem;
+    margin-bottom: 0rem;
     animation: float 3s ease-in-out infinite;
     filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.12));
-    opacity: 0.4;
+    opacity: 0.6;
 }
 
 .enter-text {
@@ -169,6 +173,19 @@
     letter-spacing: 3px;
     animation: pulse 2s infinite;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    
+    /* Button reset styles */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 10px 20px;
+    transition: transform 0.3s ease;
+}
+
+.enter-text:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
 }
 
 .intro-footer {
