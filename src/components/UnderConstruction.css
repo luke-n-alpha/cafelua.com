@@ -1,0 +1,142 @@
+.construction-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Align to bottom for VN style */
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    overflow: hidden;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Background Image */
+.construction-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 80%;
+    min-height: 80%;
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain; /* Or cover depending on preference, contain shows full img */
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+    z-index: 0;
+    opacity: 0.6; /* Darken slightly to make dialogue pop */
+}
+
+/* VN Layout Container */
+.vn-container {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 40px;
+    z-index: 1;
+    pointer-events: none; /* Let clicks pass through transparent areas */
+}
+
+/* Dialogue Box */
+.vn-dialogue-box {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 25px 30px;
+    margin: 0 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto; /* Re-enable clicks */
+    position: relative;
+}
+
+.vn-content-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.vn-text-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Character Sprite */
+.vn-character {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px; /* Mild rounding */
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+    animation: fadeIn 0.5s ease-out;
+}
+
+.vn-name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ffcc00; /* Gold color for name */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.vn-text {
+    font-size: 1.2rem;
+    color: white;    
+    line-height: 1.6;
+    margin: 0;
+    white-space: pre-line;
+}
+
+.vn-button-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vn-back-btn {
+    background: transparent;    
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 8px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.vn-back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: translateX(5px);
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
