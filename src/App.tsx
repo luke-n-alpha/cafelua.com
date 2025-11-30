@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import CafeLayout from './components/CafeLayout';
 import IntroPage from './components/IntroPage';
 import LoungePage from './components/LoungePage';
