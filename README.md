@@ -1,22 +1,71 @@
-# Café Luα — Public Landing
+[🇰🇷 한국어 (Korean)](./README.ko.md)
 
-공개용 레포: 인트로(랜딩) 화면과 필요한 에셋만 포함합니다. 본 사이트의 나머지 페이지, 데이터, 에셋은 `cafelua-private` 리포에 있습니다.
+# Cafe Lua
 
-## 사용 방법
-- 설치: `npm install`
-- 개발 서버: `npm run dev`
-- 빌드: `npm run build`
-- 미리보기: `npm run preview`
+**Cafe Lua** is a virtual space project themed around a quiet tea house in the forest. It provides visitors with relaxation and warm stories, offering an immersive experience through various interactive elements.
 
-## 배포 (GitHub Pages)
-- 기본 브랜치: `main`
-- 빌드 출력: `dist` (Vite, `base: '/cafelua.com/'`)
-- 워크플로: `.github/workflows/deploy.yml` (push to `main` 또는 `workflow_dispatch`로 실행)
+## 🌿 Introduction
 
-## 포함된 것
-- `src/components/IntroPage.tsx` / `.css`: 시즌·날씨별 인트로 배경 및 로고 애니메이션
-- `public/intro-background-img/*`: 인트로 배경 이미지 세트
-- `src/assets/logo.png`: 인트로 로고
+This project is a web application built with React and Vite, featuring the following:
 
-## 빠진 것 (프라이빗에만 존재)
-- 소설/문서/캐릭터 데이터, 나머지 페이지(카페, 라이브러리, 랩 등) 컴포넌트, 기타 민감 자산
+*   **Immersive Intro**: Invites you to the world of Cafe Lua with backgrounds that change according to time and weather.
+*   **Lounge Space**: The main area where you can enjoy the atmosphere of Cafe Lua with relaxing music.
+*   **Responsive Design**: Provides an optimized experience on various devices.
+*   **Multilingual Support (Planned)**: Cafe Lua's stories will be delivered in various languages.
+
+## 🚀 Key Features
+
+*   **Real-time Environment Reflection**: Background changes reflecting the user's actual location-based weather and time using OpenWeather API (Coming Soon).
+*   **Background Music (BGM)**: BGM playback and control tailored to each space, such as the intro and lounge.
+*   **Character Interaction**: Conversation and interaction with Cafe Lua's mascot 'Alpha' (In Development).
+
+## 🛠️ Tech Stack
+
+*   **Framework**: React, Vite
+*   **Language**: TypeScript
+*   **Styling**: CSS Modules (or Styled Components)
+*   **State Management**: (TBD)
+*   **Deployment**: (TBD)
+
+## 📂 Project Structure
+
+```
+public-home/
+├── public/             # Static resources (images, audio, etc.)
+├── src/
+│   ├── components/     # UI Components
+│   ├── assets/         # Assets imported within source code
+│   ├── styles/         # Global styles and theme settings
+│   ├── App.tsx         # Main application component
+│   └── main.tsx        # Entry Point
+└── ...
+```
+
+## 📝 Changelog
+
+### v0.1.1 (2025-11-30)
+- **Features & Improvements**:
+    - **Weather API Integration**: Added functionality to fetch real-time weather information and reflect it in the background and environmental elements.
+    - **BGM System**: Added auto-play and control UI for background music in Lounge and Intro pages.
+    - **Lounge Menu**: Added menu button UI in the Lounge screen to access main features (linked to Under Construction page).
+- **UI/UX Improvements**:
+    - **Under Construction Page Redesign**:
+        - Changed layout of text and character image (Image on left, Text on right).
+        - Fixed character image size (100px) and updated style (removed border, natural placement).
+        - Adjusted position of 'Back to Lounge' button (aligned to bottom right) and improved style.
+    - **Intro Page Improvement**: Enhanced sharing experience by applying Open Graph meta tags and cover image.
+
+### v0.1.0 (2025-11-20)
+- **Initial Release**:
+    - Project basic structure setup (React + Vite + TypeScript).
+    - Intro page implementation (automatic background image transition by time).
+    - Basic Lounge page implementation.
+    - Basic routing setup.
+
+## 🤝 Contributing
+
+This project is currently being developed as a personal project. Contribution guidelines will be provided in the future. Please report bugs or suggest features via Issues.
+
+## 📄 License
+
+(License information to be added)
