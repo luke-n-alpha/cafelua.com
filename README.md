@@ -1,23 +1,23 @@
-[🇰🇷 한국어 (Korean)](./README.ko.md)
+[🇰🇷 한국어](./README.ko.md)
 
 # Cafe Lua
 
-**Cafe Lua** is a virtual space project themed around a quiet tea house in the forest. It provides visitors with relaxation and warm stories, offering an immersive experience through various interactive elements.
+**Cafe Lua** is a virtual space project themed around a tranquil teahouse in the forest. It offers visitors a relaxing retreat and warm stories, providing an immersive experience through various interactive elements.
 
-## 🌿 Introduction
+## 🌿 Project Introduction
 
-This project is a web application built with React and Vite, featuring the following:
+This project is a web application built with React and Vite, featuring the following characteristics:
 
-*   **Immersive Intro**: Invites you to the world of Cafe Lua with backgrounds that change according to time and weather.
-*   **Lounge Space**: The main area where you can enjoy the atmosphere of Cafe Lua with relaxing music.
-*   **Responsive Design**: Provides an optimized experience on various devices.
-*   **Multilingual Support (Planned)**: Cafe Lua's stories will be delivered in various languages.
+*   **Immersive Intro**: Invites you into the world of Cafe Lua with backgrounds that change according to the time of day and weather.
+*   **Lounge Space**: The main area where you can enjoy the atmosphere of Cafe Lua with comfortable music.
+*   **Responsive Design**: Provides an optimized experience across various devices.
+*   **Multilingual Support**: Offers multilingual support, including Korean and English, using i18next.
 
 ## 🚀 Key Features
 
-*   **Real-time Environment Reflection**: Background changes reflecting the user's actual location-based weather and time using OpenWeather API (Coming Soon).
-*   **Background Music (BGM)**: BGM playback and control tailored to each space, such as the intro and lounge.
-*   **Character Interaction**: Conversation and interaction with Cafe Lua's mascot 'Alpha' (In Development).
+*   **Real-time Environment Reflection**: Reflects the user's actual location-based weather and time zone in the background (in preparation).
+*   **Background Music (BGM)**: BGM playback and control features suitable for each space, such as the intro and lounge.
+*   **Character Interaction**: Conversation and interaction with Cafe Lua's mascot, 'Alpha' (in development).
 
 ## 🛠️ Tech Stack
 
@@ -33,8 +33,8 @@ This project is a web application built with React and Vite, featuring the follo
 public-home/
 ├── public/             # Static resources (images, audio, etc.)
 ├── src/
-│   ├── components/     # UI Components
-│   ├── assets/         # Assets imported within source code
+│   ├── components/     # UI components
+│   ├── assets/         # Assets imported within the source code
 │   ├── styles/         # Global styles and theme settings
 │   ├── App.tsx         # Main application component
 │   └── main.tsx        # Entry Point
@@ -46,25 +46,25 @@ public-home/
 ### v0.1.1 (2025-11-30)
 - **Features & Improvements**:
     - **Weather API Integration**: Added functionality to fetch real-time weather information and reflect it in the background and environmental elements.
-    - **BGM System**: Added auto-play and control UI for background music in Lounge and Intro pages.
-    - **Lounge Menu**: Added menu button UI in the Lounge screen to access main features (linked to Under Construction page).
-- **UI/UX Improvements**:
+    - **BGM System**: Added automatic background music playback and control UI to the lounge and intro pages.
+    - **Lounge Menu**: Added a menu button UI to the lounge screen for accessing key features (linked to under construction page).
+- **UI/UX Enhancements**:
     - **Under Construction Page Redesign**:
-        - Changed layout of text and character image (Image on left, Text on right).
-        - Fixed character image size (100px) and updated style (removed border, natural placement).
-        - Adjusted position of 'Back to Lounge' button (aligned to bottom right) and improved style.
-    - **Intro Page Improvement**: Enhanced sharing experience by applying Open Graph meta tags and cover image.
+        - Changed the layout of text and character images (image on the left, text on the right).
+        - Fixed character image size (100px) and modified styles (removed border, natural placement).
+        - Adjusted the 'Return to Lounge' button position (aligned to the bottom right) and improved its style.
+    - **Intro Page Improvements**: Enhanced sharing experience by applying Open Graph meta tags and a cover image.
 
 ### v0.1.0 (2025-11-20)
 - **Initial Release**:
-    - Project basic structure setup (React + Vite + TypeScript).
-    - Intro page implementation (automatic background image transition by time).
-    - Basic Lounge page implementation.
-    - Basic routing setup.
+    - Set up the basic project structure (React + Vite + TypeScript).
+    - Implemented the intro page (automatic background image change by time of day).
+    - Basic implementation of the lounge page.
+    - Set up basic routing.
 
 ## 🤝 Contributing
 
-This project is currently being developed as a personal project. Contribution guidelines will be provided in the future. Please report bugs or suggest features via Issues.
+This project is currently being developed as a personal project, and a contribution guide will be prepared in the future. Please leave bug reports or feature suggestions through Issues.
 
 ## 📄 License
 
