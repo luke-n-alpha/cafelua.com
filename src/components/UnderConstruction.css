@@ -28,7 +28,7 @@
     border-radius: 10px;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
     z-index: 0;
-    opacity: 0.45; /* Darken slightly to make dialogue pop */
+    opacity: 1; /* Keep illustration fully opaque */
 }
 
 /* VN Layout Container */
