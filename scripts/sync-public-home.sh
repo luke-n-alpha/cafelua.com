@@ -29,6 +29,8 @@ echo "Syncing Next.js app to public-home..."
 
 rsync -a --delete \
     --exclude ".next" \
+    --exclude ".git" \
+    --exclude ".gitmodules" \
     --exclude "node_modules" \
     --exclude "test-results" \
     --exclude ".swc" \

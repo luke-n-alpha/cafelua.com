@@ -113,11 +113,11 @@ const IconSelect = ({
     getIcon,
     label
 }: {
-    value: string,
-    options: string[],
-    onChange: (val: string) => void,
-    getIcon: (val: string) => React.ReactNode,
-    label: string
+    value: string;
+    options: string[];
+    onChange: (val: string) => void;
+    getIcon: (val: string) => React.ReactNode;
+    label: string;
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -394,21 +394,21 @@ const IntroPage: React.FC = () => {
                     value={season}
                     options={['spring', 'summer', 'autumn', 'winter']}
                     onChange={(v) => setSeason(v as Season)}
-                    getIcon={getSeasonIcon}
+                    getIcon={(v) => getSeasonIcon(v as Season)}
                 />
                 <IconSelect
                     label="Time"
                     value={time}
                     options={['day', 'sunset', 'night', 'closed']}
                     onChange={(v) => setTime(v as TimeOfDay)}
-                    getIcon={getTimeIcon}
+                    getIcon={(v) => getTimeIcon(v as TimeOfDay)}
                 />
                 <IconSelect
                     label="Weather"
                     value={weather}
                     options={availableWeathers}
                     onChange={(v) => setWeather(v as Weather)}
-                    getIcon={getWeatherIcon}
+                    getIcon={(v) => getWeatherIcon(v as Weather)}
                 />
 
                 {season === 'winter' && (
@@ -444,7 +444,7 @@ const IntroPage: React.FC = () => {
             </div>
 
             <div className="intro-footer glass" onClick={(e) => e.stopPropagation()}>
-                <span>v0.1.1</span>
+                <span>v0.1.2</span>
                 <a href="https://github.com/luke-n-alpha/cafelua.com" target="_blank" rel="noopener noreferrer">
                     GitHub
                 </a>

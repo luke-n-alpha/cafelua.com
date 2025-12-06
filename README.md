@@ -21,11 +21,11 @@ This project is moving to a Next.js (App Router) + shadcn/ui stack, featuring th
 
 ## 🛠️ Tech Stack
 
-*   **Framework**: Next.js (App Router), React, shadcn/ui
+*   **Framework**: Next.js 14 (App Router, static `output: 'export'` for GitHub Pages), React 18, shadcn/ui
 *   **Language**: TypeScript
 *   **Styling**: CSS with design tokens (variables.css), shadcn primitives
 *   **Testing**: Jest + React Testing Library (TDD), Playwright for E2E
-*   **Deployment**: Next build artifacts synced from the private repo
+*   **Deployment**: Static `next build` output synced from the private repo; GitHub Pages deploy workflow builds and publishes `out/`
 
 ## Environment
 - `NEXT_PUBLIC_OPENWEATHER_API_KEY` (optional): OpenWeather API key for real-time weather in intro/lounge. Falls back to time/season defaults when missing.
@@ -45,9 +45,11 @@ public-home/
 
 ## 📝 Changelog
 
-### v0.1.2 (2025-12-02)
-- **Architecture**: Migrated public-home to mirror the private Next.js (App Router) + shadcn/ui stack; updated sync script and docs to treat private `src/` as the single source of truth.
-- **Structure**: Clarified private vs public layout (app source under `src/src`, generated `data/content-index.json` read-only).
+### v0.1.2 (2024-12-07)
+- **Architecture**:
+    - Downgraded to **Next.js 14.2 + React 18** with `output: 'export'` so GitHub Pages can host the static build (Next 15 dynamic runtime is unsupported on Pages).
+    - GitHub Actions deploy workflow updated to run `npm run build` → upload `out/` → deploy to Pages.
+    - Added stricter guidance to keep scratch work in `work-log/` and avoid the legacy `work/` path.
 
 ### v0.1.1 (2025-11-30)
 - **Features & Improvements**:

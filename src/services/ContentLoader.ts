@@ -7,6 +7,11 @@ export interface ContentItem {
     type: 'post' | 'blog' | 'novel' | 'profile';
     category: string;
     path: string;
+    series?: string;
+    part?: number;
+    chapter?: number;
+    episode?: number;
+    chapterTitle?: string;
     images?: string[];
 }
 

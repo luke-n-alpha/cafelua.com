@@ -21,11 +21,11 @@
 
 ## 🛠️ 기술 스택
 
-*   **Framework**: Next.js(App Router), React, shadcn/ui
+*   **Framework**: Next.js 14(App Router, GitHub Pages 대응을 위한 정적 `output: 'export'`), React 18, shadcn/ui
 *   **Language**: TypeScript
 *   **Styling**: CSS + 디자인 토큰(variables.css), shadcn 컴포넌트
 *   **Testing**: Jest + React Testing Library(TDD), Playwright(E2E)
-*   **Deployment**: private → public-home 동기화 후 배포
+*   **Deployment**: private → public-home 동기화 후 정적 `npm run build` 산출물(`out/`)을 GitHub Pages 워크플로우로 배포
 
 ## 환경 변수
 - `NEXT_PUBLIC_OPENWEATHER_API_KEY` (선택): 인트로/라운지 실시간 날씨 반영용 OpenWeather API 키. 없으면 시간/계절 기본값으로 동작합니다.
@@ -45,9 +45,11 @@ public-home/
 
 ## 📝 업데이트 내역 (Changelog)
 
-### v0.1.2 (2025-12-02)
-- **아키텍처**: public-home을 private의 Next.js(App Router) + shadcn/ui 스택과 동기화하도록 재구성, private `src/`를 단일 소스 오브 트루스로 명시.
-- **구조**: 앱 소스 위치(`src/src`), 생성물(`data/content-index.json` 수정 금지) 등 사양을 문서화.
+### v0.1.2 (2024-12-07)
+- **아키텍처**:
+    - GitHub Pages가 Next 15 동적 런타임을 지원하지 않아 **Next.js 14.2 + React 18**로 다운그레이드하고 `output: 'export'` 정적 빌드로 전환.
+    - 배포 워크플로우를 `npm run build` → `out/` 업로드 → Pages 배포 순서로 갱신.
+    - 스크래치 문서는 `work-log/`에만 보관하도록 가이드 강화, 과거 `work/` 경로 정리.
 
 ### v0.1.1 (2025-11-30)
 - **기능 추가 및 개선**:
