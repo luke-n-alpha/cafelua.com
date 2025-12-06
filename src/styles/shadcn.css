@@ -1,0 +1,131 @@
+:root {
+    /* shadcn/ui token bridge mapped to Cafe Lua palette */
+    --background: var(--color-cream);
+    --foreground: var(--color-espresso);
+    --card: #ffffff;
+    --card-foreground: var(--color-espresso);
+    --popover: #ffffff;
+    --popover-foreground: var(--color-espresso);
+    --primary: var(--color-forest);
+    --primary-foreground: #f5f1e6;
+    --secondary: var(--color-latte);
+    --secondary-foreground: var(--color-forest);
+    --muted: #e9e3d8;
+    --muted-foreground: #4f4640;
+    --accent: var(--color-sage);
+    --accent-foreground: #1f2f2f;
+    --destructive: #b42318;
+    --destructive-foreground: #fff8f2;
+    --border: #d6c8be;
+    --input: #d6c8be;
+    --ring: var(--color-sage);
+    --radius: 12px;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.ui-card {
+    background: var(--card);
+    color: var(--card-foreground);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-paper);
+}
+
+.ui-glass {
+    background: color-mix(in srgb, var(--card) 25%, transparent);
+    backdrop-filter: blur(10px);
+    border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+    box-shadow: var(--shadow-soft);
+}
+
+.ui-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 0.75rem 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    background: var(--card);
+    color: var(--foreground);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ui-button:hover {
+    background: color-mix(in srgb, var(--card) 85%, var(--accent) 15%);
+    box-shadow: var(--shadow-paper);
+    transform: translateY(-1px);
+}
+
+.ui-button:active {
+    transform: translateY(0);
+}
+
+.ui-button-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+}
+
+.ui-button-primary:hover {
+    background: color-mix(in srgb, var(--primary) 85%, black 5%);
+    box-shadow: var(--shadow-soft);
+}
+
+.ui-button-ghost {
+    background: color-mix(in srgb, var(--muted) 25%, transparent);
+    color: var(--foreground);
+    border-color: color-mix(in srgb, var(--border) 70%, transparent);
+}
+
+.ui-button-ghost:hover {
+    background: color-mix(in srgb, var(--muted) 40%, transparent);
+}
+
+.ui-button-danger {
+    background: color-mix(in srgb, var(--destructive) 15%, transparent);
+    border-color: color-mix(in srgb, var(--destructive) 40%, var(--border) 60%);
+    color: color-mix(in srgb, var(--destructive-foreground) 70%, var(--foreground) 30%);
+}
+
+.ui-button-danger:hover {
+    background: color-mix(in srgb, var(--destructive) 35%, var(--card) 65%);
+    border-color: color-mix(in srgb, var(--destructive) 60%, var(--border) 40%);
+    color: var(--destructive-foreground);
+}
+
+.ui-icon-button {
+    width: 40px;
+    height: 40px;
+    padding: 0.6rem;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    background: color-mix(in srgb, var(--card) 30%, transparent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--foreground);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ui-icon-button:hover {
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
+    box-shadow: var(--shadow-paper);
+}
+
+.ui-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 25%, var(--card) 75%);
+    border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--border) 50%);
+    color: var(--accent-foreground);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}

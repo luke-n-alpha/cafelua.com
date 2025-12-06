@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import './UnderConstruction.css';
@@ -34,7 +36,7 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({ onClose }) => {
                     </div>
                     
                     <div className="vn-button-row">
-                        <button className="vn-back-btn" onClick={onClose}>
+                        <button className="vn-back-btn ui-button ui-button-ghost" onClick={onClose}>
                             {t('lounge.backToLounge')} ▶
                         </button>
                     </div>

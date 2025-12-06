@@ -1,10 +1,33 @@
 .bookshelf-container {
     padding: 2rem;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 0 auto;
+}
+
+.bookshelf-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-serif);
+    color: var(--foreground);
+    margin: 0 0 1rem 0;
+}
+
+.bookshelf-section {
+    margin-top: 1.5rem;
+}
+
+.bookshelf-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.bookshelf-section-title {
+    font-weight: 700;
+    color: var(--color-forest);
+    letter-spacing: 0.02em;
 }
 
 .bookshelf-grid {
@@ -13,29 +36,31 @@
     gap: 1rem;
     margin-top: 2rem;
     padding: 2rem;
-    background: #5d4037;
-    /* Wood color */
-    border-radius: 5px;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    background: color-mix(in srgb, var(--color-wood-deep) 65%, var(--card) 35%);
+    border-radius: var(--radius);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.25);
+    border: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
 }
 
 .book-item {
-    width: 40px;
-    height: 150px;
+    width: 60px;
+    height: 170px;
     background: #8d6e63;
-    border-radius: 2px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 0;
 }
 
 .book-item:hover {
     transform: translateY(-10px) scale(1.05);
     background: #a1887f;
     z-index: 10;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
 .book-spine {

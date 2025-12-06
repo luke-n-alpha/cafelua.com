@@ -7,45 +7,45 @@
     gap: 10px;
     padding: 8px 15px;
     border-radius: 25px;
-    background: rgba(255, 255, 255, 0.1);
+    background: color-mix(in srgb, var(--card) 25%, transparent);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
     z-index: 1000;
     transition: all 0.3s ease;
+    box-shadow: var(--shadow-paper);
 }
 
 .bgm-player:hover {
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: color-mix(in srgb, var(--accent) 18%, var(--card) 82%);
+    box-shadow: var(--shadow-soft);
 }
 
 .bgm-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--accent-foreground);
 }
 
 .bgm-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.9);
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 5px;
+    padding: 5px 10px;
     border-radius: 15px;
     transition: all 0.2s ease;
+    color: var(--foreground);
+    border: none;
 }
 
 .bgm-btn:hover {
-    color: #fff;
+    color: var(--accent-foreground);
     transform: scale(1.05);
 }
 
 .bgm-btn.muted {
-    color: rgba(255, 100, 100, 0.8);
+    color: color-mix(in srgb, var(--destructive) 70%, var(--foreground) 30%);
+    border: none;
 }
 
 .bgm-label {

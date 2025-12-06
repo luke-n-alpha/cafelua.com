@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-end; /* Align to bottom for VN style */
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: rgba(8, 10, 14, 0.8);
     backdrop-filter: blur(5px);
     z-index: 2000;
     overflow: hidden;
@@ -26,9 +26,9 @@
     max-height: 90%;
     object-fit: contain; /* Or cover depending on preference, contain shows full img */
     border-radius: 10px;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
     z-index: 0;
-    opacity: 0.6; /* Darken slightly to make dialogue pop */
+    opacity: 0.45; /* Darken slightly to make dialogue pop */
 }
 
 /* VN Layout Container */
@@ -47,12 +47,12 @@
 
 /* Dialogue Box */
 .vn-dialogue-box {
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 15px;
+    background: rgba(12, 12, 16, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
     padding: 25px 30px;
     margin: 0 20px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
     display: flex;
     flex-direction: column;
     pointer-events: auto; /* Re-enable clicks */
@@ -79,20 +79,20 @@
     height: 100px;
     object-fit: cover;
     border-radius: 10px; /* Mild rounding */
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.55));
     animation: fadeIn 0.5s ease-out;
 }
 
 .vn-name {
     font-size: 1.4rem;
     font-weight: bold;
-    color: #ffcc00; /* Gold color for name */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    color: #ffc83d;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
 }
 
 .vn-text {
     font-size: 1.2rem;
-    color: white;    
+    color: #f5f2eb;    
     line-height: 1.6;
     margin: 0;
     white-space: pre-line;
@@ -107,22 +107,12 @@
 }
 
 .vn-back-btn {
-    background: transparent;    
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
     font-size: 1rem;
-    cursor: pointer;
-    padding: 8px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 30px;
-    transition: all 0.3s ease;
+    letter-spacing: 0.01em;
     animation: pulse 2s infinite;
-}
-
-.vn-back-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #eaeef7;
 }
 
 @keyframes slideInLeft {
@@ -139,4 +129,50 @@
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    /* Move illustration up so it's visible above dialogue */
+    .construction-bg {
+        top: 35%;
+        max-width: 95%;
+        min-width: unset;
+        min-height: unset;
+        width: 100%;
+        height: auto;
+    }
+
+    /* Reduce text area size */
+    .vn-dialogue-box {
+        padding: 20px;
+        margin: 0 15px 30px 15px;
+    }
+
+    /* Adjust character and text layout */
+    .vn-content-row {
+        gap: 15px;
+    }
+
+    /* Reduce Alpha face size */
+    .vn-character {
+        width: 60px;
+        height: 60px;
+    }
+
+    .vn-name {
+        font-size: 1.1rem;
+        margin-bottom: 2px;
+    }
+
+    /* Reduce text size */
+    .vn-text {
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    .vn-back-btn {
+        padding: 6px 15px;
+        font-size: 0.9rem;
+    }
 }

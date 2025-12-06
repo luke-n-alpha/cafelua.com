@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);
+    background: color-mix(in srgb, var(--foreground) 80%, transparent);
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -25,29 +25,20 @@
     position: absolute;
     top: 1rem;
     left: 1rem;
-    background: none;
-    border: none;
-    color: #f5f5f5;
     font-size: 1rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    cursor: pointer;
     z-index: 10;
 }
 
-.close-btn:hover {
-    color: #ffd700;
-}
-
 .book-page {
-    background: #fdfbf7;
-    /* Warm paper color */
+    background: var(--card);
     width: 100%;
     height: 100%;
     padding: 4rem 5rem;
-    border-radius: 4px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
     overflow-y: auto;
     position: relative;
     font-family: 'KoPub Batang', serif;
@@ -57,7 +48,7 @@
 .book-header {
     text-align: center;
     margin-bottom: 3rem;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 1px solid var(--border);
     padding-bottom: 1rem;
     display: flex;
     flex-direction: column;
@@ -67,38 +58,22 @@
 
 .book-header h1 {
     font-size: 2rem;
-    color: #2c2c2c;
+    color: var(--foreground);
     margin: 0;
 }
 
 .book-date {
     font-size: 0.9rem;
-    color: #888;
-}
-
-.view-map-btn {
-    margin-top: 0.5rem;
-    padding: 0.4rem 1rem;
-    background: #5d4037;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background 0.2s;
-}
-
-.view-map-btn:hover {
-    background: #795548;
+    color: var(--muted-foreground);
 }
 
 .map-overlay {
-    background: #eee;
+    background: color-mix(in srgb, var(--muted) 60%, var(--card) 40%);
     padding: 1rem;
     margin-bottom: 2rem;
-    border-radius: 8px;
+    border-radius: var(--radius);
     text-align: center;
-    border: 1px solid #ddd;
+    border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
 }
 
 .map-container img {
@@ -111,14 +86,14 @@
 .map-caption {
     margin-top: 0.5rem;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--muted-foreground);
     font-style: italic;
 }
 
 .book-content {
     font-size: 1.1rem;
     line-height: 1.8;
-    color: #333;
+    color: var(--foreground);
 }
 
 .markdown-body p {
@@ -138,8 +113,8 @@
     text-align: center;
     margin-top: 3rem;
     padding-top: 1rem;
-    border-top: 1px solid #eee;
-    color: #aaa;
+    border-top: 1px solid var(--border);
+    color: var(--muted-foreground);
     font-size: 0.9rem;
 }
 

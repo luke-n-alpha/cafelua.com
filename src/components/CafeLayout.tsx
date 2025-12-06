@@ -1,11 +1,13 @@
+'use client';
+
 import { useState, useEffect } from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { Sun, Moon, Volume2, VolumeX } from 'lucide-react';
 import cafeDay from '../assets/cafe_day.png';
 import './CafeLayout.css';
 
-const CafeLayout = () => {
+const CafeLayout = ({ children }: { children?: React.ReactNode }) => {
     const { t } = useTranslation();
     const [isNight, setIsNight] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
@@ -46,30 +48,28 @@ const CafeLayout = () => {
 
             {/* Main Content Layer */}
             <div className="content-layer">
-                <header className="cafe-header">
+                <header className="cafe-header ui-glass">
                     <div className="logo-area">
                         <h1>Café Luα</h1>
                     </div>
                     <nav className="cafe-nav">
-                        <Link to="/" onClick={playClickSound}>{t('nav.home') || 'Home'}</Link>
-                        <Link to="/profile" onClick={playClickSound}>{t('nav.profile') || 'Profile'}</Link>
-                        <Link to="/cafe-life" onClick={playClickSound}>{t('nav.cafe_life') || 'Cafe Life'}</Link>
-                        <Link to="/library" onClick={playClickSound}>{t('nav.library') || 'Library'}</Link>
-                        <Link to="/lab" onClick={playClickSound}>{t('nav.lab') || 'Lab'}</Link>
+                        <Link href="/" onClick={playClickSound}>{t('nav.home') || 'Home'}</Link>
+                        <Link href="/profile" onClick={playClickSound}>{t('nav.profile') || 'Profile'}</Link>
+                        <Link href="/cafe-life" onClick={playClickSound}>{t('nav.cafe_life') || 'Cafe Life'}</Link>
+                        <Link href="/library" onClick={playClickSound}>{t('nav.library') || 'Library'}</Link>
+                        <Link href="/lab" onClick={playClickSound}>{t('nav.lab') || 'Lab'}</Link>
                     </nav>
                     <div className="controls">
-                        <button onClick={() => setIsMuted(!isMuted)} className="icon-btn">
+                        <button onClick={() => setIsMuted(!isMuted)} className="icon-btn ui-icon-button">
                             {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
                         </button>
-                        <div className="time-indicator">
+                        <div className="time-indicator ui-chip">
                             {isNight ? <Moon size={20} /> : <Sun size={20} />}
                         </div>
                     </div>
                 </header>
 
-                <main className="cafe-main">
-                    <Outlet />
-                </main>
+                <main className="cafe-main">{children}</main>
 
                 <footer className="cafe-footer">
                     <p>© 2025 Café Luα. All rights reserved.</p>

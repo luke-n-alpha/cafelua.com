@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Volume2, VolumeX, Music } from 'lucide-react';
@@ -84,13 +86,13 @@ const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ src, autoPlay = true 
     };
 
     return (
-        <div className="bgm-player glass" onClick={(e) => e.stopPropagation()}>
+        <div className="bgm-player ui-glass" onClick={(e) => e.stopPropagation()}>
             <div className="bgm-icon">
                 <Music size={16} className={isPlaying ? "spin-slow" : ""} />
             </div>
             <div className="bgm-controls">
                 <button 
-                    className={`bgm-btn ${isMuted ? 'muted' : ''}`} 
+                    className={`bgm-btn ui-button ui-button-ghost ${isMuted ? 'muted' : ''}`} 
                     onClick={toggleMute}
                     title={isMuted ? t('common.unmute') : t('common.mute')}
                 >

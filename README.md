@@ -6,7 +6,7 @@
 
 ## 🌿 Project Introduction
 
-This project is a web application built with React and Vite, featuring the following characteristics:
+This project is moving to a Next.js (App Router) + shadcn/ui stack, featuring the following characteristics:
 
 *   **Immersive Intro**: Invites you into the world of Cafe Lua with backgrounds that change according to the time of day and weather.
 *   **Lounge Space**: The main area where you can enjoy the atmosphere of Cafe Lua with comfortable music.
@@ -21,27 +21,33 @@ This project is a web application built with React and Vite, featuring the follo
 
 ## 🛠️ Tech Stack
 
-*   **Framework**: React, Vite
+*   **Framework**: Next.js (App Router), React, shadcn/ui
 *   **Language**: TypeScript
-*   **Styling**: CSS Modules (or Styled Components)
-*   **State Management**: (TBD)
-*   **Deployment**: (TBD)
+*   **Styling**: CSS with design tokens (variables.css), shadcn primitives
+*   **Testing**: Jest + React Testing Library (TDD), Playwright for E2E
+*   **Deployment**: Next build artifacts synced from the private repo
+
+## Environment
+- `NEXT_PUBLIC_OPENWEATHER_API_KEY` (optional): OpenWeather API key for real-time weather in intro/lounge. Falls back to time/season defaults when missing.
 
 ## 📂 Project Structure
 
 ```
 public-home/
-├── public/             # Static resources (images, audio, etc.)
-├── src/
-│   ├── components/     # UI components
-│   ├── assets/         # Assets imported within the source code
-│   ├── styles/         # Global styles and theme settings
-│   ├── App.tsx         # Main application component
-│   └── main.tsx        # Entry Point
+├── public/              # Static resources (images, audio, etc.)
+├── src/                 # Next.js App Router source
+│   ├── app/             # Route handlers, layouts, pages
+│   ├── components/      # UI components (shadcn + custom)
+│   ├── styles/          # Global styles and theme tokens
+│   └── data/            # Generated content index & helpers
 └── ...
 ```
 
 ## 📝 Changelog
+
+### v0.1.2 (2025-12-02)
+- **Architecture**: Migrated public-home to mirror the private Next.js (App Router) + shadcn/ui stack; updated sync script and docs to treat private `src/` as the single source of truth.
+- **Structure**: Clarified private vs public layout (app source under `src/src`, generated `data/content-index.json` read-only).
 
 ### v0.1.1 (2025-11-30)
 - **Features & Improvements**:

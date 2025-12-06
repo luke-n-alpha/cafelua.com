@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Sync intro assets/components from the private repo into the public-home submodule,
+# Sync the Next.js App Router source from private `src/` into `public-home/`,
 # then optionally build/commit/push the public repo.
 # Usage:
 #   ./src/scripts/sync-public-home.sh           # copy + build
@@ -22,60 +22,20 @@ require_dir() {
     fi
 }
 
-require_dir "$PRIVATE_SRC/src/components"
-require_dir "$PUBLIC_DIR/src/components"
+require_dir "$PRIVATE_SRC"
+require_dir "$PUBLIC_DIR"
 
-copy_file() {
-    local src="$1"
-    local dest="$2"
-    if [[ ! -f "$src" ]]; then
-        echo "Missing source file: $src" >&2
-        exit 1
-    fi
-    mkdir -p "$(dirname "$dest")"
-    cp "$src" "$dest"
-    echo "Copied $(basename "$src")"
-}
+echo "Syncing Next.js app to public-home..."
 
-echo "Syncing intro assets/components to public-home..."
-# Sync App shell and styles
-copy_file "$PRIVATE_SRC/src/App.tsx" "$PUBLIC_DIR/src/App.tsx"
-copy_file "$PRIVATE_SRC/src/index.css" "$PUBLIC_DIR/src/index.css"
-copy_file "$PRIVATE_SRC/src/styles/variables.css" "$PUBLIC_DIR/src/styles/variables.css"
+rsync -a --delete \
+    --exclude ".next" \
+    --exclude "node_modules" \
+    --exclude "test-results" \
+    --exclude ".swc" \
+    --exclude "coverage" \
+    "$PRIVATE_SRC/" "$PUBLIC_DIR/"
 
-# Sync components
-copy_file "$PRIVATE_SRC/src/components/IntroPage.tsx" "$PUBLIC_DIR/src/components/IntroPage.tsx"
-copy_file "$PRIVATE_SRC/src/components/IntroPage.css" "$PUBLIC_DIR/src/components/IntroPage.css"
-copy_file "$PRIVATE_SRC/src/components/LoungePage.tsx" "$PUBLIC_DIR/src/components/LoungePage.tsx"
-copy_file "$PRIVATE_SRC/src/components/LoungePage.css" "$PUBLIC_DIR/src/components/LoungePage.css"
-copy_file "$PRIVATE_SRC/src/components/UnderConstruction.tsx" "$PUBLIC_DIR/src/components/UnderConstruction.tsx"
-copy_file "$PRIVATE_SRC/src/components/UnderConstruction.css" "$PUBLIC_DIR/src/components/UnderConstruction.css"
-copy_file "$PRIVATE_SRC/src/components/BackgroundMusic.tsx" "$PUBLIC_DIR/src/components/BackgroundMusic.tsx"
-copy_file "$PRIVATE_SRC/src/components/BackgroundMusic.css" "$PUBLIC_DIR/src/components/BackgroundMusic.css"
-copy_file "$PRIVATE_SRC/src/components/CafeLayout.tsx" "$PUBLIC_DIR/src/components/CafeLayout.tsx"
-copy_file "$PRIVATE_SRC/src/components/CafeLayout.css" "$PUBLIC_DIR/src/components/CafeLayout.css"
-
-
-# Sync services
-copy_file "$PRIVATE_SRC/src/services/WeatherService.ts" "$PUBLIC_DIR/src/services/WeatherService.ts"
-
-# Sync i18n
-copy_file "$PRIVATE_SRC/src/i18n.ts" "$PUBLIC_DIR/src/i18n.ts"
-
-# Sync assets & public files
-copy_file "$PRIVATE_SRC/public/intro-logo.png" "$PUBLIC_DIR/public/intro-logo.png"
-copy_file "$PRIVATE_SRC/index.html" "$PUBLIC_DIR/index.html"
-copy_file "$PRIVATE_SRC/public/og-cover.png" "$PUBLIC_DIR/public/og-cover.png"
-
-# Sync directories (simple copy)
-rm -rf "$PUBLIC_DIR/src/assets"
-cp -R "$PRIVATE_SRC/src/assets/" "$PUBLIC_DIR/src/assets/"
-rm -rf "$PUBLIC_DIR/public/intro-background-img"
-cp -R "$PRIVATE_SRC/public/intro-background-img/" "$PUBLIC_DIR/public/intro-background-img/"
-rm -rf "$PUBLIC_DIR/public/lounge-background-img"
-cp -R "$PRIVATE_SRC/public/lounge-background-img/" "$PUBLIC_DIR/public/lounge-background-img/"
-rm -rf "$PUBLIC_DIR/public/sounds"
-cp -R "$PRIVATE_SRC/public/sounds/" "$PUBLIC_DIR/public/sounds/"
+echo "Sync complete."
 
 if [[ "${SKIP_BUILD:-0}" != "1" ]]; then
     echo "Building public-home..."

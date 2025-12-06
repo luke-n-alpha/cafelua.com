@@ -19,12 +19,12 @@ interface WeatherResponse {
     dt: number;
 }
 
-const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY || '';
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
 export const getWeatherByCoords = async (lat: number, lon: number): Promise<{ weather: AppWeather, time: AppTimeOfDay } | null> => {
     if (!API_KEY) {
-        console.warn("OpenWeatherMap API Key not found in .env");
+        console.warn('OpenWeatherMap API Key not found in env (NEXT_PUBLIC_OPENWEATHER_API_KEY)');
         return null;
     }
 

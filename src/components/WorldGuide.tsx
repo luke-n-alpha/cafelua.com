@@ -1,11 +1,12 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { ContentLoader } from '../services/ContentLoader';
 import { ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import Link from 'next/link';
 import './WorldGuide.css';
 
 const WorldGuide = () => {
-    const navigate = useNavigate();
     const [guideContent, setGuideContent] = useState<string>('');
     const [loading, setLoading] = useState(true);
 
@@ -36,11 +37,11 @@ const WorldGuide = () => {
 
     return (
         <div className="world-guide-container">
-            <button className="back-btn" onClick={() => navigate('/library')}>
+            <Link className="back-btn ui-button ui-button-ghost" href="/library">
                 <ArrowLeft size={20} /> Back to Library
-            </button>
+            </Link>
 
-            <div className="guide-content">
+            <div className="guide-content ui-card">
                 {loading ? (
                     <div className="loading">Loading World Guide...</div>
                 ) : guideContent ? (

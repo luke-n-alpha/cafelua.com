@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+'use client';
+
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import './IntroPage.css';
-import logoImg from '../assets/intro-logo.png';
 import {
     Sun, Moon, CloudRain, CloudSnow, CloudLightning,
     Flower2, Leaf, Snowflake, Sunset, DoorClosed, RefreshCw
@@ -115,7 +116,7 @@ const IconSelect = ({
     value: string,
     options: string[],
     onChange: (val: string) => void,
-    getIcon: (val: any) => React.ReactNode,
+    getIcon: (val: string) => React.ReactNode,
     label: string
 }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -170,7 +171,7 @@ const IconSelect = ({
 
 const IntroPage: React.FC = () => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
+    const router = useRouter();
     const [season, setSeason] = useState<Season>('spring');
     const [time, setTime] = useState<TimeOfDay>('day');
     const [weather, setWeather] = useState<Weather>('sunny');
@@ -181,13 +182,7 @@ const IntroPage: React.FC = () => {
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     // Auto-detect on mount
-    useEffect(() => {
-        handleRefresh();
-        // Preload sound if available
-        audioRef.current = new Audio('/sounds/footsteps.mp3');
-    }, []);
-
-    const fetchRealWeather = async () => {
+    const fetchRealWeather = useCallback(async () => {
         if (!navigator.geolocation) return;
 
         navigator.geolocation.getCurrentPosition(async (position) => {
@@ -202,15 +197,15 @@ const IntroPage: React.FC = () => {
             console.log("Geolocation blocked or failed:", error);
             // Fallback to default time-based logic is already handled by handleRefresh initial call
         });
-    };
+    }, []);
 
     // Check if current date is in Christmas period (Dec 1-25)
-    const isChristmasPeriod = (): boolean => {
+    const isChristmasPeriod = useCallback((): boolean => {
         const now = new Date();
         const month = now.getMonth(); // 0-indexed, so 11 = December
         const day = now.getDate();
         return month === 11 && day >= 1 && day <= 25;
-    };
+    }, []);
 
     // Valid weather options based on season (no "closed" in weather)
     const getValidWeathers = (s: Season): Weather[] => {
@@ -238,7 +233,7 @@ const IntroPage: React.FC = () => {
         if (season !== 'winter') {
             setIsChristmas(false);
         }
-    }, [season]);
+    }, [season, weather]);
 
     // Update background whenever state changes
     useEffect(() => {
@@ -344,7 +339,7 @@ const IntroPage: React.FC = () => {
         
     }, [season]); // Re-sort priority when season changes
 
-    const handleRefresh = async () => {
+    const handleRefresh = useCallback(async () => {
         const now = new Date();
         const s = getSeason(now.getMonth());
         
@@ -362,7 +357,13 @@ const IntroPage: React.FC = () => {
         } else {
             setIsChristmas(false);
         }
-    };
+    }, [fetchRealWeather, isChristmasPeriod]);
+
+    useEffect(() => {
+        void handleRefresh();
+        // Preload sound if available
+        audioRef.current = new Audio('/sounds/footsteps.mp3');
+    }, [handleRefresh]);
 
     const handleEnter = () => {
         if (audioRef.current) {
@@ -370,14 +371,14 @@ const IntroPage: React.FC = () => {
         }
         
         // Navigate to Lounge with current environmental state
-        navigate('/lounge', {
-            state: {
-                season,
-                time,
-                weather,
-                isChristmas
-            }
+        const params = new URLSearchParams({
+            season,
+            time,
+            weather,
+            christmas: String(isChristmas)
         });
+
+        router.push(`/lounge?${params.toString()}`);
     };
 
     return (
@@ -414,7 +415,7 @@ const IntroPage: React.FC = () => {
                     <>
                         <div className="divider" />
                         <button
-                            className={`xmas-toggle ${isChristmas ? 'active' : ''}`}
+                            className={`xmas-toggle ui-icon-button ${isChristmas ? 'active' : ''}`}
                             onClick={() => setIsChristmas(!isChristmas)}
                             title={t('intro.christmasMode')}
                         >
@@ -425,14 +426,14 @@ const IntroPage: React.FC = () => {
 
                 <div className="divider" />
 
-                <button className="refresh-btn-icon" onClick={handleRefresh} title={t('intro.autoDetect')}>
+                <button className="refresh-btn-icon ui-icon-button" onClick={handleRefresh} title={t('intro.autoDetect')}>
                     <RefreshCw size={20} />
                 </button>
             </div>
 
             <div className="center-content">
                 <img 
-                    src={logoImg} 
+                    src="/intro-logo.png" 
                     alt="Cafelua Logo" 
                     className="intro-logo" 
                     onClick={handleEnter}
@@ -443,7 +444,7 @@ const IntroPage: React.FC = () => {
             </div>
 
             <div className="intro-footer glass" onClick={(e) => e.stopPropagation()}>
-                <span>v0.1.0</span>
+                <span>v0.1.1</span>
                 <a href="https://github.com/luke-n-alpha/cafelua.com" target="_blank" rel="noopener noreferrer">
                     GitHub
                 </a>

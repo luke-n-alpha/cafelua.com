@@ -3,8 +3,11 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  font-family: 'Pretendard', sans-serif;
-  color: var(--color-text-main);
+  font-family: var(--font-sans);
+  color: var(--foreground);
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.28), transparent 35%),
+              radial-gradient(circle at 80% 0%, rgba(143, 188, 143, 0.16), transparent 40%),
+              var(--background);
 }
 
 .background-layer {
@@ -35,8 +38,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: rgba(255, 255, 255, 0.1); /* Subtle glass effect */
-  backdrop-filter: blur(2px);
+  background: color-mix(in srgb, var(--card) 18%, transparent);
+  backdrop-filter: blur(4px);
 }
 
 .cafe-header {
@@ -44,14 +47,15 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background: color-mix(in srgb, var(--card) 85%, transparent);
+  box-shadow: var(--shadow-paper);
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
 }
 
 .logo-area h1 {
   font-family: 'Merriweather', serif;
   font-size: 1.5rem;
-  color: var(--color-coffee-dark);
+  color: var(--color-forest);
   margin: 0;
 }
 
@@ -62,13 +66,14 @@
 
 .cafe-nav a {
   text-decoration: none;
-  color: var(--color-text-main);
+  color: var(--foreground);
   font-weight: 500;
   transition: color 0.2s;
 }
 
 .cafe-nav a:hover {
-  color: var(--color-coffee-medium);
+  color: var(--color-forest);
+  text-decoration: underline;
 }
 
 .controls {
@@ -78,17 +83,7 @@
 }
 
 .icon-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--color-text-sub);
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: background 0.2s;
-}
-
-.icon-btn:hover {
-  background: rgba(0,0,0,0.05);
+  color: var(--foreground);
 }
 
 .cafe-main {
@@ -100,24 +95,24 @@
 .cafe-footer {
   text-align: center;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.8);
+  background: color-mix(in srgb, var(--card) 85%, transparent);
   font-size: 0.8rem;
-  color: var(--color-text-sub);
+  color: var(--muted-foreground);
 }
 
 /* Night Mode Adjustments */
 .night .cafe-header,
 .night .cafe-footer {
-  background: rgba(20, 20, 30, 0.8);
-  color: #e0e0e0;
+  background: color-mix(in srgb, var(--foreground) 15%, var(--card) 85%);
+  color: color-mix(in srgb, var(--foreground) 85%, #fff 15%);
 }
 
 .night .logo-area h1 {
-  color: #f0f0f0;
+  color: color-mix(in srgb, var(--accent) 40%, #fff 60%);
 }
 
 .night .cafe-nav a {
-  color: #d0d0d0;
+  color: color-mix(in srgb, var(--foreground) 70%, #fff 30%);
 }
 
 .night .cafe-nav a:hover {

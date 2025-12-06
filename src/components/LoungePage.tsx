@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import BackgroundMusic from './BackgroundMusic';
 import UnderConstruction from './UnderConstruction';
@@ -10,26 +12,16 @@ type Season = 'spring' | 'summer' | 'autumn' | 'winter';
 type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
 type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
 
-interface LocationState {
-    season: Season;
-    time: TimeOfDay;
-    weather: Weather;
-    isChristmas: boolean;
-}
-
 const LoungePage: React.FC = () => {
     const { t } = useTranslation();
-    const location = useLocation();
-    const navigate = useNavigate();
+    const searchParams = useSearchParams();
+    const router = useRouter();
     const [bgImage, setBgImage] = useState<string>('');
     const [showConstruction, setShowConstruction] = useState(false);
-    const state = location.state as LocationState;
-
-    // Default state if accessed directly without intro
-    const season = state?.season || 'spring';
-    const time = state?.time || 'day';
-    const weather = state?.weather || 'sunny';
-    const isChristmas = state?.isChristmas || false;
+    const season = (searchParams.get('season') as Season) || 'spring';
+    const time = (searchParams.get('time') as TimeOfDay) || 'day';
+    const weather = (searchParams.get('weather') as Weather) || 'sunny';
+    const isChristmas = searchParams.get('christmas') === 'true';
 
     // Resolve background image based on state
     useEffect(() => {
@@ -87,28 +79,28 @@ const LoungePage: React.FC = () => {
             <div className="game-menu">
                 <div className="menu-title">{t('lounge.title')}</div>
                               
-                <button className="menu-button" onClick={() => setShowConstruction(true)}>
+                <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
                     {t('lounge.about')}
                 </button>
-                <button className="menu-button" onClick={() => setShowConstruction(true)}>
+                <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
                     {t('lounge.counter')}
                 </button>
-                <button className="menu-button" onClick={() => setShowConstruction(true)}>
+                <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
                     {t('lounge.lab')}
                 </button>
-                <button className="menu-button" onClick={() => setShowConstruction(true)}>
+                <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
                     {t('lounge.library')}
                 </button>
-                <button className="menu-button" onClick={() => setShowConstruction(true)}>
+                <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
                     {t('lounge.gallery')}
                 </button>
-                <button className="menu-button" onClick={() => setShowConstruction(true)}>
+                <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
                     {t('lounge.guestbook')}
                 </button>
 
-                <button 
-                    className="menu-button exit" 
-                    onClick={() => navigate('/')}
+                <button
+                    className="menu-button ui-button ui-button-danger exit"
+                    onClick={() => router.push('/')}
                 >
                     {t('lounge.back')}
                 </button>

@@ -1,12 +1,15 @@
+'use client';
+
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { ContentLoader, type ContentItem } from '../services/ContentLoader';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import './BookViewer.css';
 
 const BookViewer = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const id = searchParams.get('id');
     const [content, setContent] = useState<string>('');
     const [meta, setMeta] = useState<ContentItem | null>(null);
     const [loading, setLoading] = useState(false);
@@ -47,7 +50,7 @@ const BookViewer = () => {
     return (
         <div className="book-viewer-overlay">
             <div className="book-viewer-container">
-                <button className="close-btn" onClick={() => navigate('/library')}>
+                <button className="close-btn ui-button ui-button-ghost" onClick={() => router.push('/library')}>
                     <ArrowLeft size={24} /> Back to Shelf
                 </button>
 
@@ -56,7 +59,7 @@ const BookViewer = () => {
                         <h1>{meta.title}</h1>
                         <span className="book-date">{new Date(meta.date).toLocaleDateString()}</span>
                         {mapImages.length > 0 && (
-                            <button className="view-map-btn" onClick={() => setShowMap(!showMap)}>
+                            <button className="view-map-btn ui-button ui-button-primary" onClick={() => setShowMap(!showMap)}>
                                 {showMap ? 'Hide Map' : 'View Map 🗺️'}
                             </button>
                         )}
