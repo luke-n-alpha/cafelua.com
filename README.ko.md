@@ -21,11 +21,11 @@
 
 ## 🛠️ 기술 스택
 
-*   **Framework**: Next.js 14(App Router, GitHub Pages 대응을 위한 정적 `output: 'export'`), React 18, shadcn/ui
+*   **Framework**: Next.js 16(App Router), React 19, shadcn/ui
 *   **Language**: TypeScript
 *   **Styling**: CSS + 디자인 토큰(variables.css), shadcn 컴포넌트
 *   **Testing**: Jest + React Testing Library(TDD), Playwright(E2E)
-*   **Deployment**: private → public-home 동기화 후 정적 `npm run build` 산출물(`out/`)을 GitHub Pages 워크플로우로 배포
+*   **Deployment**: private → public-home 동기화 후 GitHub Pages 워크플로우에서 `out/` 빌드/배포 (Pages 사용 시 정적 export 설정 확인)
 
 ## 환경 변수
 - `NEXT_PUBLIC_OPENWEATHER_API_KEY` (선택): 인트로/라운지 실시간 날씨 반영용 OpenWeather API 키. 없으면 시간/계절 기본값으로 동작합니다.
@@ -42,6 +42,10 @@ public-home/
 │   └── data/            # 생성된 콘텐츠 인덱스 및 헬퍼
 └── ...
 ```
+
+## 📄 문서 공개 정책
+- 내부 문서/스펙은 private 저장소에만 유지하며 이 저장소에 공개하지 않습니다.
+- 외부 공개가 필요하면 private 소스에서 이 저장소로 동기화합니다.
 
 ## 📝 업데이트 내역 (Changelog)
 
