@@ -14,11 +14,6 @@ if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
 }
 
-function parseDate(dateStr) {
-    if (!dateStr) return new Date();
-    return new Date(dateStr);
-}
-
 function scanDirectory(dir) {
     const results = [];
     const files = fs.readdirSync(dir);

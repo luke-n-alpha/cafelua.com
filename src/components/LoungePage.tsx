@@ -88,7 +88,7 @@ const LoungePage: React.FC = () => {
                 <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
                     {t('lounge.lab')}
                 </button>
-                <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
+                <button className="menu-button ui-button ui-button-ghost" onClick={() => router.push('/library')}>
                     {t('lounge.library')}
                 </button>
                 <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>

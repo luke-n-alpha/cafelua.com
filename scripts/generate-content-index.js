@@ -8,6 +8,29 @@ const __dirname = path.dirname(__filename);
 const DATA_DIR = path.resolve(__dirname, '../../data');
 const OUTPUT_FILE = path.resolve(__dirname, '../src/data/content-index.json');
 
+const SHOULD_SYNC_PUBLIC = process.env.PUBLIC_CONTENT === '1';
+const PUBLIC_CONTENT_DIRS = [
+    'luke-novel',
+    'cafelua/posting',
+    'alpha/posting'
+];
+const CONTENT_PATH_PREFIXES = PUBLIC_CONTENT_DIRS.map(dir => `${dir}/`);
+const PUBLIC_DATA_DIR = path.resolve(__dirname, '../public/data');
+const CONTENT_FILES = new Set([
+    'profile_luke.md'
+]);
+
+function isPublicContentPath(filePath) {
+    const relativePath = path.relative(DATA_DIR, filePath).split(path.sep).join('/');
+    if (CONTENT_FILES.has(relativePath)) {
+        return true;
+    }
+    if (relativePath.startsWith('cafelua/posting/')) {
+        return path.basename(relativePath) === 'posting.md';
+    }
+    return CONTENT_PATH_PREFIXES.some(prefix => relativePath.startsWith(prefix));
+}
+
 // Helper to recursively get files
 function getFiles(dir) {
     const subdirs = fs.readdirSync(dir);
@@ -24,7 +47,7 @@ function getMetadata(filePath, allFiles) {
     const filename = path.basename(filePath, '.md');
 
     let title = filename;
-    let date = fs.statSync(filePath).mtime.toISOString();
+    const date = fs.statSync(filePath).mtime.toISOString();
     let series = undefined;
     let part = undefined;
     let chapter = undefined;
@@ -159,7 +182,7 @@ function generateIndex() {
     }
 
     const allFiles = getFiles(DATA_DIR);
-    const markdownFiles = allFiles.filter(file => file.endsWith('.md'));
+    const markdownFiles = allFiles.filter(file => file.endsWith('.md') && isPublicContentPath(file));
 
     console.log(`Found ${markdownFiles.length} markdown files.`);
 
@@ -170,6 +193,48 @@ function generateIndex() {
 
     fs.writeFileSync(OUTPUT_FILE, JSON.stringify(index, null, 2));
     console.log(`Generated index with ${index.length} items at ${OUTPUT_FILE}`);
+    if (SHOULD_SYNC_PUBLIC) {
+        syncPublicData();
+    } else {
+        clearPublicData();
+        console.log('PUBLIC_CONTENT is not set; public data cleared.');
+    }
+}
+
+function syncPublicData() {
+    if (fs.existsSync(PUBLIC_DATA_DIR)) {
+        fs.rmSync(PUBLIC_DATA_DIR, { recursive: true, force: true });
+    }
+    fs.mkdirSync(PUBLIC_DATA_DIR, { recursive: true });
+
+    for (const dir of PUBLIC_CONTENT_DIRS) {
+        const sourceDir = path.resolve(DATA_DIR, dir);
+        if (!fs.existsSync(sourceDir)) {
+            continue;
+        }
+        const targetDir = path.resolve(PUBLIC_DATA_DIR, dir);
+        fs.mkdirSync(path.dirname(targetDir), { recursive: true });
+        fs.cpSync(sourceDir, targetDir, { recursive: true });
+    }
+
+    for (const file of CONTENT_FILES) {
+        const sourceFile = path.resolve(DATA_DIR, file);
+        if (!fs.existsSync(sourceFile)) {
+            continue;
+        }
+        const targetFile = path.resolve(PUBLIC_DATA_DIR, file);
+        fs.mkdirSync(path.dirname(targetFile), { recursive: true });
+        fs.copyFileSync(sourceFile, targetFile);
+    }
+
+    console.log(`Public data synced to: ${PUBLIC_DATA_DIR}`);
+}
+
+function clearPublicData() {
+    if (fs.existsSync(PUBLIC_DATA_DIR)) {
+        fs.rmSync(PUBLIC_DATA_DIR, { recursive: true, force: true });
+    }
+    fs.mkdirSync(PUBLIC_DATA_DIR, { recursive: true });
 }
 
 generateIndex();

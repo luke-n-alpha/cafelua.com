@@ -10,6 +10,7 @@
 
 *   **몰입형 인트로**: 시간대와 날씨에 따라 변화하는 배경과 함께 카페루아의 세계로 초대합니다.
 *   **라운지 공간**: 편안한 음악과 함께 카페루아의 분위기를 즐길 수 있는 메인 공간입니다.
+*   **서재 공간**: Win98 PC 감성으로 1997/1998년 루크의 홈페이지 추억을 탐험할 수 있는 공간(정적, 읽기 전용).
 *   **반응형 디자인**: 다양한 디바이스에서 최적화된 경험을 제공합니다.
 *   **다국어 지원**: i18next를 활용하여 한국어 및 영어 등 다국어 지원을 제공합니다.
 
@@ -21,14 +22,15 @@
 
 ## 🛠️ 기술 스택
 
-*   **Framework**: Next.js 16(App Router), React 19, shadcn/ui
+*   **Framework**: Next.js 14(App Router, GitHub Pages 대응을 위한 정적 `output: 'export'`), React 18, shadcn/ui
 *   **Language**: TypeScript
 *   **Styling**: CSS + 디자인 토큰(variables.css), shadcn 컴포넌트
 *   **Testing**: Jest + React Testing Library(TDD), Playwright(E2E)
-*   **Deployment**: private → public-home 동기화 후 GitHub Pages 워크플로우에서 `out/` 빌드/배포 (Pages 사용 시 정적 export 설정 확인)
+*   **Deployment**: private → public-home 동기화 후 정적 `npm run build` 산출물(`out/`)을 GitHub Pages 워크플로우로 배포
 
 ## 환경 변수
 - `NEXT_PUBLIC_OPENWEATHER_API_KEY` (선택): 인트로/라운지 실시간 날씨 반영용 OpenWeather API 키. 없으면 시간/계절 기본값으로 동작합니다.
+- 보안: `.env` 파일은 절대 커밋하지 않습니다. private → public-home 동기화에서도 제외됩니다.
 
 ## 📂 프로젝트 구조
 
@@ -42,10 +44,6 @@ public-home/
 │   └── data/            # 생성된 콘텐츠 인덱스 및 헬퍼
 └── ...
 ```
-
-## 📄 문서 공개 정책
-- 내부 문서/스펙은 private 저장소에만 유지하며 이 저장소에 공개하지 않습니다.
-- 외부 공개가 필요하면 private 소스에서 이 저장소로 동기화합니다.
 
 ## 📝 업데이트 내역 (Changelog)
 

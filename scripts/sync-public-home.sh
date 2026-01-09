@@ -10,10 +10,12 @@ set -euo pipefail
 # Environment:
 #   SKIP_BUILD=1 to skip npm run build inside public-home
 #   COMMIT_MSG="..." to override default commit message when using --push
+#   PUBLIC_CONTENT=1 to publish content data and content-index.json
 
 ROOT_DIR="$(cd "$(dirname "$0")/../.." && pwd -P)"
 PRIVATE_SRC="$ROOT_DIR/src"
 PUBLIC_DIR="$ROOT_DIR/public-home"
+PUBLIC_INDEX="$PUBLIC_DIR/src/src/data/content-index.json"
 
 require_dir() {
     if [[ ! -d "$1" ]]; then
@@ -31,11 +33,25 @@ rsync -a --delete \
     --exclude ".next" \
     --exclude ".git" \
     --exclude ".gitmodules" \
+    --include ".env.example" \
+    --exclude ".env" \
+    --exclude ".env.*" \
     --exclude "node_modules" \
     --exclude "test-results" \
     --exclude ".swc" \
     --exclude "coverage" \
     "$PRIVATE_SRC/" "$PUBLIC_DIR/"
+
+rm -f "$PUBLIC_DIR/.env"
+find "$PUBLIC_DIR" -maxdepth 1 -type f -name ".env.*" ! -name ".env.example" -delete
+
+if [[ "${PUBLIC_CONTENT:-0}" != "1" ]]; then
+    rm -rf "$PUBLIC_DIR/public/data"
+    mkdir -p "$PUBLIC_DIR/public/data"
+    mkdir -p "$(dirname "$PUBLIC_INDEX")"
+    printf "[]\n" > "$PUBLIC_INDEX"
+    echo "Public content publishing disabled; cleared public data and content index."
+fi
 
 echo "Sync complete."
 

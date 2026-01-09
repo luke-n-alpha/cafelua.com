@@ -5,7 +5,7 @@ import nextPlugin from '@next/eslint-plugin-next';
 
 export default tseslint.config(
     {
-        ignores: ['dist', '.next']
+        ignores: ['dist', '.next', 'out', 'coverage', 'test-results']
     },
     {
         files: ['**/*.{ts,tsx,js,jsx}'],

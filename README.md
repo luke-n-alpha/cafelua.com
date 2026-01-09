@@ -10,6 +10,7 @@ This project is moving to a Next.js (App Router) + shadcn/ui stack, featuring th
 
 *   **Immersive Intro**: Invites you into the world of Cafe Lua with backgrounds that change according to the time of day and weather.
 *   **Lounge Space**: The main area where you can enjoy the atmosphere of Cafe Lua with comfortable music.
+*   **Library Space**: A nostalgic “Win98 PC” experience where you can explore Luke's 1997/1998 homepage memories (static, read-only).
 *   **Responsive Design**: Provides an optimized experience across various devices.
 *   **Multilingual Support**: Offers multilingual support, including Korean and English, using i18next.
 
@@ -21,14 +22,15 @@ This project is moving to a Next.js (App Router) + shadcn/ui stack, featuring th
 
 ## 🛠️ Tech Stack
 
-*   **Framework**: Next.js 16 (App Router), React 19, shadcn/ui
+*   **Framework**: Next.js 14 (App Router, static `output: 'export'` for GitHub Pages), React 18, shadcn/ui
 *   **Language**: TypeScript
 *   **Styling**: CSS with design tokens (variables.css), shadcn primitives
 *   **Testing**: Jest + React Testing Library (TDD), Playwright for E2E
-*   **Deployment**: Synced from the private repo; GitHub Pages workflow builds and publishes `out/` (ensure static export config if using Pages)
+*   **Deployment**: Static `next build` output synced from the private repo; GitHub Pages deploy workflow builds and publishes `out/`
 
 ## Environment
 - `NEXT_PUBLIC_OPENWEATHER_API_KEY` (optional): OpenWeather API key for real-time weather in intro/lounge. Falls back to time/season defaults when missing.
+- Security: Never commit `.env` files. They are ignored and excluded from the private → public sync workflow.
 
 ## 📂 Project Structure
 
@@ -42,11 +44,6 @@ public-home/
 │   └── data/            # Generated content index & helpers
 └── ...
 ```
-
-## 📄 Documentation Policy
-- Internal docs/specs are kept in the private repo and are not published here.
-- Public-facing materials must be synced into this repo from the private source.
-- The private repo uses `sync-repos.sh` at its root to pull/commit/push subrepos and the host repo in order (optional commit message as args).
 
 ## 📝 Changelog
 
