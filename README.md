@@ -45,6 +45,8 @@ public-home/
 └── ...
 ```
 
+- Note: `src/app/(lounge)/` shares a layout across `/lounge`, `/counter`, and `/about` so the lounge BGM can continue between page transitions.
+
 ## 📝 Changelog
 
 ### v0.1.3 (2026-01-11)
