@@ -1,4 +1,5 @@
 domain: cafelua.com
 policy: allow
 sitemap: https://cafelua.com/sitemap.xml
+llms: https://cafelua.com/llms.txt
 contact: https://github.com/luke-n-alpha/cafelua.com

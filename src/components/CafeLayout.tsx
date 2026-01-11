@@ -6,11 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { Sun, Moon, Volume2, VolumeX } from 'lucide-react';
 import cafeDay from '../assets/cafe_day.png';
 import './CafeLayout.css';
+import AboutModal from './AboutModal';
 
 const CafeLayout = ({ children }: { children?: React.ReactNode }) => {
     const { t } = useTranslation();
     const [isNight, setIsNight] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
+    const [showAboutModal, setShowAboutModal] = useState(false);
 
     // Check time for Day/Night cycle
     useEffect(() => {
@@ -33,6 +35,7 @@ const CafeLayout = ({ children }: { children?: React.ReactNode }) => {
 
     return (
         <div className={`cafe-layout ${isNight ? 'night' : 'day'}`}>
+            {showAboutModal && <AboutModal onClose={() => setShowAboutModal(false)} />}
             {/* Background Layer */}
             <div
                 className="background-layer"
@@ -54,9 +57,10 @@ const CafeLayout = ({ children }: { children?: React.ReactNode }) => {
                     </div>
                     <nav className="cafe-nav">
                         <Link href="/" onClick={playClickSound}>{t('nav.home') || 'Home'}</Link>
+                        <a href="#" onClick={() => { playClickSound(); setShowAboutModal(true); }}>{t('nav.about')}</a>
                         <Link href="/profile" onClick={playClickSound}>{t('nav.profile') || 'Profile'}</Link>
                         <Link href="/cafe-life" onClick={playClickSound}>{t('nav.cafe_life') || 'Cafe Life'}</Link>
-                        <Link href="/library" onClick={playClickSound}>{t('nav.library') || 'Library'}</Link>
+                        <Link href="/atelier" onClick={playClickSound}>{t('nav.library') || 'Atelier'}</Link>
                         <Link href="/lab" onClick={playClickSound}>{t('nav.lab') || 'Lab'}</Link>
                     </nav>
                     <div className="controls">

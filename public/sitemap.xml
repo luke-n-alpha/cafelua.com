@@ -4,12 +4,30 @@
     <loc>https://cafelua.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <lastmod>2025-11-27</lastmod>
+    <lastmod>2026-01-11</lastmod>
   </url>
   <url>
-    <loc>https://cafelua.com/main</loc>
+    <loc>https://cafelua.com/lounge/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2026-01-11</lastmod>
+  </url>
+  <url>
+    <loc>https://cafelua.com/atelier/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2026-01-11</lastmod>
+  </url>
+  <url>
+    <loc>https://cafelua.com/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2025-11-27</lastmod>
+    <lastmod>2026-01-11</lastmod>
+  </url>
+  <url>
+    <loc>https://cafelua.com/counter/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-01-11</lastmod>
   </url>
 </urlset>

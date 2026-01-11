@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
-import BackgroundMusic from './BackgroundMusic';
 import UnderConstruction from './UnderConstruction';
 import './LoungePage.css';
 
@@ -17,11 +16,25 @@ const LoungePage: React.FC = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const [bgImage, setBgImage] = useState<string>('');
+    const [loungeVariant, setLoungeVariant] = useState('lounge-sunny');
+    const entrySource = searchParams.get('from');
+    const [showGreeting, setShowGreeting] = useState(() => entrySource === 'entrance');
     const [showConstruction, setShowConstruction] = useState(false);
     const season = (searchParams.get('season') as Season) || 'spring';
     const time = (searchParams.get('time') as TimeOfDay) || 'day';
     const weather = (searchParams.get('weather') as Weather) || 'sunny';
     const isChristmas = searchParams.get('christmas') === 'true';
+
+    const pushWithParams = (path: string) => {
+        const query = searchParams.toString();
+        router.push(query ? `${path}?${query}` : path);
+    };
+
+    const handleStairs = () => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('from', 'lounge');
+        router.push(`/atelier?${params.toString()}`);
+    };
 
     // Resolve background image based on state
     useEffect(() => {
@@ -50,6 +63,7 @@ const LoungePage: React.FC = () => {
             }
         }
 
+        setLoungeVariant(imageName);
         setBgImage(`/lounge-background-img/${imageName}.webp`);
     }, [season, time, weather, isChristmas]);
 
@@ -69,48 +83,89 @@ const LoungePage: React.FC = () => {
         });
     }, []);
 
+    const handleCloseGreeting = () => {
+        setShowGreeting(false);
+
+        const params = new URLSearchParams(searchParams.toString());
+        if (!params.has('from')) return;
+        params.delete('from');
+        const query = params.toString();
+        router.replace(query ? `/lounge?${query}` : '/lounge');
+    };
+
+    const greetingVariant = loungeVariant.replace(/^lounge-/, '');
+    const greetingKey = `lounge.greeting.${greetingVariant}`;
+    const greetingMessage = t(greetingKey, { defaultValue: t('lounge.alphaGreeting') });
+
+    useEffect(() => {
+        const from = searchParams.get('from');
+        if (!from) return;
+        if (from === 'entrance' && showGreeting) return;
+
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete('from');
+        const query = params.toString();
+        router.replace(query ? `/lounge?${query}` : '/lounge');
+    }, [router, searchParams, showGreeting]);
+
     return (
         <div 
             className="lounge-container"
             style={{ backgroundImage: `url('${bgImage}')` }}
         >
-            <BackgroundMusic src="/sounds/lounge.mp3" />
-            
-            <div className="game-menu">
-                <div className="menu-title">{t('lounge.title')}</div>
-                              
-                <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
-                    {t('lounge.about')}
-                </button>
-                <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
-                    {t('lounge.counter')}
-                </button>
-                <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
-                    {t('lounge.lab')}
-                </button>
-                <button className="menu-button ui-button ui-button-ghost" onClick={() => router.push('/library')}>
-                    {t('lounge.library')}
-                </button>
-                <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
-                    {t('lounge.gallery')}
-                </button>
-                <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
-                    {t('lounge.guestbook')}
-                </button>
+            {!showGreeting && (
+                <>
+                    <div className="game-menu">
+                        <div className="menu-title">{t('lounge.title')}</div>
+                                      
+                        <button className="menu-button ui-button ui-button-ghost" onClick={() => pushWithParams('/about')}>
+                            {t('lounge.about')}
+                        </button>
+                        <button className="menu-button ui-button ui-button-ghost" onClick={() => pushWithParams('/counter')}>
+                            {t('lounge.counter')}
+                        </button>
+                        <button className="menu-button ui-button ui-button-ghost" onClick={handleStairs}>
+                            {t('lounge.stairs')}
+                        </button>
+                        <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
+                            {t('lounge.gallery')}
+                        </button>
+                        <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
+                            {t('lounge.guestbook')}
+                        </button>
 
-                <button
-                    className="menu-button ui-button ui-button-danger exit"
-                    onClick={() => router.push('/')}
-                >
-                    {t('lounge.back')}
-                </button>
-            </div>
+                        <button
+                            className="menu-button ui-button ui-button-danger exit"
+                            onClick={() => router.push('/')}
+                        >
+                            {t('lounge.back')}
+                        </button>
+                    </div>
 
-            <div className="lounge-footer">
-                {t('lounge.currentMode')}: {t(`season.${season}`)} / {t(`time.${time}`)} / {t(`weather.${weather}`)} {isChristmas ? `(${t('intro.christmasMode')})` : ''}
-            </div>
+                    <div className="lounge-footer">
+                        {t('lounge.currentMode')}: {t(`season.${season}`)} / {t(`time.${time}`)} / {t(`weather.${weather}`)} {isChristmas ? `(${t('intro.christmasMode')})` : ''}
+                    </div>
+                </>
+            )}
 
-            {showConstruction && <UnderConstruction onClose={() => setShowConstruction(false)} />}
+            {showGreeting && (
+                <UnderConstruction
+                    onClose={handleCloseGreeting}
+                    message={greetingMessage}
+                    backgroundSrc={bgImage || '/undestruct.jpg'}
+                    illustrationSrc={bgImage || '/undestruct.jpg'}
+                    characterSrc="/characters/alpha/alpha-nice-talk.webp"
+                    closeLabel={t('lounge.showMenu')}
+                />
+            )}
+
+            {showConstruction && (
+                <UnderConstruction
+                    onClose={() => setShowConstruction(false)}
+                    backgroundSrc={bgImage || '/undestruct.jpg'}
+                    illustrationSrc="/undestruct.jpg"
+                />
+            )}
         </div>
     );
 };

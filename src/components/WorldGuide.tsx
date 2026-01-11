@@ -37,8 +37,8 @@ const WorldGuide = () => {
 
     return (
         <div className="world-guide-container">
-            <Link className="back-btn ui-button ui-button-ghost" href="/library">
-                <ArrowLeft size={20} /> Back to Library
+            <Link className="back-btn ui-button ui-button-ghost" href="/atelier">
+                <ArrowLeft size={20} /> Back to Atelier
             </Link>
 
             <div className="guide-content ui-card">

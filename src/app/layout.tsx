@@ -1,10 +1,49 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import '../app/globals.css';
 import Providers from './providers';
 
 export const metadata: Metadata = {
-    title: 'Cafe Lua',
-    description: 'Next.js + shadcn migration scaffold for Cafe Lua'
+    metadataBase: new URL('https://cafelua.com'),
+    title: {
+        default: '카페루아 (Café Luα)',
+        template: '%s | 카페루아'
+    },
+    description: '현실과 이세계의 경계에 있는 작은 가상 카페. 루크와 알파가 함께 운영합니다.',
+    alternates: {
+        canonical: '/'
+    },
+    openGraph: {
+        type: 'website',
+        url: '/',
+        title: '카페루아 (Café Luα)',
+        description: '현실과 이세계의 경계에 있는 작은 가상 카페. 루크와 알파가 함께 운영합니다.',
+        siteName: '카페루아',
+        locale: 'ko_KR',
+        images: [
+            {
+                url: '/og-cover.png',
+                width: 1200,
+                height: 630,
+                alt: '카페루아 (Café Luα)'
+            }
+        ]
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: '카페루아 (Café Luα)',
+        description: '현실과 이세계의 경계에 있는 작은 가상 카페. 루크와 알파가 함께 운영합니다.',
+        images: ['/og-cover.png']
+    },
+    robots: {
+        index: true,
+        follow: true
+    }
+};
+
+export const viewport: Viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    themeColor: '#080a0e'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

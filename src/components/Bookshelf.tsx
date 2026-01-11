@@ -16,7 +16,7 @@ const Bookshelf = () => {
 
     const handleOpen = (novelId: string) => {
         // TODO: route to reader when available
-        const target = `/library?id=${encodeURIComponent(novelId)}`;
+        const target = `/atelier?id=${encodeURIComponent(novelId)}`;
         window.location.href = target;
     };
 

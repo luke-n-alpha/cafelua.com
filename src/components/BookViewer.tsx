@@ -50,7 +50,7 @@ const BookViewer = () => {
     return (
         <div className="book-viewer-overlay">
             <div className="book-viewer-container">
-                <button className="close-btn ui-button ui-button-ghost" onClick={() => router.push('/library')}>
+                <button className="close-btn ui-button ui-button-ghost" onClick={() => router.push('/atelier')}>
                     <ArrowLeft size={24} /> Back to Shelf
                 </button>
 

@@ -8,7 +8,10 @@ interface UnderConstructionProps {
     onClose: () => void;
     message?: string;
     backgroundSrc?: string;
+    illustrationSrc?: string;
     characterSrc?: string;
+    spriteSrc?: string;
+    spriteAlt?: string;
     speakerName?: string;
     closeLabel?: string;
 }
@@ -17,7 +20,10 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
     onClose,
     message,
     backgroundSrc = '/undestruct.jpg',
-    characterSrc = '/alpha-trouble.webp',
+    illustrationSrc,
+    characterSrc = '/characters/alpha/alpha-trouble.webp',
+    spriteSrc,
+    spriteAlt = 'Character Sprite',
     speakerName = 'Alpha',
     closeLabel
 }) => {
@@ -29,10 +35,41 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
         <div className="construction-overlay">
             {/* Background Image covering full overlay */}
             <img 
-                src={backgroundSrc} 
-                alt="Under Construction" 
+                src={backgroundSrc}
+                alt=""
+                aria-hidden="true"
                 className="construction-bg"
+                onError={(event) => {
+                    const img = event.currentTarget;
+                    if (img.src.endsWith('/undestruct.jpg')) return;
+                    img.src = '/undestruct.jpg';
+                }}
             />
+
+            {illustrationSrc && (
+                <div className="construction-illustration-frame" aria-hidden="true">
+                    <img
+                        src={illustrationSrc}
+                        alt=""
+                        className="construction-illustration"
+                        onError={(event) => {
+                            const img = event.currentTarget;
+                            if (img.src.endsWith('/undestruct.jpg')) return;
+                            img.src = '/undestruct.jpg';
+                        }}
+                    />
+                </div>
+            )}
+
+            {spriteSrc && (
+                <div className="vn-sprite-wrap" aria-hidden="true">
+                    <img
+                        src={spriteSrc}
+                        alt={spriteAlt}
+                        className="vn-sprite"
+                    />
+                </div>
+            )}
 
             {/* Character & Dialogue Container */}
             <div className="vn-container">

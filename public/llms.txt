@@ -1,0 +1,17 @@
+# Café Luα (cafelua.com)
+
+## Policy
+- Crawling: allowed
+
+## Sitemap
+- https://cafelua.com/sitemap.xml
+
+## Key URLs
+- https://cafelua.com/
+- https://cafelua.com/lounge/
+- https://cafelua.com/atelier/
+- https://cafelua.com/about/
+- https://cafelua.com/counter/
+
+## Contact
+- https://github.com/luke-n-alpha/cafelua.com

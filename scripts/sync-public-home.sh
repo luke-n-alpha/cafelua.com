@@ -42,6 +42,8 @@ rsync -a --delete \
     --exclude "coverage" \
     "$PRIVATE_SRC/" "$PUBLIC_DIR/"
 
+rm -rf "$PUBLIC_DIR/.next"
+
 rm -f "$PUBLIC_DIR/.env"
 find "$PUBLIC_DIR" -maxdepth 1 -type f -name ".env.*" ! -name ".env.example" -delete
 

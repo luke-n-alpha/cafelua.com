@@ -10,7 +10,7 @@ This project is moving to a Next.js (App Router) + shadcn/ui stack, featuring th
 
 *   **Immersive Intro**: Invites you into the world of Cafe Lua with backgrounds that change according to the time of day and weather.
 *   **Lounge Space**: The main area where you can enjoy the atmosphere of Cafe Lua with comfortable music.
-*   **Library Space**: A nostalgic “Win98 PC” experience where you can explore Luke's 1997/1998 homepage memories (static, read-only).
+*   **2F Atelier Space**: A nostalgic “Win98 PC” experience where you can explore Luke's 1997/1998 homepage memories (static, read-only).
 *   **Responsive Design**: Provides an optimized experience across various devices.
 *   **Multilingual Support**: Offers multilingual support, including Korean and English, using i18next.
 
@@ -46,6 +46,13 @@ public-home/
 ```
 
 ## 📝 Changelog
+
+### v0.1.3 (2026-01-11)
+- **Spaces & Pages**:
+    - Lounge and 2F Atelier space updates.
+    - Added Luke's 1997/1998 homepages on the old PC in the 2F Atelier.
+    - Added Cafe introduction page.
+    - Added a planned work list at the Counter.
 
 ### v0.1.2 (2024-12-07)
 - **Architecture**:

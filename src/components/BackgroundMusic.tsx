@@ -8,9 +8,16 @@ import './BackgroundMusic.css';
 interface BackgroundMusicProps {
     src: string;
     autoPlay?: boolean;
+    hideUi?: boolean;
+    suspended?: boolean;
 }
 
-const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ src, autoPlay = true }) => {
+const BackgroundMusic: React.FC<BackgroundMusicProps> = ({
+    src,
+    autoPlay = true,
+    hideUi = false,
+    suspended = false
+}) => {
     const { t } = useTranslation();
     const [isMuted, setIsMuted] = useState<boolean>(true); // Default to muted for safety
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -31,6 +38,12 @@ const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ src, autoPlay = true 
     useEffect(() => {
         if (audioRef.current) {
             audioRef.current.volume = 0.5; // Default volume
+
+            if (suspended) {
+                audioRef.current.pause();
+                setIsPlaying(false);
+                return;
+            }
             
             if (!isMuted && autoPlay) {
                 const playPromise = audioRef.current.play();
@@ -47,12 +60,12 @@ const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ src, autoPlay = true 
                 setIsPlaying(false);
             }
         }
-    }, [src, isMuted, autoPlay]);
+    }, [src, isMuted, autoPlay, suspended]);
 
     // Retry play on any user interaction if autoplay failed
     useEffect(() => {
         const handleUserInteraction = () => {
-            if (audioRef.current && !isMuted && !isPlaying && autoPlay) {
+            if (audioRef.current && !suspended && !isMuted && !isPlaying && autoPlay) {
                 audioRef.current.play()
                     .then(() => setIsPlaying(true))
                     .catch(e => console.log("Still blocked:", e));
@@ -66,7 +79,7 @@ const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ src, autoPlay = true 
             window.removeEventListener('click', handleUserInteraction);
             window.removeEventListener('keydown', handleUserInteraction);
         };
-    }, [isMuted, isPlaying, autoPlay]);
+    }, [suspended, isMuted, isPlaying, autoPlay]);
 
     const toggleMute = (e: React.MouseEvent) => {
         e.stopPropagation(); // Prevent bubbling to parent click handlers
@@ -79,6 +92,7 @@ const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ src, autoPlay = true 
                 audioRef.current.pause();
                 setIsPlaying(false);
             } else {
+                if (suspended) return;
                 audioRef.current.play().catch(e => console.log("Play failed:", e));
                 setIsPlaying(true);
             }
@@ -86,27 +100,31 @@ const BackgroundMusic: React.FC<BackgroundMusicProps> = ({ src, autoPlay = true 
     };
 
     return (
-        <div className="bgm-player ui-glass" onClick={(e) => e.stopPropagation()}>
-            <div className="bgm-icon">
-                <Music size={16} className={isPlaying ? "spin-slow" : ""} />
-            </div>
-            <div className="bgm-controls">
-                <button 
-                    className={`bgm-btn ui-button ui-button-ghost ${isMuted ? 'muted' : ''}`} 
-                    onClick={toggleMute}
-                    title={isMuted ? t('common.unmute') : t('common.mute')}
-                >
-                    {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-                    <span className="bgm-label">{isMuted ? t('common.off') : t('common.on')}</span>
-                </button>
-            </div>
+        <>
             <audio 
                 ref={audioRef} 
                 src={src} 
                 loop 
                 preload="auto"
             />
-        </div>
+            {!hideUi && (
+                <div className="bgm-player ui-glass" onClick={(e) => e.stopPropagation()}>
+                    <div className="bgm-icon">
+                        <Music size={16} className={isPlaying ? "spin-slow" : ""} />
+                    </div>
+                    <div className="bgm-controls">
+                        <button 
+                            className={`bgm-btn ui-button ui-button-ghost ${isMuted ? 'muted' : ''}`} 
+                            onClick={toggleMute}
+                            title={isMuted ? t('common.unmute') : t('common.mute')}
+                        >
+                            {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                            <span className="bgm-label">{isMuted ? t('common.off') : t('common.on')}</span>
+                        </button>
+                    </div>
+                </div>
+            )}
+        </>
     );
 };
 

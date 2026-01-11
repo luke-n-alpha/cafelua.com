@@ -1,17 +1,32 @@
 'use client';
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import BackgroundMusic from './BackgroundMusic';
 import UnderConstruction from './UnderConstruction';
+import { LegacyMidiSynthPlayer } from '../services/LegacyMidiSynth';
 import './LibraryPage.css';
 
 type LibraryMode = 'menu' | 'booting' | 'desktop' | 'shutdown';
 type IeTarget = '1997' | '1998';
 
-const IE_VIEWPORT_WIDTH = 800;
-const IE_VIEWPORT_HEIGHT = 600;
+// Types inherited from IntroPage (could be shared, but redefined here for simplicity)
+type Season = 'spring' | 'summer' | 'autumn' | 'winter';
+type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
+type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
+type IeHistoryContext = 'iframe' | 'frame2';
+
+type IeHistoryEntry = {
+    context: IeHistoryContext;
+    path: string;
+};
+
+const DEFAULT_IE_VIEWPORT = { width: 1024, height: 768 };
+const IE_VIEWPORTS: Record<IeTarget, { width: number; height: number }> = {
+    '1997': DEFAULT_IE_VIEWPORT,
+    '1998': { width: 800, height: 600 }
+};
 
 const formatClock = (date: Date) => {
     const hours = String(date.getHours()).padStart(2, '0');
@@ -21,7 +36,7 @@ const formatClock = (date: Date) => {
 
 const getIeUrl = (target: IeTarget) => {
     if (target === '1997') return '/1997-homepage/index.html';
-    return '/1998-homepage/main.html';
+    return '/1998-homepage/index.html';
 };
 
 const getIeTitle = (target: IeTarget) => {
@@ -29,7 +44,23 @@ const getIeTitle = (target: IeTarget) => {
     return 'Internet Explorer - 1998';
 };
 
-const ScaledLegacyFrame = ({ src }: { src: string }) => {
+const ScaledLegacyFrame = ({
+    src,
+    iframeRef,
+    onLoad,
+    viewportWidth,
+    viewportHeight,
+    maxScale = 1,
+    fitMode = 'contain'
+}: {
+    src: string;
+    iframeRef: React.MutableRefObject<HTMLIFrameElement | null>;
+    onLoad: () => void;
+    viewportWidth: number;
+    viewportHeight: number;
+    maxScale?: number;
+    fitMode?: 'contain' | 'heightOnNarrow';
+}) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [scale, setScale] = useState(1);
 
@@ -39,11 +70,14 @@ const ScaledLegacyFrame = ({ src }: { src: string }) => {
 
         const updateScale = () => {
             const rect = el.getBoundingClientRect();
-            const nextScale = Math.min(
-                1,
-                rect.width / IE_VIEWPORT_WIDTH,
-                rect.height / IE_VIEWPORT_HEIGHT
+            const fitScale = Math.min(
+                maxScale,
+                rect.width / viewportWidth,
+                rect.height / viewportHeight
             );
+            const nextScale = fitMode === 'heightOnNarrow' && rect.width < 520
+                ? Math.min(maxScale, rect.height / viewportHeight)
+                : fitScale;
             setScale(Number.isFinite(nextScale) && nextScale > 0 ? nextScale : 1);
         };
 
@@ -52,20 +86,31 @@ const ScaledLegacyFrame = ({ src }: { src: string }) => {
         const ro = new ResizeObserver(updateScale);
         ro.observe(el);
         return () => ro.disconnect();
-    }, []);
+    }, [viewportWidth, viewportHeight, maxScale, fitMode]);
 
-    const scaledWidth = Math.round(IE_VIEWPORT_WIDTH * scale);
-    const scaledHeight = Math.round(IE_VIEWPORT_HEIGHT * scale);
+    const scaledWidth = Math.round(viewportWidth * scale);
+    const scaledHeight = Math.round(viewportHeight * scale);
 
     return (
         <div className="legacy-viewport" ref={containerRef}>
             <div className="legacy-viewport-frame" style={{ width: scaledWidth, height: scaledHeight }}>
-                <div className="legacy-viewport-inner" style={{ transform: `scale(${scale})` }}>
+                <div
+                    className="legacy-viewport-inner"
+                    style={{
+                        width: viewportWidth,
+                        height: viewportHeight,
+                        transform: `scale(${scale})`
+                    }}
+                >
                     <iframe
                         className="legacy-iframe"
                         src={src}
                         title="Legacy Homepage"
-                        sandbox="allow-scripts"
+                        style={{ width: viewportWidth, height: viewportHeight }}
+                        ref={(node) => {
+                            iframeRef.current = node;
+                        }}
+                        onLoad={onLoad}
                     />
                 </div>
             </div>
@@ -76,25 +121,390 @@ const ScaledLegacyFrame = ({ src }: { src: string }) => {
 const LibraryPage: React.FC = () => {
     const { t } = useTranslation();
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [showIntro, setShowIntro] = useState(true);
     const [mode, setMode] = useState<LibraryMode>('menu');
     const [ieTarget, setIeTarget] = useState<IeTarget | null>(null);
+    const [ieAddress, setIeAddress] = useState<string>('');
+    const [canIeGoBack, setCanIeGoBack] = useState(false);
+    const [isIeInaccessible, setIsIeInaccessible] = useState(false);
+    const [isLegacyMidiActive, setIsLegacyMidiActive] = useState(false);
     const [dialogue, setDialogue] = useState<string | null>(null);
     const [clock, setClock] = useState(() => formatClock(new Date()));
     const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
+    const legacyIframeRef = useRef<HTMLIFrameElement | null>(null);
+    const ieHistoryRef = useRef<IeHistoryEntry[]>([]);
+    const frame2ListenerRef = useRef<{ frame: HTMLFrameElement; handler: () => void } | null>(null);
+    const startupAudioRef = useRef<HTMLAudioElement | null>(null);
+    const shutdownAudioRef = useRef<HTMLAudioElement | null>(null);
+    const legacyMidiPlayerRef = useRef<LegacyMidiSynthPlayer | null>(null);
+    const season = (searchParams.get('season') as Season) || 'spring';
+    const time = (searchParams.get('time') as TimeOfDay) || 'day';
+    const weather = (searchParams.get('weather') as Weather) || 'sunny';
+    const isChristmas = searchParams.get('christmas') === 'true';
 
     useEffect(() => {
         const interval = setInterval(() => setClock(formatClock(new Date())), 1000 * 10);
         return () => clearInterval(interval);
     }, []);
 
-    const backgroundImage = useMemo(() => `/library-background-img/library-sunny.webp`, []);
+    const backgroundName = useMemo(() => {
+        let imageName = '2f-sunny'; // Default fallback
+
+        // Christmas priority
+        if (isChristmas) {
+            imageName = '2f-christmas';
+        } else if (season === 'winter' && weather === 'snow') {
+            imageName = '2f-snow';
+        } else {
+            // Weather/Time priority
+            if (weather === 'rain' || weather === 'storm') {
+                imageName = '2f-rain';
+            } else if (weather === 'snow') {
+                imageName = '2f-snow';
+            } else {
+                // Clear/Sunny conditions
+                if (time === 'sunset') {
+                    imageName = '2f-sunset';
+                } else if (time === 'night' || time === 'closed') {
+                    imageName = '2f-night';
+                } else {
+                    imageName = '2f-sunny';
+                }
+            }
+        }
+
+        return imageName;
+    }, [season, time, weather, isChristmas]);
+
+    const backgroundImage = useMemo(() => {
+        return `/atelier-background-img/${backgroundName}.webp`;
+    }, [backgroundName]);
+
+    const greetingVariant = backgroundName.replace(/^2f-/, '');
+    const entrySource = searchParams.get('from');
+    const greetingMessage = entrySource === 'lounge'
+        ? t('atelier.stairsIntro', {
+            defaultValue: '손님, 2층으로 올라오셨군요.\n여기는 2층 프라이빗 아틀리에예요. 창가의 책상과 작업 도구들이 준비되어 있어요.\n어디부터 살펴볼까요?'
+        })
+        : t(`atelier.greeting.${greetingVariant}`, { defaultValue: t('atelier.alphaIntro') });
+
+    const legacyMidiSrc = useMemo(() => {
+        if (!ieTarget) return null;
+        if (ieTarget === '1997') return '/1997-homepage/music/back1.mid';
+        return '/1998-homepage/music/Totoro%27.mid';
+    }, [ieTarget]);
+
+    const ieViewport = useMemo(() => {
+        if (!ieTarget) return DEFAULT_IE_VIEWPORT;
+        return IE_VIEWPORTS[ieTarget] ?? DEFAULT_IE_VIEWPORT;
+    }, [ieTarget]);
+
+    const ieMaxScale = useMemo(() => {
+        if (ieTarget === '1998') return 1.35;
+        return 1;
+    }, [ieTarget]);
+
+    const ieFitMode = useMemo(() => {
+        if (ieTarget === '1998') return 'heightOnNarrow';
+        return 'contain';
+    }, [ieTarget]);
+
+    // Preload all atelier images
+    useEffect(() => {
+        const images = [
+            '2f-christmas.webp',
+            '2f-night.webp',
+            '2f-rain.webp',
+            '2f-snow.webp',
+            '2f-sunny.webp',
+            '2f-sunset.webp'
+        ];
+        images.forEach(img => {
+            const i = new Image();
+            i.src = `/atelier-background-img/${img}`;
+        });
+    }, []);
+
+    useEffect(() => {
+        legacyMidiPlayerRef.current = new LegacyMidiSynthPlayer();
+        return () => {
+            legacyMidiPlayerRef.current?.stop();
+        };
+    }, []);
+
+    useEffect(() => {
+        const player = legacyMidiPlayerRef.current;
+        if (!player) return;
+
+        player.stop();
+        setIsLegacyMidiActive(false);
+
+        if (!legacyMidiSrc) return;
+
+        let canceled = false;
+        let retryHandler: ((e?: Event) => void) | null = null;
+
+        const attemptStart = async () => {
+            try {
+                const isMuted = localStorage.getItem('cafelua_bgm_muted') === 'true';
+                if (isMuted) return false;
+            } catch {
+                // If localStorage is blocked/unavailable, allow playback attempts.
+            }
+
+            const started = await player.start(legacyMidiSrc, {
+                onEnded: () => {
+                    if (canceled) return;
+                    setIsLegacyMidiActive(false);
+                }
+            });
+            if (canceled) {
+                player.stop();
+                return false;
+            }
+
+            setIsLegacyMidiActive(started);
+            return started;
+        };
+
+        void attemptStart().then((started) => {
+            if (canceled || started) return;
+
+            const handler = async () => {
+                const startedNow = await attemptStart();
+                if (!startedNow) return;
+                if (!retryHandler) return;
+                window.removeEventListener('click', retryHandler);
+                window.removeEventListener('keydown', retryHandler);
+                retryHandler = null;
+            };
+
+            retryHandler = handler;
+            window.addEventListener('click', retryHandler);
+            window.addEventListener('keydown', retryHandler);
+        });
+
+        return () => {
+            canceled = true;
+            player.stop();
+            if (retryHandler) {
+                window.removeEventListener('click', retryHandler);
+                window.removeEventListener('keydown', retryHandler);
+            }
+        };
+    }, [legacyMidiSrc]);
+
+    const cleanupFrame2Listener = () => {
+        const current = frame2ListenerRef.current;
+        if (!current) return;
+
+        current.frame.removeEventListener('load', current.handler);
+        frame2ListenerRef.current = null;
+    };
+
+    useEffect(() => {
+        cleanupFrame2Listener();
+        if (!ieTarget) {
+            ieHistoryRef.current = [];
+            setIeAddress('');
+            setCanIeGoBack(false);
+            setIsIeInaccessible(false);
+            return;
+        }
+
+        const startPath = getIeUrl(ieTarget);
+        ieHistoryRef.current = [{ context: 'iframe', path: startPath }];
+        setIeAddress(startPath);
+        setCanIeGoBack(false);
+        setIsIeInaccessible(false);
+    }, [ieTarget]);
+
+    useEffect(() => {
+        return () => {
+            const current = frame2ListenerRef.current;
+            if (!current) return;
+            current.frame.removeEventListener('load', current.handler);
+            frame2ListenerRef.current = null;
+        };
+    }, []);
+
+    const registerIeNavigation = (context: IeHistoryContext, path: string) => {
+        const stack = ieHistoryRef.current;
+        const last = stack[stack.length - 1];
+
+        setIsIeInaccessible(false);
+        if (last && last.context === context && last.path === path) {
+            setIeAddress(path);
+            setCanIeGoBack(stack.length > 1);
+            return;
+        }
+
+        stack.push({ context, path });
+
+        const MAX_STACK = 50;
+        if (stack.length > MAX_STACK) {
+            stack.splice(0, stack.length - MAX_STACK);
+        }
+
+        setIeAddress(path);
+        setCanIeGoBack(stack.length > 1);
+    };
+
+    const getFrame2Window = () => {
+        const iframe = legacyIframeRef.current;
+        if (!iframe) return null;
+
+        const win = iframe.contentWindow;
+        if (!win) return null;
+
+        try {
+            const frameEl = win.document.querySelector('frame[name="frame2"]') as HTMLFrameElement | null;
+            return frameEl?.contentWindow ?? null;
+        } catch {
+            return null;
+        }
+    };
+
+    const handleIeLoad = () => {
+        const iframe = legacyIframeRef.current;
+        if (!iframe) return;
+
+        try {
+            const location = iframe.contentWindow?.location;
+            if (location) {
+                registerIeNavigation('iframe', `${location.pathname}${location.search}${location.hash}`);
+            }
+        } catch {
+            cleanupFrame2Listener();
+            setIsIeInaccessible(true);
+            const stack = ieHistoryRef.current;
+            setCanIeGoBack(stack.length > 0);
+        }
+
+        const win = iframe.contentWindow;
+        if (!win) return;
+
+        try {
+            const frameEl = win.document.querySelector('frame[name="frame2"]') as HTMLFrameElement | null;
+            if (!frameEl) {
+                cleanupFrame2Listener();
+                return;
+            }
+
+            const existing = frame2ListenerRef.current;
+            if (existing && existing.frame === frameEl) return;
+
+            if (existing) {
+                existing.frame.removeEventListener('load', existing.handler);
+                frame2ListenerRef.current = null;
+            }
+
+            const handler = () => {
+                const frameWin = getFrame2Window();
+                if (!frameWin) return;
+
+                try {
+                    const loc = frameWin.location;
+                    registerIeNavigation('frame2', `${loc.pathname}${loc.search}${loc.hash}`);
+                } catch {
+                    setIsIeInaccessible(true);
+                    const stack = ieHistoryRef.current;
+                    setCanIeGoBack(stack.length > 0);
+                }
+            };
+
+            frameEl.addEventListener('load', handler);
+            frame2ListenerRef.current = { frame: frameEl, handler };
+        } catch {
+            // ignore
+        }
+    };
+
+    const navigateIeTo = (entry: IeHistoryEntry) => {
+        const iframe = legacyIframeRef.current;
+        if (!iframe) return;
+
+        if (entry.context === 'frame2') {
+            const frameWin = getFrame2Window();
+            if (frameWin) {
+                try {
+                    frameWin.location.replace(entry.path);
+                    return;
+                } catch {
+                    // ignore
+                }
+            }
+        }
+
+        try {
+            iframe.contentWindow?.location.replace(entry.path);
+            return;
+        } catch {
+            // ignore
+        }
+
+        iframe.src = entry.path;
+    };
+
+    const handleIeBack = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const stack = ieHistoryRef.current;
+        if (stack.length === 0) return;
+
+        if (isIeInaccessible) {
+            const lastKnown = stack[stack.length - 1];
+            if (!lastKnown) return;
+            setIeAddress(lastKnown.path);
+            setIsIeInaccessible(false);
+            setCanIeGoBack(stack.length > 1);
+            navigateIeTo(lastKnown);
+            return;
+        }
+
+        if (stack.length <= 1) return;
+
+        stack.pop();
+        const prev = stack[stack.length - 1];
+        if (!prev) return;
+
+        setIeAddress(prev.path);
+        setCanIeGoBack(stack.length > 1);
+        navigateIeTo(prev);
+    };
+
+    const playSfx = (audio: HTMLAudioElement | null) => {
+        if (!audio) return;
+
+        try {
+            const isMuted = localStorage.getItem('cafelua_bgm_muted') === 'true';
+            if (isMuted) return;
+        } catch {
+            // If localStorage is blocked/unavailable, allow SFX attempts.
+        }
+
+        try {
+            audio.currentTime = 0;
+            audio.volume = 0.7;
+            const playPromise = audio.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+                playPromise.catch(() => {
+                    // Ignore playback errors (unsupported formats, autoplay policies, etc).
+                });
+            }
+        } catch {
+            // Ignore playback errors (browser autoplay policies, etc).
+        }
+    };
 
     const handlePowerOn = () => {
         if (mode !== 'menu') return;
         setIeTarget(null);
         setDialogue(null);
         setIsStartMenuOpen(false);
+        playSfx(startupAudioRef.current);
         setMode('booting');
         setTimeout(() => setMode('desktop'), 900);
     };
@@ -104,6 +514,7 @@ const LibraryPage: React.FC = () => {
         setIeTarget(null);
         setDialogue(null);
         setIsStartMenuOpen(false);
+        playSfx(shutdownAudioRef.current);
         setMode('shutdown');
         setTimeout(() => setMode('menu'), 900);
     };
@@ -112,26 +523,67 @@ const LibraryPage: React.FC = () => {
         setDialogue(t('library.missing1999'));
     };
 
+    const handleMenuNotReady = (message: string) => {
+        setDialogue(message);
+    };
+
+    const handleBackToLounge = () => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('from', 'atelier');
+        router.push(`/lounge?${params.toString()}`);
+    };
+
     return (
         <div
             className="library-container"
             style={{ backgroundImage: `url('${backgroundImage}')` }}
         >
-            <BackgroundMusic src="/sounds/library.mp3" />
+            <BackgroundMusic
+                src="/sounds/atelier.mp3"
+                hideUi={mode !== 'menu'}
+                suspended={isLegacyMidiActive}
+            />
+            <audio ref={startupAudioRef} src="/sounds/windows-startup.mp3" preload="auto" />
+            <audio ref={shutdownAudioRef} src="/sounds/windows-shutdown.mp3" preload="auto" />
 
             {mode === 'menu' && (
                 <div className="game-menu">
-                    <div className="menu-title">{t('library.title')}</div>
+                    <div className="menu-title">{t('atelier.title')}</div>
+
+                    <button
+                        className="menu-button ui-button ui-button-ghost"
+                        onClick={() => handleMenuNotReady(t('atelier.masterDeskMessage'))}
+                    >
+                        {t('atelier.masterDesk')}
+                    </button>
+                    <button
+                        className="menu-button ui-button ui-button-ghost"
+                        onClick={() => handleMenuNotReady(t('atelier.alphaStationMessage'))}
+                    >
+                        {t('atelier.alphaStation')}
+                    </button>
+                    <button
+                        className="menu-button ui-button ui-button-ghost"
+                        onClick={() => handleMenuNotReady(t('atelier.libraryMessage'))}
+                    >
+                        {t('atelier.library')}
+                    </button>
+                    <button
+                        className="menu-button ui-button ui-button-ghost"
+                        onClick={() => handleMenuNotReady(t('atelier.terraceMessage'))}
+                    >
+                        {t('atelier.terrace')}
+                    </button>
 
                     <button className="menu-button ui-button ui-button-ghost" onClick={handlePowerOn}>
-                        {t('library.powerOnPc')}
+                        {t('atelier.oldPc')}
                     </button>
 
                     <button
                         className="menu-button ui-button ui-button-danger exit"
-                        onClick={() => router.push('/lounge')}
+                        onClick={handleBackToLounge}
                     >
-                        {t('library.backToLounge')}
+                        {t('atelier.backToLounge')}
                     </button>
                 </div>
             )}
@@ -232,15 +684,31 @@ const LibraryPage: React.FC = () => {
                                     </div>
                                 </div>
                                 <div className="ie-toolbar">
+                                    <button
+                                        type="button"
+                                        className="ie-nav-btn"
+                                        onClick={handleIeBack}
+                                        disabled={!canIeGoBack}
+                                    >
+                                        ◀ {t('library.ieBack')}
+                                    </button>
                                     <div className="ie-address-label">Address</div>
                                     <input
                                         className="ie-address"
                                         readOnly
-                                        value={getIeUrl(ieTarget)}
+                                        value={ieAddress || getIeUrl(ieTarget)}
                                     />
                                 </div>
                                 <div className="ie-content">
-                                    <ScaledLegacyFrame src={getIeUrl(ieTarget)} />
+                                    <ScaledLegacyFrame
+                                        src={getIeUrl(ieTarget)}
+                                        iframeRef={legacyIframeRef}
+                                        onLoad={handleIeLoad}
+                                        viewportWidth={ieViewport.width}
+                                        viewportHeight={ieViewport.height}
+                                        maxScale={ieMaxScale}
+                                        fitMode={ieFitMode}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -251,9 +719,11 @@ const LibraryPage: React.FC = () => {
             {showIntro && (
                 <UnderConstruction
                     onClose={() => setShowIntro(false)}
-                    message={t('library.alphaIntro')}
-                    backgroundSrc="/library-background-img/library-sunny.webp"
-                    closeLabel={t('library.close')}
+                    message={greetingMessage}
+                    backgroundSrc={backgroundImage}
+                    illustrationSrc={backgroundImage}
+                    characterSrc="/characters/alpha/alpha-nice-talk.webp"
+                    closeLabel={t('atelier.explore')}
                 />
             )}
 
@@ -261,7 +731,7 @@ const LibraryPage: React.FC = () => {
                 <UnderConstruction
                     onClose={() => setDialogue(null)}
                     message={dialogue}
-                    backgroundSrc="/library-background-img/library-sunny.webp"
+                    backgroundSrc={backgroundImage}
                     closeLabel={t('library.close')}
                 />
             )}
