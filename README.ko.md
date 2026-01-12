@@ -45,8 +45,6 @@ public-home/
 └── ...
 ```
 
-- 참고: `src/app/(lounge)/`는 `/lounge`, `/counter`, `/about`을 같은 레이아웃으로 묶어서 페이지 전환 시 라운지 BGM이 끊기지 않게 유지합니다.
-
 ## 📝 업데이트 내역 (Changelog)
 
 ### v0.1.3 (2026-01-11)

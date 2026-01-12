@@ -205,10 +205,7 @@ const LibraryPage: React.FC = () => {
         return 1;
     }, [ieTarget]);
 
-    const ieFitMode = useMemo(() => {
-        if (ieTarget === '1998') return 'heightOnNarrow';
-        return 'contain';
-    }, [ieTarget]);
+    const ieFitMode: 'contain' | 'heightOnNarrow' = 'contain';
 
     // Preload all atelier images
     useEffect(() => {

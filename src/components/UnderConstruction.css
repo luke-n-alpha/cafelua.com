@@ -201,7 +201,9 @@
 
     /* Adjust character and text layout */
     .vn-content-row {
-        gap: 15px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
     }
 
     /* Reduce Alpha face size */
