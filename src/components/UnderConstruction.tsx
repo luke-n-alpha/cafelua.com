@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import './UnderConstruction.css';
 
@@ -27,12 +27,43 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
     speakerName = 'Alpha',
     closeLabel
 }) => {
+    const overlayRef = useRef<HTMLDivElement>(null);
     const { t } = useTranslation();
     const resolvedMessage = message ?? t('lounge.underConstruction');
     const resolvedCloseLabel = closeLabel ?? t('lounge.backToLounge');
 
+    useEffect(() => {
+        const overlay = overlayRef.current;
+        if (!overlay) return;
+
+        const updateViewportHeight = () => {
+            const visualHeight = window.visualViewport?.height ?? window.innerHeight;
+            overlay.style.setProperty('--uc-vh', `${visualHeight * 0.01}px`);
+        };
+
+        updateViewportHeight();
+
+        window.addEventListener('resize', updateViewportHeight);
+        window.addEventListener('orientationchange', updateViewportHeight);
+
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', updateViewportHeight);
+            window.visualViewport.addEventListener('scroll', updateViewportHeight);
+        }
+
+        return () => {
+            window.removeEventListener('resize', updateViewportHeight);
+            window.removeEventListener('orientationchange', updateViewportHeight);
+
+            if (window.visualViewport) {
+                window.visualViewport.removeEventListener('resize', updateViewportHeight);
+                window.visualViewport.removeEventListener('scroll', updateViewportHeight);
+            }
+        };
+    }, []);
+
     return (
-        <div className="construction-overlay">
+        <div ref={overlayRef} className="construction-overlay">
             {/* Background Image covering full overlay */}
             <img 
                 src={backgroundSrc}

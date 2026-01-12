@@ -1,6 +1,9 @@
 .construction-overlay {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(var(--uc-vh, 1vh) * 100);
     display: flex;
     justify-content: center;
     align-items: flex-end; /* Align to bottom for VN style */
@@ -8,6 +11,8 @@
     z-index: 2000;
     overflow: hidden;
     animation: fadeIn 0.3s ease-out;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 .construction-overlay::after {
@@ -84,7 +89,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding-bottom: 40px;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
     z-index: 4;
     pointer-events: none; /* Let clicks pass through transparent areas */
 }
@@ -94,6 +99,7 @@
     background: rgba(12, 12, 16, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
+    font-size: 16px;
     padding: 25px 30px;
     margin: 0 20px;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
@@ -128,14 +134,14 @@
 }
 
 .vn-name {
-    font-size: 1.4rem;
+    font-size: 1.4em;
     font-weight: bold;
     color: #ffc83d;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
 }
 
 .vn-text {
-    font-size: 1.2rem;
+    font-size: 1.2em;
     color: #f5f2eb;    
     line-height: 1.6;
     margin: 0;
@@ -151,7 +157,7 @@
 }
 
 .vn-back-btn {
-    font-size: 1rem;
+    font-size: 1em;
     letter-spacing: 0.01em;
     animation: pulse 2s infinite;
     background: rgba(255, 255, 255, 0.04);
@@ -178,9 +184,16 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .construction-illustration-frame {
-        top: 42%;
+        top: calc(env(safe-area-inset-top, 0px) + 12px);
+        transform: translateX(-50%);
         width: 95vw;
+        height: min(52vh, 420px);
         border-radius: 12px;
+    }
+
+    .construction-illustration {
+        height: 100%;
+        object-position: top center;
     }
 
     .vn-sprite {
@@ -196,7 +209,7 @@
     /* Reduce text area size */
     .vn-dialogue-box {
         padding: 20px;
-        margin: 0 15px 30px 15px;
+        margin: 0 15px;
     }
 
     /* Adjust character and text layout */
@@ -213,18 +226,18 @@
     }
 
     .vn-name {
-        font-size: 1.1rem;
+        font-size: 1.1em;
         margin-bottom: 2px;
     }
 
     /* Reduce text size */
     .vn-text {
-        font-size: 0.95rem;
+        font-size: 0.95em;
         line-height: 1.4;
     }
 
     .vn-back-btn {
         padding: 6px 15px;
-        font-size: 0.9rem;
+        font-size: 0.9em;
     }
 }
