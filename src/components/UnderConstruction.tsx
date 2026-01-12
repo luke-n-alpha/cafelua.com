@@ -36,6 +36,14 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
         const overlay = overlayRef.current;
         if (!overlay) return;
 
+        const ua = navigator.userAgent ?? '';
+        const isFacebookWebView = /FBAN|FBAV|FB_IAB|FB4A|FBIOS/i.test(ua);
+        if (isFacebookWebView) {
+            overlay.dataset.ucWebview = 'facebook';
+        } else {
+            delete overlay.dataset.ucWebview;
+        }
+
         const updateViewportHeight = () => {
             const visualHeight = window.visualViewport?.height ?? window.innerHeight;
             overlay.style.setProperty('--uc-vh', `${visualHeight * 0.01}px`);

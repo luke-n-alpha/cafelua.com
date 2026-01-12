@@ -100,6 +100,8 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     padding: 25px 30px;
     margin: 0 20px;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
@@ -184,16 +186,10 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .construction-illustration-frame {
-        top: calc(env(safe-area-inset-top, 0px) + 12px);
+        top: calc(env(safe-area-inset-top, 0px) + (var(--uc-vh, 1vh) * 12.5));
         transform: translateX(-50%);
         width: 95vw;
-        height: min(52vh, 420px);
         border-radius: 12px;
-    }
-
-    .construction-illustration {
-        height: 100%;
-        object-position: top center;
     }
 
     .vn-sprite {
@@ -208,6 +204,9 @@
 
     /* Reduce text area size */
     .vn-dialogue-box {
+        max-height: calc((var(--uc-vh, 1vh) * 55) - env(safe-area-inset-bottom, 0px));
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
         padding: 20px;
         margin: 0 15px;
     }
@@ -239,5 +238,16 @@
     .vn-back-btn {
         padding: 6px 15px;
         font-size: 0.9em;
+    }
+}
+
+.construction-overlay[data-uc-webview='facebook'] .vn-dialogue-box {
+    font-size: 15px;
+}
+
+@media (max-width: 768px) {
+    .construction-overlay[data-uc-webview='facebook'] .vn-dialogue-box {
+        font-size: 13px;
+        max-height: calc((var(--uc-vh, 1vh) * 50) - env(safe-area-inset-bottom, 0px));
     }
 }
