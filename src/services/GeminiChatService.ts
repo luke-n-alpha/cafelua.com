@@ -1,7 +1,7 @@
 /**
  * GeminiChatService - 알파와의 커피챗을 위한 클라이언트 서비스
  *
- * 사용 모델: gemini-3-flash
+ * 사용 모델: gemini-3-flash-preview
  * API: /api/chat (서버 사이드)
  */
 
