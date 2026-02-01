@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
-import BackgroundMusic from '../../components/BackgroundMusic';
+import BackgroundMusic from '@/components/BackgroundMusic';
 
 const normalizePathname = (pathname: string) => {
     if (pathname.length > 1 && pathname.endsWith('/')) return pathname.slice(0, -1);

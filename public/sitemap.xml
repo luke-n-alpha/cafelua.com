@@ -1,39 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Korean -->
   <url>
-    <loc>https://cafelua.com/</loc>
+    <loc>https://cafelua.com/ko</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en"/>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <lastmod>2026-02-02</lastmod>
   </url>
   <url>
-    <loc>https://cafelua.com/lounge/</loc>
+    <loc>https://cafelua.com/ko/lounge</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/lounge"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/lounge"/>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <lastmod>2026-02-02</lastmod>
   </url>
   <url>
-    <loc>https://cafelua.com/counter/</loc>
+    <loc>https://cafelua.com/ko/counter</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/counter"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/counter"/>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2026-02-02</lastmod>
   </url>
   <url>
-    <loc>https://cafelua.com/tarot/</loc>
+    <loc>https://cafelua.com/ko/tarot</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/tarot"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/tarot"/>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2026-02-02</lastmod>
   </url>
   <url>
-    <loc>https://cafelua.com/atelier/</loc>
+    <loc>https://cafelua.com/ko/atelier</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/atelier"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/atelier"/>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2026-02-02</lastmod>
   </url>
   <url>
-    <loc>https://cafelua.com/about/</loc>
+    <loc>https://cafelua.com/ko/about</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/about"/>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- English -->
+  <url>
+    <loc>https://cafelua.com/en</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en"/>
     <lastmod>2026-02-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/lounge</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/lounge"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/lounge"/>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/counter</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/counter"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/counter"/>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/tarot</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/tarot"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/tarot"/>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/atelier</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/atelier"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/atelier"/>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/about"/>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

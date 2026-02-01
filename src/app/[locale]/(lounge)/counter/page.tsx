@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import CounterPage from '../../../components/CounterPage';
+import CounterPage from '@/components/CounterPage';
 
 export const metadata: Metadata = {
     title: '카운터',

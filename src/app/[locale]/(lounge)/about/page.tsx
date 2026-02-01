@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import AboutPage from '../../../components/AboutPage';
+import AboutPage from '@/components/AboutPage';
 
 export const metadata: Metadata = {
     title: '카페 소개',

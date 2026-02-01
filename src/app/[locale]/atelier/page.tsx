@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import LibraryPage from '../../components/LibraryPage';
+import LibraryPage from '@/components/LibraryPage';
 
 export const metadata: Metadata = {
     title: '2층 아틀리에',

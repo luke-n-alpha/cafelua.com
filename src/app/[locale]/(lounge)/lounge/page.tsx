@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import LoungePage from '../../../components/LoungePage';
+import LoungePage from '@/components/LoungePage';
 
 export const metadata: Metadata = {
     title: '라운지',

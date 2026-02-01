@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import IntroPage from '../components/IntroPage';
+import IntroPage from '@/components/IntroPage';
 
 export const metadata: Metadata = {
     title: '현관',

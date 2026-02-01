@@ -5,6 +5,11 @@
 ## About
 Cafe Lua is a virtual space project offering visitors a relaxing retreat and warm stories through an immersive web experience. Features include ambient music, weather-responsive visuals, and AI-powered character interaction.
 
+## Languages
+- Korean (Primary): /ko/
+- English: /en/
+- Root URL (/) redirects based on browser language
+
 ## Key Features
 - **Lounge**: Main space with ambient BGM and weather-responsive backgrounds
 - **Counter**: Meet Alpha, the AI cafe assistant
@@ -18,13 +23,21 @@ Cafe Lua is a virtual space project offering visitors a relaxing retreat and war
 ## Sitemap
 - https://cafelua.com/sitemap.xml
 
-## Key URLs
-- https://cafelua.com/
-- https://cafelua.com/lounge/
-- https://cafelua.com/counter/
-- https://cafelua.com/tarot/
-- https://cafelua.com/atelier/
-- https://cafelua.com/about/
+## Key URLs (Korean)
+- https://cafelua.com/ko/
+- https://cafelua.com/ko/lounge
+- https://cafelua.com/ko/counter
+- https://cafelua.com/ko/tarot
+- https://cafelua.com/ko/atelier
+- https://cafelua.com/ko/about
+
+## Key URLs (English)
+- https://cafelua.com/en/
+- https://cafelua.com/en/lounge
+- https://cafelua.com/en/counter
+- https://cafelua.com/en/tarot
+- https://cafelua.com/en/atelier
+- https://cafelua.com/en/about
 
 ## Technology
 - Next.js 16, React 19, TypeScript
