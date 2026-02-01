@@ -26,7 +26,7 @@ This project is moving to a Next.js (App Router) + shadcn/ui stack, featuring th
 *   **Language**: TypeScript
 *   **Styling**: CSS with design tokens (variables.css)
 *   **Testing**: Jest + React Testing Library (TDD), Playwright for E2E
-*   **AI Integration**: Google Gemini 2.0 Flash API
+*   **AI Integration**: Google Gemini 3.0 Flash API
 *   **Deployment**: Vercel (recommended) or static export
 
 ## 🔧 Environment Variables
@@ -68,7 +68,7 @@ public-home/
 
 ### v0.1.4 (2026-02-02)
 - **AI Chat Features**:
-    - **Coffee Chat**: VN-style conversation system with Alpha at the cafe counter. Powered by Google Gemini 2.0 Flash.
+    - **Coffee Chat**: VN-style conversation system with Alpha at the cafe counter. Powered by Google Gemini 3.0 Flash.
     - **Tarot Consultation**: Mystic tarot-themed chat experience (Alpha is still learning to read cards).
     - Expression/mood system with 8 different Alpha expressions.
     - User memory persistence via localStorage (remembers past conversations).

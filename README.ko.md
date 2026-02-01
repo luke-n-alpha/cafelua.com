@@ -26,7 +26,7 @@
 *   **Language**: TypeScript
 *   **Styling**: CSS + 디자인 토큰(variables.css)
 *   **Testing**: Jest + React Testing Library(TDD), Playwright(E2E)
-*   **AI 연동**: Google Gemini 2.0 Flash API
+*   **AI 연동**: Google Gemini 3.0 Flash API
 *   **Deployment**: Vercel (권장) 또는 정적 빌드
 
 ## 🔧 환경 변수
@@ -68,7 +68,7 @@ public-home/
 
 ### v0.1.4 (2026-02-02)
 - **AI 채팅 기능**:
-    - **Coffee Chat**: 카페 카운터에서 알파와 VN 스타일 대화 시스템. Google Gemini 2.0 Flash 사용.
+    - **Coffee Chat**: 카페 카운터에서 알파와 VN 스타일 대화 시스템. Google Gemini 3.0 Flash 사용.
     - **타로 상담**: 신비로운 타로 테마 채팅 경험 (알파는 아직 카드 읽기 수련 중).
     - 8가지 알파 표정/기분 시스템.
     - localStorage를 통한 사용자 메모리 유지 (과거 대화 기억).
