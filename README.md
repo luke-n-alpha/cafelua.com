@@ -22,15 +22,34 @@ This project is moving to a Next.js (App Router) + shadcn/ui stack, featuring th
 
 ## 🛠️ Tech Stack
 
-*   **Framework**: Next.js 14 (App Router, static `output: 'export'` for GitHub Pages), React 18, shadcn/ui
+*   **Framework**: Next.js 16 (App Router), React 19
 *   **Language**: TypeScript
-*   **Styling**: CSS with design tokens (variables.css), shadcn primitives
+*   **Styling**: CSS with design tokens (variables.css)
 *   **Testing**: Jest + React Testing Library (TDD), Playwright for E2E
-*   **Deployment**: Static `next build` output synced from the private repo; GitHub Pages deploy workflow builds and publishes `out/`
+*   **AI Integration**: Google Gemini 2.0 Flash API
+*   **Deployment**: Vercel (recommended) or static export
 
-## Environment
-- `NEXT_PUBLIC_OPENWEATHER_API_KEY` (optional): OpenWeather API key for real-time weather in intro/lounge. Falls back to time/season defaults when missing.
-- Security: Never commit `.env` files. They are ignored and excluded from the private → public sync workflow.
+## 🔧 Environment Variables
+
+Copy `.env.example` to `.env` and configure:
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GEMINI_TOKEN` | Yes* | Google Gemini API key for Coffee Chat & Tarot features. Get it from [AI Studio](https://aistudio.google.com/app/apikey) |
+| `ALPHA_SECRET_PHRASE` | No | Secret phrase for master recognition |
+| `ALPHA_FAMILY_MEMBERS` | No | Family members JSON for Alpha's memory |
+| `ALPHA_MASTER_BIRTHDAY` | No | Master's birthday for Alpha to remember |
+| `VITE_OPENWEATHER_API_KEY` | No | OpenWeather API key for real-time weather |
+
+*Required only for AI chat features (Coffee Chat, Tarot)
+
+### Vercel Deployment
+
+1. Connect your repository to [Vercel](https://vercel.com)
+2. Add environment variables in Project Settings → Environment Variables
+3. Deploy automatically on push to main branch
+
+**Security**: Never commit `.env` files. They are gitignored.
 
 ## 📂 Project Structure
 
@@ -46,6 +65,20 @@ public-home/
 ```
 
 ## 📝 Changelog
+
+### v0.1.4 (2026-02-02)
+- **AI Chat Features**:
+    - **Coffee Chat**: VN-style conversation system with Alpha at the cafe counter. Powered by Google Gemini 2.0 Flash.
+    - **Tarot Consultation**: Mystic tarot-themed chat experience (Alpha is still learning to read cards).
+    - Expression/mood system with 8 different Alpha expressions.
+    - User memory persistence via localStorage (remembers past conversations).
+    - Conversation history browsing with session type separation.
+    - Real-time message saving.
+- **i18n Enhancement**:
+    - Added complete translations for Counter, Coffee Chat, and Tarot pages (EN/KO).
+- **Documentation**:
+    - Added `.env.example` with all environment variables.
+    - Updated README with Vercel deployment guide.
 
 ### v0.1.3 (2026-01-11)
 - **Spaces & Pages**:

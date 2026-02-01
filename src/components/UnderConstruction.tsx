@@ -4,6 +4,11 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import './UnderConstruction.css';
 
+interface ButtonConfig {
+    label: string;
+    onClick: () => void;
+}
+
 interface UnderConstructionProps {
     onClose: () => void;
     message?: string;
@@ -14,18 +19,20 @@ interface UnderConstructionProps {
     spriteAlt?: string;
     speakerName?: string;
     closeLabel?: string;
+    buttons?: ButtonConfig[];
 }
 
 const UnderConstruction: React.FC<UnderConstructionProps> = ({
     onClose,
     message,
-    backgroundSrc = '/undestruct.jpg',
+    backgroundSrc = '/undestruct.webp',
     illustrationSrc,
     characterSrc = '/characters/alpha/alpha-trouble.webp',
     spriteSrc,
     spriteAlt = 'Character Sprite',
     speakerName = 'Alpha',
-    closeLabel
+    closeLabel,
+    buttons
 }) => {
     const overlayRef = useRef<HTMLDivElement>(null);
     const { t } = useTranslation();
@@ -80,8 +87,8 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
                 className="construction-bg"
                 onError={(event) => {
                     const img = event.currentTarget;
-                    if (img.src.endsWith('/undestruct.jpg')) return;
-                    img.src = '/undestruct.jpg';
+                    if (img.src.endsWith('/undestruct.webp')) return;
+                    img.src = '/undestruct.webp';
                 }}
             />
 
@@ -93,8 +100,8 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
                         className="construction-illustration"
                         onError={(event) => {
                             const img = event.currentTarget;
-                            if (img.src.endsWith('/undestruct.jpg')) return;
-                            img.src = '/undestruct.jpg';
+                            if (img.src.endsWith('/undestruct.webp')) return;
+                            img.src = '/undestruct.webp';
                         }}
                     />
                 </div>
@@ -126,9 +133,21 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
                     </div>
                     
                     <div className="vn-button-row">
-                        <button className="vn-back-btn ui-button ui-button-ghost" onClick={onClose}>
-                            {resolvedCloseLabel} ▶
-                        </button>
+                        {buttons && buttons.length > 0 ? (
+                            buttons.map((btn, idx) => (
+                                <button
+                                    key={idx}
+                                    className="vn-back-btn ui-button ui-button-ghost"
+                                    onClick={btn.onClick}
+                                >
+                                    {btn.label} ▶
+                                </button>
+                            ))
+                        ) : (
+                            <button className="vn-back-btn ui-button ui-button-ghost" onClick={onClose}>
+                                {resolvedCloseLabel} ▶
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>

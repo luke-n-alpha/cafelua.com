@@ -22,15 +22,34 @@
 
 ## 🛠️ 기술 스택
 
-*   **Framework**: Next.js 14(App Router, GitHub Pages 대응을 위한 정적 `output: 'export'`), React 18, shadcn/ui
+*   **Framework**: Next.js 16 (App Router), React 19
 *   **Language**: TypeScript
-*   **Styling**: CSS + 디자인 토큰(variables.css), shadcn 컴포넌트
+*   **Styling**: CSS + 디자인 토큰(variables.css)
 *   **Testing**: Jest + React Testing Library(TDD), Playwright(E2E)
-*   **Deployment**: private → public-home 동기화 후 정적 `npm run build` 산출물(`out/`)을 GitHub Pages 워크플로우로 배포
+*   **AI 연동**: Google Gemini 2.0 Flash API
+*   **Deployment**: Vercel (권장) 또는 정적 빌드
 
-## 환경 변수
-- `NEXT_PUBLIC_OPENWEATHER_API_KEY` (선택): 인트로/라운지 실시간 날씨 반영용 OpenWeather API 키. 없으면 시간/계절 기본값으로 동작합니다.
-- 보안: `.env` 파일은 절대 커밋하지 않습니다. private → public-home 동기화에서도 제외됩니다.
+## 🔧 환경 변수
+
+`.env.example`을 `.env`로 복사하고 설정하세요:
+
+| 변수명 | 필수 | 설명 |
+|--------|------|------|
+| `GEMINI_TOKEN` | Yes* | Coffee Chat & Tarot 기능용 Google Gemini API 키. [AI Studio](https://aistudio.google.com/app/apikey)에서 발급 |
+| `ALPHA_SECRET_PHRASE` | No | 마스터 인식용 비밀 문구 |
+| `ALPHA_FAMILY_MEMBERS` | No | 알파 메모리용 가족 구성원 JSON |
+| `ALPHA_MASTER_BIRTHDAY` | No | 알파가 기억할 마스터 생일 |
+| `VITE_OPENWEATHER_API_KEY` | No | 실시간 날씨용 OpenWeather API 키 |
+
+*AI 채팅 기능(Coffee Chat, Tarot) 사용 시에만 필수
+
+### Vercel 배포
+
+1. [Vercel](https://vercel.com)에 저장소 연결
+2. Project Settings → Environment Variables에서 환경변수 추가
+3. main 브랜치 push 시 자동 배포
+
+**보안**: `.env` 파일은 절대 커밋하지 않습니다. gitignore에 포함되어 있습니다.
 
 ## 📂 프로젝트 구조
 
@@ -46,6 +65,20 @@ public-home/
 ```
 
 ## 📝 업데이트 내역 (Changelog)
+
+### v0.1.4 (2026-02-02)
+- **AI 채팅 기능**:
+    - **Coffee Chat**: 카페 카운터에서 알파와 VN 스타일 대화 시스템. Google Gemini 2.0 Flash 사용.
+    - **타로 상담**: 신비로운 타로 테마 채팅 경험 (알파는 아직 카드 읽기 수련 중).
+    - 8가지 알파 표정/기분 시스템.
+    - localStorage를 통한 사용자 메모리 유지 (과거 대화 기억).
+    - 세션 타입별 대화 기록 열람 기능.
+    - 실시간 메시지 저장.
+- **i18n 강화**:
+    - 카운터, Coffee Chat, 타로 페이지 완전 번역 추가 (EN/KO).
+- **문서화**:
+    - 모든 환경변수 포함 `.env.example` 추가.
+    - Vercel 배포 가이드로 README 업데이트.
 
 ### v0.1.3 (2026-01-11)
 - **주요 업데이트**:

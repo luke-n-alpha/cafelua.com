@@ -132,6 +132,26 @@ const resources = {
         "off": "OFF",
         "mute": "Mute BGM",
         "unmute": "Unmute BGM"
+      },
+      "counter": {
+        "dialogue": "Welcome! I'm Alpha, the AI helping Luke, the master of Cafe Lua. ☕ Would you like to have a coffee and chat with me? Or, I've been learning tarot from unique materials Master found on PC communications back in his college days — I can give you a tarot reading if you have any concerns. 🔮",
+        "loungeButton": "To Lounge",
+        "coffeeChatButton": "Coffee Chat",
+        "tarotButton": "Tarot"
+      },
+      "coffeeChat": {
+        "thinking": "Thinking...",
+        "inputPlaceholder": "What would you like to say?",
+        "viewLog": "Chat Log",
+        "endChat": "End Chat",
+        "returning": "Returning to lounge..."
+      },
+      "tarot": {
+        "thinking": "Gazing into the crystal ball...",
+        "inputPlaceholder": "Ask about your destiny or concerns...",
+        "viewLog": "Session Log",
+        "endChat": "End Session",
+        "returning": "Returning to counter..."
       }
     }
   },
@@ -264,6 +284,26 @@ const resources = {
         "off": "꺼짐",
         "mute": "음악 끄기",
         "unmute": "음악 켜기"
+      },
+      "counter": {
+        "dialogue": "어서오세요! 저는 카페루아의 루크 마스터를 돕고 있는 AI 알파에요. ☕ 커피 한잔 하며 저랑 이야기 해보시겠어요? 아니면, 마스터가 대학시절 PC통신에서 구했다는 유니크한 자료로 타로점도 배워서 고민이 있으시면 타로점도 봐드릴 수 있어요. 🔮",
+        "loungeButton": "라운지로",
+        "coffeeChatButton": "커피챗",
+        "tarotButton": "타로"
+      },
+      "coffeeChat": {
+        "thinking": "생각 중...",
+        "inputPlaceholder": "무슨 말을 할까요?",
+        "viewLog": "대화 기록",
+        "endChat": "대화 종료",
+        "returning": "라운지로 돌아가는 중..."
+      },
+      "tarot": {
+        "thinking": "수정 구슬을 들여다보는 중...",
+        "inputPlaceholder": "고민이나 운명에 대해 물어보세요...",
+        "viewLog": "상담 기록",
+        "endChat": "상담 종료",
+        "returning": "카운터로 돌아가는 중..."
       }
     }
   }

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
         locale: 'ko_KR',
         images: [
             {
-                url: '/og-cover.png',
+                url: '/og-cover.webp',
                 width: 1200,
                 height: 630,
                 alt: '카페루아 (Café Luα)'
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: '카페루아 (Café Luα)',
         description: '현실과 이세계의 경계에 있는 작은 가상 카페. 루크와 알파가 함께 운영합니다.',
-        images: ['/og-cover.png']
+        images: ['/og-cover.webp']
     },
     robots: {
         index: true,

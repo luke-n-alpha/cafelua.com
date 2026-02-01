@@ -46,7 +46,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ onClose }) => {
         <div className="about-modal-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label={title}>
             <div className="about-modal-stage" onClick={(e) => e.stopPropagation()}>
                 <img
-                    src="/ui/about-modal-bg.png"
+                    src="/ui/about-modal-bg.webp"
                     alt=""
                     className="about-modal-illustration"
                     aria-hidden="true"

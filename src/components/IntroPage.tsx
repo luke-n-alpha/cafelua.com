@@ -434,7 +434,7 @@ const IntroPage: React.FC = () => {
 
             <div className="center-content">
                 <img 
-                    src="/intro-logo.png" 
+                    src="/intro-logo.webp" 
                     alt="Cafelua Logo" 
                     className="intro-logo" 
                     onClick={handleEnter}

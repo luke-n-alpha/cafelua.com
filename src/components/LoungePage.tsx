@@ -152,8 +152,8 @@ const LoungePage: React.FC = () => {
                 <UnderConstruction
                     onClose={handleCloseGreeting}
                     message={greetingMessage}
-                    backgroundSrc={bgImage || '/undestruct.jpg'}
-                    illustrationSrc={bgImage || '/undestruct.jpg'}
+                    backgroundSrc={bgImage || '/undestruct.webp'}
+                    illustrationSrc={bgImage || '/undestruct.webp'}
                     characterSrc="/characters/alpha/alpha-nice-talk.webp"
                     closeLabel={t('lounge.showMenu')}
                 />
@@ -162,8 +162,8 @@ const LoungePage: React.FC = () => {
             {showConstruction && (
                 <UnderConstruction
                     onClose={() => setShowConstruction(false)}
-                    backgroundSrc={bgImage || '/undestruct.jpg'}
-                    illustrationSrc="/undestruct.jpg"
+                    backgroundSrc={bgImage || '/undestruct.webp'}
+                    illustrationSrc="/undestruct.webp"
                 />
             )}
         </div>
