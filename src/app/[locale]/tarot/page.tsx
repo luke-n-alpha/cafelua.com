@@ -76,7 +76,7 @@ export default function TarotPage() {
         router.push(query ? `/${i18n.language}/counter?${query}` : `/${i18n.language}/counter`);
     }, [router, searchParams, i18n.language]);
 
-    // 뷰포트 높이 설정
+    // 뷰포트 높이 설정 (초기값만, 키보드 열림 시 리사이즈 안함)
     useEffect(() => {
         const overlay = overlayRef.current;
         if (!overlay) return;
@@ -87,26 +87,21 @@ export default function TarotPage() {
             overlay.dataset.ucWebview = 'facebook';
         }
 
-        const updateViewportHeight = () => {
-            const visualHeight = window.visualViewport?.height ?? window.innerHeight;
-            overlay.style.setProperty('--uc-vh', `${visualHeight * 0.01}px`);
+        // 초기 높이만 설정 (키보드 열림 시 변경 안함)
+        const initialHeight = window.innerHeight;
+        overlay.style.setProperty('--uc-vh', `${initialHeight * 0.01}px`);
+
+        // orientation change만 처리
+        const handleOrientationChange = () => {
+            setTimeout(() => {
+                overlay.style.setProperty('--uc-vh', `${window.innerHeight * 0.01}px`);
+            }, 100);
         };
 
-        updateViewportHeight();
-        window.addEventListener('resize', updateViewportHeight);
-        window.addEventListener('orientationchange', updateViewportHeight);
-        if (window.visualViewport) {
-            window.visualViewport.addEventListener('resize', updateViewportHeight);
-            window.visualViewport.addEventListener('scroll', updateViewportHeight);
-        }
+        window.addEventListener('orientationchange', handleOrientationChange);
 
         return () => {
-            window.removeEventListener('resize', updateViewportHeight);
-            window.removeEventListener('orientationchange', updateViewportHeight);
-            if (window.visualViewport) {
-                window.visualViewport.removeEventListener('resize', updateViewportHeight);
-                window.visualViewport.removeEventListener('scroll', updateViewportHeight);
-            }
+            window.removeEventListener('orientationchange', handleOrientationChange);
         };
     }, []);
 
