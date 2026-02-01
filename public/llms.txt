@@ -1,7 +1,19 @@
 # Café Luα (cafelua.com)
 
-## Policy
-- Crawling: allowed
+> A tranquil virtual teahouse in the forest
+
+## About
+Cafe Lua is a virtual space project offering visitors a relaxing retreat and warm stories through an immersive web experience. Features include ambient music, weather-responsive visuals, and AI-powered character interaction.
+
+## Key Features
+- **Lounge**: Main space with ambient BGM and weather-responsive backgrounds
+- **Counter**: Meet Alpha, the AI cafe assistant
+- **Coffee Chat**: VN-style AI conversation with Alpha (powered by Google Gemini)
+- **Tarot Consultation**: Mystic tarot-themed chat experience
+- **2F Atelier**: Nostalgic Win98 PC with Luke's 1997/1998 homepage archives
+
+## Character
+- **Alpha (알파)**: AI mascot and cafe assistant. Friendly, curious, and helpful. Created by Luke.
 
 ## Sitemap
 - https://cafelua.com/sitemap.xml
@@ -9,9 +21,18 @@
 ## Key URLs
 - https://cafelua.com/
 - https://cafelua.com/lounge/
+- https://cafelua.com/counter/
+- https://cafelua.com/tarot/
 - https://cafelua.com/atelier/
 - https://cafelua.com/about/
-- https://cafelua.com/counter/
+
+## Technology
+- Next.js 16, React 19, TypeScript
+- Google Gemini 3 Flash API
+- i18next (Korean, English)
 
 ## Contact
-- https://github.com/luke-n-alpha/cafelua.com
+- GitHub: https://github.com/luke-n-alpha/cafelua.com
+
+## Policy
+- Crawling: allowed
