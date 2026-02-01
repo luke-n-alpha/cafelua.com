@@ -73,6 +73,14 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
         memoryRef.current = memory;
     }, [memory]);
 
+    // 라운지 BGM 정지 이벤트 발송
+    useEffect(() => {
+        window.dispatchEvent(new CustomEvent('coffeechat:open'));
+        return () => {
+            window.dispatchEvent(new CustomEvent('coffeechat:close'));
+        };
+    }, []);
+
     // 라운지로 이동
     const goToLounge = useCallback(() => {
         const query = searchParams.toString();
