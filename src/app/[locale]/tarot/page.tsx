@@ -73,8 +73,8 @@ export default function TarotPage() {
     // 카운터로 돌아가기
     const goToCounter = useCallback(() => {
         const query = searchParams.toString();
-        router.push(query ? `/counter?${query}` : '/counter');
-    }, [router, searchParams]);
+        router.push(query ? `/${i18n.language}/counter?${query}` : `/${i18n.language}/counter`);
+    }, [router, searchParams, i18n.language]);
 
     // 뷰포트 높이 설정
     useEffect(() => {

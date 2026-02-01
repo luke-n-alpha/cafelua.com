@@ -11,7 +11,7 @@ type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
 type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
 
 const CounterPage: React.FC = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -43,7 +43,7 @@ const CounterPage: React.FC = () => {
 
     const handleBackToLounge = () => {
         const query = searchParams.toString();
-        router.push(query ? `/lounge?${query}` : '/lounge');
+        router.push(query ? `/${i18n.language}/lounge?${query}` : `/${i18n.language}/lounge`);
     };
 
     const handleCloseCoffeeChat = () => {
@@ -52,7 +52,7 @@ const CounterPage: React.FC = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.delete('chat');
         const query = params.toString();
-        router.replace(query ? `/counter?${query}` : '/counter');
+        router.replace(query ? `/${i18n.language}/counter?${query}` : `/${i18n.language}/counter`);
     };
 
     const handleOpenCoffeeChat = () => {
@@ -60,7 +60,7 @@ const CounterPage: React.FC = () => {
         // URL에 chat=open 파라미터 추가 (LoungeBgm 일시 중지용)
         const params = new URLSearchParams(searchParams.toString());
         params.set('chat', 'open');
-        router.replace(`/counter?${params.toString()}`);
+        router.replace(`/${i18n.language}/counter?${params.toString()}`);
     };
 
     const buttons = [
@@ -74,7 +74,7 @@ const CounterPage: React.FC = () => {
         },
         {
             label: t('counter.tarotButton', '타로'),
-            onClick: () => router.push('/tarot'),
+            onClick: () => router.push(`/${i18n.language}/tarot`),
         },
     ];
 

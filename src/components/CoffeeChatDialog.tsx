@@ -76,8 +76,8 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
     // 라운지로 이동
     const goToLounge = useCallback(() => {
         const query = searchParams.toString();
-        router.push(query ? `/lounge?${query}` : '/lounge');
-    }, [router, searchParams]);
+        router.push(query ? `/${i18n.language}/lounge?${query}` : `/${i18n.language}/lounge`);
+    }, [router, searchParams, i18n.language]);
 
     // 대화 요약 및 저장
     const summarizeAndSave = useCallback(async (mem: ChatMemory, chatMessages: ChatMessage[]) => {

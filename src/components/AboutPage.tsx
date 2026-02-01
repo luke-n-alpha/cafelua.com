@@ -2,6 +2,7 @@
 
 import React, { useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 import AboutModal from './AboutModal';
 import './AboutPage.css';
 
@@ -10,6 +11,7 @@ type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
 type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
 
 const AboutPage: React.FC = () => {
+    const { i18n } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
     const season = (searchParams.get('season') as Season) || 'spring';
@@ -39,7 +41,7 @@ const AboutPage: React.FC = () => {
 
     const handleBackToLounge = () => {
         const query = searchParams.toString();
-        router.push(query ? `/lounge?${query}` : '/lounge');
+        router.push(query ? `/${i18n.language}/lounge?${query}` : `/${i18n.language}/lounge`);
     };
 
     return (

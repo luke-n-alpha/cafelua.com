@@ -12,7 +12,7 @@ type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
 type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
 
 const LoungePage: React.FC = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const searchParams = useSearchParams();
     const router = useRouter();
     const [bgImage, setBgImage] = useState<string>('');
@@ -27,13 +27,13 @@ const LoungePage: React.FC = () => {
 
     const pushWithParams = (path: string) => {
         const query = searchParams.toString();
-        router.push(query ? `${path}?${query}` : path);
+        router.push(query ? `/${i18n.language}${path}?${query}` : `/${i18n.language}${path}`);
     };
 
     const handleStairs = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.set('from', 'lounge');
-        router.push(`/atelier?${params.toString()}`);
+        router.push(`/${i18n.language}/atelier?${params.toString()}`);
     };
 
     // Resolve background image based on state
@@ -136,7 +136,7 @@ const LoungePage: React.FC = () => {
 
                         <button
                             className="menu-button ui-button ui-button-danger exit"
-                            onClick={() => router.push('/')}
+                            onClick={() => router.push(`/${i18n.language}`)}
                         >
                             {t('lounge.back')}
                         </button>

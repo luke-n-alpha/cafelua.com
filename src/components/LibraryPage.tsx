@@ -119,7 +119,7 @@ const ScaledLegacyFrame = ({
 };
 
 const LibraryPage: React.FC = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
     const [showIntro, setShowIntro] = useState(true);
@@ -527,7 +527,7 @@ const LibraryPage: React.FC = () => {
     const handleBackToLounge = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.set('from', 'atelier');
-        router.push(`/lounge?${params.toString()}`);
+        router.push(`/${i18n.language}/lounge?${params.toString()}`);
     };
 
     return (

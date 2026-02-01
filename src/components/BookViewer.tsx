@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 import { ContentLoader, type ContentItem } from '../services/ContentLoader';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import './BookViewer.css';
 
 const BookViewer = () => {
+    const { i18n } = useTranslation();
     const searchParams = useSearchParams();
     const router = useRouter();
     const id = searchParams.get('id');
@@ -50,7 +52,7 @@ const BookViewer = () => {
     return (
         <div className="book-viewer-overlay">
             <div className="book-viewer-container">
-                <button className="close-btn ui-button ui-button-ghost" onClick={() => router.push('/atelier')}>
+                <button className="close-btn ui-button ui-button-ghost" onClick={() => router.push(`/${i18n.language}/atelier`)}>
                     <ArrowLeft size={24} /> Back to Shelf
                 </button>
 
