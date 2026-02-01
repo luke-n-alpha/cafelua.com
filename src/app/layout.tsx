@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 import '../app/globals.css';
 import Providers from './providers';
+
+const GA_ID = 'G-EDLFFFY25M';
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://cafelua.com'),
@@ -49,6 +52,20 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="ko">
+            <head>
+                <Script
+                    src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+                    strategy="afterInteractive"
+                />
+                <Script id="gtag-init" strategy="afterInteractive">
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', '${GA_ID}');
+                    `}
+                </Script>
+            </head>
             <body>
                 <Providers>{children}</Providers>
             </body>
