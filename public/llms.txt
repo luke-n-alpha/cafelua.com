@@ -70,7 +70,7 @@ Individual diary pages are available at /gallery/diary/[slug]:
 
 ## Technology
 - Next.js 16, React 19, TypeScript
-- Google Gemini 3 Flash API
+- Google Gemini 2.5 Flash API
 - Firebase Admin SDK (Firestore)
 - i18next (Korean, English)
 

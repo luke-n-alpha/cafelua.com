@@ -10,8 +10,7 @@ This project is an immersive web application built on Next.js 16 (App Router), o
 
 *   **Immersive Intro**: Invites you into the world of Cafe Lua with backgrounds that change according to the time of day and weather.
 *   **Lounge Space**: The main area where you can enjoy the atmosphere of Cafe Lua with ambient music.
-*   **Counter & Coffee Chat**: VN-style conversation with AI mascot 'Alpha' at the cafe counter. Powered by Google Gemini 3.0 Flash.
-*   **Tarot Consultation**: Mystic tarot reading experience with a full Celtic Cross (10-card) spread.
+*   **Counter**: VN-style Coffee Chat and Celtic Cross (10-card) tarot reading with AI mascot 'Alpha'. Powered by Google Gemini 2.5 Flash.
 *   **Gallery**: Browse cafe space photos, diary entries, tarot card collection, and BGM collection.
 *   **Diary**: Personal diary entries in text + multi-image posting format. Each entry has its own shareable URL with OG metadata.
 *   **Guestbook**: Guestbook with nickname + password authentication. Secret message system and admin mode.
@@ -21,12 +20,12 @@ This project is an immersive web application built on Next.js 16 (App Router), o
 
 ## 🚀 Key Features
 
-*   **AI Conversation System**: Coffee Chat and Tarot consultation powered by Google Gemini 3.0 Flash. 8 Alpha expression/mood states, conversation memory via localStorage.
+*   **AI Conversation System**: Coffee Chat and Tarot consultation powered by Google Gemini 2.5 Flash. 8 Alpha expression/mood states, conversation memory via localStorage.
 *   **Tarot Reading**: Celtic Cross (10-card) spread UI with per-card interpretation and final summary. Server-side API routes for Gemini integration.
 *   **Gallery & Diary**: Cafe spaces, tarot cards, and BGM collection gallery. Individual diary URLs with image lightbox (keyboard/mouse/touch navigation).
 *   **Guestbook**: Firestore-based guestbook with secret messages, admin mode, rate limiting, and server-side security.
 *   **Background Music (BGM)**: BGM playback and control features for each space.
-*   **Real-time Environment Reflection**: Location-based weather and time zone background changes via OpenWeather API (in preparation).
+*   **Real-time Environment Reflection**: Location-based weather and time zone background changes via OpenWeather API.
 
 ## 🛠️ Tech Stack
 
@@ -34,7 +33,7 @@ This project is an immersive web application built on Next.js 16 (App Router), o
 *   **Language**: TypeScript
 *   **Styling**: CSS with design tokens (variables.css)
 *   **Testing**: Jest + React Testing Library (TDD), Playwright for E2E
-*   **AI Integration**: Google Gemini 3.0 Flash API
+*   **AI Integration**: Google Gemini 2.5 Flash API
 *   **Deployment**: Vercel (recommended) or static export
 
 ## 🔧 Environment Variables
@@ -107,7 +106,7 @@ public-home/
 
 ### v0.1.4 (2026-02-02)
 - **AI Chat Features**:
-    - **Coffee Chat**: VN-style conversation system with Alpha at the cafe counter. Powered by Google Gemini 3.0 Flash.
+    - **Coffee Chat**: VN-style conversation system with Alpha at the cafe counter. Powered by Google Gemini 2.5 Flash.
     - **Tarot Consultation**: Mystic tarot-themed chat experience (Alpha is still learning to read cards).
     - Expression/mood system with 8 different Alpha expressions.
     - User memory persistence via localStorage (remembers past conversations).
