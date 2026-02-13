@@ -112,26 +112,23 @@
 }
 
 .vn-content-row {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 20px;
+    display: block;
 }
 
 .vn-text-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    display: block;
 }
 
 /* Character Sprite */
 .vn-character {
+    float: left;
     width: 100px;
     height: 100px;
     object-fit: cover;
-    border-radius: 10px; /* Mild rounding */
+    border-radius: 10px;
     filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.55));
+    margin-right: 16px;
+    margin-bottom: 4px;
     animation: fadeIn 0.5s ease-out;
 }
 
@@ -207,21 +204,26 @@
         max-height: calc((var(--uc-vh, 1vh) * 55) - env(safe-area-inset-bottom, 0px));
         overflow: auto;
         -webkit-overflow-scrolling: touch;
-        padding: 20px;
-        margin: 0 15px;
+        padding: 14px 8px;
+        margin: 0 4px;
     }
 
-    /* Adjust character and text layout */
+    /* Adjust character and text layout - float로 텍스트가 이미지 아래까지 채움 */
     .vn-content-row {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
+        display: block;
+    }
+
+    .vn-text-group {
+        display: block;
     }
 
     /* Reduce Alpha face size */
     .vn-character {
+        float: left;
         width: 60px;
         height: 60px;
+        margin-right: 10px;
+        margin-bottom: 4px;
     }
 
     .vn-name {

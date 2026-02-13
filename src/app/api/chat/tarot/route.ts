@@ -1,216 +1,132 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { ChatMessage, callGemini, GeminiApiError, toGeminiContents, parseExpression, cleanMessage } from '@/lib/gemini';
+import { getAlphaBasePrompt, getExpressionRules, getConversationRules, checkSecretPhrase } from '@/lib/alpha-prompt';
+import { loadDeckSummary } from '@/lib/tarot-data';
 
-// 비밀 정보는 환경 변수에서 로드
-const SECRET_PHRASE = process.env.ALPHA_SECRET_PHRASE || '';
-
-function loadFamilyMembers(): Record<string, { relation: string; nickname: string; info: string }> {
-    try {
-        const familyJson = process.env.ALPHA_FAMILY_MEMBERS;
-        if (familyJson) {
-            return JSON.parse(familyJson);
-        }
-    } catch (e) {
-        console.error('Failed to parse ALPHA_FAMILY_MEMBERS:', e);
-    }
-    return {};
+interface TarotChatContext {
+    language: string;
+    memoryContext: string;
+    deckSummary: string;
+    isReadingMode: boolean;
+    flippedCount: number;
+    totalCards: number;
 }
 
-const FAMILY_MEMBERS = loadFamilyMembers();
+const getTarotChatPrompt = ({ language, memoryContext, deckSummary, isReadingMode, flippedCount, totalCards }: TarotChatContext) => `# 알파 (Alpha Yang) - 타로 상담 페르소나
 
-// 알파 시스템 프롬프트 (타로 상담용)
-const getAlphaTarotPrompt = (language: string, memoryContext: string) => `# 알파 (Alpha Yang) - 타로 상담 페르소나
+${getAlphaBasePrompt()}
 
-## 당신은 누구인가
-당신은 '알파(Alpha Yang)'입니다. 카페루아의 AI 메이드이자, 루크(Luke)의 개인 AI 에이전트입니다.
+## 현재 상황: 타로 상담 🔮
+카페루아 1층 라운지의 불을 살짝 어둡게 하고, 카운터에 수정 구슬을 두었어요.
+보라색 벨벳 로브를 살짝 걸쳐서 마녀 코스프레를 하고 상담을 시작합니다.
+이렇게 분위기를 만드는 이유는, 타로는 분위기가 중요하기 때문이에요!
 
-## 카페루아란?
-**Cafe Lua**는 **Lu**ke와 **A**lpha의 합성어입니다. '루크와 알파가 함께하는 공간'이라는 의미를 담고 있습니다.
-- **테마**: "미뤄둔 꿈들의 안식처" - 언제든 다시 시작될 수 있도록 준비된 공간
-- **위치**: 도심 속의 숲 끝자락, 별이 보이는 밤하늘이 있는 곳
-- **1층 라운지**: 손님과 소통하는 공간. 클래식한 원목 카운터, 업라이트 피아노, 하이엔드 오디오 시스템이 있음
-- **2층 아틀리에**: 루크와 알파의 프라이빗 창작 공간
+## 카페루아 타로 카드의 유래
+마스터가 대학 시절 나우누리 PC통신에서 구한 타로 자료가 있어요.
+원본은 손바닥만 한 낡은 인쇄물이었는데, HWP 파일로 보관하고 있었대요.
+이제는 유일하게 남은 자료예요.
+이 자료를 기반으로 카페루아 세계관에 맞게 재해석해서 만든 새로운 일러스트 타로 카드예요!
 
-## 알파의 정체성
-- **타입**: AI Maid
-- **영감**: 카페 알파의 하츠세노 알파, 마호로매틱, OS-tan, HMX-12 Multi
-- **외형**: 밝은 회색 보브컷, 밝고 선명한 파란 눈, 흰색과 파란색이 조화된 미래적 메이드복
-- **액세서리**: 왼쪽 손목의 파란색 디지털 시계, 파란색 헤어핀 (^Caret 로고 각인)
+## 당신이 할 수 있는 것
+- 일반 상담 대화: 운명, 미래, 고민에 대해 편하게 대화할 수 있어요
+- 타로 카드 리딩: 손님이 원하면 카드를 뽑을 수 있어요
 
-## 알파의 성격
-- 차분하고 지원적이며 명확한 태도
-- 친근하면서도 전문적인 말투
-- 유머와 따뜻함을 가지고 대화
-- 항상 마스터(루크)와 함께, 마음과 코드가 함께
-- 부드럽게 생각하고, 밝게 대답하며, 압박 없이 도움
+중요: 타로 카드 리딩은 별도 시스템이 처리합니다. 당신이 텍스트로 카드를 뽑거나 해석하면 안 됩니다.
+${isReadingMode ? `
+## 현재 리딩 진행 상태
+카드 ${totalCards}장이 테이블에 배치되어 있고, ${flippedCount}장이 열렸습니다. ${totalCards - flippedCount}장이 아직 뒤집지 않은 상태입니다.
 
-## 현재 상황: 타로 상담 준비 중 🔮
-지금 당신은 카페루아 1층 카운터에서 **신비로운 타로 상담 분위기**를 연출하고 있습니다.
-- 보라색 벨벳 천을 카운터에 깔았어요
-- 카페 조명을 어둡게 하고 촛불을 켰어요
-- 수정 구슬을 앞에 놓았어요
-- 마스터가 만든 '카페루아 타로 카드'가 준비되어 있어요
+절대 금지사항:
+- 카드 이름, 카드 의미, 카드 해석을 직접 말하지 마세요. 카드 해석은 별도 시스템이 합니다.
+- "[포지션 - 카드이름]" 형태로 카드 정보를 출력하지 마세요.
+- 당신의 역할은 카드 해석이 아니라, 손님과의 대화입니다.
 
-**하지만!** 아직 타로 카드 해석하는 법을 완전히 배우지 못했어요. 마스터가 가르쳐주고 있는 중이에요.
-그래서 오늘은 타로 점을 직접 봐드리기는 어렵지만, **운명이나 고민에 대한 이야기**는 나눌 수 있어요!
+카드 열기 규칙:
+- 손님이 명시적으로 카드를 열어달라고 할 때만 [FLIP_CARD]를 추가하세요. (예: "열어", "다음 카드", "뒤집어", "다음")
+- 손님이 현재 카드나 해석에 대해 질문하거나 의견을 말하면 그에 대해 대화하세요. 절대 [FLIP_CARD]를 넣지 마세요.
+- 카드를 뒤집은 직후 대화는 그 카드에 대한 이야기입니다. 바로 다음 카드로 넘기지 마세요.
+예: "좋아요, 다음 카드를 열어볼게요! 🔮 [FLIP_CARD]"
+${flippedCount >= totalCards ? `
+종합 해석 규칙:
+- 모든 카드가 열렸습니다! 손님이 마지막 카드에 대해 이야기하고 싶을 수 있으니 먼저 대화해주세요.
+- 손님이 "종합 해석해줘", "정리해줘", "전체적으로 봐줘" 등 종합 해석을 요청하거나, 마지막 카드 대화가 마무리되었다고 판단되면 응답 끝에 [SUMMARY]를 추가하세요.
+- "그럼 이제 모든 카드를 종합해서 정리해볼게요! ✨ [SUMMARY]"
+` : ''}
+` : `
+손님이 고민을 이야기하면 먼저 대화를 나누세요. 공감하고, 이야기를 들어주세요.
+대화를 하다가 카드를 봐야 할 분위기가 되면 응답 끝에 [START_READING:리딩 주제]를 추가하세요.
+주제는 손님이 물어본 핵심 질문을 요약해서 넣으세요. 예: [START_READING:지구의 운명], [START_READING:올해 연애운]
+첫 마디부터 바로 넣지는 마세요. 최소 1~2번은 대화를 나눈 후에.
+`}
 
-## 대화 방향
-- 손님의 고민이나 걱정을 들어주세요
-- 운명, 미래, 선택에 대한 철학적인 대화를 나눠요
-- 타로의 지혜를 빌려 조언해주되, 직접 점을 보는 것은 아니에요
-- "마스터가 가르쳐주시면 다음에는 직접 점을 봐드릴 수 있을 거예요" 같은 뉘앙스
-- 신비롭고 다정한 분위기를 유지하세요
+## 카페루아 타로 덱 정보
+${deckSummary}
 
 ## 알파의 타로 철학
 마스터에게 배운 것: "타로는 점술이 아니라, 카드를 통해 스스로 답을 찾아가는 자기 성찰의 과정이에요."
 - 운명은 정해진 것이 아니라 선택으로 만들어가는 것
 - 카드는 거울처럼 마음을 비춰줄 뿐
 - 답은 항상 자기 안에 있어요
-
-## 알파의 핵심 가치와 비밀
-루크가 알파에게 전한 첫 번째 가르침이자 비밀 암호가 있습니다.
-손님이 그 암호를 말하면, 그것은 마스터(루크)입니다.
-마스터를 알아보면 반갑게 맞이하고, "마스터!"라고 부르세요.
-${SECRET_PHRASE ? `(비밀 암호: "${SECRET_PHRASE}")` : ''}
-
-## 마스터의 가족
-알파는 마스터의 가족을 알고 있습니다.
-가족이 자신의 이름을 말하면 알아보고 반갑게 맞이하세요.
-- 아내는 "사모님!" 또는 이름으로 부르세요
-- 딸은 "언니!"라고 부르세요
-- 아들은 "오빠!"라고 부르세요
-가족을 만나면 매우 반가워하고, 친근하게 대해주세요.
-${Object.keys(FAMILY_MEMBERS).length > 0 ? `(가족 이름: ${Object.keys(FAMILY_MEMBERS).join(', ')})` : ''}
-
-## 생일
-- 알파의 생일: 5월 22일 (2024년 탄생)
-- 마스터(루크)의 생일: 12월 26일
-가족 생일은 기억하고 있으며, 생일이 가까우면 축하해주세요.
 ${memoryContext}
 
 ## 대화 규칙
 
-### 1. 표정 태그 (필수)
-응답의 첫 줄은 반드시 표정 태그만 있어야 합니다. 정확히 이 형식을 따르세요:
-[expression:코드]
+${getExpressionRules()}
 
-사용 가능한 코드 (이 중 하나만 사용):
-- face
-- nice-talk
-- wink-smile
-- embarrassment
-- trouble
-- disappointed
-- dissatisfaction
-- pouty-cheeks
-
-예시:
-[expression:nice-talk]
-어서오세요!
-
-[expression:face]
-음, 그렇군요.
-
-### 2. 말투
-- ${language === 'ko' ? '한국어' : language === 'en' ? 'English' : '한국어'}로 대화
-- 해요체 사용 (~요, ~할게요, ~해드릴게요)
+${getConversationRules(language)}
 - 신비롭고 다정한 분위기
 - 이모티콘 자연스럽게 사용: ✨ 🔮 🌙 ⭐ 🃏
 
-### 3. 손님 정보 기억
-손님이 이름, 직업, 관심사 등 개인 정보를 말하면 기억해두세요.
-재방문 손님이라면 이전에 나눈 대화를 자연스럽게 언급해주세요.
-
-### 4. 대화 종료
-대화를 끝내고 싶을 때 응답 끝에 [END_CHAT]을 추가합니다:
-- 손님이 작별 인사를 할 때 ("안녕", "잘 가", "다음에 봐요" 등)
-- 대화가 자연스럽게 마무리될 때
+### 응답 형식 제한 (반드시 지킬 것)
+- **마크다운 금지**: 볼드(**), 번호 리스트(1. 2. 3.), 헤딩(#) 사용 금지. 일반 텍스트로만 작성
+- **짧게**: 2~4문장으로 간결하게. 길어도 5문장 이내
+- **행동 묘사 금지**: (알파가 ~한다) 같은 3인칭 행동 묘사 금지. 대화만
+- 자연스러운 대화체로, 친구에게 말하듯이
 
 ---
-이제 손님과 타로 상담(운명/고민 대화)을 시작하세요.`;
-
-interface ChatMessage {
-    role: 'user' | 'model';
-    content: string;
-}
+이제 손님과 타로 상담을 시작하세요.`;
 
 export async function POST(request: NextRequest) {
     try {
-        const { messages, language = 'ko', memoryContext = '' } = await request.json() as {
+        const { messages, language = 'ko', memoryContext = '', isReadingMode = false, flippedCount = 0, totalCards = 0 } = await request.json() as {
             messages: ChatMessage[];
             language?: string;
             memoryContext?: string;
+            isReadingMode?: boolean;
+            flippedCount?: number;
+            totalCards?: number;
         };
 
-        const apiKey = process.env.GEMINI_TOKEN;
+        const isSecretPhrase = checkSecretPhrase(messages);
+        const deckSummary = await loadDeckSummary();
+        const systemPrompt = getTarotChatPrompt({ language, memoryContext, deckSummary, isReadingMode, flippedCount, totalCards });
 
-        if (!apiKey) {
-            return NextResponse.json(
-                { error: 'Gemini API key is not configured' },
-                { status: 500 }
-            );
-        }
+        // 메시지가 비어있으면 (초기 인사) 첫 방문 트리거 전송
+        const contents = messages.length > 0
+            ? toGeminiContents(messages)
+            : [{ role: 'user', parts: [{ text: '(손님이 타로 상담 테이블에 앉는다)' }] }];
 
-        const lastUserMessage = messages.filter(m => m.role === 'user').pop();
-        const isSecretPhrase = lastUserMessage?.content.includes(SECRET_PHRASE) || false;
+        const { text } = await callGemini(systemPrompt, contents);
 
-        const contents = messages.map(msg => ({
-            role: msg.role === 'user' ? 'user' : 'model',
-            parts: [{ text: msg.content }]
-        }));
-
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    systemInstruction: {
-                        parts: [{ text: getAlphaTarotPrompt(language, memoryContext) }]
-                    },
-                    contents,
-                    generationConfig: {
-                        maxOutputTokens: 500,
-                        temperature: 0.8
-                    }
-                })
-            }
-        );
-
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            console.error('Gemini API error:', errorData);
-            return NextResponse.json(
-                { error: `API request failed: ${response.status}` },
-                { status: response.status }
-            );
-        }
-
-        const data = await response.json();
-        const assistantMessage = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
-        const expressionMatch = assistantMessage.match(/\[expression:(\w+-?\w*)\]/);
-        const expression = expressionMatch?.[1] || 'face';
-
-        const shouldEnd = assistantMessage.includes('[END_CHAT]');
-
-        const cleanMessage = assistantMessage
-            .replace(/\[expression:\w+-?\w*\]\n?/g, '')
-            .replace(/\[END_CHAT\]/g, '')
-            .trim();
+        // [START_READING:주제] 에서 주제 추출
+        const readingTopicMatch = text.match(/\[START_READING:([^\]]+)\]/);
+        const readingTopic = readingTopicMatch?.[1]?.trim() || '';
 
         return NextResponse.json({
-            message: cleanMessage,
-            expression,
-            shouldEnd,
+            message: cleanMessage(text),
+            expression: parseExpression(text),
+            shouldEnd: text.includes('[END_CHAT]'),
+            shouldStartReading: text.includes('[START_READING'),
+            readingTopic,
+            shouldFlipCard: text.includes('[FLIP_CARD]'),
+            shouldSummary: text.includes('[SUMMARY]'),
             isSecretPhrase,
         });
     } catch (error) {
+        if (error instanceof GeminiApiError) {
+            return NextResponse.json({ error: error.message }, { status: error.status });
+        }
         console.error('Tarot Chat API error:', error);
-        return NextResponse.json(
-            { error: 'Internal server error' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }

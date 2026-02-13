@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { renderMessage } from '@/lib/format-message';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import BackgroundMusic from './BackgroundMusic';
@@ -461,7 +462,7 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
                         <div className="vn-text-group">
                             <div className="vn-name">Alpha</div>
                             <p className="vn-text">
-                                {isLoading ? t('coffeeChat.thinking', '생각 중...') : currentMessage}
+                                {isLoading ? t('coffeeChat.thinking', '생각 중...') : renderMessage(currentMessage)}
                             </p>
                         </div>
                     </div>

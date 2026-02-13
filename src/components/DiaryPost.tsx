@@ -1,0 +1,163 @@
+'use client';
+
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
+import type { DiaryEntry } from '@/data/gallery/diaryData';
+import './DiaryPost.css';
+
+interface Props {
+    entry: DiaryEntry;
+}
+
+const DiaryPost: React.FC<Props> = ({ entry }) => {
+    const { i18n, t } = useTranslation();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const isKo = i18n.language === 'ko';
+
+    const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+    const lightboxRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const len = entry.images.length;
+
+    const title = isKo ? entry.titleKo : entry.titleEn;
+    const content = isKo ? entry.contentKo : entry.contentEn;
+
+    const goNext = useCallback(() => {
+        if (len <= 1) return;
+        setLightboxIdx((prev) => (prev !== null ? (prev + 1) % len : null));
+    }, [len]);
+
+    const goPrev = useCallback(() => {
+        if (len <= 1) return;
+        setLightboxIdx((prev) => (prev !== null ? (prev - 1 + len) % len : null));
+    }, [len]);
+
+    // Keyboard navigation
+    useEffect(() => {
+        if (lightboxIdx === null) return;
+        const handleKey = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev(); }
+            else if (e.key === 'Escape') setLightboxIdx(null);
+        };
+        window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
+    }, [lightboxIdx, goNext, goPrev]);
+
+    // Mouse wheel navigation
+    useEffect(() => {
+        if (lightboxIdx === null) return;
+        const el = lightboxRef.current;
+        if (!el) return;
+        const onWheel = (e: WheelEvent) => {
+            e.preventDefault();
+            if (e.deltaY > 0 || e.deltaX > 0) goNext();
+            else if (e.deltaY < 0 || e.deltaX < 0) goPrev();
+        };
+        el.addEventListener('wheel', onWheel, { passive: false });
+        return () => el.removeEventListener('wheel', onWheel);
+    }, [lightboxIdx, goNext, goPrev]);
+
+    // Arrow up/down to scroll post content
+    useEffect(() => {
+        if (lightboxIdx !== null) return;
+        const el = contentRef.current;
+        if (!el) return;
+        const handleKey = (e: KeyboardEvent) => {
+            const step = 120;
+            if (e.key === 'ArrowDown') { e.preventDefault(); el.scrollBy({ top: step, behavior: 'smooth' }); }
+            else if (e.key === 'ArrowUp') { e.preventDefault(); el.scrollBy({ top: -step, behavior: 'smooth' }); }
+        };
+        window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
+    }, [lightboxIdx]);
+
+    const handleBack = () => {
+        router.push(`/${i18n.language}/gallery?tab=diary`);
+    };
+
+    return (
+        <div
+            className="diary-container"
+            style={{ backgroundImage: "url('/gallery-background-img/gallery-cozy-corner.webp')" }}
+        >
+            <div className="diary-panel">
+                <div className="diary-post-header">
+                    <h1 className="diary-post-title">{title}</h1>
+                    <div className="diary-post-date">{entry.date}</div>
+                </div>
+
+                <div ref={contentRef} className="diary-post-content">
+                    {/* Text content before images */}
+                    {content && (
+                        <div className="diary-post-text">
+                            {content.split('\n').map((line, i) => (
+                                <React.Fragment key={i}>
+                                    {line}
+                                    {i < content.split('\n').length - 1 && <br />}
+                                </React.Fragment>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Images */}
+                    {entry.images.length > 0 && (
+                        <div className="diary-post-images">
+                            {entry.images.map((src, i) => (
+                                <img
+                                    key={i}
+                                    src={src}
+                                    alt={`${title} ${i + 1}`}
+                                    className="diary-post-img"
+                                    loading="lazy"
+                                    onClick={() => setLightboxIdx(i)}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                <button className="diary-back" onClick={handleBack}>
+                    {t('gallery.backToGallery')}
+                </button>
+            </div>
+
+            {/* Lightbox */}
+            {lightboxIdx !== null && (
+                <div ref={lightboxRef} className="diary-lightbox" onClick={() => setLightboxIdx(null)}>
+                    <img
+                        src={entry.images[lightboxIdx]}
+                        alt={`${title} ${lightboxIdx + 1}`}
+                        onClick={(e) => e.stopPropagation()}
+                    />
+                    {len > 1 && (
+                        <>
+                            <button
+                                className="diary-lb-arrow prev"
+                                onClick={(e) => { e.stopPropagation(); goPrev(); }}
+                            >
+                                &#8249;
+                            </button>
+                            <button
+                                className="diary-lb-arrow next"
+                                onClick={(e) => { e.stopPropagation(); goNext(); }}
+                            >
+                                &#8250;
+                            </button>
+                            <div className="diary-lb-counter">
+                                {lightboxIdx + 1} / {entry.images.length}
+                            </div>
+                        </>
+                    )}
+                    <button className="diary-lb-close" onClick={() => setLightboxIdx(null)}>
+                        {t('about.close')}
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default DiaryPost;

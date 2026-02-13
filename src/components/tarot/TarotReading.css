@@ -1,0 +1,695 @@
+/* 타로 리딩 스타일 */
+
+/* ========================================
+   3단 레이아웃: 알파(상단) - 카드(중단) - 대화(하단)
+   ======================================== */
+
+/* 알파 이미지 컨테이너 */
+.tarot-alpha-container {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 55%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 3;
+  pointer-events: none;
+  transition: all 0.4s ease;
+}
+
+.tarot-alpha-image {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  transition: all 0.4s ease;
+}
+
+/* 카드 영역 컨테이너 - 대화창과 좌측 정렬 */
+.tarot-cards-container {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1400px;
+  height: 55%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+
+/* 스프레드 그리드 */
+.tarot-spread {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  padding: 0.5rem;
+  pointer-events: auto;
+}
+
+.tarot-spread-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  width: 320px;
+  margin: 0 auto;
+}
+
+/* 카드 컨테이너 */
+.tarot-card-container {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.tarot-card-container:hover:not(.interpreted) {
+  transform: translateY(-4px);
+}
+
+.tarot-card-container.active {
+  z-index: 10;
+}
+
+.tarot-card-container.active .tarot-card {
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
+}
+
+.tarot-card-container.interpreted {
+  opacity: 0.7;
+  cursor: default;
+}
+
+/* 포지션 라벨 */
+.tarot-position-label {
+  position: absolute;
+  top: -1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  z-index: 5;
+}
+
+/* 카드 본체 */
+.tarot-card {
+  width: 100%;
+  aspect-ratio: 2/3;
+  perspective: 1000px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tarot-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.tarot-card.flipped .tarot-card-inner {
+  transform: rotateY(180deg);
+}
+
+.tarot-card.reversed.flipped .tarot-card-inner {
+  transform: rotateY(180deg) rotateZ(180deg);
+}
+
+/* 카드 앞뒤면 공통 */
+.tarot-card-front,
+.tarot-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* 카드 뒷면 */
+.tarot-card-back {
+  background: linear-gradient(135deg, #2d1b4e 0%, #1a0a2e 100%);
+  border: 2px solid #6b4c9a;
+}
+
+.tarot-card-back-design {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.tarot-logo {
+  font-size: 2rem;
+  color: #9b7cc9;
+  text-shadow: 0 0 10px rgba(155, 124, 201, 0.5);
+}
+
+.tarot-pattern {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  border: 1px solid rgba(155, 124, 201, 0.3);
+  border-radius: 50%;
+}
+
+.tarot-pattern::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 60%;
+  border: 1px solid rgba(155, 124, 201, 0.2);
+  border-radius: 50%;
+}
+
+/* 카드 앞면 */
+.tarot-card-front {
+  transform: rotateY(180deg);
+  background: #1a1a2e;
+  display: flex;
+  flex-direction: column;
+}
+
+.tarot-card-image {
+  width: 100%;
+  height: 85%;
+  object-fit: cover;
+}
+
+.tarot-card-name {
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.2rem;
+}
+
+/* 역방향 뱃지 */
+.tarot-reversed-badge {
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.55rem;
+  color: #ff6b6b;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  z-index: 5;
+}
+
+/* 셔플 애니메이션 */
+@keyframes shuffle {
+  0% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-20px) rotate(-5deg); }
+  50% { transform: translateX(20px) rotate(5deg); }
+  75% { transform: translateX(-10px) rotate(-2deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+
+.tarot-shuffle {
+  animation: shuffle 0.5s ease-in-out;
+}
+
+/* 타로 리딩 컨트롤 */
+.tarot-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.tarot-topic-input {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tarot-topic-input input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: 1px solid rgba(155, 124, 201, 0.5);
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.tarot-topic-input input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.tarot-topic-input input:focus {
+  outline: none;
+  border-color: #9b7cc9;
+}
+
+.tarot-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #6b4c9a 0%, #4a2c7a 100%);
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tarot-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(107, 76, 154, 0.4);
+}
+
+.tarot-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tarot-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 타로 상태 메시지 */
+.tarot-status {
+  text-align: center;
+  padding: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+}
+
+.tarot-status.highlight {
+  color: #9b7cc9;
+  font-weight: 500;
+}
+
+/* 진행 바 */
+.tarot-progress {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.5rem;
+}
+
+.tarot-progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.tarot-progress-dot.active {
+  background: #9b7cc9;
+  transform: scale(1.2);
+}
+
+.tarot-progress-dot.done {
+  background: rgba(155, 124, 201, 0.5);
+}
+
+/* 모바일 최적화 */
+@media (max-width: 400px) {
+  .tarot-spread-grid {
+    gap: 0.3rem;
+    max-width: 300px;
+  }
+
+  .tarot-position-label {
+    font-size: 0.55rem;
+    top: -1rem;
+  }
+
+  .tarot-card-name {
+    font-size: 0.6rem;
+  }
+
+  .tarot-logo {
+    font-size: 1.5rem;
+  }
+}
+
+/* ========================================
+   켈틱 크로스 배열
+   ======================================== */
+
+.celtic-cross-spread {
+  display: flex;
+  gap: 1.5rem;
+  z-index: 10;
+  pointer-events: auto;
+  align-items: flex-start;
+  transform: scale(0.9);
+  transform-origin: top left;
+}
+
+/* 중앙 십자 영역 */
+.celtic-cross-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 5.5rem; /* 크로스를 아래로 */
+}
+
+.celtic-cross-middle {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* 중앙 스택 (1번 + 2번 교차) */
+.celtic-center-stack {
+  position: relative;
+  width: 81px;
+  height: 144px;
+}
+
+/* 오른쪽 기둥 (7~10, 아래에서 위로) */
+.celtic-staff {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.3rem;
+}
+
+.celtic-pos-7 {
+  margin-bottom: 0.5rem;
+}
+
+.celtic-pos-10 {
+  margin-top: 0.5rem;
+}
+
+/* 개별 카드 (9:16 비율) */
+.celtic-card {
+  width: 81px;
+  height: 144px;
+  perspective: 1000px;
+  cursor: pointer;
+  position: relative;
+}
+
+.celtic-card.interpreted {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.celtic-card.active {
+  z-index: 20;
+}
+
+.celtic-card.active .celtic-card-inner {
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+}
+
+/* 1번 카드 (기본) */
+.celtic-pos-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* 2번 카드 (교차, 90도 회전) */
+.celtic-pos-2.celtic-crossed {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  z-index: 10;
+}
+
+/* 카드 뒤집기 애니메이션 */
+.celtic-card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.6s ease;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  border-radius: 6px;
+}
+
+.celtic-card.flipped .celtic-card-inner {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.celtic-card-back,
+.celtic-card-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 6px;
+}
+
+/* 카드 뒷면 */
+.celtic-card-back {
+  background: url('/tarot/card-back.webp') center/contain no-repeat;
+  background-color: #1a1a2e;
+}
+
+.celtic-card-number {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* 카드 앞면 */
+.celtic-card-front {
+  transform: rotateY(180deg);
+  background: #1a1a2e;
+}
+
+.celtic-card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #1a1a2e;
+}
+
+.celtic-card-front.reversed img {
+  transform: rotate(180deg);
+}
+
+/* 포지션 라벨 */
+.celtic-position-label {
+  position: absolute;
+  bottom: -1.3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* 확대된 카드 오버레이 */
+.card-detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* 투명 배경 - 대화창 기준 오른쪽 정렬 */
+.card-detail-overlay.card-detail-transparent {
+  background: transparent;
+  pointer-events: none;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1400px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-top: 5%;
+}
+
+.card-detail-overlay.card-detail-transparent .card-detail-content {
+  pointer-events: auto;
+  margin-right: 3rem;
+}
+
+.card-detail-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* 카드 네비게이션 화살표 */
+.card-nav-btn {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.card-nav-btn:hover:not(:disabled) {
+  background: rgba(138, 43, 226, 0.5);
+}
+
+/* 켈틱 크로스에서 선택된 카드 표시 */
+.celtic-card.viewing .celtic-card-inner {
+  box-shadow: 0 0 12px rgba(255, 200, 61, 0.7);
+  outline: 2px solid rgba(255, 200, 61, 0.6);
+}
+
+.celtic-card.next-flip .celtic-card-inner {
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.6);
+  outline: 2px solid rgba(138, 43, 226, 0.5);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(138, 43, 226, 0.4); }
+  50% { box-shadow: 0 0 18px rgba(138, 43, 226, 0.8); }
+}
+
+.card-detail-image {
+  width: 270px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(138, 43, 226, 0.4);
+}
+
+.card-detail-image.reversed {
+  transform: rotate(180deg);
+}
+
+.card-detail-name {
+  font-size: 1.2rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.card-detail-position {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* 모바일: 열린 카드 가운데 정렬 */
+@media (max-width: 768px) {
+  .card-detail-overlay.card-detail-transparent {
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 5%;
+  }
+
+  .card-detail-overlay.card-detail-transparent .card-detail-content {
+    margin-right: 0;
+  }
+
+  .card-detail-image {
+    width: 200px;
+  }
+}
+
+/* 모바일 최적화 */
+@media (max-width: 500px) {
+  .tarot-cards-container {
+    top: 3%;
+    height: 55%;
+  }
+
+  .celtic-card {
+    width: 50px;
+    height: 90px;
+    perspective: 800px;
+  }
+
+  .celtic-center-stack {
+    width: 50px;
+    height: 90px;
+  }
+
+  .celtic-cross-spread {
+    gap: 0.8rem;
+  }
+
+  .celtic-cross-center {
+    gap: 0.2rem;
+    margin-top: 1rem;
+  }
+
+  .celtic-cross-middle {
+    gap: 0.2rem;
+  }
+
+  .celtic-staff {
+    gap: 0.2rem;
+  }
+
+  .celtic-card-number {
+    font-size: 1rem;
+  }
+
+  .celtic-position-label {
+    font-size: 0.6rem;
+    bottom: -1.1rem;
+  }
+}
+
+/* 아주 작은 화면 */
+@media (max-width: 380px) {
+  .tarot-cards-container {
+    top: 2%;
+    height: 55%;
+  }
+
+  .celtic-card {
+    width: 40px;
+    height: 72px;
+    perspective: 600px;
+  }
+
+  .celtic-center-stack {
+    width: 40px;
+    height: 72px;
+  }
+
+  .celtic-cross-spread {
+    gap: 0.5rem;
+  }
+
+  .celtic-cross-center {
+    margin-top: 0.8rem;
+  }
+
+}

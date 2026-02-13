@@ -66,6 +66,27 @@ public-home/
 
 ## 📝 Changelog
 
+### v0.1.5 (2026-02-13)
+- **Gallery — Diary**:
+    - Added diary tab to the gallery with 19 entries (newest first).
+    - Each diary entry has its own shareable URL with Open Graph metadata (`/gallery/diary/[slug]`).
+    - Posting-style layout: text content + multiple images per entry.
+    - Image lightbox with keyboard (left/right arrows), mouse wheel, and touch navigation.
+    - Keyboard scroll (up/down arrows) for browsing post content.
+    - Full Korean/English bilingual support for titles, content, and UI.
+    - 50 diary images optimized and converted to WebP format.
+- **Gallery — Guestbook**:
+    - Full guestbook feature with nickname + password authentication.
+    - Secret message system with viewer authentication.
+    - Admin mode for managing all entries.
+    - All Firestore operations migrated to Firebase Admin SDK (server-side only).
+    - Rate limiting, timing-safe password comparison, and server-side validation.
+- **Security Hardening**:
+    - Migrated from client-side Firestore SDK to Firebase Admin SDK.
+    - Server-side password hashing (SHA-256) and timing-safe comparison.
+    - Per-IP rate limiting on all API endpoints.
+    - Secret messages only accessible via authenticated server API.
+
 ### v0.1.4 (2026-02-02)
 - **AI Chat Features**:
     - **Coffee Chat**: VN-style conversation system with Alpha at the cafe counter. Powered by Google Gemini 3.0 Flash.

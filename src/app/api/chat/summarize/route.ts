@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-interface ChatMessage {
-    role: 'user' | 'model';
-    content: string;
-}
+import { ChatMessage, callGemini, GeminiApiError } from '@/lib/gemini';
 
 const SUMMARIZE_PROMPT = `당신은 대화 요약 전문가입니다. 아래 대화를 분석하여 JSON 형식으로 응답해주세요.
 
@@ -51,59 +47,19 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        const apiKey = process.env.GEMINI_TOKEN;
-
-        if (!apiKey) {
-            console.error('GEMINI_TOKEN not found');
-            return NextResponse.json(
-                { error: 'Gemini API key is not configured' },
-                { status: 500 }
-            );
-        }
-
-        // 대화 내용을 텍스트로 변환
         const conversationText = messages
             .map(m => `${m.role === 'user' ? '손님' : '알파'}: ${m.content}`)
             .join('\n');
 
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    contents: [{
-                        role: 'user',
-                        parts: [{ text: SUMMARIZE_PROMPT + conversationText }]
-                    }],
-                    generationConfig: {
-                        maxOutputTokens: 500,
-                        temperature: 0.3
-                    }
-                })
-            }
+        const { text } = await callGemini(
+            SUMMARIZE_PROMPT + conversationText,
+            [{ role: 'user', parts: [{ text: '위 대화를 분석해주세요.' }] }],
+            { temperature: 0.3 }
         );
 
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            console.error('Gemini API error:', errorData);
-            return NextResponse.json(
-                { error: `API request failed: ${response.status}` },
-                { status: response.status }
-            );
-        }
-
-        const data = await response.json();
-        const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
-        // JSON 파싱 시도
         try {
-            // JSON 블록 추출 (```json ... ``` 또는 { ... })
-            const jsonMatch = responseText.match(/```json\s*([\s\S]*?)\s*```/) ||
-                              responseText.match(/(\{[\s\S]*\})/);
-
+            const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/) ||
+                              text.match(/(\{[\s\S]*\})/);
             if (jsonMatch) {
                 const parsed = JSON.parse(jsonMatch[1]);
                 return NextResponse.json(parsed);
@@ -112,7 +68,6 @@ export async function POST(request: NextRequest) {
             console.error('JSON parse error:', parseError);
         }
 
-        // 파싱 실패 시 기본 응답
         return NextResponse.json({
             name: null,
             nickname: null,
@@ -121,10 +76,10 @@ export async function POST(request: NextRequest) {
             summary: '대화 요약을 생성하지 못했습니다.',
         });
     } catch (error) {
+        if (error instanceof GeminiApiError) {
+            return NextResponse.json({ error: error.message }, { status: error.status });
+        }
         console.error('Summarize API error:', error);
-        return NextResponse.json(
-            { error: 'Internal server error' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }

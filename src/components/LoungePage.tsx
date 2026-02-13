@@ -19,7 +19,6 @@ const LoungePage: React.FC = () => {
     const [loungeVariant, setLoungeVariant] = useState('lounge-sunny');
     const entrySource = searchParams.get('from');
     const [showGreeting, setShowGreeting] = useState(() => entrySource === 'entrance');
-    const [showConstruction, setShowConstruction] = useState(false);
     const season = (searchParams.get('season') as Season) || 'spring';
     const time = (searchParams.get('time') as TimeOfDay) || 'day';
     const weather = (searchParams.get('weather') as Weather) || 'sunny';
@@ -127,10 +126,10 @@ const LoungePage: React.FC = () => {
                         <button className="menu-button ui-button ui-button-ghost" onClick={handleStairs}>
                             {t('lounge.stairs')}
                         </button>
-                        <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
+                        <button className="menu-button ui-button ui-button-ghost" onClick={() => pushWithParams('/gallery')}>
                             {t('lounge.gallery')}
                         </button>
-                        <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
+                        <button className="menu-button ui-button ui-button-ghost" onClick={() => pushWithParams('/guestbook')}>
                             {t('lounge.guestbook')}
                         </button>
 
@@ -159,13 +158,6 @@ const LoungePage: React.FC = () => {
                 />
             )}
 
-            {showConstruction && (
-                <UnderConstruction
-                    onClose={() => setShowConstruction(false)}
-                    backgroundSrc={bgImage || '/undestruct.webp'}
-                    illustrationSrc="/undestruct.webp"
-                />
-            )}
         </div>
     );
 };
