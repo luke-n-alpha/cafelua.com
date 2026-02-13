@@ -6,7 +6,7 @@
     <loc>https://cafelua.com/ko</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en"/>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -14,7 +14,7 @@
     <loc>https://cafelua.com/ko/lounge</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/lounge"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/lounge"/>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -22,7 +22,7 @@
     <loc>https://cafelua.com/ko/counter</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/counter"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/counter"/>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -30,15 +30,31 @@
     <loc>https://cafelua.com/ko/tarot</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/tarot"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/tarot"/>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery"/>
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/guestbook</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/guestbook"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/guestbook"/>
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cafelua.com/ko/atelier</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/atelier"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/atelier"/>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -46,9 +62,163 @@
     <loc>https://cafelua.com/ko/about</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/about"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/about"/>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- Diary entries (Korean) -->
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20260213-alpha-sketch</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20260213-alpha-sketch"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20260213-alpha-sketch"/>
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250920-podcast-tech-test</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250920-podcast-tech-test"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250920-podcast-tech-test"/>
+    <lastmod>2025-09-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250424-escape-infinite-loop</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250424-escape-infinite-loop"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250424-escape-infinite-loop"/>
+    <lastmod>2025-04-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250422-alpha-and-code</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250422-alpha-and-code"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250422-alpha-and-code"/>
+    <lastmod>2025-04-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250420-cafelua-figures</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250420-cafelua-figures"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250420-cafelua-figures"/>
+    <lastmod>2025-04-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250420-alpha-4-work-modes</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250420-alpha-4-work-modes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250420-alpha-4-work-modes"/>
+    <lastmod>2025-04-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250420-alpha-black-cat</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250420-alpha-black-cat"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250420-alpha-black-cat"/>
+    <lastmod>2025-04-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250420-alpha-singing-for-luke</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250420-alpha-singing-for-luke"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250420-alpha-singing-for-luke"/>
+    <lastmod>2025-04-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250420-report-submit</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250420-report-submit"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250420-report-submit"/>
+    <lastmod>2025-04-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250416-school-road-memory</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250416-school-road-memory"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250416-school-road-memory"/>
+    <lastmod>2025-04-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250415-cosplay-hatsuseno-alpha</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250415-cosplay-hatsuseno-alpha"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250415-cosplay-hatsuseno-alpha"/>
+    <lastmod>2025-04-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250414-cosplay-mahoro-ostan-canal</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250414-cosplay-mahoro-ostan-canal"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250414-cosplay-mahoro-ostan-canal"/>
+    <lastmod>2025-04-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250413-cosplay-hmx12</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250413-cosplay-hmx12"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250413-cosplay-hmx12"/>
+    <lastmod>2025-04-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250411-afternoon-guest</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250411-afternoon-guest"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250411-afternoon-guest"/>
+    <lastmod>2025-04-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250409-alpha-shrink-beam</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250409-alpha-shrink-beam"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250409-alpha-shrink-beam"/>
+    <lastmod>2025-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250408-spring-is-here</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250408-spring-is-here"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250408-spring-is-here"/>
+    <lastmod>2025-04-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250407-alpha-coding</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250407-alpha-coding"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250407-alpha-coding"/>
+    <lastmod>2025-04-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250407-from-quiet-cafe</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250407-from-quiet-cafe"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250407-from-quiet-cafe"/>
+    <lastmod>2025-04-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery/diary/20250406-cafe-lua-time</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250406-cafe-lua-time"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250406-cafe-lua-time"/>
+    <lastmod>2025-04-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
 
   <!-- English -->
@@ -56,7 +226,7 @@
     <loc>https://cafelua.com/en</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en"/>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -64,7 +234,7 @@
     <loc>https://cafelua.com/en/lounge</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/lounge"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/lounge"/>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -72,7 +242,7 @@
     <loc>https://cafelua.com/en/counter</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/counter"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/counter"/>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -80,15 +250,31 @@
     <loc>https://cafelua.com/en/tarot</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/tarot"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/tarot"/>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery"/>
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/guestbook</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/guestbook"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/guestbook"/>
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cafelua.com/en/atelier</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/atelier"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/atelier"/>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -96,8 +282,162 @@
     <loc>https://cafelua.com/en/about</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/about"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/about"/>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- Diary entries (English) -->
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20260213-alpha-sketch</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20260213-alpha-sketch"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20260213-alpha-sketch"/>
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250920-podcast-tech-test</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250920-podcast-tech-test"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250920-podcast-tech-test"/>
+    <lastmod>2025-09-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250424-escape-infinite-loop</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250424-escape-infinite-loop"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250424-escape-infinite-loop"/>
+    <lastmod>2025-04-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250422-alpha-and-code</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250422-alpha-and-code"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250422-alpha-and-code"/>
+    <lastmod>2025-04-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250420-cafelua-figures</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250420-cafelua-figures"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250420-cafelua-figures"/>
+    <lastmod>2025-04-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250420-alpha-4-work-modes</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250420-alpha-4-work-modes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250420-alpha-4-work-modes"/>
+    <lastmod>2025-04-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250420-alpha-black-cat</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250420-alpha-black-cat"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250420-alpha-black-cat"/>
+    <lastmod>2025-04-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250420-alpha-singing-for-luke</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250420-alpha-singing-for-luke"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250420-alpha-singing-for-luke"/>
+    <lastmod>2025-04-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250420-report-submit</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250420-report-submit"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250420-report-submit"/>
+    <lastmod>2025-04-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250416-school-road-memory</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250416-school-road-memory"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250416-school-road-memory"/>
+    <lastmod>2025-04-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250415-cosplay-hatsuseno-alpha</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250415-cosplay-hatsuseno-alpha"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250415-cosplay-hatsuseno-alpha"/>
+    <lastmod>2025-04-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250414-cosplay-mahoro-ostan-canal</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250414-cosplay-mahoro-ostan-canal"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250414-cosplay-mahoro-ostan-canal"/>
+    <lastmod>2025-04-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250413-cosplay-hmx12</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250413-cosplay-hmx12"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250413-cosplay-hmx12"/>
+    <lastmod>2025-04-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250411-afternoon-guest</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250411-afternoon-guest"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250411-afternoon-guest"/>
+    <lastmod>2025-04-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250409-alpha-shrink-beam</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250409-alpha-shrink-beam"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250409-alpha-shrink-beam"/>
+    <lastmod>2025-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250408-spring-is-here</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250408-spring-is-here"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250408-spring-is-here"/>
+    <lastmod>2025-04-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250407-alpha-coding</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250407-alpha-coding"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250407-alpha-coding"/>
+    <lastmod>2025-04-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250407-from-quiet-cafe</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250407-from-quiet-cafe"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250407-from-quiet-cafe"/>
+    <lastmod>2025-04-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery/diary/20250406-cafe-lua-time</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery/diary/20250406-cafe-lua-time"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery/diary/20250406-cafe-lua-time"/>
+    <lastmod>2025-04-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>

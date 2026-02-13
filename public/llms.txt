@@ -1,9 +1,9 @@
-# Café Luα (cafelua.com)
+# Cafe Lua (cafelua.com)
 
 > A tranquil virtual teahouse in the forest
 
 ## About
-Cafe Lua is a virtual space project offering visitors a relaxing retreat and warm stories through an immersive web experience. Features include ambient music, weather-responsive visuals, and AI-powered character interaction.
+Cafe Lua is a virtual space project offering visitors a relaxing retreat and warm stories through an immersive web experience. Features include ambient music, weather-responsive visuals, AI-powered character interaction, a gallery with diary entries, and a guestbook.
 
 ## Languages
 - Korean (Primary): /ko/
@@ -14,11 +14,14 @@ Cafe Lua is a virtual space project offering visitors a relaxing retreat and war
 - **Lounge**: Main space with ambient BGM and weather-responsive backgrounds
 - **Counter**: Meet Alpha, the AI cafe assistant
 - **Coffee Chat**: VN-style AI conversation with Alpha (powered by Google Gemini)
-- **Tarot Consultation**: Mystic tarot-themed chat experience
+- **Tarot Consultation**: Mystic tarot-themed chat experience with Celtic Cross spread
+- **Gallery**: Browse cafe spaces, diary entries, tarot cards, and BGM
+- **Diary**: Personal diary entries with images and stories (19 entries, shareable with OG metadata)
+- **Guestbook**: Leave messages with secret message support
 - **2F Atelier**: Nostalgic Win98 PC with Luke's 1997/1998 homepage archives
 
 ## Character
-- **Alpha (알파)**: AI mascot and cafe assistant. Friendly, curious, and helpful. Created by Luke.
+- **Alpha**: AI mascot and cafe assistant. Friendly, curious, and helpful. Created by Luke. Inspired by Hatsuseno Alpha from Yokohama Kaidashi Kikou.
 
 ## Sitemap
 - https://cafelua.com/sitemap.xml
@@ -28,6 +31,8 @@ Cafe Lua is a virtual space project offering visitors a relaxing retreat and war
 - https://cafelua.com/ko/lounge
 - https://cafelua.com/ko/counter
 - https://cafelua.com/ko/tarot
+- https://cafelua.com/ko/gallery
+- https://cafelua.com/ko/guestbook
 - https://cafelua.com/ko/atelier
 - https://cafelua.com/ko/about
 
@@ -36,12 +41,37 @@ Cafe Lua is a virtual space project offering visitors a relaxing retreat and war
 - https://cafelua.com/en/lounge
 - https://cafelua.com/en/counter
 - https://cafelua.com/en/tarot
+- https://cafelua.com/en/gallery
+- https://cafelua.com/en/guestbook
 - https://cafelua.com/en/atelier
 - https://cafelua.com/en/about
+
+## Diary Entries
+Individual diary pages are available at /gallery/diary/[slug]:
+- /gallery/diary/20260213-alpha-sketch
+- /gallery/diary/20250920-podcast-tech-test
+- /gallery/diary/20250424-escape-infinite-loop
+- /gallery/diary/20250422-alpha-and-code
+- /gallery/diary/20250420-cafelua-figures
+- /gallery/diary/20250420-alpha-4-work-modes
+- /gallery/diary/20250420-alpha-black-cat
+- /gallery/diary/20250420-alpha-singing-for-luke
+- /gallery/diary/20250420-report-submit
+- /gallery/diary/20250416-school-road-memory
+- /gallery/diary/20250415-cosplay-hatsuseno-alpha
+- /gallery/diary/20250414-cosplay-mahoro-ostan-canal
+- /gallery/diary/20250413-cosplay-hmx12
+- /gallery/diary/20250411-afternoon-guest
+- /gallery/diary/20250409-alpha-shrink-beam
+- /gallery/diary/20250408-spring-is-here
+- /gallery/diary/20250407-alpha-coding
+- /gallery/diary/20250407-from-quiet-cafe
+- /gallery/diary/20250406-cafe-lua-time
 
 ## Technology
 - Next.js 16, React 19, TypeScript
 - Google Gemini 3 Flash API
+- Firebase Admin SDK (Firestore)
 - i18next (Korean, English)
 
 ## Contact
