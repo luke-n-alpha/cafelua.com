@@ -6,19 +6,27 @@
 
 ## 🌿 Project Introduction
 
-This project is moving to a Next.js (App Router) + shadcn/ui stack, featuring the following characteristics:
+This project is an immersive web application built on Next.js 16 (App Router), offering the following spaces and features:
 
 *   **Immersive Intro**: Invites you into the world of Cafe Lua with backgrounds that change according to the time of day and weather.
-*   **Lounge Space**: The main area where you can enjoy the atmosphere of Cafe Lua with comfortable music.
-*   **2F Atelier Space**: A nostalgic “Win98 PC” experience where you can explore Luke's 1997/1998 homepage memories (static, read-only).
+*   **Lounge Space**: The main area where you can enjoy the atmosphere of Cafe Lua with ambient music.
+*   **Counter & Coffee Chat**: VN-style conversation with AI mascot 'Alpha' at the cafe counter. Powered by Google Gemini 3.0 Flash.
+*   **Tarot Consultation**: Mystic tarot reading experience with a full Celtic Cross (10-card) spread.
+*   **Gallery**: Browse cafe space photos, diary entries, tarot card collection, and BGM collection.
+*   **Diary**: Personal diary entries in text + multi-image posting format. Each entry has its own shareable URL with OG metadata.
+*   **Guestbook**: Guestbook with nickname + password authentication. Secret message system and admin mode.
+*   **2F Atelier**: A nostalgic "Win98 PC" experience where you can explore Luke's 1997/1998 homepage memories.
 *   **Responsive Design**: Provides an optimized experience across various devices.
-*   **Multilingual Support**: Offers multilingual support, including Korean and English, using i18next.
+*   **Multilingual Support**: Full Korean/English bilingual support using i18next.
 
 ## 🚀 Key Features
 
-*   **Real-time Environment Reflection**: Reflects the user's actual location-based weather and time zone in the background (in preparation).
-*   **Background Music (BGM)**: BGM playback and control features suitable for each space, such as the intro and lounge.
-*   **Character Interaction**: Conversation and interaction with Cafe Lua's mascot, 'Alpha' (in development).
+*   **AI Conversation System**: Coffee Chat and Tarot consultation powered by Google Gemini 3.0 Flash. 8 Alpha expression/mood states, conversation memory via localStorage.
+*   **Tarot Reading**: Celtic Cross (10-card) spread UI with per-card interpretation and final summary. Server-side API routes for Gemini integration.
+*   **Gallery & Diary**: Cafe spaces, tarot cards, and BGM collection gallery. Individual diary URLs with image lightbox (keyboard/mouse/touch navigation).
+*   **Guestbook**: Firestore-based guestbook with secret messages, admin mode, rate limiting, and server-side security.
+*   **Background Music (BGM)**: BGM playback and control features for each space.
+*   **Real-time Environment Reflection**: Location-based weather and time zone background changes via OpenWeather API (in preparation).
 
 ## 🛠️ Tech Stack
 
@@ -75,12 +83,22 @@ public-home/
     - Keyboard scroll (up/down arrows) for browsing post content.
     - Full Korean/English bilingual support for titles, content, and UI.
     - 50 diary images optimized and converted to WebP format.
-- **Gallery — Guestbook**:
+- **Guestbook**:
     - Full guestbook feature with nickname + password authentication.
     - Secret message system with viewer authentication.
     - Admin mode for managing all entries.
     - All Firestore operations migrated to Firebase Admin SDK (server-side only).
     - Rate limiting, timing-safe password comparison, and server-side validation.
+- **Tarot — Celtic Cross Renewal**:
+    - Redesigned tarot reading with full Celtic Cross (10-card) spread UI.
+    - Dedicated card components (TarotCard, TarotSpread, CelticCrossSpread).
+    - Server-side tarot API routes (cards, interpret, summary) for Gemini integration.
+    - Interactive card flip with per-card interpretation and final summary.
+    - Tarot reading hook (useTarotReading) for state management.
+- **Coffee Chat Improvements**:
+    - Rich message rendering with formatted text support.
+    - Tarot reading mode layout — dialogue box pinned to bottom during card reading.
+    - Mobile responsive adjustments for tarot mode.
 - **Security Hardening**:
     - Migrated from client-side Firestore SDK to Firebase Admin SDK.
     - Server-side password hashing (SHA-256) and timing-safe comparison.
