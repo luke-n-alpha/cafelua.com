@@ -38,9 +38,41 @@
     <loc>https://cafelua.com/ko/gallery</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery"/>
-    <lastmod>2026-02-13</lastmod>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery?tab=diary</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery?tab=diary"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery?tab=diary"/>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery?tab=spaces</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery?tab=spaces"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery?tab=spaces"/>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery?tab=tarot</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery?tab=tarot"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery?tab=tarot"/>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/ko/gallery?tab=bgm</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery?tab=bgm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery?tab=bgm"/>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cafelua.com/ko/guestbook</loc>
@@ -258,9 +290,41 @@
     <loc>https://cafelua.com/en/gallery</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery"/>
-    <lastmod>2026-02-13</lastmod>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery?tab=diary</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery?tab=diary"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery?tab=diary"/>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery?tab=spaces</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery?tab=spaces"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery?tab=spaces"/>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery?tab=tarot</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery?tab=tarot"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery?tab=tarot"/>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cafelua.com/en/gallery?tab=bgm</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery?tab=bgm"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery?tab=bgm"/>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://cafelua.com/en/guestbook</loc>
