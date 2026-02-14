@@ -24,7 +24,7 @@ const GalleryPage: React.FC = () => {
 
     const tabParam = searchParams.get('tab') as Category | null;
     const validTabs: Category[] = ['diary', 'spaces', 'tarot', 'bgm'];
-    const initialTab = tabParam && validTabs.includes(tabParam) ? tabParam : 'spaces';
+    const initialTab = tabParam && validTabs.includes(tabParam) ? tabParam : 'diary';
 
     const [showGreeting, setShowGreeting] = useState(!tabParam);
     const [category, setCategory] = useState<Category>(initialTab);
