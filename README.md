@@ -26,6 +26,7 @@ This project is an immersive web application built on Next.js 16 (App Router), o
 *   **Guestbook**: Firestore-based guestbook with secret messages, admin mode, rate limiting, and server-side security.
 *   **Background Music (BGM)**: BGM playback and control features for each space.
 *   **Real-time Environment Reflection**: Location-based weather and time zone background changes via OpenWeather API.
+*   **Visitor Counter**: Retro-style visitor counter on the intro page, powered by GA4 Data API.
 
 ## 🛠️ Tech Stack
 
@@ -75,6 +76,13 @@ public-home/
 ```
 
 ## 📝 Changelog
+
+### v0.1.6 (2026-02-14)
+- **Visitor Counter**:
+    - Retro-style visitor counter widget on the intro page (below the enter button).
+    - GA4 Data API integration for real-time cumulative visitor count.
+    - Server-side API route (`/api/visitors/count`) with 1-hour cache.
+    - Graceful fallback: counter hides silently when configuration is missing.
 
 ### v0.1.5 (2026-02-13)
 - **Gallery — Diary**:
