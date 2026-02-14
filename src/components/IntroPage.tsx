@@ -9,6 +9,7 @@ import {
     Flower2, Leaf, Snowflake, Sunset, DoorClosed, RefreshCw
 } from 'lucide-react';
 import BackgroundMusic from './BackgroundMusic';
+import VisitorCounter from './VisitorCounter';
 import { getWeatherByCoords } from '../services/WeatherService';
 import type { AppWeather, AppTimeOfDay } from '../services/WeatherService';
 
@@ -442,6 +443,7 @@ const IntroPage: React.FC = () => {
                 <button className="enter-text" onClick={handleEnter}>
                     {t('intro.clickToEnter')}
                 </button>
+                <VisitorCounter />
             </div>
 
             <div className="intro-footer glass" onClick={(e) => e.stopPropagation()}>

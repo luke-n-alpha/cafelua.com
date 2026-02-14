@@ -47,8 +47,11 @@
 | `ALPHA_FAMILY_MEMBERS` | No | 알파 메모리용 가족 구성원 JSON |
 | `ALPHA_MASTER_BIRTHDAY` | No | 알파가 기억할 마스터 생일 |
 | `VITE_OPENWEATHER_API_KEY` | No | 실시간 날씨용 OpenWeather API 키 |
+| `FIREBASE_CLIENT_EMAIL` | Yes* | Firebase Admin SDK 서비스 계정 이메일 |
+| `FIREBASE_PRIVATE_KEY` | Yes* | Firebase Admin SDK 비공개 키 |
+| `GA4_PROPERTY_ID` | No | 인트로 페이지 방문자 카운터용 GA4 속성 ID |
 
-*AI 채팅 기능(Coffee Chat, Tarot) 사용 시에만 필수
+*방명록 및 AI 채팅 기능 사용 시 필수
 
 ### Vercel 배포
 

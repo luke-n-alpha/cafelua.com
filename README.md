@@ -47,8 +47,11 @@ Copy `.env.example` to `.env` and configure:
 | `ALPHA_FAMILY_MEMBERS` | No | Family members JSON for Alpha's memory |
 | `ALPHA_MASTER_BIRTHDAY` | No | Master's birthday for Alpha to remember |
 | `VITE_OPENWEATHER_API_KEY` | No | OpenWeather API key for real-time weather |
+| `FIREBASE_CLIENT_EMAIL` | Yes* | Firebase Admin SDK service account email |
+| `FIREBASE_PRIVATE_KEY` | Yes* | Firebase Admin SDK private key |
+| `GA4_PROPERTY_ID` | No | GA4 Property ID for visitor counter on intro page |
 
-*Required only for AI chat features (Coffee Chat, Tarot)
+*Required for Guestbook and AI chat features
 
 ### Vercel Deployment
 

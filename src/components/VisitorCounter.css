@@ -1,0 +1,25 @@
+.visitor-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.4rem 1rem;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 20px;
+    border: 1px solid rgba(127, 239, 189, 0.2);
+}
+
+.visitor-counter-label {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: 1px;
+}
+
+.visitor-counter-digits {
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #7fefbd;
+    text-shadow: 0 0 6px rgba(127, 239, 189, 0.35);
+}

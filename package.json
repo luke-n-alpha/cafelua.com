@@ -14,6 +14,7 @@
     "generate-index": "node scripts/generate-content-index.js"
   },
   "dependencies": {
+    "@google-analytics/data": "^5.2.1",
     "firebase": "^12.9.0",
     "firebase-admin": "^13.6.1",
     "i18next": "^25.6.3",
