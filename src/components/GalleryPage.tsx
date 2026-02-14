@@ -23,14 +23,35 @@ const GalleryPage: React.FC = () => {
     const isKo = i18n.language === 'ko';
 
     const tabParam = searchParams.get('tab') as Category | null;
+    const subParam = searchParams.get('sub');
+    const imgParam = searchParams.get('img');
     const validTabs: Category[] = ['diary', 'spaces', 'tarot', 'bgm'];
     const initialTab = tabParam && validTabs.includes(tabParam) ? tabParam : 'diary';
+    const validSubcats = SPACE_SUBCATEGORIES.map(s => s.key);
+    const initialSub = subParam && validSubcats.includes(subParam) ? subParam : 'intro';
 
     const [showGreeting, setShowGreeting] = useState(!tabParam);
     const [category, setCategory] = useState<Category>(initialTab);
-    const [spaceSubcat, setSpaceSubcat] = useState('intro');
+    const [spaceSubcat, setSpaceSubcat] = useState(initialSub);
     const [carouselIndex, setCarouselIndex] = useState(0);
     const [lightboxImage, setLightboxImage] = useState<GalleryImage | null>(null);
+
+    // URL 업데이트 헬퍼 (히스토리 교체, 새로고침 없음)
+    const updateUrl = useCallback((params: Record<string, string | null>) => {
+        const newParams = new URLSearchParams();
+        const current: Record<string, string | null> = {
+            tab: category,
+            sub: category === 'spaces' ? spaceSubcat : null,
+            img: null,
+        };
+        const merged = { ...current, ...params };
+        for (const [k, v] of Object.entries(merged)) {
+            if (v != null) newParams.set(k, v);
+        }
+        const qs = newParams.toString();
+        const url = `/${i18n.language}/gallery${qs ? `?${qs}` : ''}`;
+        window.history.replaceState(null, '', url);
+    }, [category, spaceSubcat, i18n.language]);
     const [playingBgm, setPlayingBgm] = useState<string | null>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -45,6 +66,20 @@ const GalleryPage: React.FC = () => {
     useEffect(() => {
         setCarouselIndex(0);
     }, [spaceSubcat]);
+
+    // URL의 img 파라미터로 라이트박스 초기 열기
+    useEffect(() => {
+        if (imgParam == null || showGreeting) return;
+        const idx = parseInt(imgParam, 10);
+        if (isNaN(idx) || idx < 0) return;
+        if (category === 'spaces') {
+            const images = SPACE_IMAGES[spaceSubcat] || [];
+            if (idx < images.length) { setLightboxImage(images[idx]); setCarouselIndex(idx); }
+        } else if (category === 'tarot') {
+            if (idx < TAROT_CARDS.length) setLightboxImage(TAROT_CARDS[idx]);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // Start gallery BGM on entering gallery
     useEffect(() => {
@@ -144,7 +179,7 @@ const GalleryPage: React.FC = () => {
         return (
             <div className="gallery-container" style={{ backgroundImage: "url('/gallery-background-img/gallery-cozy-corner.webp')" }}>
                 <UnderConstruction
-                    onClose={() => setShowGreeting(false)}
+                    onClose={() => { setShowGreeting(false); window.history.replaceState(null, '', `/${i18n.language}/gallery?tab=${category}`); }}
                     message={t('gallery.greeting')}
                     backgroundSrc="/gallery-background-img/gallery-cozy-corner.webp"
                     illustrationSrc="/gallery-background-img/gallery-cozy-corner.webp"
@@ -176,7 +211,7 @@ const GalleryPage: React.FC = () => {
                         <button
                             key={cat}
                             className={`gallery-tab${category === cat ? ' active' : ''}`}
-                            onClick={() => setCategory(cat)}
+                            onClick={() => { setCategory(cat); updateUrl({ tab: cat, sub: cat === 'spaces' ? spaceSubcat : null, img: null }); }}
                         >
                             {t(`gallery.${cat === 'tarot' ? 'tarotCards' : cat === 'diary' ? 'diary' : cat}`)}
                         </button>
@@ -237,7 +272,7 @@ const GalleryPage: React.FC = () => {
                                     <button
                                         key={sub.key}
                                         className={`gallery-chip${spaceSubcat === sub.key ? ' active' : ''}`}
-                                        onClick={() => setSpaceSubcat(sub.key)}
+                                        onClick={() => { setSpaceSubcat(sub.key); updateUrl({ sub: sub.key, img: null }); }}
                                     >
                                         {isKo ? sub.labelKo : sub.labelEn}
                                     </button>
@@ -247,7 +282,7 @@ const GalleryPage: React.FC = () => {
                             {currentImages.length > 0 && spaceSubcat === 'expression' ? (
                                 <div className="character-grid">
                                     {currentImages.map((img, i) => (
-                                        <div key={i} className="character-card" onClick={() => setLightboxImage(img)}>
+                                        <div key={i} className="character-card" onClick={() => { setLightboxImage(img); updateUrl({ img: String(i) }); }}>
                                             <img src={img.src} alt={isKo ? img.titleKo : img.titleEn} loading="lazy" />
                                             <div className="character-card-name">{isKo ? img.titleKo : img.titleEn}</div>
                                         </div>
@@ -258,7 +293,7 @@ const GalleryPage: React.FC = () => {
                                     <div
                                         ref={carouselRef}
                                         className={`carousel-viewport${spaceSubcat === 'character' ? ' contain-mode' : ''}`}
-                                        onClick={() => setLightboxImage(currentImages[carouselIndex])}
+                                        onClick={() => { setLightboxImage(currentImages[carouselIndex]); updateUrl({ img: String(carouselIndex) }); }}
                                         onTouchStart={handleTouchStart}
                                         onTouchMove={handleTouchMove}
                                         onTouchEnd={handleTouchEnd}
@@ -289,7 +324,7 @@ const GalleryPage: React.FC = () => {
                                 <div
                                     key={i}
                                     className="tarot-card-item"
-                                    onClick={() => setLightboxImage(card)}
+                                    onClick={() => { setLightboxImage(card); updateUrl({ img: String(i) }); }}
                                 >
                                     <img
                                         src={card.src}
@@ -348,7 +383,7 @@ const GalleryPage: React.FC = () => {
 
             {/* Lightbox */}
             {lightboxImage && (
-                <div className="lightbox-overlay" onClick={() => setLightboxImage(null)}>
+                <div className="lightbox-overlay" onClick={() => { setLightboxImage(null); updateUrl({ img: null }); }}>
                     <img
                         src={lightboxImage.src}
                         alt={isKo ? lightboxImage.titleKo : lightboxImage.titleEn}
@@ -362,7 +397,7 @@ const GalleryPage: React.FC = () => {
                             {isKo ? lightboxImage.descKo : lightboxImage.descEn}
                         </div>
                     </div>
-                    <button className="lightbox-close" onClick={() => setLightboxImage(null)}>
+                    <button className="lightbox-close" onClick={(e) => { e.stopPropagation(); setLightboxImage(null); updateUrl({ img: null }); }}>
                         {t('about.close')}
                     </button>
                 </div>
