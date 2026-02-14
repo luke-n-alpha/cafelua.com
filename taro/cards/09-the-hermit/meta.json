@@ -1,0 +1,58 @@
+{
+  "id": 9,
+  "nameEn": "THE HERMIT",
+  "nameKr": "은둔자",
+  "character": "luke",
+  "imagePath": "/tarot/major/09-the-hermit.webp",
+  "keywords": [
+    "성찰",
+    "탐구",
+    "고독",
+    "지혜"
+  ],
+  "objects": [
+    {
+      "traditional": "늙은 현자",
+      "cafelua": "루크 (야근 중)",
+      "meaning": "깊은 사고에 잠긴 개발자"
+    },
+    {
+      "traditional": "등불",
+      "cafelua": "모니터의 불빛",
+      "meaning": "밤의 유일한 광원, 지식의 창"
+    },
+    {
+      "traditional": "지팡이",
+      "cafelua": "키보드 / 스타일러스",
+      "meaning": "창조의 도구"
+    },
+    {
+      "traditional": "회색 망토",
+      "cafelua": "편안한 후드티",
+      "meaning": "겸손한 차림, 작업 모드"
+    },
+    {
+      "traditional": "산꼭대기",
+      "cafelua": "높은 층의 창가",
+      "meaning": "세상을 내려다보는 위치"
+    },
+    {
+      "traditional": "별",
+      "cafelua": "코드 에디터의 커서 점멸",
+      "meaning": "깜빡이는 작은 빛, 다음 진리를 향해"
+    }
+  ],
+  "upright": [
+    "내면 탐구",
+    "지혜 추구",
+    "고독",
+    "안내",
+    "인내"
+  ],
+  "reversed": [
+    "고립",
+    "외로움",
+    "길 잃음",
+    "조급함"
+  ]
+}

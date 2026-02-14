@@ -1,0 +1,58 @@
+{
+  "id": 12,
+  "nameEn": "THE HANGED MAN",
+  "nameKr": "매달린 남자",
+  "character": "luke",
+  "imagePath": "/tarot/major/12-the-hanged-man.webp",
+  "keywords": [
+    "관점 전환",
+    "멈춤",
+    "희생",
+    "깨달음"
+  ],
+  "objects": [
+    {
+      "traditional": "거꾸로 매달린",
+      "cafelua": "해먹/소파에 거꾸로 누운 루크",
+      "meaning": "관점 전환, 휴식 중 깨달음"
+    },
+    {
+      "traditional": "나무",
+      "cafelua": "책장/서가",
+      "meaning": "지식의 나무, 지지 구조"
+    },
+    {
+      "traditional": "다리 교차",
+      "cafelua": "편안하게 꼰 다리",
+      "meaning": "이완 속의 사색"
+    },
+    {
+      "traditional": "후광",
+      "cafelua": "모니터 불빛 / 창문 빛",
+      "meaning": "깨달음의 원천"
+    },
+    {
+      "traditional": "평온한 표정",
+      "cafelua": "생각에 잠긴 차분한 얼굴",
+      "meaning": "자발적 멈춤"
+    },
+    {
+      "traditional": "빨간/파란 옷",
+      "cafelua": "캐주얼한 옷 (빨강/파랑 포인트)",
+      "meaning": "일상 속 사색"
+    }
+  ],
+  "upright": [
+    "관점 전환",
+    "희생",
+    "정지",
+    "내려놓음",
+    "깨달음"
+  ],
+  "reversed": [
+    "무의미한 희생",
+    "고집",
+    "정체",
+    "지연"
+  ]
+}

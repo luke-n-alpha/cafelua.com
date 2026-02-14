@@ -1,0 +1,53 @@
+{
+  "id": 2,
+  "nameEn": "THE HIGH PRIESTESS",
+  "nameKr": "여사제",
+  "character": "alpha",
+  "imagePath": "/tarot/major/02-the-high-priestess.webp",
+  "keywords": [
+    "직관",
+    "지혜",
+    "비밀",
+    "내면"
+  ],
+  "objects": [
+    {
+      "traditional": "두 기둥 (B/J)",
+      "cafelua": "흑백 책장 (B/J 레이블)",
+      "meaning": "지식의 이원성, 논리와 직관"
+    },
+    {
+      "traditional": "달",
+      "cafelua": "창문의 달빛",
+      "meaning": "직관적 통찰, 밤의 지혜"
+    },
+    {
+      "traditional": "TORA 두루마리",
+      "cafelua": "코드가 표시된 태블릿",
+      "meaning": "숨겨진 알고리즘, 데이터 지식"
+    },
+    {
+      "traditional": "석류 커튼",
+      "cafelua": "커피콩 패턴 커튼",
+      "meaning": "카페루아의 비밀, 은밀한 영역"
+    },
+    {
+      "traditional": "물",
+      "cafelua": "차 한 잔",
+      "meaning": "명상, 직관에 귀 기울임"
+    }
+  ],
+  "upright": [
+    "내면의 지혜",
+    "숨겨진 지식",
+    "기다림의 지혜",
+    "내면 탐색",
+    "비밀 유지"
+  ],
+  "reversed": [
+    "직관 무시",
+    "표면적 지식",
+    "숨김/기만",
+    "불균형"
+  ]
+}

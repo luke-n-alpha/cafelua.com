@@ -1,0 +1,25 @@
+{
+  "id": 18,
+  "nameEn": "THE MOON",
+  "nameKr": "달",
+  "character": "alpha",
+  "imagePath": "/tarot/major/18-the-moon.webp",
+  "keywords": [
+    "직관",
+    "불확실",
+    "환상",
+    "무의식"
+  ],
+  "objects": [],
+  "upright": [
+    "불확실한 밤",
+    "숨겨진 진실",
+    "직관의 시간",
+    "꿈의 영역"
+  ],
+  "reversed": [
+    "착각의 해소",
+    "두려움 극복",
+    "명확한 인식"
+  ]
+}

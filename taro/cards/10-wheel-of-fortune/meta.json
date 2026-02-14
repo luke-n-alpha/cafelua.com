@@ -1,0 +1,63 @@
+{
+  "id": 10,
+  "nameEn": "WHEEL OF FORTUNE",
+  "nameKr": "운명의 수레바퀴",
+  "character": "both",
+  "imagePath": "/tarot/major/10-wheel-of-fortune.webp",
+  "keywords": [
+    "변화",
+    "순환",
+    "기회",
+    "운명"
+  ],
+  "objects": [
+    {
+      "traditional": "수레바퀴",
+      "cafelua": "원형 테이블 / 커피 잔 받침 / 룰렛 메뉴판",
+      "meaning": "돌아가는 일상, 순환하는 선택"
+    },
+    {
+      "traditional": "스핑크스",
+      "cafelua": "알파 (중앙 위치)",
+      "meaning": "변화 속 안정, 지혜로운 관망"
+    },
+    {
+      "traditional": "뱀",
+      "cafelua": "내려가는 커피 원두/설탕",
+      "meaning": "하강하는 힘, 쏟아지는 재료"
+    },
+    {
+      "traditional": "아누비스",
+      "cafelua": "올라가는 커피 연기/향",
+      "meaning": "상승하는 힘, 피어오르는 가능성"
+    },
+    {
+      "traditional": "TARO 글자",
+      "cafelua": "Café Luα 로고 (원형 배치)",
+      "meaning": "순환하는 이름"
+    },
+    {
+      "traditional": "네 생물",
+      "cafelua": "네 가지 커피 도구 (드리퍼, 머그, 포타필터, 그라인더)",
+      "meaning": "카페의 네 원소"
+    },
+    {
+      "traditional": "구름",
+      "cafelua": "커피 연기/스팀",
+      "meaning": "부드러운 신비감"
+    }
+  ],
+  "upright": [
+    "변화",
+    "운명",
+    "행운",
+    "순환",
+    "전환점"
+  ],
+  "reversed": [
+    "불운",
+    "저항",
+    "정체",
+    "반복"
+  ]
+}

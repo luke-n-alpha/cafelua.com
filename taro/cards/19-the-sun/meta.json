@@ -1,0 +1,25 @@
+{
+  "id": 19,
+  "nameEn": "THE SUN",
+  "nameKr": "태양",
+  "character": "both",
+  "imagePath": "/tarot/major/19-the-sun.webp",
+  "keywords": [
+    "성공",
+    "기쁨",
+    "활력",
+    "명확함"
+  ],
+  "objects": [],
+  "upright": [
+    "행복한 시간",
+    "성공의 순간",
+    "활력과 열정",
+    "명확한 비전"
+  ],
+  "reversed": [
+    "과도한 낙관",
+    "소진",
+    "가려진 기쁨"
+  ]
+}

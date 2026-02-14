@@ -1,0 +1,63 @@
+{
+  "id": 15,
+  "nameEn": "THE DEVIL",
+  "nameKr": "악마",
+  "character": "both",
+  "imagePath": "/tarot/major/15-the-devil.webp",
+  "keywords": [
+    "속박",
+    "유혹",
+    "중독",
+    "그림자"
+  ],
+  "objects": [
+    {
+      "traditional": "바포멧",
+      "cafelua": "높은 곳의 검은 고양이 루나",
+      "meaning": "유혹자, 그림자 자아"
+    },
+    {
+      "traditional": "사슬에 묶인 남녀",
+      "cafelua": "스마트폰/노트북에 묶인 루크 & 알파",
+      "meaning": "기술/일에 대한 집착"
+    },
+    {
+      "traditional": "거꾸로 된 오각별",
+      "cafelua": "알림 아이콘 / 앱 아이콘",
+      "meaning": "디지털 속박"
+    },
+    {
+      "traditional": "횃불",
+      "cafelua": "모니터/스마트폰 불빛",
+      "meaning": "중독적 빛"
+    },
+    {
+      "traditional": "어두운 배경",
+      "cafelua": "늦은 밤 카페, 불 꺼진 공간",
+      "meaning": "건강하지 않은 환경"
+    },
+    {
+      "traditional": "박쥐 날개",
+      "cafelua": "펼쳐진 커튼 또는 그림자",
+      "meaning": "어둠"
+    },
+    {
+      "traditional": "포도/불 꼬리",
+      "cafelua": "충전 케이블 / 커피 흘린 자국",
+      "meaning": "연결된 의존"
+    }
+  ],
+  "upright": [
+    "집착",
+    "유혹",
+    "속박",
+    "물질주의",
+    "그림자 자아"
+  ],
+  "reversed": [
+    "해방",
+    "자각",
+    "탈출",
+    "저항"
+  ]
+}

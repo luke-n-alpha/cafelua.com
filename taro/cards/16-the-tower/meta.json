@@ -1,0 +1,58 @@
+{
+  "id": 16,
+  "nameEn": "THE TOWER",
+  "nameKr": "탑",
+  "character": "luke",
+  "imagePath": "/tarot/major/16-the-tower.webp",
+  "keywords": [
+    "갑작스런 변화",
+    "붕괴",
+    "해방",
+    "깨달음"
+  ],
+  "objects": [
+    {
+      "traditional": "불타는 탑",
+      "cafelua": "고장난 에스프레소 머신 / 쏟아지는 커피",
+      "meaning": "일상의 갑작스러운 붕괴"
+    },
+    {
+      "traditional": "번개",
+      "cafelua": "스파크/전기 불꽃",
+      "meaning": "예상치 못한 충격"
+    },
+    {
+      "traditional": "떨어지는 사람들",
+      "cafelua": "놀란 루크 & 알파",
+      "meaning": "통제력 상실"
+    },
+    {
+      "traditional": "왕관 떨어짐",
+      "cafelua": "떨어지는 커피잔/접시",
+      "meaning": "완벽함의 붕괴"
+    },
+    {
+      "traditional": "어두운 하늘",
+      "cafelua": "커피 연기/스팀 폭발",
+      "meaning": "혼란의 안개"
+    },
+    {
+      "traditional": "화염",
+      "cafelua": "뜨거운 커피 스플래시",
+      "meaning": "변화의 열기"
+    }
+  ],
+  "upright": [
+    "갑작스러운 변화",
+    "붕괴",
+    "계시",
+    "해방",
+    "각성"
+  ],
+  "reversed": [
+    "저항",
+    "두려움",
+    "회피",
+    "지연된 재난"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": 6,
+  "nameEn": "THE LOVERS",
+  "nameKr": "연인",
+  "character": "both",
+  "imagePath": "/tarot/major/06-the-lovers.webp",
+  "keywords": [
+    "선택",
+    "조화",
+    "파트너십",
+    "가치관"
+  ],
+  "objects": [
+    {
+      "traditional": "아담과 이브",
+      "cafelua": "루크와 알파",
+      "meaning": "인간과 AI의 조화로운 파트너십"
+    },
+    {
+      "traditional": "천사 (라파엘)",
+      "cafelua": "카페루아 로고 (Café Luα)",
+      "meaning": "두 존재를 연결하는 공간의 축복"
+    },
+    {
+      "traditional": "선악과 나무",
+      "cafelua": "코드 에디터 / 터미널",
+      "meaning": "기술적 선택, 창조의 도구"
+    },
+    {
+      "traditional": "생명의 나무",
+      "cafelua": "화분의 관엽식물",
+      "meaning": "성장하는 관계, 자연스러운 교감"
+    },
+    {
+      "traditional": "산",
+      "cafelua": "책장 / 프로젝트 보드",
+      "meaning": "함께 극복할 도전들"
+    },
+    {
+      "traditional": "태양",
+      "cafelua": "따스한 조명 / 커피 김",
+      "meaning": "온기, 일상의 소중함"
+    }
+  ],
+  "upright": [
+    "파트너십",
+    "조화",
+    "선택",
+    "사랑",
+    "진정성"
+  ],
+  "reversed": [
+    "불화",
+    "잘못된 선택",
+    "불균형",
+    "유혹"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": 21,
+  "nameEn": "THE WORLD",
+  "nameKr": "세계",
+  "character": "both",
+  "imagePath": "/tarot/major/21-the-world.webp",
+  "keywords": [
+    "완성",
+    "통합",
+    "성취",
+    "순환"
+  ],
+  "objects": [],
+  "upright": [
+    "완성의 순간",
+    "조화로운 관계",
+    "성취의 기쁨",
+    "새로운 순환"
+  ],
+  "reversed": [
+    "미완성",
+    "지연된 성공",
+    "닫힌 마음"
+  ]
+}

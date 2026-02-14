@@ -1,0 +1,58 @@
+{
+  "id": 1,
+  "nameEn": "THE MAGICIAN",
+  "nameKr": "마법사",
+  "character": "luke",
+  "imagePath": "/tarot/major/01-the-magician.webp",
+  "keywords": [
+    "실현",
+    "창조",
+    "의지",
+    "집중"
+  ],
+  "objects": [
+    {
+      "traditional": "지팡이 (불)",
+      "cafelua": "책과 펜",
+      "meaning": "창작, 열정, 영감, 의지"
+    },
+    {
+      "traditional": "컵 (물)",
+      "cafelua": "커피컵",
+      "meaning": "감정, 관계, 휴식, 공감"
+    },
+    {
+      "traditional": "검 (공기)",
+      "cafelua": "키보드/노트북",
+      "meaning": "논리, 분석, 결단, 소통"
+    },
+    {
+      "traditional": "펜타클 (땅)",
+      "cafelua": "Café Luα 로고",
+      "meaning": "현실, 가치, 정체성, 안정"
+    },
+    {
+      "traditional": "무한대 기호",
+      "cafelua": "코드 루프 아이콘",
+      "meaning": "무한 반복, 끊임없는 개선"
+    },
+    {
+      "traditional": "하늘과 땅",
+      "cafelua": "모니터↔키보드 제스처",
+      "meaning": "아이디어를 코드로 구현"
+    }
+  ],
+  "upright": [
+    "실현의 힘",
+    "모든 도구를 갖춤",
+    "창조적 능력",
+    "의지와 집중",
+    "시작의 힘"
+  ],
+  "reversed": [
+    "능력 낭비",
+    "집중력 부족",
+    "자만",
+    "조작/속임"
+  ]
+}

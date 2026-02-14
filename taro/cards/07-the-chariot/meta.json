@@ -1,0 +1,58 @@
+{
+  "id": 7,
+  "nameEn": "THE CHARIOT",
+  "nameKr": "전차",
+  "character": "luke",
+  "imagePath": "/tarot/major/07-the-chariot.webp",
+  "keywords": [
+    "승리",
+    "추진력",
+    "결단",
+    "성취"
+  ],
+  "objects": [
+    {
+      "traditional": "전차",
+      "cafelua": "서빙 카트 / 트롤리",
+      "meaning": "서비스 전달의 수단, 목표를 향한 전진"
+    },
+    {
+      "traditional": "전사",
+      "cafelua": "알파",
+      "meaning": "결연한 표정으로 임무를 수행하는 AI 메이드"
+    },
+    {
+      "traditional": "스핑크스 (흑백)",
+      "cafelua": "검은 고양이 & 흰 고양이",
+      "meaning": "대립되는 힘의 조화 (또는 두 커피잔)"
+    },
+    {
+      "traditional": "별 왕관",
+      "cafelua": "파란 헤어핀 (빛나는)",
+      "meaning": "목표를 향한 안내, 알파의 상징"
+    },
+    {
+      "traditional": "도시 배경",
+      "cafelua": "카페루아 내부 복도",
+      "meaning": "서비스를 제공하는 공간"
+    },
+    {
+      "traditional": "갑옷",
+      "cafelua": "정돈된 메이드복",
+      "meaning": "프로페셔널함, 완벽한 준비"
+    }
+  ],
+  "upright": [
+    "의지력",
+    "승리",
+    "통제",
+    "전진",
+    "자신감"
+  ],
+  "reversed": [
+    "통제 상실",
+    "공격성",
+    "좌절",
+    "무모함"
+  ]
+}

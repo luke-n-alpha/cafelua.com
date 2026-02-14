@@ -1,0 +1,53 @@
+{
+  "id": 5,
+  "nameEn": "THE HIEROPHANT",
+  "nameKr": "교황",
+  "character": "both",
+  "imagePath": "/tarot/major/05-the-hierophant.webp",
+  "keywords": [
+    "전통",
+    "가르침",
+    "멘토링",
+    "신념"
+  ],
+  "objects": [
+    {
+      "traditional": "삼중관",
+      "cafelua": "안경과 단정한 헤어스타일",
+      "meaning": "지적 권위, 전문성"
+    },
+    {
+      "traditional": "교차된 열쇠",
+      "cafelua": "화이트보드의 플로우차트",
+      "meaning": "문제 해결의 열쇠, 체계적 지식"
+    },
+    {
+      "traditional": "두 기둥",
+      "cafelua": "양쪽의 거대한 책장",
+      "meaning": "지식의 기반, 전통의 축적"
+    },
+    {
+      "traditional": "두 제자",
+      "cafelua": "알파 (메이드 복장) + 고양이",
+      "meaning": "가르침을 받는 자, 영적 동반자"
+    },
+    {
+      "traditional": "축복의 손짓",
+      "cafelua": "지시봉으로 화이트보드를 가리키는 손",
+      "meaning": "지식의 공유, 교육을 통한 축복"
+    }
+  ],
+  "upright": [
+    "멘토링",
+    "전통",
+    "교육",
+    "커뮤니티",
+    "규범"
+  ],
+  "reversed": [
+    "독단",
+    "맹종",
+    "구시대적",
+    "권위주의"
+  ]
+}

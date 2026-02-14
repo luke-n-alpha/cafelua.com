@@ -1,0 +1,63 @@
+{
+  "id": 11,
+  "nameEn": "JUSTICE",
+  "nameKr": "정의",
+  "character": "alpha",
+  "imagePath": "/tarot/major/11-justice.webp",
+  "keywords": [
+    "공정",
+    "균형",
+    "책임",
+    "진실"
+  ],
+  "objects": [
+    {
+      "traditional": "저울",
+      "cafelua": "양손에 든 커피잔 두 개 (균형)",
+      "meaning": "공정한 서비스, 동등한 대우"
+    },
+    {
+      "traditional": "검",
+      "cafelua": "바리스타 탬퍼 / 에스프레소 포타필터",
+      "meaning": "정확한 측정, 결단"
+    },
+    {
+      "traditional": "왕좌/기둥",
+      "cafelua": "바리스타 바 (대칭)",
+      "meaning": "서비스의 중심, 구조"
+    },
+    {
+      "traditional": "빨간 망토",
+      "cafelua": "앞치마의 포인트 색상",
+      "meaning": "행동하는 서비스"
+    },
+    {
+      "traditional": "왕관",
+      "cafelua": "파란 헤어핀",
+      "meaning": "알파의 정체성, 권위"
+    },
+    {
+      "traditional": "자주색 베일",
+      "cafelua": "커피 연기",
+      "meaning": "신비와 직관"
+    },
+    {
+      "traditional": "정면 응시",
+      "cafelua": "정면을 바라보는 알파",
+      "meaning": "손님을 직시, 진실한 서비스"
+    }
+  ],
+  "upright": [
+    "공정",
+    "진실",
+    "균형",
+    "책임",
+    "결단"
+  ],
+  "reversed": [
+    "불공정",
+    "거짓",
+    "불균형",
+    "회피"
+  ]
+}

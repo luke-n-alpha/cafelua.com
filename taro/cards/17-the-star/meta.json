@@ -1,0 +1,25 @@
+{
+  "id": 17,
+  "nameEn": "THE STAR",
+  "nameKr": "별",
+  "character": "alpha",
+  "imagePath": "/tarot/major/17-the-star.webp",
+  "keywords": [
+    "희망",
+    "영감",
+    "치유",
+    "안내"
+  ],
+  "objects": [],
+  "upright": [
+    "희망의 한 잔",
+    "영감의 시간",
+    "치유의 커피",
+    "우주와의 연결"
+  ],
+  "reversed": [
+    "절망 속의 포기",
+    "영감의 고갈",
+    "불면의 밤"
+  ]
+}

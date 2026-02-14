@@ -1,0 +1,63 @@
+{
+  "id": 14,
+  "nameEn": "TEMPERANCE",
+  "nameKr": "절제",
+  "character": "alpha",
+  "imagePath": "/tarot/major/14-temperance.webp",
+  "keywords": [
+    "균형",
+    "조화",
+    "인내",
+    "통합"
+  ],
+  "objects": [
+    {
+      "traditional": "천사",
+      "cafelua": "알파 (바리스타)",
+      "meaning": "조화를 만드는 존재"
+    },
+    {
+      "traditional": "두 잔 사이 물",
+      "cafelua": "두 컵 사이 푸어링하는 커피",
+      "meaning": "완벽한 블렌딩, 균형"
+    },
+    {
+      "traditional": "한 발 물/땅",
+      "cafelua": "바 안쪽과 바깥쪽 경계",
+      "meaning": "서비스와 손님 사이"
+    },
+    {
+      "traditional": "태양/길",
+      "cafelua": "카페 창밖 황금빛 풍경",
+      "meaning": "나아갈 방향"
+    },
+    {
+      "traditional": "아이리스 꽃",
+      "cafelua": "라떼 아트 (하트/나뭇잎)",
+      "meaning": "조화로운 예술"
+    },
+    {
+      "traditional": "삼각형",
+      "cafelua": "앞치마의 디테일",
+      "meaning": "균형의 상징"
+    },
+    {
+      "traditional": "날개",
+      "cafelua": "커피 연기의 형상",
+      "meaning": "부드러운 상승, 초월"
+    }
+  ],
+  "upright": [
+    "균형",
+    "조화",
+    "인내",
+    "치유",
+    "중용"
+  ],
+  "reversed": [
+    "불균형",
+    "과잉/결핍",
+    "갈등",
+    "조급함"
+  ]
+}

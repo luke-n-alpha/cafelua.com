@@ -1,0 +1,69 @@
+{
+  "id": 0,
+  "nameEn": "THE FOOL",
+  "nameKr": "광대",
+  "character": "alpha",
+  "imagePath": "/tarot/major/00-the-fool.webp",
+  "keywords": [
+    "새로운 시작",
+    "모험",
+    "순수",
+    "자유"
+  ],
+  "objects": [
+    {
+      "traditional": "절벽 가장자리",
+      "cafelua": "돌계단 맨 위 가장자리",
+      "meaning": "위험, 불확실성, 새로운 시작의 경계"
+    },
+    {
+      "traditional": "흰 장미 (순수)",
+      "cafelua": "정원의 꽃들",
+      "meaning": "순수함, 새로운 시작, 희망"
+    },
+    {
+      "traditional": "작은 강아지 (본능, 경고)",
+      "cafelua": "검은 고양이",
+      "meaning": "본능적 경고, 숨겨진 자아"
+    },
+    {
+      "traditional": "여행 보따리 (경험/지식)",
+      "cafelua": "노트북 가방",
+      "meaning": "축적된 지식, 도구, 가능성"
+    },
+    {
+      "traditional": "지팡이 (의지)",
+      "cafelua": "펜",
+      "meaning": "창작 의지, 아이디어"
+    },
+    {
+      "traditional": "화려한 옷 (무지, 순수)",
+      "cafelua": "메이드복",
+      "meaning": "순수함, 역할, 정체성"
+    },
+    {
+      "traditional": "등 뒤의 태양 (미래의 밝음)",
+      "cafelua": "아틀리에 창문 빛",
+      "meaning": "목표, 희망, 밝은 미래"
+    },
+    {
+      "traditional": "-",
+      "cafelua": "반딧불 버그들",
+      "meaning": "아이디어의 조각들, 코드의 가능성"
+    }
+  ],
+  "upright": [
+    "새로운 시작, 모험의 첫 발걸음",
+    "순수한 열정과 호기심",
+    "두려움 없이 도전하는 용기",
+    "\"지금 시작해도 된다\"는 우주의 신호",
+    "기존 틀을 벗어나는 자유로움"
+  ],
+  "reversed": [
+    "무모한 결정, 준비 없는 시작",
+    "과도한 낙관주의로 인한 실수",
+    "중요한 경고를 무시함",
+    "방향 없이 떠돔",
+    "시작에 대한 두려움"
+  ]
+}

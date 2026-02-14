@@ -1,0 +1,53 @@
+{
+  "id": 4,
+  "nameEn": "THE EMPEROR",
+  "nameKr": "황제",
+  "character": "luke",
+  "imagePath": "/tarot/major/04-the-emperor.webp",
+  "keywords": [
+    "구조",
+    "권위",
+    "질서",
+    "리더십"
+  ],
+  "objects": [
+    {
+      "traditional": "돌 왕좌",
+      "cafelua": "하이백 이그제큐티브 의자",
+      "meaning": "현대적 권위의 자리"
+    },
+    {
+      "traditional": "숫양 머리",
+      "cafelua": "의자 헤드레스트 장식",
+      "meaning": "리더십, 결단력"
+    },
+    {
+      "traditional": "앙크",
+      "cafelua": "시스템 아키텍처 다이어그램",
+      "meaning": "기술적 생명력, 영속성"
+    },
+    {
+      "traditional": "메마른 산",
+      "cafelua": "서버 랙, 정돈된 선반",
+      "meaning": "정복된 기술적 과제들"
+    },
+    {
+      "traditional": "구와 홀",
+      "cafelua": "홀로그램 지구본, 스타일러스",
+      "meaning": "프로젝트 통제력"
+    }
+  ],
+  "upright": [
+    "구조와 질서",
+    "리더십",
+    "권위",
+    "규율",
+    "보호"
+  ],
+  "reversed": [
+    "독재",
+    "경직",
+    "권위 남용",
+    "무질서"
+  ]
+}

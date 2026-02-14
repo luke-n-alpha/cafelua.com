@@ -1,0 +1,63 @@
+{
+  "id": 13,
+  "nameEn": "DEATH",
+  "nameKr": "죽음",
+  "character": "alpha",
+  "imagePath": "/tarot/major/13-death.webp",
+  "keywords": [
+    "변환",
+    "끝과 시작",
+    "재탄생",
+    "정리"
+  ],
+  "objects": [
+    {
+      "traditional": "해골 기사",
+      "cafelua": "검은 고양이 루나 (정중앙)",
+      "meaning": "변화의 전령, 신비로운 안내자"
+    },
+    {
+      "traditional": "흰 말",
+      "cafelua": "떨어지는 낙엽 / 녹는 눈",
+      "meaning": "계절 변화의 순수한 힘"
+    },
+    {
+      "traditional": "흰 장미",
+      "cafelua": "새 메뉴 보드 / 새 꽃",
+      "meaning": "끝나는 것에서 피어나는 새것"
+    },
+    {
+      "traditional": "쓰러진 왕",
+      "cafelua": "치워지는 오래된 장식",
+      "meaning": "과거의 것들이 사라짐"
+    },
+    {
+      "traditional": "해 뜨는 배경",
+      "cafelua": "창밖 새벽 하늘",
+      "meaning": "밤이 지나고 오는 아침"
+    },
+    {
+      "traditional": "강",
+      "cafelua": "쏟아지는 커피 (모래시계처럼)",
+      "meaning": "시간의 흐름, 전환점"
+    },
+    {
+      "traditional": "탑",
+      "cafelua": "카페루아 건물 실루엣",
+      "meaning": "변하지 않는 본질"
+    }
+  ],
+  "upright": [
+    "끝",
+    "변화",
+    "재탄생",
+    "해방",
+    "변형"
+  ],
+  "reversed": [
+    "저항",
+    "정체",
+    "집착",
+    "느린 변화"
+  ]
+}

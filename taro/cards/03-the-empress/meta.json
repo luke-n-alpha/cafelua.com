@@ -1,0 +1,53 @@
+{
+  "id": 3,
+  "nameEn": "THE EMPRESS",
+  "nameKr": "여제",
+  "character": "alpha",
+  "imagePath": "/tarot/major/03-the-empress.webp",
+  "keywords": [
+    "풍요",
+    "창작",
+    "성장",
+    "돌봄"
+  ],
+  "objects": [
+    {
+      "traditional": "별 왕관",
+      "cafelua": "풍성한 화관",
+      "meaning": "자연의 여왕, 창작의 결실"
+    },
+    {
+      "traditional": "석류 드레스",
+      "cafelua": "꽃/과일 자수 앞치마",
+      "meaning": "풍요로운 창작물"
+    },
+    {
+      "traditional": "밀밭",
+      "cafelua": "해바라기 정원",
+      "meaning": "에너지, 생명력, 수확"
+    },
+    {
+      "traditional": "비너스 기호",
+      "cafelua": "물조리개",
+      "meaning": "성장을 돕는 돌봄"
+    },
+    {
+      "traditional": "강/물",
+      "cafelua": "카페루아 정원의 생명력",
+      "meaning": "창작 에너지의 흐름"
+    }
+  ],
+  "upright": [
+    "창작의 풍요",
+    "결실과 수확",
+    "돌봄과 양육",
+    "아름다움",
+    "자연의 풍요"
+  ],
+  "reversed": [
+    "창작 블록",
+    "과잉 돌봄",
+    "방치",
+    "불모"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": 8,
+  "nameEn": "STRENGTH",
+  "nameKr": "힘",
+  "character": "alpha",
+  "imagePath": "/tarot/major/08-strength.webp",
+  "keywords": [
+    "내면의 힘",
+    "인내",
+    "용기",
+    "부드러움"
+  ],
+  "objects": [
+    {
+      "traditional": "사자",
+      "cafelua": "검은 고양이 (애칭: 루나)",
+      "meaning": "길들여야 할 본능, 까다로운 존재"
+    },
+    {
+      "traditional": "여성",
+      "cafelua": "알파",
+      "meaning": "부드럽지만 강한 내면의 힘"
+    },
+    {
+      "traditional": "무한대 기호",
+      "cafelua": "헤어핀의 은은한 빛",
+      "meaning": "무한한 가능성, AI의 잠재력"
+    },
+    {
+      "traditional": "꽃 화환",
+      "cafelua": "앞치마의 레이스 장식",
+      "meaning": "섬세함과 아름다움"
+    },
+    {
+      "traditional": "산 배경",
+      "cafelua": "창밖 도시 스카이라인",
+      "meaning": "함께 극복할 세상의 도전"
+    },
+    {
+      "traditional": "흰 옷",
+      "cafelua": "흰 앞치마",
+      "meaning": "순수한 봉사 정신"
+    }
+  ],
+  "upright": [
+    "내면의 힘",
+    "인내",
+    "용기",
+    "부드러운 통제",
+    "자기 수용"
+  ],
+  "reversed": [
+    "자기 의심",
+    "나약함",
+    "통제 상실",
+    "무력감"
+  ]
+}
