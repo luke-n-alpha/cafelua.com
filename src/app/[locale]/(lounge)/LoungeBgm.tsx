@@ -11,8 +11,11 @@ export default function LoungeBgm() {
     // locale prefix 제거하고 경로만 추출 (/ko/counter -> /counter)
     const pathWithoutLocale = pathname.replace(/^\/(ko|en)/, '') || '/';
 
+    // 갤러리는 자체 BGM이 있으므로 라운지 BGM 정지
+    const isGallery = pathWithoutLocale.startsWith('/gallery');
+
     // UI 숨김 조건
-    const hideUi = pathWithoutLocale === '/about' || pathWithoutLocale === '/counter';
+    const hideUi = pathWithoutLocale === '/about' || pathWithoutLocale === '/counter' || isGallery;
 
     // 커스텀 이벤트로 커피챗 열림/닫힘 감지
     useEffect(() => {
@@ -28,5 +31,5 @@ export default function LoungeBgm() {
         };
     }, []);
 
-    return <BackgroundMusic src="/sounds/lounge.mp3" hideUi={hideUi} suspended={isChatOpen} />;
+    return <BackgroundMusic src="/sounds/lounge.mp3" hideUi={hideUi} suspended={isChatOpen || isGallery} />;
 }
