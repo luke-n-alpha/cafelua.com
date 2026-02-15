@@ -12,13 +12,14 @@ type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
 type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
 
 const LoungePage: React.FC = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const searchParams = useSearchParams();
     const router = useRouter();
     const [bgImage, setBgImage] = useState<string>('');
     const [loungeVariant, setLoungeVariant] = useState('lounge-sunny');
     const entrySource = searchParams.get('from');
     const [showGreeting, setShowGreeting] = useState(() => entrySource === 'entrance');
+    const [showConstruction, setShowConstruction] = useState(false);
     const season = (searchParams.get('season') as Season) || 'spring';
     const time = (searchParams.get('time') as TimeOfDay) || 'day';
     const weather = (searchParams.get('weather') as Weather) || 'sunny';
@@ -26,13 +27,13 @@ const LoungePage: React.FC = () => {
 
     const pushWithParams = (path: string) => {
         const query = searchParams.toString();
-        router.push(query ? `/${i18n.language}${path}?${query}` : `/${i18n.language}${path}`);
+        router.push(query ? `${path}?${query}` : path);
     };
 
     const handleStairs = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.set('from', 'lounge');
-        router.push(`/${i18n.language}/atelier?${params.toString()}`);
+        router.push(`/atelier?${params.toString()}`);
     };
 
     // Resolve background image based on state
@@ -126,16 +127,16 @@ const LoungePage: React.FC = () => {
                         <button className="menu-button ui-button ui-button-ghost" onClick={handleStairs}>
                             {t('lounge.stairs')}
                         </button>
-                        <button className="menu-button ui-button ui-button-ghost" onClick={() => pushWithParams('/gallery')}>
+                        <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
                             {t('lounge.gallery')}
                         </button>
-                        <button className="menu-button ui-button ui-button-ghost" onClick={() => pushWithParams('/guestbook')}>
+                        <button className="menu-button ui-button ui-button-ghost" onClick={() => setShowConstruction(true)}>
                             {t('lounge.guestbook')}
                         </button>
 
                         <button
                             className="menu-button ui-button ui-button-danger exit"
-                            onClick={() => router.push(`/${i18n.language}`)}
+                            onClick={() => router.push('/')}
                         >
                             {t('lounge.back')}
                         </button>
@@ -158,6 +159,13 @@ const LoungePage: React.FC = () => {
                 />
             )}
 
+            {showConstruction && (
+                <UnderConstruction
+                    onClose={() => setShowConstruction(false)}
+                    backgroundSrc={bgImage || '/undestruct.webp'}
+                    illustrationSrc="/undestruct.webp"
+                />
+            )}
         </div>
     );
 };

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { renderMessage } from '@/lib/format-message';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import BackgroundMusic from './BackgroundMusic';
@@ -23,11 +22,7 @@ import {
     authenticateMaster,
     updateUserInfo,
     saveSummary,
-    saveConversationToHistory,
-    getConversationHistory,
-    type ChatMemory,
-    type ConversationRecord,
-    type ConversationMessage
+    type ChatMemory
 } from '../services/ChatMemoryService';
 import './UnderConstruction.css';
 import './CoffeeChatDialog.css';
@@ -56,59 +51,28 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
     const [userInput, setUserInput] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isChatEnded, setIsChatEnded] = useState<boolean>(false);
-    const [showLog, setShowLog] = useState<boolean>(false);
-    const [copySuccess, setCopySuccess] = useState<boolean>(false);
-    const [showHistory, setShowHistory] = useState<boolean>(false);
-    const [selectedHistory, setSelectedHistory] = useState<ConversationRecord | null>(null);
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const messagesRef = useRef<ChatMessage[]>([]);
-    const memoryRef = useRef<ChatMemory | null>(null);
-
-    // Refs 업데이트
-    useEffect(() => {
-        messagesRef.current = messages;
-    }, [messages]);
-
-    useEffect(() => {
-        memoryRef.current = memory;
-    }, [memory]);
-
-    // 라운지 BGM 정지 이벤트 발송
-    useEffect(() => {
-        window.dispatchEvent(new CustomEvent('coffeechat:open'));
-        return () => {
-            window.dispatchEvent(new CustomEvent('coffeechat:close'));
-        };
-    }, []);
 
     // 라운지로 이동
     const goToLounge = useCallback(() => {
         const query = searchParams.toString();
-        router.push(query ? `/${i18n.language}/lounge?${query}` : `/${i18n.language}/lounge`);
-    }, [router, searchParams, i18n.language]);
+        router.push(query ? `/lounge?${query}` : '/lounge');
+    }, [router, searchParams]);
 
     // 대화 요약 및 저장
-    const summarizeAndSave = useCallback(async (mem: ChatMemory, chatMessages: ChatMessage[]) => {
-        if (chatMessages.length < 2) {
+    const summarizeAndSave = useCallback(async (mem: ChatMemory) => {
+        if (mem.recentMessages.length < 2) {
             saveMemory(mem);
             return;
         }
-
-        // 대화를 히스토리에 저장
-        const historyMessages: ConversationMessage[] = chatMessages.map(m => ({
-            role: m.role,
-            content: m.content,
-            expression: m.expression,
-            timestamp: m.timestamp || Date.now(),
-        }));
 
         try {
             const response = await fetch('/api/chat/summarize', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    messages: chatMessages.map(m => ({
+                    messages: mem.recentMessages.map(m => ({
                         role: m.role,
                         content: m.content
                     }))
@@ -118,14 +82,6 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
             if (response.ok) {
                 const data = await response.json();
                 let updatedMemory = mem;
-
-                // 히스토리에 저장
-                updatedMemory = saveConversationToHistory(
-                    updatedMemory,
-                    'coffee',
-                    historyMessages,
-                    data.summary
-                );
 
                 if (data.name || data.nickname || data.interests?.length || data.importantFacts?.length) {
                     updatedMemory = updateUserInfo(updatedMemory, {
@@ -142,19 +98,15 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
 
                 saveMemory(updatedMemory);
             } else {
-                // 요약 실패해도 히스토리에는 저장
-                let updatedMemory = saveConversationToHistory(mem, 'coffee', historyMessages);
-                saveMemory(updatedMemory);
+                saveMemory(mem);
             }
         } catch (e) {
             console.error('Failed to summarize:', e);
-            // 요약 실패해도 히스토리에는 저장
-            let updatedMemory = saveConversationToHistory(mem, 'coffee', historyMessages);
-            saveMemory(updatedMemory);
+            saveMemory(mem);
         }
     }, []);
 
-    // 뷰포트 높이 설정 (초기값만, 키보드 열림 시 리사이즈 안함)
+    // 뷰포트 높이 설정
     useEffect(() => {
         const overlay = overlayRef.current;
         if (!overlay) return;
@@ -165,43 +117,32 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
             overlay.dataset.ucWebview = 'facebook';
         }
 
-        // 초기 높이만 설정 (키보드 열림 시 변경 안함)
-        const initialHeight = window.innerHeight;
-        overlay.style.setProperty('--uc-vh', `${initialHeight * 0.01}px`);
-
-        // orientation change만 처리
-        const handleOrientationChange = () => {
-            setTimeout(() => {
-                overlay.style.setProperty('--uc-vh', `${window.innerHeight * 0.01}px`);
-            }, 100);
+        const updateViewportHeight = () => {
+            const visualHeight = window.visualViewport?.height ?? window.innerHeight;
+            overlay.style.setProperty('--uc-vh', `${visualHeight * 0.01}px`);
         };
 
-        window.addEventListener('orientationchange', handleOrientationChange);
+        updateViewportHeight();
+        window.addEventListener('resize', updateViewportHeight);
+        window.addEventListener('orientationchange', updateViewportHeight);
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', updateViewportHeight);
+            window.visualViewport.addEventListener('scroll', updateViewportHeight);
+        }
 
         return () => {
-            window.removeEventListener('orientationchange', handleOrientationChange);
+            window.removeEventListener('resize', updateViewportHeight);
+            window.removeEventListener('orientationchange', updateViewportHeight);
+            if (window.visualViewport) {
+                window.visualViewport.removeEventListener('resize', updateViewportHeight);
+                window.visualViewport.removeEventListener('scroll', updateViewportHeight);
+            }
         };
     }, []);
 
     // 메모리 로드 및 초기 인사
     useEffect(() => {
-        let mem = loadMemory();
-
-        // 이전 세션 메시지가 있으면 히스토리에 저장 후 초기화
-        if (mem.recentMessages.length > 0) {
-            const prevMessages: ConversationMessage[] = mem.recentMessages.map(m => ({
-                role: m.role,
-                content: m.content,
-                timestamp: m.timestamp,
-            }));
-            const prevType = mem.lastSessionType || 'coffee';
-            mem = saveConversationToHistory(mem, prevType, prevMessages);
-            mem.recentMessages = [];
-        }
-
-        // 현재 세션 타입 설정
-        mem.lastSessionType = 'coffee';
-        saveMemory(mem);
+        const mem = loadMemory();
         setMemory(mem);
 
         // 재방문 손님 인사
@@ -234,8 +175,8 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
             setIsChatEnded(true);
 
             // 대화 요약 후 저장
-            if (memoryRef.current && messagesRef.current.length > 0) {
-                await summarizeAndSave(memoryRef.current, messagesRef.current);
+            if (mem) {
+                await summarizeAndSave(mem);
             }
 
             setTimeout(goToLounge, 3000);
@@ -314,9 +255,6 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
             updatedMemory = addMessage(updatedMemory, 'model', data.message);
             setMemory(updatedMemory);
 
-            // 실시간 저장 (메시지마다)
-            saveMemory(updatedMemory);
-
             if (data.shouldEnd) {
                 setIsChatEnded(true);
                 if (timeoutRef.current) {
@@ -324,8 +262,7 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
                 }
 
                 // 대화 요약 후 저장
-                const allMessages = [...updatedMessages, assistantMessage];
-                await summarizeAndSave(updatedMemory, allMessages);
+                await summarizeAndSave(updatedMemory);
 
                 setTimeout(goToLounge, 3000);
             }
@@ -355,64 +292,6 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
         }
     };
 
-    // 대화 로그 포맷팅
-    const formatChatLog = useCallback(() => {
-        const date = new Date().toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-
-        const header = `☕ 카페루아 커피챗 - ${date}\n${'─'.repeat(30)}\n\n`;
-
-        const expressionEmoji: Record<string, string> = {
-            'face': '😐',
-            'nice-talk': '😊',
-            'wink-smile': '😉',
-            'embarrassment': '😅',
-            'trouble': '😟',
-            'disappointed': '😔',
-            'dissatisfaction': '😤',
-            'pouty-cheeks': '🥺',
-        };
-
-        const chatContent = messages.map(msg => {
-            const speaker = msg.role === 'user' ? '나' : 'Alpha';
-            if (msg.role === 'model' && msg.expression) {
-                const emoji = expressionEmoji[msg.expression] || '';
-                return `${speaker} ${emoji}: ${msg.content}`;
-            }
-            return `${speaker}: ${msg.content}`;
-        }).join('\n\n');
-
-        const footer = `\n\n${'─'.repeat(30)}\n🏠 cafelua.com`;
-
-        return header + chatContent + footer;
-    }, [messages]);
-
-    // 대화 로그 복사
-    const handleCopyLog = useCallback(async () => {
-        const log = formatChatLog();
-        try {
-            await navigator.clipboard.writeText(log);
-            setCopySuccess(true);
-            setTimeout(() => setCopySuccess(false), 2000);
-        } catch (e) {
-            console.error('Failed to copy:', e);
-            // 폴백: textarea 사용
-            const textarea = document.createElement('textarea');
-            textarea.value = log;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            setCopySuccess(true);
-            setTimeout(() => setCopySuccess(false), 2000);
-        }
-    }, [formatChatLog]);
-
     // 대화 종료
     const handleEndChat = async () => {
         if (timeoutRef.current) {
@@ -421,7 +300,11 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
 
         // 대화 요약 후 저장
         if (memory && messages.length > 0) {
-            await summarizeAndSave(memory, messages);
+            const finalMemory = messages.reduce(
+                (mem, msg) => addMessage(mem, msg.role, msg.content),
+                memory
+            );
+            await summarizeAndSave(finalMemory);
         }
 
         onClose();
@@ -462,7 +345,7 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
                         <div className="vn-text-group">
                             <div className="vn-name">Alpha</div>
                             <p className="vn-text">
-                                {isLoading ? t('coffeeChat.thinking', '생각 중...') : renderMessage(currentMessage)}
+                                {isLoading ? t('coffeeChat.thinking', '생각 중...') : currentMessage}
                             </p>
                         </div>
                     </div>
@@ -489,17 +372,6 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
                                     ▶
                                 </button>
                             </form>
-
-                            {/* 로그 보기 버튼 */}
-                            {messages.length > 0 && (
-                                <button
-                                    className="cc-log-btn"
-                                    onClick={() => setShowLog(true)}
-                                    title={t('coffeeChat.viewLog', '대화 기록')}
-                                >
-                                    📜
-                                </button>
-                            )}
 
                             {/* 종료 버튼 */}
                             <button
@@ -537,111 +409,6 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
                     )}
                 </div>
             </div>
-
-            {/* 대화 로그 모달 */}
-            {showLog && (
-                <div className="cc-log-overlay" onClick={() => { setShowLog(false); setShowHistory(false); setSelectedHistory(null); }}>
-                    <div className="cc-log-modal" onClick={(e) => e.stopPropagation()}>
-                        <div className="cc-log-header">
-                            <h3>{showHistory ? '📚 이전 대화' : selectedHistory ? `📖 ${new Date(selectedHistory.date).toLocaleDateString('ko-KR')}` : '☕ 대화 기록'}</h3>
-                            <div className="cc-log-header-btns">
-                                {(showHistory || selectedHistory) && (
-                                    <button
-                                        className="cc-log-back"
-                                        onClick={() => { setShowHistory(false); setSelectedHistory(null); }}
-                                    >
-                                        ←
-                                    </button>
-                                )}
-                                <button
-                                    className="cc-log-close"
-                                    onClick={() => { setShowLog(false); setShowHistory(false); setSelectedHistory(null); }}
-                                >
-                                    ✕
-                                </button>
-                            </div>
-                        </div>
-                        <div className="cc-log-content">
-                            {showHistory ? (
-                                // 히스토리 목록
-                                memory && getConversationHistory(memory).length > 0 ? (
-                                    [...getConversationHistory(memory)].reverse().map((record) => (
-                                        <div
-                                            key={record.id}
-                                            className="cc-history-item"
-                                            onClick={() => { setSelectedHistory(record); setShowHistory(false); }}
-                                        >
-                                            <span className="cc-history-type">
-                                                {record.type === 'coffee' ? '☕' : '🔮'}
-                                            </span>
-                                            <div className="cc-history-info">
-                                                <span className="cc-history-date">
-                                                    {new Date(record.date).toLocaleDateString('ko-KR', {
-                                                        year: 'numeric',
-                                                        month: 'short',
-                                                        day: 'numeric',
-                                                        hour: '2-digit',
-                                                        minute: '2-digit'
-                                                    })}
-                                                </span>
-                                                <span className="cc-history-summary">
-                                                    {record.summary || `${record.messages.length}개의 메시지`}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <p className="cc-history-empty">이전 대화 기록이 없어요</p>
-                                )
-                            ) : selectedHistory ? (
-                                // 선택된 히스토리 상세
-                                selectedHistory.messages.map((msg, idx) => (
-                                    <div
-                                        key={idx}
-                                        className={`cc-log-message ${msg.role === 'user' ? 'user' : 'alpha'}`}
-                                    >
-                                        <span className="cc-log-speaker">
-                                            {msg.role === 'user' ? '나' : 'Alpha'}
-                                        </span>
-                                        <p className="cc-log-text">{msg.content}</p>
-                                    </div>
-                                ))
-                            ) : (
-                                // 현재 대화
-                                messages.map((msg, idx) => (
-                                    <div
-                                        key={idx}
-                                        className={`cc-log-message ${msg.role === 'user' ? 'user' : 'alpha'}`}
-                                    >
-                                        <span className="cc-log-speaker">
-                                            {msg.role === 'user' ? '나' : 'Alpha'}
-                                        </span>
-                                        <p className="cc-log-text">{msg.content}</p>
-                                    </div>
-                                ))
-                            )}
-                        </div>
-                        <div className="cc-log-footer">
-                            {!showHistory && !selectedHistory && (
-                                <>
-                                    <button
-                                        className="cc-history-btn"
-                                        onClick={() => setShowHistory(true)}
-                                    >
-                                        📚 이전 대화
-                                    </button>
-                                    <button
-                                        className="cc-copy-btn"
-                                        onClick={handleCopyLog}
-                                    >
-                                        {copySuccess ? '✓ 복사됨!' : '📋 복사하기'}
-                                    </button>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

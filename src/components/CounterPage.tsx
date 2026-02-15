@@ -11,7 +11,7 @@ type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
 type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
 
 const CounterPage: React.FC = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -43,7 +43,7 @@ const CounterPage: React.FC = () => {
 
     const handleBackToLounge = () => {
         const query = searchParams.toString();
-        router.push(query ? `/${i18n.language}/lounge?${query}` : `/${i18n.language}/lounge`);
+        router.push(query ? `/lounge?${query}` : '/lounge');
     };
 
     const handleCloseCoffeeChat = () => {
@@ -52,7 +52,7 @@ const CounterPage: React.FC = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.delete('chat');
         const query = params.toString();
-        router.replace(query ? `/${i18n.language}/counter?${query}` : `/${i18n.language}/counter`);
+        router.replace(query ? `/counter?${query}` : '/counter');
     };
 
     const handleOpenCoffeeChat = () => {
@@ -60,7 +60,7 @@ const CounterPage: React.FC = () => {
         // URL에 chat=open 파라미터 추가 (LoungeBgm 일시 중지용)
         const params = new URLSearchParams(searchParams.toString());
         params.set('chat', 'open');
-        router.replace(`/${i18n.language}/counter?${params.toString()}`);
+        router.replace(`/counter?${params.toString()}`);
     };
 
     const buttons = [
@@ -74,7 +74,7 @@ const CounterPage: React.FC = () => {
         },
         {
             label: t('counter.tarotButton', '타로'),
-            onClick: () => router.push(`/${i18n.language}/tarot`),
+            onClick: () => router.push('/taro'),
         },
     ];
 
@@ -92,7 +92,7 @@ const CounterPage: React.FC = () => {
     return (
         <UnderConstruction
             onClose={handleBackToLounge}
-            message={t('counter.dialogue', '어서오세요! 저는 카페루아의 루크 마스터를 돕고 있는 AI 알파에요. ☕ 커피 한잔 하며 저랑 이야기 해보시겠어요? 아니면, 마스터가 대학시절 PC통신에서 구했다는 유니크한 자료로 타로점도 배워서 고민이 있으시면 타로점도 봐드릴 수 있어요. 🔮')}
+            message={t('counter.dialogue', '어서오세요, 손님! 무엇을 도와드릴까요?')}
             backgroundSrc={backgroundImage}
             characterSrc="/characters/alpha/alpha-nice-talk.webp"
             spriteSrc="/characters/alpha/alpha-serving.webp"

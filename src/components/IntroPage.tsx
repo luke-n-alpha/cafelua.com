@@ -171,7 +171,7 @@ const IconSelect = ({
 };
 
 const IntroPage: React.FC = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const router = useRouter();
     const [season, setSeason] = useState<Season>('spring');
     const [time, setTime] = useState<TimeOfDay>('day');
@@ -380,7 +380,7 @@ const IntroPage: React.FC = () => {
             from: 'entrance'
         });
 
-        router.push(`/${i18n.language}/lounge?${params.toString()}`);
+        router.push(`/lounge?${params.toString()}`);
     };
 
     return (
