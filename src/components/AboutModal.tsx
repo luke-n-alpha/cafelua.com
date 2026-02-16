@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useEffect, useMemo } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import './AboutModal.css';
@@ -13,10 +13,10 @@ interface AboutModalProps {
     onClose: () => void;
 }
 
-const AboutModal: React.FC<AboutModalProps> = ({ activeTab, onClose }) => {
+const AboutModal: React.FC<AboutModalProps> = ({ activeTab: initialTab, onClose }) => {
     const { t, i18n } = useTranslation();
-    const router = useRouter();
     const searchParams = useSearchParams();
+    const [activeTab, setActiveTab] = useState<AboutTab>(initialTab);
 
     useEffect(() => {
         const onKeyDown = (event: KeyboardEvent) => {
@@ -29,9 +29,11 @@ const AboutModal: React.FC<AboutModalProps> = ({ activeTab, onClose }) => {
     }, [onClose]);
 
     const switchTab = (tab: AboutTab) => {
+        setActiveTab(tab);
         const query = searchParams.toString();
         const base = `/${i18n.language}/about/${tab}`;
-        router.push(query ? `${base}?${query}` : base);
+        const url = query ? `${base}?${query}` : base;
+        window.history.pushState(null, '', url);
     };
 
     const title = t('about.title', { defaultValue: t('nav.about') });
