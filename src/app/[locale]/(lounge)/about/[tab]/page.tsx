@@ -12,13 +12,17 @@ const TAB_META: Record<AboutTab, { titleKo: string; descKo: string }> = {
     luke: { titleKo: '루크의 인사 | 카페루아', descKo: '카페루아 주인장 루크의 인사말.' },
 };
 
+interface Props {
+    params: Promise<{ tab: string; locale: string }>;
+}
+
 export function generateStaticParams() {
     return VALID_TABS.map((tab) => ({ tab }));
 }
 
-export function generateMetadata({ params }: { params: { tab: string } }): Metadata {
-    const tab = params.tab as AboutTab;
-    const meta = TAB_META[tab] ?? TAB_META.sitemap;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { tab } = await params;
+    const meta = TAB_META[tab as AboutTab] ?? TAB_META.sitemap;
 
     return {
         title: meta.titleKo,
@@ -38,12 +42,12 @@ export function generateMetadata({ params }: { params: { tab: string } }): Metad
     };
 }
 
-export default function AboutTabPage({ params }: { params: { tab: string } }) {
-    const tab = params.tab as AboutTab;
+export default async function AboutTabPage({ params }: Props) {
+    const { tab } = await params;
 
-    if (!VALID_TABS.includes(tab)) {
+    if (!VALID_TABS.includes(tab as AboutTab)) {
         redirect('/about/sitemap');
     }
 
-    return <AboutPage activeTab={tab} />;
+    return <AboutPage activeTab={tab as AboutTab} />;
 }
