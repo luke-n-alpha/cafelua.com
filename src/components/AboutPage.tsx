@@ -9,8 +9,13 @@ import './AboutPage.css';
 type Season = 'spring' | 'summer' | 'autumn' | 'winter';
 type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
 type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
+type AboutTab = 'sitemap' | 'alpha' | 'luke';
 
-const AboutPage: React.FC = () => {
+interface AboutPageProps {
+    activeTab?: AboutTab;
+}
+
+const AboutPage: React.FC<AboutPageProps> = ({ activeTab = 'sitemap' }) => {
     const { i18n } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -46,7 +51,7 @@ const AboutPage: React.FC = () => {
 
     return (
         <div className="about-page-container" style={{ backgroundImage: `url('${backgroundImage}')` }}>
-            <AboutModal onClose={handleBackToLounge} />
+            <AboutModal activeTab={activeTab} onClose={handleBackToLounge} />
         </div>
     );
 };

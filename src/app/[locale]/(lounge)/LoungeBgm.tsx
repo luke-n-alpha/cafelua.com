@@ -15,7 +15,7 @@ export default function LoungeBgm() {
     const isGallery = pathWithoutLocale.startsWith('/gallery');
 
     // UI 숨김 조건
-    const hideUi = pathWithoutLocale === '/about' || pathWithoutLocale === '/counter' || isGallery;
+    const hideUi = pathWithoutLocale.startsWith('/about') || pathWithoutLocale === '/counter' || isGallery;
 
     // 커스텀 이벤트로 커피챗 열림/닫힘 감지
     useEffect(() => {

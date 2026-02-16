@@ -74,7 +74,10 @@ const CounterPage: React.FC = () => {
         },
         {
             label: t('counter.tarotButton', '타로'),
-            onClick: () => router.push('/taro'),
+            onClick: () => {
+                const query = searchParams.toString();
+                router.push(query ? `/tarot?${query}` : '/tarot');
+            },
         },
     ];
 

@@ -35,7 +35,7 @@ const CafeLayout = ({ children }: { children?: React.ReactNode }) => {
 
     return (
         <div className={`cafe-layout ${isNight ? 'night' : 'day'}`}>
-            {showAboutModal && <AboutModal onClose={() => setShowAboutModal(false)} />}
+            {showAboutModal && <AboutModal activeTab="sitemap" onClose={() => setShowAboutModal(false)} />}
             {/* Background Layer */}
             <div
                 className="background-layer"

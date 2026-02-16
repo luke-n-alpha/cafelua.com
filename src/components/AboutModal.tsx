@@ -1,19 +1,22 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import './AboutModal.css';
 
+type AboutTab = 'sitemap' | 'alpha' | 'luke';
+
 interface AboutModalProps {
+    activeTab: AboutTab;
     onClose: () => void;
 }
 
-type AboutTab = 'alpha' | 'luke';
-
-const AboutModal: React.FC<AboutModalProps> = ({ onClose }) => {
-    const { t } = useTranslation();
-    const [activeTab, setActiveTab] = useState<AboutTab>('alpha');
+const AboutModal: React.FC<AboutModalProps> = ({ activeTab, onClose }) => {
+    const { t, i18n } = useTranslation();
+    const router = useRouter();
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         const onKeyDown = (event: KeyboardEvent) => {
@@ -25,22 +28,27 @@ const AboutModal: React.FC<AboutModalProps> = ({ onClose }) => {
         return () => document.removeEventListener('keydown', onKeyDown);
     }, [onClose]);
 
-    useEffect(() => {
-        setActiveTab(Math.random() < 0.5 ? 'alpha' : 'luke');
-    }, []);
+    const switchTab = (tab: AboutTab) => {
+        const query = searchParams.toString();
+        const base = `/${i18n.language}/about/${tab}`;
+        router.push(query ? `${base}?${query}` : base);
+    };
 
     const title = t('about.title', { defaultValue: t('nav.about') });
     const closeLabel = t('about.close', { defaultValue: '닫기' });
+    const sitemapTabLabel = t('about.sitemapTab', { defaultValue: '사이트맵' });
     const alphaTabLabel = t('about.alphaTab', { defaultValue: '알파의 인사' });
     const lukeTabLabel = t('about.lukeTab', { defaultValue: '루크의 인사' });
     const loadErrorLabel = t('about.loadError', { defaultValue: '소개글을 불러오지 못했어요.' });
+    const sitemapBody = t('about.sitemapBody', { defaultValue: '' });
     const alphaBody = t('about.alphaBody', { defaultValue: '' });
     const lukeBody = t('about.lukeBody', { defaultValue: '' });
 
     const activeBody = useMemo(() => {
+        if (activeTab === 'sitemap') return sitemapBody;
         if (activeTab === 'alpha') return alphaBody;
         return lukeBody;
-    }, [activeTab, alphaBody, lukeBody]);
+    }, [activeTab, sitemapBody, alphaBody, lukeBody]);
 
     return (
         <div className="about-modal-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label={title}>
@@ -59,15 +67,22 @@ const AboutModal: React.FC<AboutModalProps> = ({ onClose }) => {
                         </div>
                         <div className="about-modal-tabs">
                             <button
+                                className={`tab-button ${activeTab === 'sitemap' ? 'active' : ''}`}
+                                onClick={() => switchTab('sitemap')}
+                                type="button"
+                            >
+                                {sitemapTabLabel}
+                            </button>
+                            <button
                                 className={`tab-button ${activeTab === 'alpha' ? 'active' : ''}`}
-                                onClick={() => setActiveTab('alpha')}
+                                onClick={() => switchTab('alpha')}
                                 type="button"
                             >
                                 {alphaTabLabel}
                             </button>
                             <button
                                 className={`tab-button ${activeTab === 'luke' ? 'active' : ''}`}
-                                onClick={() => setActiveTab('luke')}
+                                onClick={() => switchTab('luke')}
                                 type="button"
                             >
                                 {lukeTabLabel}
