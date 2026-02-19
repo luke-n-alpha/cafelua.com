@@ -13,9 +13,11 @@ export default function LoungeBgm() {
 
     // 갤러리는 자체 BGM이 있으므로 라운지 BGM 정지
     const isGallery = pathWithoutLocale.startsWith('/gallery');
+    const isDeskPath = pathWithoutLocale.startsWith('/desk');
+    const bgmSrc = isDeskPath ? '/sounds/atelier.mp3' : '/sounds/lounge.mp3';
 
     // UI 숨김 조건
-    const hideUi = pathWithoutLocale.startsWith('/about') || pathWithoutLocale === '/counter' || isGallery;
+    const hideUi = pathWithoutLocale === '/counter' || isGallery;
 
     // 커스텀 이벤트로 커피챗 열림/닫힘 감지
     useEffect(() => {
@@ -31,5 +33,5 @@ export default function LoungeBgm() {
         };
     }, []);
 
-    return <BackgroundMusic src="/sounds/lounge.mp3" hideUi={hideUi} suspended={isChatOpen || isGallery} />;
+    return <BackgroundMusic src={bgmSrc} hideUi={hideUi} suspended={isChatOpen || isGallery} />;
 }

@@ -17,8 +17,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!entry) return {};
 
     const title = `${entry.titleKo} | 카페루아 다이어리`;
-    const description = entry.contentKo
-        ? entry.contentKo.slice(0, 120) + (entry.contentKo.length > 120 ? '...' : '')
+    const cleanContent = entry.contentKo?.replace(/\{\{IMG:\d+\}\}/g, '').trim();
+    const description = cleanContent
+        ? cleanContent.slice(0, 120) + (cleanContent.length > 120 ? '...' : '')
         : `카페루아 다이어리 — ${entry.titleKo}`;
     const ogImage = entry.images.length > 0 ? entry.images[0] : '/og-cover.png';
 

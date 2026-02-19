@@ -81,7 +81,7 @@ const resources = {
         },
         "explore": "Explore",
         "masterDesk": "Master's Desk",
-        "masterDeskMessage": "Guest... the master's desk is still a little messy.\nI'll tidy it up and open the workspace soon.",
+        "masterDeskMessage": "Guest, this is the master's desk.\nIt's where Luke's notes, essays, and new stories come together.\nTake your time — I'll be here to guide you.",
         "alphaStation": "Alpha's Station",
         "alphaStationMessage": "Alpha's station is syncing right now.\nJust a moment, Guest.",
         "library": "Library",
@@ -191,6 +191,12 @@ const resources = {
         "diary": "Diary",
         "diaryEmpty": "No diary entries yet. Stay tuned!",
         "backToGallery": "Back to Gallery"
+      },
+      "desk": {
+        "title": "Master's Desk",
+        "empty": "No posts yet. Stay tuned!",
+        "backToAtelier": "Back to Atelier",
+        "backToDesk": "Back to Desk"
       },
       "guestbook": {
         "title": "Guestbook",
@@ -303,7 +309,7 @@ const resources = {
         },
         "explore": "둘러보기",
         "masterDesk": "마스터의 데스크",
-        "masterDeskMessage": "손님... 마스터의 데스크는 아직 조금 어지러워요.\n정리되는 대로 작업/집필 공간을 열어둘게요.",
+        "masterDeskMessage": "손님, 여기는 마스터의 데스크예요.\n루크 마스터가 기록해온 글과 메모, 그리고 새로운 이야기들이 모여 있는 자리랍니다.\n천천히 둘러보세요. 필요한 안내는 제가 도와드릴게요.",
         "alphaStation": "알파 스테이션",
         "alphaStationMessage": "알파 스테이션은 지금 동기화 중이에요.\n잠시만 기다려주세요, 손님.",
         "library": "서재",
@@ -413,6 +419,12 @@ const resources = {
         "diary": "다이어리",
         "diaryEmpty": "아직 다이어리가 비어있어요. 조금만 기다려주세요!",
         "backToGallery": "갤러리로 돌아가기"
+      },
+      "desk": {
+        "title": "마스터의 데스크",
+        "empty": "아직 글이 없어요. 조금만 기다려주세요!",
+        "backToAtelier": "아틀리에로 돌아가기",
+        "backToDesk": "데스크로 돌아가기"
       },
       "guestbook": {
         "title": "방명록",

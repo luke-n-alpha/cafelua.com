@@ -138,6 +138,17 @@ const LibraryPage: React.FC = () => {
     const startupAudioRef = useRef<HTMLAudioElement | null>(null);
     const shutdownAudioRef = useRef<HTMLAudioElement | null>(null);
     const legacyMidiPlayerRef = useRef<LegacyMidiSynthPlayer | null>(null);
+    const shouldAutoBootOldPc = searchParams.get('oldpc') === 'true';
+
+    useEffect(() => {
+        if (!shouldAutoBootOldPc) return;
+        setShowIntro(false);
+        setDialogue(null);
+        setIsStartMenuOpen(false);
+        setMode('booting');
+        const timerId = window.setTimeout(() => setMode('desktop'), 900);
+        return () => window.clearTimeout(timerId);
+    }, [shouldAutoBootOldPc]);
     const season = (searchParams.get('season') as Season) || 'spring';
     const time = (searchParams.get('time') as TimeOfDay) || 'day';
     const weather = (searchParams.get('weather') as Weather) || 'sunny';
@@ -549,7 +560,7 @@ const LibraryPage: React.FC = () => {
 
                     <button
                         className="menu-button ui-button ui-button-ghost"
-                        onClick={() => handleMenuNotReady(t('atelier.masterDeskMessage'))}
+                        onClick={() => router.push(`/${i18n.language}/desk`)}
                     >
                         {t('atelier.masterDesk')}
                     </button>

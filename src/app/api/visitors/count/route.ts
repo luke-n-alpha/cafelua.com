@@ -5,6 +5,8 @@ export async function GET() {
     const propertyId = process.env.GA4_PROPERTY_ID;
     const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
     const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+    const metricName = process.env.GA4_VISITOR_METRIC || 'screenPageViews';
+    const startDate = process.env.GA4_COUNTER_START_DATE || '2025-11-20';
 
     if (!propertyId || !clientEmail || !privateKey) {
         return NextResponse.json(
@@ -23,8 +25,8 @@ export async function GET() {
 
         const [response] = await client.runReport({
             property: `properties/${propertyId}`,
-            dateRanges: [{ startDate: '2020-01-01', endDate: 'today' }],
-            metrics: [{ name: 'totalUsers' }],
+            dateRanges: [{ startDate, endDate: 'today' }],
+            metrics: [{ name: metricName }],
         });
 
         const count = Number(response.rows?.[0]?.metricValues?.[0]?.value ?? 0);
@@ -33,7 +35,7 @@ export async function GET() {
             { count },
             {
                 headers: {
-                    'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=600',
+                    'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
                 },
             }
         );

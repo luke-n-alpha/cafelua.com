@@ -14,11 +14,11 @@
 .diary-panel {
     display: flex;
     flex-direction: column;
-    width: 90%;
-    max-width: 720px;
-    max-height: 82vh;
-    margin-top: 6vh;
-    padding: 1.5rem;
+    width: 94%;
+    max-width: 960px;
+    max-height: 95vh;
+    margin-top: 1.5vh;
+    padding: 1.2rem 2rem 0.6rem;
     background: linear-gradient(145deg, rgba(20, 20, 24, 0.65), rgba(36, 30, 30, 0.55));
     backdrop-filter: blur(14px);
     border-radius: 22px;
@@ -36,8 +36,8 @@
 
 .diary-post-header {
     flex-shrink: 0;
-    margin-bottom: 1rem;
-    padding-bottom: 0.8rem;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.5rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -73,8 +73,8 @@
 }
 
 .diary-post-text {
-    font-size: 0.88rem;
-    line-height: 1.7;
+    font-size: 0.95rem;
+    line-height: 1.75;
     color: rgba(245, 242, 235, 0.85);
     margin-bottom: 1rem;
     word-break: keep-all;
@@ -89,7 +89,7 @@
 
 .diary-post-img {
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     border-radius: 10px;
     cursor: pointer;
     transition: opacity 0.2s;
@@ -100,11 +100,16 @@
     opacity: 0.9;
 }
 
+.diary-post-img-inline {
+    margin: 0.6rem auto;
+    display: block;
+}
+
 /* Back button */
 .diary-back {
     flex-shrink: 0;
-    margin-top: 0.8rem;
-    padding: 0.55rem 1.2rem;
+    margin-top: 0.4rem;
+    padding: 0.45rem 1rem;
     background: rgba(18, 18, 24, 0.45);
     border: 1px solid rgba(255, 120, 120, 0.35);
     color: rgba(255, 200, 200, 0.9);

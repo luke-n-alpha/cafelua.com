@@ -222,7 +222,7 @@ const GalleryPage: React.FC = () => {
                 <div className="gallery-content">
                     {/* Diary tab */}
                     {category === 'diary' && (
-                        <div className="diary-list">
+                        <div className="diary-grid">
                             {DIARY_ENTRIES.map((entry) => (
                                 <a
                                     key={entry.slug}
@@ -245,19 +245,13 @@ const GalleryPage: React.FC = () => {
                                             loading="lazy"
                                         />
                                     ) : (
-                                        <div className="diary-card-thumb diary-card-thumb-empty" />
+                                        <div className="diary-card-thumb diary-card-thumb-placeholder" />
                                     )}
                                     <div className="diary-card-info">
                                         <div className="diary-card-title">
                                             {isKo ? entry.titleKo : entry.titleEn}
                                         </div>
                                         <div className="diary-card-date">{entry.date}</div>
-                                        {(isKo ? entry.contentKo : entry.contentEn) && (
-                                            <div className="diary-card-excerpt">
-                                                {(isKo ? entry.contentKo : entry.contentEn).slice(0, 60)}
-                                                {(isKo ? entry.contentKo : entry.contentEn).length > 60 ? '...' : ''}
-                                            </div>
-                                        )}
                                     </div>
                                 </a>
                             ))}

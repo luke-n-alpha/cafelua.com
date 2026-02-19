@@ -90,32 +90,91 @@ const DiaryPost: React.FC<Props> = ({ entry }) => {
                 </div>
 
                 <div ref={contentRef} className="diary-post-content">
-                    {/* Text content before images */}
-                    {content && (
-                        <div className="diary-post-text">
-                            {content.split('\n').map((line, i) => (
-                                <React.Fragment key={i}>
-                                    {line}
-                                    {i < content.split('\n').length - 1 && <br />}
-                                </React.Fragment>
-                            ))}
-                        </div>
-                    )}
-
-                    {/* Images */}
-                    {entry.images.length > 0 && (
-                        <div className="diary-post-images">
-                            {entry.images.map((src, i) => (
-                                <img
-                                    key={i}
-                                    src={src}
-                                    alt={`${title} ${i + 1}`}
-                                    className="diary-post-img"
-                                    loading="lazy"
-                                    onClick={() => setLightboxIdx(i)}
-                                />
-                            ))}
-                        </div>
+                    {content && content.includes('{{IMG:') ? (
+                        /* Inline image mode: interleave text and images */
+                        (() => {
+                            const referencedIndices = new Set<number>();
+                            const segments = content.split(/(\{\{IMG:\d+\}\})/);
+                            return (
+                                <>
+                                    {segments.map((seg, si) => {
+                                        const match = seg.match(/^\{\{IMG:(\d+)\}\}$/);
+                                        if (match) {
+                                            const idx = parseInt(match[1], 10);
+                                            referencedIndices.add(idx);
+                                            const src = entry.images[idx];
+                                            if (!src) return null;
+                                            return (
+                                                <img
+                                                    key={`img-${si}`}
+                                                    src={src}
+                                                    alt={`${title} ${idx + 1}`}
+                                                    className="diary-post-img diary-post-img-inline"
+                                                    loading="lazy"
+                                                    onClick={() => setLightboxIdx(idx)}
+                                                />
+                                            );
+                                        }
+                                        if (!seg.trim()) return null;
+                                        return (
+                                            <div key={`text-${si}`} className="diary-post-text">
+                                                {seg.split('\n').map((line, li) => (
+                                                    <React.Fragment key={li}>
+                                                        {line}
+                                                        {li < seg.split('\n').length - 1 && <br />}
+                                                    </React.Fragment>
+                                                ))}
+                                            </div>
+                                        );
+                                    })}
+                                    {/* Remaining images not referenced by markers */}
+                                    {entry.images.length > referencedIndices.size && (
+                                        <div className="diary-post-images">
+                                            {entry.images.map((src, i) =>
+                                                referencedIndices.has(i) ? null : (
+                                                    <img
+                                                        key={i}
+                                                        src={src}
+                                                        alt={`${title} ${i + 1}`}
+                                                        className="diary-post-img"
+                                                        loading="lazy"
+                                                        onClick={() => setLightboxIdx(i)}
+                                                    />
+                                                ),
+                                            )}
+                                        </div>
+                                    )}
+                                </>
+                            );
+                        })()
+                    ) : (
+                        <>
+                            {/* Legacy mode: text then images */}
+                            {content && (
+                                <div className="diary-post-text">
+                                    {content.split('\n').map((line, i) => (
+                                        <React.Fragment key={i}>
+                                            {line}
+                                            {i < content.split('\n').length - 1 && <br />}
+                                        </React.Fragment>
+                                    ))}
+                                </div>
+                            )}
+                            {entry.images.length > 0 && (
+                                <div className="diary-post-images">
+                                    {entry.images.map((src, i) => (
+                                        <img
+                                            key={i}
+                                            src={src}
+                                            alt={`${title} ${i + 1}`}
+                                            className="diary-post-img"
+                                            loading="lazy"
+                                            onClick={() => setLightboxIdx(i)}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
 
