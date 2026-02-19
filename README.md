@@ -83,18 +83,10 @@ public-home/
     - GA4 Data API integration for real-time cumulative visitor count.
     - Server-side API route (`/api/visitors/count`) with 1-hour cache.
     - Graceful fallback: counter hides silently when configuration is missing.
-- **Master's Desk Migration**:
-    - Added first-pass Naver import pipeline for post metadata/content normalization.
-    - Added fallback handling for broken embeds and missing images.
-    - Added migration script/docs baseline for repeatable batch runs.
-- **Migration Stabilization Updates**:
-    - Added list-level exclusion rules for me2day-linked relay posts.
-    - Kept novel posts out of Master's Desk listing (to be reorganized in Library/Study flow later).
-    - Reinforced migration article with reproducible runbook (batch collection, dedupe, sanitize, SEO generation).
-    - Fixed `seo:generate` TypeScript ESM import resolution for automated `sitemap.xml` and `llms.txt` updates.
-    - Switched migration scraper to **full-list (`categoryNo=0`) traversal** and added `--end-page`, `--full-resync` options to reduce missing/early-stop cases.
-    - Added slug collision handling with `postNo` suffix to prevent duplicate-key and thumbnail/card mismatch issues.
-    - Updated README and migration guidance to match actual batch workflow and filtering rules.
+- **Blog Migration + Master's Desk Update**:
+    - Added Naver blog migration pipeline with metadata/content normalization.
+    - Consolidated Master's Desk listing/classification/sanitization rules.
+    - Synced automated `sitemap.xml`/`llms.txt` generation with updated runbook/docs.
 
 ### v0.1.5 (2026-02-13)
 - **Gallery — Diary**:

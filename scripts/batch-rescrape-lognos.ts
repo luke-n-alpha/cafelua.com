@@ -2,7 +2,7 @@ import { chromium, type Page } from 'playwright';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
-import { NAVER_POSTS } from '../src/data/desk/_naver-posts.ts';
+import { NAVER_POSTS } from '../src/data/desk/_naver-posts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
