@@ -83,6 +83,18 @@ public-home/
     - GA4 Data API integration for real-time cumulative visitor count.
     - Server-side API route (`/api/visitors/count`) with 1-hour cache.
     - Graceful fallback: counter hides silently when configuration is missing.
+- **Master's Desk Migration**:
+    - Added first-pass Naver import pipeline for post metadata/content normalization.
+    - Added fallback handling for broken embeds and missing images.
+    - Added migration script/docs baseline for repeatable batch runs.
+- **Migration Stabilization Updates**:
+    - Added list-level exclusion rules for me2day-linked relay posts.
+    - Kept novel posts out of Master's Desk listing (to be reorganized in Library/Study flow later).
+    - Reinforced migration article with reproducible runbook (batch collection, dedupe, sanitize, SEO generation).
+    - Fixed `seo:generate` TypeScript ESM import resolution for automated `sitemap.xml` and `llms.txt` updates.
+    - Switched migration scraper to **full-list (`categoryNo=0`) traversal** and added `--end-page`, `--full-resync` options to reduce missing/early-stop cases.
+    - Added slug collision handling with `postNo` suffix to prevent duplicate-key and thumbnail/card mismatch issues.
+    - Updated README and migration guidance to match actual batch workflow and filtering rules.
 
 ### v0.1.5 (2026-02-13)
 - **Gallery — Diary**:
@@ -168,3 +180,23 @@ This project is currently being developed as a personal project, and a contribut
 ## 📄 License
 
 (License information to be added)
+
+## 🔄 Naver Migration Runbook (Summary)
+
+1. Collect post list in batches (`page=1..160`, `count-per-page=15`) with resume support.
+2. Deduplicate strictly by `postNo` while appending.
+3. Normalize body (inline image markers, broken player cleanup, external video link fallback).
+4. Exclude me2day relay posts + novels from Master's Desk listing policy.
+5. Regenerate SEO artifacts:
+   - `npm run seo:generate`
+
+### Recommended Command (Full Resync)
+
+```bash
+node --loader ts-node/esm scripts/fetch-naver-blog.ts \
+  --full-resync \
+  --start-page 1 \
+  --end-page 160 \
+  --count-per-page 15 \
+  --max 2600
+```

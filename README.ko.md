@@ -83,6 +83,18 @@ public-home/
     - GA4 Data API 연동으로 실시간 누적 방문자 수 표시.
     - 서버사이드 API 라우트 (`/api/visitors/count`) + 1시간 캐싱.
     - 환경변수 미설정 시 카운터 자동 숨김 (graceful fallback).
+- **마스터의 데스크 이식**:
+    - 네이버 포스트 메타/본문 정규화를 위한 1차 이식 파이프라인 추가.
+    - 깨진 임베드/누락 이미지에 대한 fallback 처리 추가.
+    - 반복 가능한 배치 수집을 위한 스크립트/문서 베이스라인 정리.
+- **이식 안정화 업데이트**:
+    - 미투데이 연동형 릴레이 포스트를 데스크 리스트 노출 대상에서 제외.
+    - 소설 포스트는 데스크 리스트에서 제외 유지(추후 서재/서고 흐름으로 별도 정리).
+    - 블로그 마이그레이션 포스팅에 재현 가능한 실행 절차(배치 수집, 중복 스킵, 정제, SEO 생성) 보강.
+    - `seo:generate`의 TypeScript ESM import 경로 문제 수정으로 `sitemap.xml`, `llms.txt` 자동 갱신 안정화.
+    - 이식 스크래퍼를 **전체보기(categoryNo=0) 기준 전수 수집**으로 정리하고, `--end-page`, `--full-resync` 옵션을 추가해 누락/조기종료 케이스를 줄임.
+    - slug 충돌 시 `postNo` suffix를 부여해 중복 slug로 인한 카드/썸네일 매핑 오류를 방지.
+    - 실제 운영 배치 수집/필터링 규칙 기준으로 README 내용 동기화.
 
 ### v0.1.5 (2026-02-13)
 - **갤러리 — 다이어리**:
@@ -168,3 +180,23 @@ public-home/
 ## 📄 라이선스 (License)
 
 (라이선스 정보 추가 예정)
+
+## 🔄 네이버 이식 실행 요약
+
+1. 전체보기 기준 배치 수집(`page=1..160`, `count-per-page=15`) + 이어받기 실행
+2. append 시 `postNo` 기준 중복 스킵
+3. 본문 정규화(`{{IMG:N}}` 복원, 깨진 플레이어 텍스트 제거, 영상 링크 치환)
+4. 미투데이 연동형 + 소설 포스트는 데스크 리스트 노출 제외
+5. SEO 산출물 갱신
+   - `npm run seo:generate`
+
+### 권장 명령 (전수 재수집)
+
+```bash
+node --loader ts-node/esm scripts/fetch-naver-blog.ts \
+  --full-resync \
+  --start-page 1 \
+  --end-page 160 \
+  --count-per-page 15 \
+  --max 2600
+```
