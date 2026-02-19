@@ -13,8 +13,8 @@
     padding-right: calc(24px + env(safe-area-inset-right));
     padding-bottom: calc(24px + env(safe-area-inset-bottom));
     padding-left: calc(24px + env(safe-area-inset-left));
-    background-color: rgba(8, 10, 14, 0.9);
-    backdrop-filter: blur(5px);
+    background-color: rgba(8, 10, 14, 0.6);
+    backdrop-filter: blur(4px);
     overflow: hidden;
     animation: fadeIn 0.3s ease-out;
 }
@@ -36,7 +36,7 @@
     border-radius: 12px;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
     z-index: 0;
-    filter: brightness(0.92) saturate(1.05);
+    filter: brightness(1.02) saturate(1.08);
     pointer-events: none;
 }
 
@@ -47,9 +47,9 @@
     border-radius: 12px;
     background: linear-gradient(
         90deg,
-        rgba(0, 0, 0, 0.06) 0%,
-        rgba(0, 0, 0, 0.26) 58%,
-        rgba(0, 0, 0, 0.55) 100%
+        rgba(0, 0, 0, 0.04) 0%,
+        rgba(0, 0, 0, 0.18) 58%,
+        rgba(0, 0, 0, 0.38) 100%
     );
     z-index: 1;
     pointer-events: none;
@@ -66,7 +66,7 @@
     right: 44px;
     bottom: 20px;
     width: min(560px, 44%);
-    background: rgba(12, 12, 16, 0.88);
+    background: rgba(16, 16, 20, 0.76);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     box-shadow: 0 18px 55px rgba(0, 0, 0, 0.55);
@@ -204,6 +204,56 @@
 .about-modal-status {
     color: #f5f2eb;
     opacity: 0.9;
+}
+
+/* Sitemap structured links */
+.about-sitemap-section {
+    margin-bottom: 1.2rem;
+}
+
+.about-sitemap-list {
+    list-style: none;
+    margin: 0 0 0 4px;
+    padding: 0;
+}
+
+.about-sitemap-list li {
+    margin: 0;
+}
+
+.about-sitemap-link {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    color: #f5f2eb;
+    font-family: inherit;
+    font-size: 0.92rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    line-height: 1.5;
+}
+
+.about-sitemap-link:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffc83d;
+}
+
+.about-sitemap-link-label {
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.about-sitemap-link-desc {
+    font-size: 0.8rem;
+    color: rgba(245, 242, 235, 0.55);
+    line-height: 1.4;
 }
 
 @media (max-width: 900px) {

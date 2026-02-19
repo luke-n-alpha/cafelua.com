@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
+import { SITEMAP_SECTIONS } from '@/data/sitemapData';
 import './AboutModal.css';
 
 type AboutTab = 'sitemap' | 'alpha' | 'luke';
@@ -15,8 +16,10 @@ interface AboutModalProps {
 
 const AboutModal: React.FC<AboutModalProps> = ({ activeTab: initialTab, onClose }) => {
     const { t, i18n } = useTranslation();
+    const router = useRouter();
     const searchParams = useSearchParams();
     const [activeTab, setActiveTab] = useState<AboutTab>(initialTab);
+    const isKo = i18n.language === 'ko';
 
     useEffect(() => {
         const onKeyDown = (event: KeyboardEvent) => {
@@ -36,21 +39,25 @@ const AboutModal: React.FC<AboutModalProps> = ({ activeTab: initialTab, onClose 
         window.history.pushState(null, '', url);
     };
 
+    const handleNavigate = (path: string) => {
+        onClose();
+        router.push(`/${i18n.language}${path}`);
+    };
+
     const title = t('about.title', { defaultValue: t('nav.about') });
     const closeLabel = t('about.close', { defaultValue: '닫기' });
     const sitemapTabLabel = t('about.sitemapTab', { defaultValue: '사이트맵' });
     const alphaTabLabel = t('about.alphaTab', { defaultValue: '알파의 인사' });
     const lukeTabLabel = t('about.lukeTab', { defaultValue: '루크의 인사' });
     const loadErrorLabel = t('about.loadError', { defaultValue: '소개글을 불러오지 못했어요.' });
-    const sitemapBody = t('about.sitemapBody', { defaultValue: '' });
     const alphaBody = t('about.alphaBody', { defaultValue: '' });
     const lukeBody = t('about.lukeBody', { defaultValue: '' });
 
     const activeBody = useMemo(() => {
-        if (activeTab === 'sitemap') return sitemapBody;
         if (activeTab === 'alpha') return alphaBody;
-        return lukeBody;
-    }, [activeTab, sitemapBody, alphaBody, lukeBody]);
+        if (activeTab === 'luke') return lukeBody;
+        return '';
+    }, [activeTab, alphaBody, lukeBody]);
 
     return (
         <div className="about-modal-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label={title}>
@@ -93,7 +100,35 @@ const AboutModal: React.FC<AboutModalProps> = ({ activeTab: initialTab, onClose 
                     </div>
 
                     <div className="about-modal-scroll">
-                        {activeBody ? (
+                        {activeTab === 'sitemap' ? (
+                            <div className="about-sitemap">
+                                {SITEMAP_SECTIONS.map((section) => (
+                                    <div key={section.titleEn} className="about-sitemap-section">
+                                        <h2>{isKo ? section.titleKo : section.titleEn}</h2>
+                                        <ul className="about-sitemap-list">
+                                            {section.items.map((item) => (
+                                                <li key={item.path}>
+                                                    <button
+                                                        className="about-sitemap-link"
+                                                        onClick={() => handleNavigate(item.path)}
+                                                        type="button"
+                                                    >
+                                                        <span className="about-sitemap-link-label">
+                                                            {isKo ? item.labelKo : item.labelEn}
+                                                        </span>
+                                                        {(isKo ? item.descKo : item.descEn) && (
+                                                            <span className="about-sitemap-link-desc">
+                                                                {isKo ? item.descKo : item.descEn}
+                                                            </span>
+                                                        )}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : activeBody ? (
                             <ReactMarkdown>{activeBody}</ReactMarkdown>
                         ) : (
                             <p className="about-modal-status">{loadErrorLabel}</p>

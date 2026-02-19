@@ -1,0 +1,300 @@
+.desk-container {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('/master-desk-background-img/master-desk-background.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.desk-panel {
+    display: flex;
+    flex-direction: column;
+    width: 94%;
+    max-width: 1080px;
+    max-height: 95vh;
+    margin-top: 1.5vh;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(145deg, rgba(20, 20, 24, 0.6), rgba(36, 30, 30, 0.52));
+    backdrop-filter: blur(14px);
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+    animation: deskFadeIn 0.6s ease-out;
+    color: #f5f2eb;
+    overflow: hidden;
+}
+
+@keyframes deskFadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.desk-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: #f5f2eb;
+}
+
+.desk-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+.desk-tabs {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.desk-search {
+    width: min(360px, 100%);
+    padding: 0.5rem 0.8rem;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(14, 14, 20, 0.45);
+    color: #f5f2eb;
+    font-size: 0.85rem;
+}
+
+.desk-search::placeholder {
+    color: rgba(245, 242, 235, 0.6);
+}
+
+.desk-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+}
+
+.desk-tag,
+.desk-tag-toggle {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(18, 18, 24, 0.45);
+    color: rgba(245, 242, 235, 0.7);
+    font-size: 0.75rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.desk-tag:hover,
+.desk-tag-toggle:hover {
+    color: #f5f2eb;
+    background: rgba(28, 28, 36, 0.6);
+}
+
+.desk-tag-toggle {
+    border-style: dashed;
+    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(22, 22, 30, 0.35);
+}
+
+.desk-tag.active {
+    background: rgba(28, 28, 36, 0.62);
+    border-color: rgba(255, 255, 255, 0.32);
+    color: #f5f2eb;
+}
+
+.desk-load-more {
+    margin: 1rem auto 0;
+    padding: 0.5rem 1.4rem;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(18, 18, 24, 0.5);
+    color: #f5f2eb;
+    cursor: pointer;
+}
+
+.desk-load-more:hover {
+    background: rgba(28, 28, 36, 0.6);
+}
+
+.desk-tab {
+    padding: 0.45rem 0.9rem;
+    background: rgba(18, 18, 24, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(245, 242, 235, 0.7);
+    font-size: 0.85rem;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 16px;
+    transition: all 0.2s ease;
+}
+
+.desk-tab:hover {
+    background: rgba(24, 24, 32, 0.55);
+    color: #f5f2eb;
+}
+
+.desk-tab.active {
+    background: rgba(24, 24, 32, 0.7);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #f5f2eb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.desk-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+
+.desk-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.desk-content::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+}
+
+.desk-empty {
+    text-align: center;
+    color: rgba(245, 242, 235, 0.5);
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+}
+
+.desk-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+}
+
+.desk-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(18, 18, 24, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: left;
+    color: inherit;
+    overflow: hidden;
+    font-family: inherit;
+}
+
+.desk-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(24, 24, 32, 0.55);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.desk-card-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    background: rgba(0, 0, 0, 0.3);
+    display: block;
+}
+
+.desk-card-thumb-placeholder {
+    background: linear-gradient(135deg, rgba(40, 36, 46, 0.6), rgba(24, 20, 28, 0.8));
+    background-image: url('/master-desk-background-img/master-desk-background.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.desk-card-info {
+    padding: 0.6rem 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.desk-card-title {
+    font-size: 0.85rem;
+    color: #f5f2eb;
+    line-height: 1.35;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.desk-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.desk-card-date {
+    font-size: 0.72rem;
+    color: rgba(245, 242, 235, 0.45);
+}
+
+.desk-card-badge {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.45rem;
+    background: rgba(180, 160, 120, 0.2);
+    border: 1px solid rgba(180, 160, 120, 0.3);
+    border-radius: 8px;
+    color: rgba(245, 242, 235, 0.65);
+}
+
+.desk-back {
+    flex-shrink: 0;
+    margin-top: 0.8rem;
+    padding: 0.55rem 1.2rem;
+    background: rgba(18, 18, 24, 0.45);
+    border: 1px solid rgba(255, 120, 120, 0.35);
+    color: rgba(255, 200, 200, 0.9);
+    font-size: 0.9rem;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+    text-align: center;
+    width: 100%;
+}
+
+.desk-back:hover {
+    background: rgba(255, 120, 120, 0.12);
+    border-color: rgba(255, 160, 160, 0.55);
+}
+
+@media (max-width: 768px) {
+    .desk-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .desk-search {
+        width: 100%;
+    }
+    .desk-panel {
+        width: 95%;
+        max-height: 82vh;
+        margin-top: 6vh;
+        padding: 1rem;
+    }
+
+    .desk-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .desk-tab {
+        font-size: 0.78rem;
+        padding: 0.35rem 0.7rem;
+    }
+}
