@@ -84,9 +84,13 @@ public-home/
     - Server-side API route (`/api/visitors/count`) with 1-hour cache.
     - Graceful fallback: counter hides silently when configuration is missing.
 - **Blog Migration + Master's Desk Update**:
-    - Added Naver blog migration pipeline with metadata/content normalization.
-    - Consolidated Master's Desk listing/classification/sanitization rules.
-    - Synced automated `sitemap.xml`/`llms.txt` generation with updated runbook/docs.
+    - Added full-list Naver migration pipeline (2,393 posts) with metadata/content normalization.
+    - Added Master's Desk route, list, post detail rendering, and per-post OG metadata wiring.
+    - Restored publish dates/categories/tags and automated cleanup for menu/markup noise in legacy bodies.
+    - Added local image materialization, missing-image fallback (`missing-image.webp`), and safer link/video preservation.
+    - Applied list policy filters for me2day relay posts and novel posts.
+    - Synced automated `sitemap.xml` / `llms.txt` generation with migration runbook and operations docs.
+    - Expanded migration article (`20260218-naver-blog-migration`) as a v0.1.6 update note.
 
 ### v0.1.5 (2026-02-13)
 - **Gallery — Diary**:
