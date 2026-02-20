@@ -4,9 +4,13 @@ import { useEffect, useState } from 'react';
 import { ContentLoader } from '../services/ContentLoader';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import './WorldGuide.css';
 
 const WorldGuide = () => {
+    const pathname = usePathname();
+    const localeFromPath = pathname.split('/')[1];
+    const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : 'ko';
     const [guideContent, setGuideContent] = useState<string>('');
     const [loading, setLoading] = useState(true);
 
@@ -37,7 +41,7 @@ const WorldGuide = () => {
 
     return (
         <div className="world-guide-container">
-            <Link className="back-btn ui-button ui-button-ghost" href="/atelier">
+            <Link className="back-btn ui-button ui-button-ghost" href={`/${locale}/atelier`}>
                 <ArrowLeft size={20} /> Back to Atelier
             </Link>
 

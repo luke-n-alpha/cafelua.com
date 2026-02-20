@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import UnderConstruction from './UnderConstruction';
 import CoffeeChatDialog from './CoffeeChatDialog';
@@ -14,6 +14,9 @@ const CounterPage: React.FC = () => {
     const { t } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const localeFromPath = pathname.split('/')[1];
+    const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : 'ko';
     const [isChatOpen, setIsChatOpen] = useState(false);
 
     const season = (searchParams.get('season') as Season) || 'spring';
@@ -43,7 +46,7 @@ const CounterPage: React.FC = () => {
 
     const handleBackToLounge = () => {
         const query = searchParams.toString();
-        router.push(query ? `/lounge?${query}` : '/lounge');
+        router.push(query ? `/${locale}/lounge?${query}` : `/${locale}/lounge`);
     };
 
     const handleCloseCoffeeChat = () => {
@@ -52,7 +55,7 @@ const CounterPage: React.FC = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.delete('chat');
         const query = params.toString();
-        router.replace(query ? `/counter?${query}` : '/counter');
+        router.replace(query ? `/${locale}/counter?${query}` : `/${locale}/counter`);
     };
 
     const handleOpenCoffeeChat = () => {
@@ -60,7 +63,7 @@ const CounterPage: React.FC = () => {
         // URL에 chat=open 파라미터 추가 (LoungeBgm 일시 중지용)
         const params = new URLSearchParams(searchParams.toString());
         params.set('chat', 'open');
-        router.replace(`/counter?${params.toString()}`);
+        router.replace(`/${locale}/counter?${params.toString()}`);
     };
 
     const buttons = [
@@ -76,7 +79,7 @@ const CounterPage: React.FC = () => {
             label: t('counter.tarotButton', '타로'),
             onClick: () => {
                 const query = searchParams.toString();
-                router.push(query ? `/tarot?${query}` : '/tarot');
+                router.push(query ? `/${locale}/tarot?${query}` : `/${locale}/tarot`);
             },
         },
     ];

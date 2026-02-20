@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Sun, Moon, Volume2, VolumeX } from 'lucide-react';
 import cafeDay from '../assets/cafe_day.png';
@@ -10,6 +11,9 @@ import AboutModal from './AboutModal';
 
 const CafeLayout = ({ children }: { children?: React.ReactNode }) => {
     const { t } = useTranslation();
+    const pathname = usePathname();
+    const localeFromPath = pathname.split('/')[1];
+    const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : 'ko';
     const [isNight, setIsNight] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [showAboutModal, setShowAboutModal] = useState(false);
@@ -56,12 +60,12 @@ const CafeLayout = ({ children }: { children?: React.ReactNode }) => {
                         <h1>Café Luα</h1>
                     </div>
                     <nav className="cafe-nav">
-                        <Link href="/" onClick={playClickSound}>{t('nav.home') || 'Home'}</Link>
+                        <Link href={`/${locale}`} onClick={playClickSound}>{t('nav.home') || 'Home'}</Link>
                         <a href="#" onClick={() => { playClickSound(); setShowAboutModal(true); }}>{t('nav.about')}</a>
-                        <Link href="/profile" onClick={playClickSound}>{t('nav.profile') || 'Profile'}</Link>
-                        <Link href="/cafe-life" onClick={playClickSound}>{t('nav.cafe_life') || 'Cafe Life'}</Link>
-                        <Link href="/atelier" onClick={playClickSound}>{t('nav.library') || 'Atelier'}</Link>
-                        <Link href="/lab" onClick={playClickSound}>{t('nav.lab') || 'Lab'}</Link>
+                        <Link href={`/${locale}/profile`} onClick={playClickSound}>{t('nav.profile') || 'Profile'}</Link>
+                        <Link href={`/${locale}/cafe-life`} onClick={playClickSound}>{t('nav.cafe_life') || 'Cafe Life'}</Link>
+                        <Link href={`/${locale}/atelier`} onClick={playClickSound}>{t('nav.library') || 'Atelier'}</Link>
+                        <Link href={`/${locale}/lab`} onClick={playClickSound}>{t('nav.lab') || 'Lab'}</Link>
                     </nav>
                     <div className="controls">
                         <button onClick={() => setIsMuted(!isMuted)} className="icon-btn ui-icon-button">

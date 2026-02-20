@@ -424,7 +424,7 @@ This migration was built with Claude Code and released as open source. If you ha
 
 Latest update (February 20, 2026)
 
-- Vercel deployment optimization applied: `/desk/[slug]` now uses ISR (`revalidate`) plus partial pre-render (`DESK_PREBUILD_COUNT`) to reduce build time.
+- Vercel deployment optimization applied: \`/desk/[slug]\` now uses ISR (\`revalidate\`) plus partial pre-render (\`DESK_PREBUILD_COUNT\`) to reduce build time.
 
 ---
 

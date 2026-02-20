@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import UnderConstruction from './UnderConstruction';
 import './LoungePage.css';
@@ -15,6 +15,9 @@ const LoungePage: React.FC = () => {
     const { t } = useTranslation();
     const searchParams = useSearchParams();
     const router = useRouter();
+    const pathname = usePathname();
+    const localeFromPath = pathname.split('/')[1];
+    const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : 'ko';
     const [bgImage, setBgImage] = useState<string>('');
     const [loungeVariant, setLoungeVariant] = useState('lounge-sunny');
     const entrySource = searchParams.get('from');
@@ -26,13 +29,14 @@ const LoungePage: React.FC = () => {
 
     const pushWithParams = (path: string) => {
         const query = searchParams.toString();
-        router.push(query ? `${path}?${query}` : path);
+        const next = `/${locale}${path}`;
+        router.push(query ? `${next}?${query}` : next);
     };
 
     const handleStairs = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.set('from', 'lounge');
-        router.push(`/atelier?${params.toString()}`);
+        router.push(`/${locale}/atelier?${params.toString()}`);
     };
 
     // Resolve background image based on state
@@ -89,7 +93,7 @@ const LoungePage: React.FC = () => {
         if (!params.has('from')) return;
         params.delete('from');
         const query = params.toString();
-        router.replace(query ? `/lounge?${query}` : '/lounge');
+        router.replace(query ? `/${locale}/lounge?${query}` : `/${locale}/lounge`);
     };
 
     const greetingVariant = loungeVariant.replace(/^lounge-/, '');
@@ -104,8 +108,8 @@ const LoungePage: React.FC = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.delete('from');
         const query = params.toString();
-        router.replace(query ? `/lounge?${query}` : '/lounge');
-    }, [router, searchParams, showGreeting]);
+        router.replace(query ? `/${locale}/lounge?${query}` : `/${locale}/lounge`);
+    }, [locale, router, searchParams, showGreeting]);
 
     return (
         <div 
@@ -135,7 +139,7 @@ const LoungePage: React.FC = () => {
 
                         <button
                             className="menu-button ui-button ui-button-danger exit"
-                            onClick={() => router.push('/')}
+                            onClick={() => router.push(`/${locale}`)}
                         >
                             {t('lounge.back')}
                         </button>

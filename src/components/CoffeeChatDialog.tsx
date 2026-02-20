@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import BackgroundMusic from './BackgroundMusic';
 import {
@@ -41,6 +41,9 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
     const { t, i18n } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const localeFromPath = pathname.split('/')[1];
+    const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : (i18n.language === 'en' ? 'en' : 'ko');
     const overlayRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -57,8 +60,8 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
     // 라운지로 이동
     const goToLounge = useCallback(() => {
         const query = searchParams.toString();
-        router.push(query ? `/lounge?${query}` : '/lounge');
-    }, [router, searchParams]);
+        router.push(query ? `/${locale}/lounge?${query}` : `/${locale}/lounge`);
+    }, [locale, router, searchParams]);
 
     // 대화 요약 및 저장
     const summarizeAndSave = useCallback(async (mem: ChatMemory) => {
