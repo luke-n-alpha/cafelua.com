@@ -51,6 +51,7 @@
 | `FIREBASE_CLIENT_EMAIL` | Yes* | Firebase Admin SDK 서비스 계정 이메일 |
 | `FIREBASE_PRIVATE_KEY` | Yes* | Firebase Admin SDK 비공개 키 |
 | `GA4_PROPERTY_ID` | No | 인트로 페이지 방문자 카운터용 GA4 속성 ID |
+| `DESK_PREBUILD_COUNT` | No | 빌드 시 사전 렌더링할 최신 데스크 포스트 수 (기본값: `50`). 나머지는 ISR로 온디맨드 생성. |
 
 *방명록 및 AI 채팅 기능 사용 시 필수
 
@@ -65,17 +66,74 @@
 ## 📂 프로젝트 구조
 
 ```
-public-home/
-├── public/              # 정적 리소스 (이미지, 오디오 등)
-├── src/                 # Next.js App Router 소스
-│   ├── app/             # 라우트/레이아웃/페이지
-│   ├── components/      # UI 컴포넌트 (shadcn + 커스텀)
-│   ├── styles/          # 전역 스타일 및 테마 토큰
-│   └── data/            # 생성된 콘텐츠 인덱스 및 헬퍼
-└── ...
+src/
+├── app/
+│   ├── [locale]/                # 로케일 기반 라우팅 (ko/en)
+│   │   ├── (lounge)/            # 1층 라우트 그룹 (공유 BGM 레이아웃)
+│   │   │   ├── desk/            # 마스터의 데스크 목록
+│   │   │   │   └── [slug]/      # 개별 포스트 (ISR)
+│   │   │   ├── gallery/diary/   # 갤러리 + 다이어리
+│   │   │   ├── counter/         # 커피챗 & 타로
+│   │   │   ├── guestbook/       # 방명록
+│   │   │   └── about/[tab]/     # 소개 페이지 (탭)
+│   │   ├── atelier/             # 2층 아틀리에 (낡은 PC, 메뉴)
+│   │   └── library/             # atelier로 리다이렉트
+│   └── api/                     # API 라우트 (채팅, 타로, 방명록 등)
+├── components/                  # React 컴포넌트
+├── data/
+│   └── desk/
+│       ├── _naver-posts.ts      # 네이버 블로그 2,393개 포스트 원본
+│       └── deskData.ts          # 필터링, 카테고리 분류, 영문 태그 매핑
+├── i18n.ts                      # i18next 설정 (ko/en 전체 리소스)
+├── lib/                         # 유틸리티 (Gemini API, 알파 프롬프트)
+└── services/                    # MIDI 신시사이저 등
+scripts/
+├── generate-seo-files.ts        # sitemap + llms.txt 생성기
+├── translate-naver-posts.ts     # Gemini 기반 블로그 번역 (샤딩)
+├── fetch-naver-blog.ts          # 네이버 블로그 스크래퍼 (Playwright)
+└── localize-naver-images.ts     # 이미지 다운로드 & 로컬화
+public/
+├── sitemap.xml                  # 자동 생성 (4,324 URL, ko+en)
+├── llms.txt                     # AI 크롤러 정보
+├── desk/                        # 데스크 포스트 이미지 (로컬화)
+├── 1997-homepage/               # 아카이브: 1997년 홈페이지
+└── 1998-homepage/               # 아카이브: 1998년 홈페이지
 ```
 
+## 📊 통계
+
+| 항목 | 수량 |
+|------|------|
+| 전체 페이지 (ko + en) | 4,324 |
+| 데스크 포스트 | 2,133 |
+| 다이어리 | 20 |
+| 데스크 카테고리 | 8 |
+| 지원 언어 | 2 (ko, en) |
+| 사이트맵 URL | 4,324 |
+
 ## 📝 업데이트 내역 (Changelog)
+
+### v0.1.7 (2026-02-20)
+- **전체 영문 번역**:
+    - 네이버 블로그 2,311+ 포스트 전체 영문 번역 (Gemini 2.5 Flash).
+    - 5개 샤드 병렬 번역 파이프라인 (체크포인트 + result-only 모드).
+    - 공백/기호 전용 제목 처리로 Gemini 빈 응답 방지.
+    - 미번역 포스트 필터 적용 — 번역 완료된 포스트만 마스터의 데스크에 노출.
+- **영문 태그 매핑**:
+    - 27개 한국어 태그의 영문 매핑 추가 (`/en/desk` 표시용).
+    - 영문 모드 검색 시 영문 태그명으로도 매칭.
+- **i18n 수정**:
+    - library 리다이렉트 locale 유실 수정 (Next.js 16 `params`는 Promise — `await` 필요).
+    - i18n hydration 불일치 수정: `[locale]/layout.tsx`에서 동기 `changeLanguage` 호출.
+    - API 채팅/타로 라우트에 언어 잠금 추가 (일관된 응답 보장).
+- **Hydration 수정**:
+    - DeskPost: YouTube 임베드의 `<div>` inside `<p>` 방지를 위해 커스텀 `div` 렌더러 적용.
+- **SEO**:
+    - sitemap.xml: 4,324 URL로 확장 (ko/en 각각 별도 엔트리 + hreflang alternate).
+    - `llms.txt`: 사이트 소개, 구조, 콘텐츠 분류, 기술 정보 등 풍부하게 보강.
+- **빌드 최적화**:
+    - ISR (`revalidate: 3600`) + `DESK_PREBUILD_COUNT` (기본 50)으로 데스크 포스트 빌드 최적화.
+    - 배포 시 100페이지(50 × 2 로케일)만 사전 빌드, 나머지는 온디맨드 생성.
 
 ### v0.1.6 (2026-02-14)
 - **방문자 카운터**:

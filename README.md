@@ -51,6 +51,7 @@ Copy `.env.example` to `.env` and configure:
 | `FIREBASE_CLIENT_EMAIL` | Yes* | Firebase Admin SDK service account email |
 | `FIREBASE_PRIVATE_KEY` | Yes* | Firebase Admin SDK private key |
 | `GA4_PROPERTY_ID` | No | GA4 Property ID for visitor counter on intro page |
+| `DESK_PREBUILD_COUNT` | No | Number of latest desk posts to pre-render at build time (default: `50`). Keeps build fast with ISR for the rest. |
 
 *Required for Guestbook and AI chat features
 
@@ -65,17 +66,74 @@ Copy `.env.example` to `.env` and configure:
 ## 📂 Project Structure
 
 ```
-public-home/
-├── public/              # Static resources (images, audio, etc.)
-├── src/                 # Next.js App Router source
-│   ├── app/             # Route handlers, layouts, pages
-│   ├── components/      # UI components (shadcn + custom)
-│   ├── styles/          # Global styles and theme tokens
-│   └── data/            # Generated content index & helpers
-└── ...
+src/
+├── app/
+│   ├── [locale]/                # Locale-based routing (ko/en)
+│   │   ├── (lounge)/            # 1F route group (shared BGM layout)
+│   │   │   ├── desk/            # Master's Desk listing
+│   │   │   │   └── [slug]/      # Individual post (ISR)
+│   │   │   ├── gallery/diary/   # Gallery + diary entries
+│   │   │   ├── counter/         # Coffee chat & tarot
+│   │   │   ├── guestbook/       # Guestbook
+│   │   │   └── about/[tab]/     # About page (tabs)
+│   │   ├── atelier/             # 2F Atelier (Old PC, menu)
+│   │   └── library/             # Redirect → atelier
+│   └── api/                     # API routes (chat, tarot, guestbook, etc.)
+├── components/                  # React components
+├── data/
+│   └── desk/
+│       ├── _naver-posts.ts      # 2,393 Naver blog posts (source data)
+│       └── deskData.ts          # Filtering, categorization, EN tag mapping
+├── i18n.ts                      # i18next config with full ko/en resources
+├── lib/                         # Utilities (Gemini API, Alpha prompt)
+└── services/                    # MIDI synth, etc.
+scripts/
+├── generate-seo-files.ts        # Sitemap + llms.txt generator
+├── translate-naver-posts.ts     # Gemini-based blog translation (sharded)
+├── fetch-naver-blog.ts          # Naver blog scraper (Playwright)
+└── localize-naver-images.ts     # Image download & localization
+public/
+├── sitemap.xml                  # Auto-generated (4,324 URLs, ko+en)
+├── llms.txt                     # AI crawler info
+├── desk/                        # Desk post images (localized)
+├── 1997-homepage/               # Archived 1997 homepage
+└── 1998-homepage/               # Archived 1998 homepage
 ```
 
+## 📊 Stats
+
+| Metric | Count |
+|--------|-------|
+| Total pages (ko + en) | 4,324 |
+| Desk posts | 2,133 |
+| Diary entries | 20 |
+| Desk categories | 8 |
+| Supported languages | 2 (ko, en) |
+| Sitemap URLs | 4,324 |
+
 ## 📝 Changelog
+
+### v0.1.7 (2026-02-20)
+- **Full English Translation**:
+    - All 2,311+ Naver blog posts translated to English via Gemini 2.5 Flash.
+    - Sharded parallel translation pipeline (5 shards) with checkpointing and result-only mode.
+    - Whitespace/symbol-only title handling to prevent Gemini empty responses.
+    - Untranslated post filter applied — only fully translated posts appear on Master's Desk.
+- **English Tag Mapping**:
+    - 27 Korean tags mapped to English equivalents for `/en/desk` display.
+    - English-mode search also matches English tag names.
+- **i18n Fixes**:
+    - Fixed library redirect losing locale (Next.js 16 `params` is a Promise — must `await`).
+    - Fixed i18n hydration mismatch: synchronous `changeLanguage` in `[locale]/layout.tsx`.
+    - Added language lock to API chat/tarot routes for consistent responses.
+- **Hydration Fix**:
+    - DeskPost: replaced `<p>` with `<div>` renderer for YouTube embeds to prevent `<div>` inside `<p>`.
+- **SEO**:
+    - Sitemap expanded to 4,324 URLs (separate entries for ko and en with hreflang alternates).
+    - `llms.txt` enriched with full site description, structure, content breakdown, and technical info.
+- **Build Optimization**:
+    - ISR (`revalidate: 3600`) + `DESK_PREBUILD_COUNT` (default 50) for desk posts.
+    - Only 100 pages (50 × 2 locales) pre-built at deploy; rest served on-demand.
 
 ### v0.1.6 (2026-02-14)
 - **Visitor Counter**:
