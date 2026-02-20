@@ -147,7 +147,17 @@ const resources = {
         "inputPlaceholder": "What would you like to say?",
         "viewLog": "Chat Log",
         "endChat": "End Chat",
-        "returning": "Returning to lounge..."
+        "returning": "Returning to lounge...",
+        "action": {
+          "silence": "Silence",
+          "nod": "Nod",
+          "smile": "Smile",
+          "sigh": "Sigh",
+          "frown": "Frown",
+          "cry": "Tear up",
+          "coffee": "Sip coffee",
+          "poke": "Poke"
+        }
       },
       "tarot": {
         "thinking": "Thinking...",
@@ -172,6 +182,7 @@ const resources = {
         "copy": "Copy",
         "history": "Past Sessions",
         "noHistory": "No past session records",
+        "reversedTag": "(Reversed)",
         "action": {
           "nod": "Nod",
           "think": "Think deeply",
@@ -376,7 +387,17 @@ const resources = {
         "inputPlaceholder": "무슨 말을 할까요?",
         "viewLog": "대화 기록",
         "endChat": "대화 종료",
-        "returning": "라운지로 돌아가는 중..."
+        "returning": "라운지로 돌아가는 중...",
+        "action": {
+          "silence": "침묵",
+          "nod": "끄덕",
+          "smile": "웃음",
+          "sigh": "한숨",
+          "frown": "찡그림",
+          "cry": "울음",
+          "coffee": "커피",
+          "poke": "톡톡"
+        }
       },
       "tarot": {
         "thinking": "생각 중...",
@@ -401,6 +422,7 @@ const resources = {
         "copy": "복사",
         "history": "이전 상담",
         "noHistory": "이전 상담 기록이 없어요",
+        "reversedTag": "(역방향)",
         "action": {
           "nod": "끄덕끄덕",
           "think": "깊은 생각",

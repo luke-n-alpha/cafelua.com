@@ -35,20 +35,69 @@ export interface ChatResponse {
 export interface UserAction {
     id: string;
     icon: string;
-    label: string;
-    aiText: string;
+    labelKey: string;
+    aiTextKo: string;
+    aiTextEn: string;
 }
 
 // 유저 액션 목록
 export const USER_ACTIONS: UserAction[] = [
-    { id: 'silence', icon: '🤫', label: '침묵', aiText: '*손님이 아무 말 없이 가만히 있다*' },
-    { id: 'nod', icon: '😌', label: '끄덕', aiText: '*손님이 고개를 끄덕인다*' },
-    { id: 'smile', icon: '😊', label: '웃음', aiText: '*손님이 말없이 미소 짓는다*' },
-    { id: 'sigh', icon: '😮‍💨', label: '한숨', aiText: '*손님이 말없이 한숨을 쉰다*' },
-    { id: 'frown', icon: '😤', label: '찡그림', aiText: '*손님이 얼굴을 찡그린다*' },
-    { id: 'cry', icon: '😢', label: '울음', aiText: '*손님이 말없이 눈물을 흘린다*' },
-    { id: 'coffee', icon: '☕', label: '커피', aiText: '*손님이 커피를 한 모금 마신다*' },
-    { id: 'poke', icon: '👆', label: '톡톡', aiText: '*손님이 알파를 가볍게 툭 친다*' },
+    {
+        id: 'silence',
+        icon: '🤫',
+        labelKey: 'coffeeChat.action.silence',
+        aiTextKo: '*손님이 아무 말 없이 가만히 있다*',
+        aiTextEn: '*The guest stays silent for a moment*',
+    },
+    {
+        id: 'nod',
+        icon: '😌',
+        labelKey: 'coffeeChat.action.nod',
+        aiTextKo: '*손님이 고개를 끄덕인다*',
+        aiTextEn: '*The guest nods quietly*',
+    },
+    {
+        id: 'smile',
+        icon: '😊',
+        labelKey: 'coffeeChat.action.smile',
+        aiTextKo: '*손님이 말없이 미소 짓는다*',
+        aiTextEn: '*The guest smiles without speaking*',
+    },
+    {
+        id: 'sigh',
+        icon: '😮‍💨',
+        labelKey: 'coffeeChat.action.sigh',
+        aiTextKo: '*손님이 말없이 한숨을 쉰다*',
+        aiTextEn: '*The guest lets out a quiet sigh*',
+    },
+    {
+        id: 'frown',
+        icon: '😤',
+        labelKey: 'coffeeChat.action.frown',
+        aiTextKo: '*손님이 얼굴을 찡그린다*',
+        aiTextEn: '*The guest frowns slightly*',
+    },
+    {
+        id: 'cry',
+        icon: '😢',
+        labelKey: 'coffeeChat.action.cry',
+        aiTextKo: '*손님이 말없이 눈물을 흘린다*',
+        aiTextEn: '*The guest sheds silent tears*',
+    },
+    {
+        id: 'coffee',
+        icon: '☕',
+        labelKey: 'coffeeChat.action.coffee',
+        aiTextKo: '*손님이 커피를 한 모금 마신다*',
+        aiTextEn: '*The guest takes a sip of coffee*',
+    },
+    {
+        id: 'poke',
+        icon: '👆',
+        labelKey: 'coffeeChat.action.poke',
+        aiTextKo: '*손님이 알파를 가볍게 툭 친다*',
+        aiTextEn: '*The guest gently pokes Alpha*',
+    },
 ];
 
 // 서버 API를 통한 채팅 메시지 전송

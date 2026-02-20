@@ -80,14 +80,16 @@ describe('GeminiChatService', () => {
             USER_ACTIONS.forEach(action => {
                 expect(action).toHaveProperty('id');
                 expect(action).toHaveProperty('icon');
-                expect(action).toHaveProperty('label');
-                expect(action).toHaveProperty('aiText');
+                expect(action).toHaveProperty('labelKey');
+                expect(action).toHaveProperty('aiTextKo');
+                expect(action).toHaveProperty('aiTextEn');
             });
         });
 
-        it('액션 aiText는 이탤릭 형식이어야 한다', () => {
+        it('액션 aiText ko/en은 이탤릭 형식이어야 한다', () => {
             USER_ACTIONS.forEach(action => {
-                expect(action.aiText).toMatch(/^\*.*\*$/);
+                expect(action.aiTextKo).toMatch(/^\*.*\*$/);
+                expect(action.aiTextEn).toMatch(/^\*.*\*$/);
             });
         });
 

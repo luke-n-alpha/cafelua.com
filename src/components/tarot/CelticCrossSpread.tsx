@@ -6,6 +6,7 @@ import './TarotReading.css';
 
 interface CelticCrossSpreadProps {
     cards: DrawnCard[];
+    language: 'ko' | 'en';
     currentIndex: number;
     interpretedIndices: number[];
     nextFlipIndex: number;
@@ -27,6 +28,7 @@ interface CelticCrossSpreadProps {
  */
 export default function CelticCrossSpread({
     cards,
+    language,
     currentIndex,
     interpretedIndices,
     nextFlipIndex,
@@ -54,7 +56,7 @@ export default function CelticCrossSpread({
                     <div className="celtic-card-back" />
                     {/* 앞면 */}
                     <div className={`celtic-card-front ${card.isReversed ? 'reversed' : ''}`}>
-                        <img src={card.card.imagePath} alt={card.card.nameKr} />
+                        <img src={card.card.imagePath} alt={language === 'en' ? card.card.nameEn : card.card.nameKr} />
                     </div>
                 </div>
             </div>

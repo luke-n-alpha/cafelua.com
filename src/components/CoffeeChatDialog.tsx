@@ -44,6 +44,7 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
     const pathname = usePathname();
     const localeFromPath = pathname.split('/')[1];
     const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : (i18n.language === 'en' ? 'en' : 'ko');
+    const preferredLanguage = locale;
     const overlayRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -56,6 +57,12 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
     const [isChatEnded, setIsChatEnded] = useState<boolean>(false);
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+        if (i18n.language !== preferredLanguage) {
+            i18n.changeLanguage(preferredLanguage);
+        }
+    }, [i18n, preferredLanguage]);
 
     // 라운지로 이동
     const goToLounge = useCallback(() => {
@@ -149,18 +156,22 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
         setMemory(mem);
 
         // 재방문 손님 인사
-        let greeting = getGreetingMessage(i18n.language);
+        let greeting = getGreetingMessage(preferredLanguage);
         if (mem.user.visitCount > 1) {
             const name = mem.user.name || mem.user.nickname;
             if (name) {
                 greeting = {
-                    message: `어서오세요, ${name}님! 다시 오셨군요. ☕ 오늘도 좋은 이야기 나눠요! ｡•ᴗ•｡✨`,
+                    message: preferredLanguage === 'en'
+                        ? `Welcome back, ${name}! ☕ I'm glad to see you again. Let's have another good conversation today! ｡•ᴗ•｡✨`
+                        : `어서오세요, ${name}님! 다시 오셨군요. ☕ 오늘도 좋은 이야기 나눠요! ｡•ᴗ•｡✨`,
                     expression: 'nice-talk',
                     shouldEnd: false,
                 };
             } else {
                 greeting = {
-                    message: `어서오세요! 다시 찾아주셨군요. ☕ 반가워요! ｡•ᴗ•｡✨`,
+                    message: preferredLanguage === 'en'
+                        ? `Welcome back! ☕ It's great to see you again! ｡•ᴗ•｡✨`
+                        : `어서오세요! 다시 찾아주셨군요. ☕ 반가워요! ｡•ᴗ•｡✨`,
                     expression: 'nice-talk',
                     shouldEnd: false,
                 };
@@ -172,7 +183,7 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
 
         // 타임아웃 설정
         timeoutRef.current = setTimeout(async () => {
-            const timeout = getTimeoutMessage(i18n.language);
+            const timeout = getTimeoutMessage(preferredLanguage);
             setCurrentMessage(timeout.message);
             setCurrentExpression(timeout.expression);
             setIsChatEnded(true);
@@ -190,7 +201,7 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
                 clearTimeout(timeoutRef.current);
             }
         };
-    }, [i18n.language, goToLounge, summarizeAndSave]);
+    }, [goToLounge, preferredLanguage, summarizeAndSave]);
 
     // 메시지 전송 처리
     const handleSendMessage = async (content: string) => {
@@ -231,7 +242,7 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
                         role: m.role,
                         content: m.content
                     })),
-                    language: i18n.language,
+                    language: preferredLanguage,
                     memoryContext,
                 })
             });
@@ -271,7 +282,7 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
             }
         } catch (error) {
             console.error('Chat error:', error);
-            const errorResponse = getErrorMessage(i18n.language);
+            const errorResponse = getErrorMessage(preferredLanguage);
             setCurrentMessage(errorResponse.message);
             setCurrentExpression(errorResponse.expression);
         } finally {
@@ -283,7 +294,8 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
     const handleActionClick = (actionId: string) => {
         const action = USER_ACTIONS.find(a => a.id === actionId);
         if (action) {
-            handleSendMessage(action.aiText);
+            const actionMessage = preferredLanguage === 'en' ? action.aiTextEn : action.aiTextKo;
+            handleSendMessage(actionMessage);
         }
     };
 
@@ -398,7 +410,7 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
                                     disabled={isLoading}
                                 >
                                     <span className="action-icon">{action.icon}</span>
-                                    <span className="action-label">{action.label}</span>
+                                    <span className="action-label">{t(action.labelKey, action.id)}</span>
                                 </button>
                             ))}
                         </div>

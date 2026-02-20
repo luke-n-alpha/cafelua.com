@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import BackgroundMusic from '@/components/BackgroundMusic';
 import CelticCrossSpread from '@/components/tarot/CelticCrossSpread';
@@ -34,10 +34,10 @@ const CHAT_TIMEOUT_MS = 15 * 60 * 1000; // 15분 (카드 리딩 시간 고려)
 
 // 타로 전용 액션들
 const TAROT_ACTIONS = [
-    { id: 'nod', icon: '🙂', label: 'tarot.action.nod', aiText: '(고개를 끄덕인다)' },
-    { id: 'think', icon: '🤔', label: 'tarot.action.think', aiText: '(깊이 생각한다)' },
-    { id: 'curious', icon: '✨', label: 'tarot.action.curious', aiText: '(호기심 가득한 눈으로 본다)' },
-    { id: 'hope', icon: '🌟', label: 'tarot.action.hope', aiText: '(희망찬 표정을 짓는다)' },
+    { id: 'nod', icon: '🙂', label: 'tarot.action.nod', aiTextKo: '(고개를 끄덕인다)', aiTextEn: '(The guest nods)' },
+    { id: 'think', icon: '🤔', label: 'tarot.action.think', aiTextKo: '(깊이 생각한다)', aiTextEn: '(The guest thinks deeply)' },
+    { id: 'curious', icon: '✨', label: 'tarot.action.curious', aiTextKo: '(호기심 가득한 눈으로 본다)', aiTextEn: '(The guest looks curious)' },
+    { id: 'hope', icon: '🌟', label: 'tarot.action.hope', aiTextKo: '(희망찬 표정을 짓는다)', aiTextEn: '(The guest looks hopeful)' },
 ];
 
 interface CardBasicInfo {
@@ -52,6 +52,10 @@ export default function TarotPage() {
     const { t, i18n } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const localeFromPath = pathname.split('/')[1];
+    const preferredLanguage = localeFromPath === 'en' ? 'en' : 'ko';
+    const isEnglish = preferredLanguage === 'en';
     const overlayRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -93,6 +97,16 @@ export default function TarotPage() {
     }>>([]);
 
     const hasQueue = messageQueue.length > 0;
+    const reversedTag = t('tarot.reversedTag', isEnglish ? '(Reversed)' : '(역방향)');
+    const getCardName = useCallback((card: CardBasicInfo | TarotCardMeta) => (
+        isEnglish ? card.nameEn : card.nameKr
+    ), [isEnglish]);
+    const getPositionName = useCallback((position: (typeof SPREAD_POSITIONS)[number]) => (
+        isEnglish ? position.nameEn : position.nameKr
+    ), [isEnglish]);
+    const getPositionContext = useCallback((position: (typeof SPREAD_POSITIONS)[number]) => (
+        isEnglish ? position.nameEn : `${position.nameKr} (${position.description})`
+    ), [isEnglish]);
 
     // 큐 진행: 대화 박스 클릭 시 다음 메시지 또는 액션 실행
     const advanceQueue = useCallback(() => {
@@ -118,8 +132,14 @@ export default function TarotPage() {
     // 카운터로 돌아가기
     const goToCounter = useCallback(() => {
         const query = searchParams.toString();
-        router.push(query ? `/${i18n.language}/counter?${query}` : `/${i18n.language}/counter`);
-    }, [router, searchParams, i18n.language]);
+        router.push(query ? `/${preferredLanguage}/counter?${query}` : `/${preferredLanguage}/counter`);
+    }, [router, searchParams, preferredLanguage]);
+
+    useEffect(() => {
+        if (i18n.language !== preferredLanguage) {
+            i18n.changeLanguage(preferredLanguage);
+        }
+    }, [i18n, preferredLanguage]);
 
     // 뷰포트 높이 설정
     useEffect(() => {
@@ -196,7 +216,7 @@ export default function TarotPage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 messages: [],
-                language: i18n.language,
+                language: preferredLanguage,
                 memoryContext,
             }),
             signal: abortController.signal,
@@ -234,7 +254,7 @@ export default function TarotPage() {
             abortController.abort();
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
         };
-    }, [goToCounter, saveWithHistory, t, i18n.language]);
+    }, [goToCounter, preferredLanguage, saveWithHistory, t]);
 
     // 카드 뽑기 (10장 - 켈틱 크로스) — 셔플 → 배치
     const drawCards = useCallback(() => {
@@ -283,7 +303,7 @@ export default function TarotPage() {
         const card = drawnCards[index];
         const position = SPREAD_POSITIONS[index];
 
-        setCurrentMessage(t('tarot.interpreting', '{{cardName}} 카드를 해석하고 있어요... 🔮', { cardName: card.card.nameKr }));
+        setCurrentMessage(t('tarot.interpreting', '{{cardName}} 카드를 해석하고 있어요... 🔮', { cardName: getCardName(card.card) }));
 
         try {
             const res = await fetch('/api/tarot/interpret', {
@@ -292,15 +312,15 @@ export default function TarotPage() {
                 body: JSON.stringify({
                     cardId: card.card.id,
                     positionIndex: index,
-                    positionName: `${position.nameKr} (${position.description})`,
+                    positionName: getPositionContext(position),
                     isReversed: card.isReversed,
                     topic: readingTopic || t('tarot.defaultTopic', '오늘의 운세'),
                     previousInterpretations: Object.entries(cardInterpretations).map(([i, interp]) => {
                         const c = drawnCards[Number(i)];
                         const p = SPREAD_POSITIONS[Number(i)];
-                        return `[${p.nameKr} - ${c.card.nameKr}${c.isReversed ? ' (역방향)' : ''}]: ${interp}`;
+                        return `[${getPositionName(p)} - ${getCardName(c.card)}${c.isReversed ? ` ${reversedTag}` : ''}]: ${interp}`;
                     }),
-                    language: i18n.language,
+                    language: preferredLanguage,
                 }),
             });
 
@@ -314,7 +334,7 @@ export default function TarotPage() {
             setCardInterpretations(newInterpretations);
 
             // 해석 결과를 대화 기록에 추가
-            const cardLabel = `[${position.nameKr} - ${card.card.nameKr}${card.isReversed ? ' (역방향)' : ''}]`;
+            const cardLabel = `[${getPositionName(position)} - ${getCardName(card.card)}${card.isReversed ? ` ${reversedTag}` : ''}]`;
             const interpretMsg: ChatMessage = {
                 role: 'model',
                 content: `${cardLabel}\n${data.message}`,
@@ -330,15 +350,15 @@ export default function TarotPage() {
         } finally {
             setIsLoading(false);
         }
-    }, [isLoading, drawnCards, readingTopic, interpretedIndices, i18n.language, t, cardInterpretations]);
+    }, [cardInterpretations, drawnCards, getCardName, getPositionContext, getPositionName, isLoading, preferredLanguage, readingTopic, reversedTag, t]);
 
     // 종합 해석 요청
     const requestSummary = useCallback(async () => {
         setIsLoading(true);
         setCurrentMessage(t('tarot.summarizing', '모든 카드를 종합해서 해석하고 있어요... ✨'));
         const allInterpretations = drawnCards.map((c, i) => ({
-            position: SPREAD_POSITIONS[i].nameKr,
-            cardName: c.card.nameKr,
+            position: getPositionName(SPREAD_POSITIONS[i]),
+            cardName: getCardName(c.card),
             isReversed: c.isReversed,
             interpretation: cardInterpretations[i] || '',
         }));
@@ -350,7 +370,7 @@ export default function TarotPage() {
                 body: JSON.stringify({
                     topic: readingTopic || t('tarot.defaultTopic', '오늘의 운세'),
                     interpretations: allInterpretations,
-                    language: i18n.language,
+                    language: preferredLanguage,
                 }),
             });
             if (summaryRes.ok) {
@@ -359,7 +379,7 @@ export default function TarotPage() {
                 setCurrentExpression(summaryData.expression as AlphaExpression);
                 const summaryMsg: ChatMessage = {
                     role: 'model',
-                    content: `[종합 해석]\n${summaryData.message}`,
+                    content: `${isEnglish ? '[Summary Reading]' : '[종합 해석]'}\n${summaryData.message}`,
                     expression: summaryData.expression,
                     timestamp: Date.now(),
                 };
@@ -370,7 +390,7 @@ export default function TarotPage() {
         } finally {
             setIsLoading(false);
         }
-    }, [drawnCards, cardInterpretations, readingTopic, i18n.language, t]);
+    }, [cardInterpretations, drawnCards, getCardName, getPositionName, isEnglish, preferredLanguage, readingTopic, t]);
 
     // 카드 영역 클릭 - 다음 카드 뒤집기 (순서대로)
     const handleCardAreaClick = useCallback(() => {
@@ -396,10 +416,13 @@ export default function TarotPage() {
         if (cardInterpretations[index]) {
             const card = drawnCards[index];
             const position = SPREAD_POSITIONS[index];
-            const cardName = `${position.nameKr} - ${card.card.nameKr}${card.isReversed ? ' (역방향)' : ''}`;
-            handleSendMessage(`(손님이 ${cardName} 카드를 다시 보고 있다)`);
+            const cardName = `${getPositionName(position)} - ${getCardName(card.card)}${card.isReversed ? ` ${reversedTag}` : ''}`;
+            const contextMessage = isEnglish
+                ? `(The guest is looking again at the ${cardName} card)`
+                : `(손님이 ${cardName} 카드를 다시 보고 있다)`;
+            handleSendMessage(contextMessage);
         }
-    }, [isLoading, drawnCards, cardInterpretations, handleCardClick]);
+    }, [cardInterpretations, drawnCards, getCardName, getPositionName, handleCardClick, isEnglish, isLoading, reversedTag]);
 
     // 카드 상세 좌우 네비게이션
     const navigateCard = useCallback((direction: 'prev' | 'next') => {
@@ -418,12 +441,14 @@ export default function TarotPage() {
         if (cardInterpretations[newIndex]) {
             const card = drawnCards[newIndex];
             const position = SPREAD_POSITIONS[newIndex];
-            const cardName = `${position.nameKr} - ${card.card.nameKr}${card.isReversed ? ' (역방향)' : ''}`;
+            const cardName = `${getPositionName(position)} - ${getCardName(card.card)}${card.isReversed ? ` ${reversedTag}` : ''}`;
             // AI에게 카드를 다시 보고 있다고 알려주고 자연스럽게 응답하게 함
-            const contextMsg = `(손님이 ${cardName} 카드를 다시 보고 있다)`;
+            const contextMsg = isEnglish
+                ? `(The guest is looking again at the ${cardName} card)`
+                : `(손님이 ${cardName} 카드를 다시 보고 있다)`;
             handleSendMessage(contextMsg);
         }
-    }, [isLoading, drawnCards, currentCardIndex, cardInterpretations]);
+    }, [cardInterpretations, currentCardIndex, drawnCards, getCardName, getPositionName, isEnglish, isLoading, reversedTag]);
 
     // 메시지 전송
     const handleSendMessage = async (content: string) => {
@@ -463,7 +488,7 @@ export default function TarotPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     messages: updatedMessages.map(m => ({ role: m.role, content: m.content })),
-                    language: i18n.language,
+                    language: preferredLanguage,
                     memoryContext,
                     isReadingMode,
                     flippedCount: drawnCards.filter(c => c.isFlipped).length,
@@ -520,7 +545,7 @@ export default function TarotPage() {
 
     const handleActionClick = (actionId: string) => {
         const action = TAROT_ACTIONS.find(a => a.id === actionId);
-        if (action) handleSendMessage(action.aiText);
+        if (action) handleSendMessage(preferredLanguage === 'en' ? action.aiTextEn : action.aiTextKo);
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -535,7 +560,7 @@ export default function TarotPage() {
     };
 
     const formatChatLog = useCallback(() => {
-        const date = new Date().toLocaleDateString(i18n.language === 'ko' ? 'ko-KR' : 'en-US', {
+        const date = new Date().toLocaleDateString(preferredLanguage === 'ko' ? 'ko-KR' : 'en-US', {
             year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
         });
         const header = `🔮 ${t('tarot.logTitle', '카페루아 타로 상담')} - ${date}\n${'─'.repeat(30)}\n\n`;
@@ -544,7 +569,7 @@ export default function TarotPage() {
             return `${speaker}: ${msg.content}`;
         }).join('\n\n');
         return header + chatContent + `\n\n${'─'.repeat(30)}\n🏠 cafelua.com`;
-    }, [messages, i18n.language, t]);
+    }, [messages, preferredLanguage, t]);
 
     const handleCopyLog = useCallback(async () => {
         const log = formatChatLog();
@@ -597,6 +622,7 @@ export default function TarotPage() {
                 >
                     <CelticCrossSpread
                         cards={drawnCards}
+                        language={preferredLanguage}
                         currentIndex={currentCardIndex}
                         interpretedIndices={interpretedIndices}
                         nextFlipIndex={drawnCards.filter(c => c.isFlipped).length}
@@ -712,7 +738,7 @@ export default function TarotPage() {
                                 </button>
                                 <img
                                     src={drawnCards[currentCardIndex].card.imagePath}
-                                    alt={drawnCards[currentCardIndex].card.nameKr}
+                                    alt={getCardName(drawnCards[currentCardIndex].card)}
                                     className={`card-detail-image ${drawnCards[currentCardIndex].isReversed ? 'reversed' : ''}`}
                                     onClick={() => setShowCardDetail(false)}
                                     style={{ cursor: 'pointer' }}
@@ -736,7 +762,7 @@ export default function TarotPage() {
                 <div className="cc-log-overlay" onClick={() => { setShowLog(false); setShowHistory(false); setSelectedHistory(null); }}>
                     <div className="cc-log-modal" onClick={(e) => e.stopPropagation()}>
                         <div className="cc-log-header">
-                            <h3>{showHistory ? `📚 ${t('tarot.history', '이전 상담')}` : selectedHistory ? `📖 ${new Date(selectedHistory.date).toLocaleDateString(i18n.language === 'ko' ? 'ko-KR' : 'en-US')}` : `🔮 ${t('tarot.viewLog', '상담 기록')}`}</h3>
+                            <h3>{showHistory ? `📚 ${t('tarot.history', '이전 상담')}` : selectedHistory ? `📖 ${new Date(selectedHistory.date).toLocaleDateString(preferredLanguage === 'ko' ? 'ko-KR' : 'en-US')}` : `🔮 ${t('tarot.viewLog', '상담 기록')}`}</h3>
                             <div className="cc-log-header-btns">
                                 {(showHistory || selectedHistory) && (
                                     <button className="cc-log-back" onClick={() => { setShowHistory(false); setSelectedHistory(null); }}>←</button>
@@ -751,7 +777,7 @@ export default function TarotPage() {
                                         <div key={record.id} className="cc-history-item" onClick={() => { setSelectedHistory(record); setShowHistory(false); }}>
                                             <span className="cc-history-type">{record.type === 'coffee' ? '☕' : '🔮'}</span>
                                             <div className="cc-history-info">
-                                                <span className="cc-history-date">{new Date(record.date).toLocaleDateString(i18n.language === 'ko' ? 'ko-KR' : 'en-US')}</span>
+                                                <span className="cc-history-date">{new Date(record.date).toLocaleDateString(preferredLanguage === 'ko' ? 'ko-KR' : 'en-US')}</span>
                                                 <span className="cc-history-summary">{record.summary || `${record.messages.length} messages`}</span>
                                             </div>
                                         </div>
