@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import './IntroPage.css';
 import {
@@ -171,8 +171,9 @@ const IconSelect = ({
 };
 
 const IntroPage: React.FC = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const router = useRouter();
+    const pathname = usePathname();
     const [season, setSeason] = useState<Season>('spring');
     const [time, setTime] = useState<TimeOfDay>('day');
     const [weather, setWeather] = useState<Weather>('sunny');
@@ -370,6 +371,9 @@ const IntroPage: React.FC = () => {
         if (audioRef.current) {
             audioRef.current.play().catch(e => console.log("Audio play failed", e));
         }
+
+        const localeFromPath = pathname.split('/')[1];
+        const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : (i18n.language === 'en' ? 'en' : 'ko');
         
         // Navigate to Lounge with current environmental state
         const params = new URLSearchParams({
@@ -380,7 +384,7 @@ const IntroPage: React.FC = () => {
             from: 'entrance'
         });
 
-        router.push(`/lounge?${params.toString()}`);
+        router.push(`/${locale}/lounge?${params.toString()}`);
     };
 
     return (
