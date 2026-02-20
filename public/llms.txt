@@ -1,16 +1,75 @@
-# CafeLua (cafelua.com)
+# Cafe Lua (cafelua.com)
 
-## URLs
-- https://cafelua.com/ko/
-- https://cafelua.com/en/
-- https://cafelua.com/ko/desk
-- https://cafelua.com/ko/gallery?tab=diary
-- https://cafelua.com/sitemap.xml
+> A virtual cafe between reality and a small fantasy, run by Luke and Alpha.
 
-## Dynamic Content
-- Desk posts: 2133
+## About
+Cafe Lua is a personal website by Luke (Yang), a software engineer and creator.
+The site is themed as a two-story virtual cafe:
+- **1F Lounge**: A relaxing space with background music, a counter for AI coffee chat and tarot, a gallery, and a guestbook.
+- **2F Atelier**: A private workspace with the Master's Desk (blog), Alpha's Station (AI dev), a library, and an old PC running Luke's 1997/1998 homepages.
+
+Alpha (Alpha Yang) is the AI maid character who resides in Cafe Lua.
+She is named after Hatsuse No Alpha from the manga *Cafe Alpha*.
+
+## Languages
+- Korean (ko): primary language
+- English (en): full bilingual support
+- All pages are available in both languages via /ko/ and /en/ path prefixes.
+
+## Site Structure
+
+### Entrance
+- https://cafelua.com/ko/ — Korean homepage (season/time/weather selector)
+- https://cafelua.com/en/ — English homepage
+
+### 1F Lounge
+- https://cafelua.com/ko/lounge — Main lounge with navigation menu
+- https://cafelua.com/ko/about — About Cafe Lua (sitemap, Alpha & Luke introductions)
+- https://cafelua.com/ko/counter — Counter: AI coffee chat & tarot reading with Alpha
+- https://cafelua.com/ko/gallery — Gallery: diary, spaces, tarot cards, BGM
+- https://cafelua.com/ko/guestbook — Guestbook: leave messages for Alpha and Luke
+
+### 2F Atelier
+- https://cafelua.com/ko/atelier — Atelier menu (Master's Desk, Old PC, etc.)
+- https://cafelua.com/ko/desk — Master's Desk: Luke's blog posts and writings
+- https://cafelua.com/ko/desk/{slug} — Individual desk post
+- https://cafelua.com/ko/atelier?oldpc=true — Old PC: browse 1997/1998 homepages in a simulated Windows 98 desktop
+
+## Content: Master's Desk
+- Total posts: 2133
+- Date range: 2006-06-12 to 2026-02-18
+- Migrated from Naver Blog (https://blog.naver.com/fstory97), active since 2006
+- Categories:
+  - IT: 1187 posts
+  - Media Review (films, books, etc.): 270 posts
+  - Artwork (illustrations, pixel art): 266 posts
+  - Private Notes (personal essays): 240 posts
+  - AI (artificial intelligence, LLMs, agents): 108 posts
+  - XRCLOUD (XR/metaverse platform): 36 posts
+  - Believer (faith & reflections): 17 posts
+  - Cafe Lua (site updates): 9 posts
+
+## Content: Gallery
 - Diary entries: 20
+- Spaces: visual tour of Cafe Lua rooms
+- Tarot cards: custom tarot deck illustrations
+- BGM: background music tracks used throughout the site
+
+## Interactive Features
+- Coffee Chat: real-time conversation with Alpha (powered by Gemini)
+- Tarot Reading: 3-card tarot session with AI interpretation
+- Old PC: fully interactive Windows 98 simulation with IE browser
+- Guestbook: public/secret message board
+
+## Technical
+- Built with Next.js, React, TypeScript
+- Deployed on Vercel
+- AI: Gemini 2.5 (chat, tarot, translation)
+- Total pages: 4324 (ko + en)
+- Sitemap: https://cafelua.com/sitemap.xml
 
 ## Policy
 - Crawling: allowed
+- robots.txt: standard allow-all
 - Canonical Sitemap: https://cafelua.com/sitemap.xml
+- llms.txt: https://cafelua.com/llms.txt
