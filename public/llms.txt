@@ -57,7 +57,7 @@ She is named after Hatsuse No Alpha from the manga *Cafe Alpha*.
 
 ## Interactive Features
 - Coffee Chat: real-time conversation with Alpha (powered by Gemini)
-- Tarot Reading: 3-card tarot session with AI interpretation
+- Tarot Reading: Celtic Cross (10-card) tarot session with AI interpretation
 - Old PC: fully interactive Windows 98 simulation with IE browser
 - Guestbook: public/secret message board
 

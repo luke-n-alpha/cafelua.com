@@ -1,23 +1,27 @@
-'use client';
+import type { Metadata } from 'next';
+import LocaleProvider from './LocaleProvider';
 
-import { useEffect } from 'react';
-import { useParams } from 'next/navigation';
-import i18n from '@/i18n';
+interface Props {
+    children: React.ReactNode;
+    params: Promise<{ locale: string }>;
+}
 
-export default function LocaleLayout({ children }: { children: React.ReactNode }) {
-    const params = useParams();
-    const locale = params.locale as string;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    const isEn = locale === 'en';
 
-    // Synchronously set language before first render to avoid hydration mismatch
-    if (locale && i18n.language !== locale) {
-        i18n.changeLanguage(locale);
-    }
+    return {
+        title: {
+            template: isEn ? '%s | CafeLua' : '%s | 카페루아',
+            default: isEn ? 'CafeLua' : '카페루아',
+        },
+        openGraph: {
+            locale: isEn ? 'en_US' : 'ko_KR',
+            siteName: isEn ? 'CafeLua' : '카페루아',
+        },
+    };
+}
 
-    useEffect(() => {
-        if (locale && i18n.language !== locale) {
-            i18n.changeLanguage(locale);
-        }
-    }, [locale]);
-
-    return <>{children}</>;
+export default async function LocaleLayout({ children }: Props) {
+    return <LocaleProvider>{children}</LocaleProvider>;
 }

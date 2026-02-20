@@ -60,23 +60,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!post) return {};
 
     const sourceTitle = locale === 'en' ? (post.titleEn || post.titleKo) : post.titleKo;
-    const title = buildOgTitle(sourceTitle, locale);
+    const ogTitle = buildOgTitle(sourceTitle, locale);
     const sourceContent = locale === 'en' ? (post.contentEn || post.contentKo) : post.contentKo;
     const description = buildOgDescription(sourceContent, locale);
     const ogImage = post.thumbnail || '/og-cover.png';
 
     return {
-        title: post.titleKo,
+        title: cleanOgText(sourceTitle) || (locale === 'en' ? 'Post' : '포스팅'),
         description,
         alternates: { canonical: `/desk/${slug}` },
         openGraph: {
             url: `/desk/${slug}`,
-            title,
+            title: ogTitle,
             description,
             images: [ogImage],
         },
         twitter: {
-            title,
+            title: ogTitle,
             description,
             images: [ogImage],
         },

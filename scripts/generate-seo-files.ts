@@ -157,7 +157,7 @@ function makeLlmsTxt() {
 
     lines.push('## Interactive Features');
     lines.push('- Coffee Chat: real-time conversation with Alpha (powered by Gemini)');
-    lines.push('- Tarot Reading: 3-card tarot session with AI interpretation');
+    lines.push('- Tarot Reading: Celtic Cross (10-card) tarot session with AI interpretation');
     lines.push('- Old PC: fully interactive Windows 98 simulation with IE browser');
     lines.push('- Guestbook: public/secret message board');
     lines.push('');
