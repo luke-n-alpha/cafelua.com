@@ -31,37 +31,32 @@ function escXml(s: string) {
         .replace(/'/g, '&apos;');
 }
 
+function bilingualItems(route: string, opts: Omit<Item, 'loc' | 'altKo' | 'altEn'>): Item[] {
+    const altKo = `${BASE}/ko${route}`;
+    const altEn = `${BASE}/en${route}`;
+    return [
+        { loc: altKo, altKo, altEn, ...opts },
+        { loc: altEn, altKo, altEn, ...opts },
+    ];
+}
+
 function coreRoutes(): Item[] {
     const routes = ['', '/lounge', '/counter', '/tarot', '/gallery', '/guestbook', '/atelier', '/about', '/desk'];
-    return routes.map((route) => ({
-        loc: `${BASE}/ko${route}`,
-        altKo: `${BASE}/ko${route}`,
-        altEn: `${BASE}/en${route}`,
-        changefreq: 'weekly',
-        priority: route === '' ? '1.0' : '0.8',
-    }));
+    return routes.flatMap((route) =>
+        bilingualItems(route, { changefreq: 'weekly', priority: route === '' ? '1.0' : '0.8' })
+    );
 }
 
 function deskRoutes(): Item[] {
-    return DESK_POSTS.map((post) => ({
-        loc: `${BASE}/ko/desk/${post.slug}`,
-        altKo: `${BASE}/ko/desk/${post.slug}`,
-        altEn: `${BASE}/en/desk/${post.slug}`,
-        lastmod: post.date,
-        changefreq: 'monthly',
-        priority: '0.7',
-    }));
+    return DESK_POSTS.flatMap((post) =>
+        bilingualItems(`/desk/${post.slug}`, { lastmod: post.date, changefreq: 'monthly', priority: '0.7' })
+    );
 }
 
 function diaryRoutes(): Item[] {
-    return DIARY_ENTRIES.map((entry) => ({
-        loc: `${BASE}/ko/gallery/diary/${entry.slug}`,
-        altKo: `${BASE}/ko/gallery/diary/${entry.slug}`,
-        altEn: `${BASE}/en/gallery/diary/${entry.slug}`,
-        lastmod: entry.date,
-        changefreq: 'monthly',
-        priority: '0.6',
-    }));
+    return DIARY_ENTRIES.flatMap((entry) =>
+        bilingualItems(`/gallery/diary/${entry.slug}`, { lastmod: entry.date, changefreq: 'monthly', priority: '0.6' })
+    );
 }
 
 function makeSitemap() {
