@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import UnderConstruction from './UnderConstruction';
 import { DESK_POSTS, DESK_CATEGORIES, type DeskCategory } from '@/data/desk/deskData';
@@ -14,6 +14,9 @@ const MasterDeskPage: React.FC = () => {
     const { t, i18n } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const localeFromPath = pathname.split('/')[1];
+    const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : (i18n.language === 'en' ? 'en' : 'ko');
     const isKo = i18n.language === 'ko';
 
     const catParam = searchParams.get('cat') as DeskCategory | 'all' | null;
@@ -131,9 +134,9 @@ const MasterDeskPage: React.FC = () => {
         if (visibleCount > 24) params.set('vc', String(visibleCount));
         if (showAllTags) params.set('tagsOpen', '1');
         const query = params.toString();
-        const url = `/${i18n.language}/desk${query ? `?${query}` : ''}`;
+        const url = `/${locale}/desk${query ? `?${query}` : ''}`;
         window.history.replaceState(null, '', url);
-    }, [category, searchText, selectedTags, visibleCount, showAllTags, i18n.language]);
+    }, [category, locale, searchText, selectedTags, visibleCount, showAllTags]);
 
     const handleSelectCategory = (cat: DeskCategory | 'all') => {
         setCategory(cat);
@@ -152,13 +155,13 @@ const MasterDeskPage: React.FC = () => {
         if (visibleCount > 24) params.set('vc', String(visibleCount));
         if (showAllTags) params.set('tagsOpen', '1');
         const query = params.toString();
-        router.push(`/${i18n.language}/desk/${slug}${query ? `?${query}` : ''}`);
+        router.push(`/${locale}/desk/${slug}${query ? `?${query}` : ''}`);
     };
 
     const handleBack = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.set('from', 'desk');
-        router.push(`/${i18n.language}/library?${params.toString()}`);
+        router.push(`/${locale}/library?${params.toString()}`);
     };
 
     const categoryBadge = (cat: string) => {

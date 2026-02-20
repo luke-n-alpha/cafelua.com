@@ -196,7 +196,7 @@ const LibraryPage: React.FC = () => {
     const entrySource = searchParams.get('from');
     const greetingMessage = entrySource === 'lounge'
         ? t('atelier.stairsIntro', {
-            defaultValue: '손님, 2층으로 올라오셨군요.\n여기는 2층 프라이빗 아틀리에예요. 창가의 책상과 작업 도구들이 준비되어 있어요.\n어디부터 살펴볼까요?'
+            defaultValue: t('atelier.alphaIntro')
         })
         : t(`atelier.greeting.${greetingVariant}`, { defaultValue: t('atelier.alphaIntro') });
 

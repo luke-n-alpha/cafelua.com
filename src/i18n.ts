@@ -71,6 +71,7 @@ const resources = {
       "atelier": {
         "title": "Cαfé Luα Private Atelier (2F)",
         "alphaIntro": "Welcome, Guest.\nWelcome to Cafe Lua.\nThis is the private atelier on the second floor.\nWhere would you like to go first?",
+        "stairsIntro": "Welcome, Guest.\nYou came up to the second floor.\nThis is the private atelier with a window-side desk and tools ready for work.\nWhere would you like to start?",
         "greeting": {
           "sunny": "Welcome, Guest.\nWelcome to Cafe Lua.\nThis is the 2F atelier — a calm workspace prepared for creation and focus.",
           "sunset": "Welcome, Guest.\nWelcome to Cafe Lua.\nThe atelier is bathed in sunset light. A great moment to capture new ideas.",
@@ -299,6 +300,7 @@ const resources = {
       "atelier": {
         "title": "2층 프라이빗 아틀리에",
         "alphaIntro": "손님, 어서오세요.\n카페루아에 오신 것을 환영합니다.\n여기는 2층 프라이빗 아틀리에예요. 창가의 책상과 작업 도구들이 준비되어 있어요.\n어디부터 살펴볼까요?",
+        "stairsIntro": "손님, 2층으로 올라오셨군요.\n여기는 2층 프라이빗 아틀리에예요. 창가의 책상과 작업 도구들이 준비되어 있어요.\n어디부터 살펴볼까요?",
         "greeting": {
           "sunny": "손님, 어서오세요.\n카페루아에 오신 것을 환영합니다.\n여기는 2층 아틀리에예요. 조용히 작업과 창작을 하기 좋은 공간이에요.",
           "sunset": "손님, 어서오세요.\n카페루아에 오신 것을 환영합니다.\n노을이 창을 물들이고 있어요. 아이디어를 기록하기 딱 좋은 시간이에요.",
@@ -466,7 +468,13 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
+    supportedLngs: ['ko', 'en'],
     fallbackLng: 'ko',
+    detection: {
+      order: ['path', 'localStorage', 'navigator'],
+      lookupFromPathIndex: 0,
+      caches: ['localStorage']
+    },
     interpolation: {
       escapeValue: false
     }
