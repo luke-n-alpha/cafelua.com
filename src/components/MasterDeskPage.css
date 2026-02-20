@@ -148,6 +148,14 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+.desk-filter-section {
+    width: 100%;
+}
+
+.desk-mobile-filter-toggle {
+    display: none;
+}
+
 .desk-content {
     flex: 1;
     min-height: 0;
@@ -277,24 +285,109 @@
     .desk-header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 0.45rem;
+        margin-bottom: 0.45rem;
     }
 
     .desk-search {
         width: 100%;
+        padding: 0.45rem 0.7rem;
+        font-size: 0.8rem;
     }
+
     .desk-panel {
         width: 95%;
-        max-height: 82vh;
-        margin-top: 6vh;
-        padding: 1rem;
+        max-height: 92vh;
+        margin-top: 1.6vh;
+        padding: 0.7rem 0.75rem;
     }
 
     .desk-grid {
         grid-template-columns: 1fr;
     }
 
+    .desk-title {
+        margin-bottom: 0;
+        font-size: 0.95rem;
+    }
+
+    .desk-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.15rem;
+        scrollbar-width: none;
+    }
+
+    .desk-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .desk-mobile-filter-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(18, 18, 24, 0.45);
+        color: rgba(245, 242, 235, 0.85);
+        border-radius: 12px;
+        padding: 0.28rem 0.62rem;
+        font-size: 0.72rem;
+        margin-bottom: 0.28rem;
+    }
+
+    .desk-tabs.collapsed,
+    .desk-tags.collapsed {
+        display: none;
+    }
+
+    .desk-tags {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 0.32rem;
+        margin-bottom: 0.45rem;
+        padding-bottom: 0.15rem;
+        scrollbar-width: none;
+    }
+
+    .desk-tags::-webkit-scrollbar {
+        display: none;
+    }
+
+    .desk-tag,
+    .desk-tag-toggle {
+        flex: 0 0 auto;
+        font-size: 0.7rem;
+        padding: 0.22rem 0.56rem;
+        border-radius: 12px;
+    }
+
     .desk-tab {
+        flex: 0 0 auto;
         font-size: 0.78rem;
-        padding: 0.35rem 0.7rem;
+        padding: 0.33rem 0.64rem;
+        border-radius: 14px;
+    }
+
+    .desk-card-thumb {
+        aspect-ratio: 16 / 8;
+    }
+
+    .desk-card-info {
+        padding: 0.5rem 0.65rem;
+        gap: 0.25rem;
+    }
+
+    .desk-card-title {
+        font-size: 0.78rem;
+        line-height: 1.3;
+    }
+
+    .desk-back {
+        margin-top: 0.55rem;
+        padding: 0.48rem 0.95rem;
+        font-size: 0.82rem;
     }
 }

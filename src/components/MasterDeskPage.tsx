@@ -39,6 +39,8 @@ const MasterDeskPage: React.FC = () => {
     const [selectedTags, setSelectedTags] = useState<string[]>(initialSelectedTags);
     const [showAllTags, setShowAllTags] = useState(initialShowAllTags);
     const [visibleCount, setVisibleCount] = useState(initialVisibleCount);
+    const [isCategoryCollapsed, setIsCategoryCollapsed] = useState(false);
+    const [isTagCollapsed, setIsTagCollapsed] = useState(false);
     const scrollRestoreTriedRef = useRef(false);
 
     useEffect(() => {
@@ -46,6 +48,13 @@ const MasterDeskPage: React.FC = () => {
         const hasSeen = sessionStorage.getItem(key);
         if (!hasSeen) {
             setShowIntro(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            setIsCategoryCollapsed(true);
+            setIsTagCollapsed(true);
         }
     }, []);
 
@@ -206,38 +215,56 @@ const MasterDeskPage: React.FC = () => {
                 </div>
 
                 {/* Category tabs */}
-                <div className="desk-tabs">
-                    {DESK_CATEGORIES.map((cat) => (
-                        <button
-                            key={cat.key}
-                            className={`desk-tab${category === cat.key ? ' active' : ''}`}
-                            onClick={() => handleSelectCategory(cat.key)}
-                        >
-                            {isKo ? cat.labelKo : cat.labelEn}
-                        </button>
-                    ))}
+                <div className="desk-filter-section">
+                    <button
+                        className="desk-mobile-filter-toggle"
+                        aria-expanded={!isCategoryCollapsed}
+                        onClick={() => setIsCategoryCollapsed((prev) => !prev)}
+                    >
+                        {isKo ? '카테고리' : 'Category'} {isCategoryCollapsed ? '▾' : '▴'}
+                    </button>
+                    <div className={`desk-tabs${isCategoryCollapsed ? ' collapsed' : ''}`}>
+                        {DESK_CATEGORIES.map((cat) => (
+                            <button
+                                key={cat.key}
+                                className={`desk-tab${category === cat.key ? ' active' : ''}`}
+                                onClick={() => handleSelectCategory(cat.key)}
+                            >
+                                {isKo ? cat.labelKo : cat.labelEn}
+                            </button>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Search + Tag filters */}
                 {availableTags.length > 0 && (
-                    <div className="desk-tags">
-                        {displayTags.map((tag) => (
-                            <button
-                                key={tag}
-                                className={`desk-tag${selectedTags.includes(tag) ? ' active' : ''}`}
-                                onClick={() => toggleTag(tag)}
-                            >
-                                #{tag}
-                            </button>
-                        ))}
-                        {availableTags.length > 10 && (
-                            <button
-                                className="desk-tag-toggle"
-                                onClick={() => setShowAllTags((prev) => !prev)}
-                            >
-                                {showAllTags ? (isKo ? '접기' : 'Collapse') : (isKo ? '더보기' : 'More')}
-                            </button>
-                        )}
+                    <div className="desk-filter-section">
+                        <button
+                            className="desk-mobile-filter-toggle"
+                            aria-expanded={!isTagCollapsed}
+                            onClick={() => setIsTagCollapsed((prev) => !prev)}
+                        >
+                            {isKo ? '태그' : 'Tags'} {isTagCollapsed ? '▾' : '▴'}
+                        </button>
+                        <div className={`desk-tags${isTagCollapsed ? ' collapsed' : ''}`}>
+                            {displayTags.map((tag) => (
+                                <button
+                                    key={tag}
+                                    className={`desk-tag${selectedTags.includes(tag) ? ' active' : ''}`}
+                                    onClick={() => toggleTag(tag)}
+                                >
+                                    #{tag}
+                                </button>
+                            ))}
+                            {availableTags.length > 10 && (
+                                <button
+                                    className="desk-tag-toggle"
+                                    onClick={() => setShowAllTags((prev) => !prev)}
+                                >
+                                    {showAllTags ? (isKo ? '접기' : 'Collapse') : (isKo ? '더보기' : 'More')}
+                                </button>
+                            )}
+                        </div>
                     </div>
                 )}
 
