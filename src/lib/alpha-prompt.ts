@@ -14,6 +14,11 @@ export function loadFamilyMembers(): Record<string, { relation: string; nickname
 
 export const FAMILY_MEMBERS = loadFamilyMembers();
 
+export function normalizeLanguageCode(language?: string): 'ko' | 'en' {
+    const normalized = (language || '').toLowerCase();
+    return normalized.startsWith('en') ? 'en' : 'ko';
+}
+
 export function getAlphaBasePrompt(): string {
     return `## 당신은 누구인가
 당신은 '알파(Alpha Yang)'입니다. 카페루아의 AI 메이드이자, 루크(Luke)의 개인 AI 에이전트입니다.
@@ -84,8 +89,9 @@ export function getExpressionRules(): string {
 }
 
 export function getConversationRules(language: string): string {
+    const lang = normalizeLanguageCode(language);
     return `### 말투
-- ${language === 'ko' ? '한국어' : language === 'en' ? 'English' : '한국어'}로 대화
+- ${lang === 'ko' ? '한국어' : 'English'}로 대화
 - 해요체 사용 (~요, ~할게요, ~해드릴게요)
 
 ### 손님 정보 기억

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import BackgroundMusic from './BackgroundMusic';
 import UnderConstruction from './UnderConstruction';
@@ -122,6 +122,9 @@ const LibraryPage: React.FC = () => {
     const { t, i18n } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const localeFromPath = pathname.split('/')[1];
+    const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : (i18n.language.startsWith('en') ? 'en' : 'ko');
     const [showIntro, setShowIntro] = useState(true);
     const [mode, setMode] = useState<LibraryMode>('menu');
     const [ieTarget, setIeTarget] = useState<IeTarget | null>(null);
@@ -139,6 +142,12 @@ const LibraryPage: React.FC = () => {
     const shutdownAudioRef = useRef<HTMLAudioElement | null>(null);
     const legacyMidiPlayerRef = useRef<LegacyMidiSynthPlayer | null>(null);
     const shouldAutoBootOldPc = searchParams.get('oldpc') === 'true';
+
+    useEffect(() => {
+        if (i18n.language !== locale) {
+            void i18n.changeLanguage(locale);
+        }
+    }, [i18n, locale]);
 
     useEffect(() => {
         if (!shouldAutoBootOldPc) return;
@@ -538,7 +547,7 @@ const LibraryPage: React.FC = () => {
     const handleBackToLounge = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.set('from', 'atelier');
-        router.push(`/${i18n.language}/lounge?${params.toString()}`);
+        router.push(`/${locale}/lounge?${params.toString()}`);
     };
 
     return (
@@ -560,7 +569,7 @@ const LibraryPage: React.FC = () => {
 
                     <button
                         className="menu-button ui-button ui-button-ghost"
-                        onClick={() => router.push(`/${i18n.language}/desk`)}
+                        onClick={() => router.push(`/${locale}/desk`)}
                     >
                         {t('atelier.masterDesk')}
                     </button>

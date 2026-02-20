@@ -65,6 +65,11 @@ const isMe2DayRelay = (p: DeskPost) => {
 };
 const isUrlOnly = (t: string) => t.startsWith('http');
 const isEmpty = (p: DeskPost) => !p.contentKo.trim() && p.images.length === 0;
+const isUntranslated = (p: DeskPost) => {
+    const en = (p.contentEn || '').trim();
+    const ko = (p.contentKo || '').trim();
+    return !en || en === ko;
+};
 
 /* ─── Category re-classification ─── */
 const AI_KEYWORDS = [
@@ -511,6 +516,7 @@ const importedPosts: DeskPost[] = (() => {
     const out: DeskPost[] = [];
     for (const post of importedPostsRaw) {
         if (seen.has(post.slug)) continue;
+        if (isUntranslated(post)) continue;
         seen.add(post.slug);
         out.push(post);
     }
@@ -539,4 +545,39 @@ export const DESK_POSTS: DeskPost[] = (() => {
 
 export function getDeskPostBySlug(slug: string): DeskPost | undefined {
     return DESK_POSTS.find((p) => p.slug === slug);
+}
+
+const TAG_EN_MAP: Record<string, string> = {
+    'IT에 대한 잡설': 'Tech Musings',
+    'My Diary': 'My Diary',
+    '일러스트': 'Illustrations',
+    '세상보기': 'Perspectives',
+    '숲속얘기의 도트 낙서': 'Pixel Doodles',
+    '영화 이야기': 'Film Talk',
+    '카페루아': 'Cafe Lua',
+    '숲속얘기의 IT엣세이 (중단,': 'IT Essays (Discontinued)',
+    '책 이야기': 'Book Talk',
+    '주인장 작업물': "Owner's Works",
+    '숲지기의 하나님': "Forest Keeper's Faith",
+    'IT이야기': 'IT Talk',
+    'IT개인자료정리': 'IT Personal Notes',
+    '까망고양이': 'Black Cat',
+    '외출하다.': 'Going Out',
+    '[POST] 숲속얘기': '[POST] Forest Story',
+    '사적이야기': 'Personal Stories',
+    '소식': 'News',
+    '숲속얘기의 짧은 SW이야기': 'Short SW Talk',
+    '알파의 보고서': "Alpha's Report",
+    '사용팁': 'Usage Tips',
+    '기타 리뷰': 'Other Reviews',
+    '웹메타버스': 'Web Metaverse',
+    'XRCLOUD': 'XRCLOUD',
+    '빌리버 전략 및 미래': 'Believer Strategy & Future',
+    '메타버스 표준(MSF)': 'Metaverse Standards (MSF)',
+    '주인장 도트 낙서': "Owner's Pixel Doodles",
+    '빌리버': 'Believer',
+};
+
+export function getTagEn(tag: string): string {
+    return TAG_EN_MAP[tag] || tag;
 }

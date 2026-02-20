@@ -8,7 +8,7 @@
 - https://cafelua.com/sitemap.xml
 
 ## Dynamic Content
-- Desk posts: 2144
+- Desk posts: 2133
 - Diary entries: 20
 
 ## Policy

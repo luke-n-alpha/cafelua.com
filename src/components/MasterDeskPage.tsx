@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import UnderConstruction from './UnderConstruction';
-import { DESK_POSTS, DESK_CATEGORIES, type DeskCategory } from '@/data/desk/deskData';
+import { DESK_POSTS, DESK_CATEGORIES, getTagEn, type DeskCategory } from '@/data/desk/deskData';
 import './MasterDeskPage.css';
 
 const DEFAULT_DESK_THUMBNAIL = '/master-desk-background-img/master-desk-background.png';
@@ -114,7 +114,7 @@ const MasterDeskPage: React.FC = () => {
             }
             if (!q) return true;
             const title = (isKo ? post.titleKo : post.titleEn).toLowerCase();
-            const tags = (post.tags || []).join(' ').toLowerCase();
+            const tags = (post.tags || []).map(t => isKo ? t : getTagEn(t)).join(' ').toLowerCase();
             return title.includes(q) || tags.includes(q);
         });
     }, [basePosts, selectedTags, searchText, isKo]);
@@ -253,7 +253,7 @@ const MasterDeskPage: React.FC = () => {
                                     className={`desk-tag${selectedTags.includes(tag) ? ' active' : ''}`}
                                     onClick={() => toggleTag(tag)}
                                 >
-                                    #{tag}
+                                    #{isKo ? tag : getTagEn(tag)}
                                 </button>
                             ))}
                             {availableTags.length > 10 && (

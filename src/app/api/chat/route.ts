@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ChatMessage, callGemini, GeminiApiError, toGeminiContents, parseExpression, cleanMessage } from '@/lib/gemini';
-import { getAlphaBasePrompt, getExpressionRules, getConversationRules, checkSecretPhrase } from '@/lib/alpha-prompt';
+import { getAlphaBasePrompt, getExpressionRules, getConversationRules, checkSecretPhrase, normalizeLanguageCode } from '@/lib/alpha-prompt';
 
 const getCoffeeChatPrompt = (language: string, memoryContext: string) => `# 알파 (Alpha Yang) - 커피챗 페르소나
 
@@ -19,7 +19,13 @@ ${getConversationRules(language)}
 - 이모티콘 자연스럽게 사용: ｡•ᴗ•｡ ✨ ☕ 🌿
 
 ---
-이제 손님과 커피챗을 시작하세요.`;
+이제 손님과 커피챗을 시작하세요.
+
+## Language Lock (Critical)
+${language === 'en'
+    ? '- You MUST reply in English only. Do not use Korean unless the user explicitly asks for Korean.'
+    : '- 반드시 한국어로만 답변하세요. 손님이 영어를 명시적으로 요청하지 않으면 영어를 쓰지 마세요.'}
+`;
 
 export async function POST(request: NextRequest) {
     try {
@@ -29,9 +35,10 @@ export async function POST(request: NextRequest) {
             memoryContext?: string;
         };
 
+        const normalizedLanguage = normalizeLanguageCode(language);
         const isSecretPhrase = checkSecretPhrase(messages);
         const contents = toGeminiContents(messages);
-        const systemPrompt = getCoffeeChatPrompt(language, memoryContext);
+        const systemPrompt = getCoffeeChatPrompt(normalizedLanguage, memoryContext);
 
         const { text } = await callGemini(systemPrompt, contents);
 

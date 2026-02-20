@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ChatMessage, callGemini, GeminiApiError, toGeminiContents, parseExpression, cleanMessage } from '@/lib/gemini';
-import { getAlphaBasePrompt, getExpressionRules, getConversationRules, checkSecretPhrase } from '@/lib/alpha-prompt';
+import { getAlphaBasePrompt, getExpressionRules, getConversationRules, checkSecretPhrase, normalizeLanguageCode } from '@/lib/alpha-prompt';
 import { loadDeckSummary } from '@/lib/tarot-data';
 
 interface TarotChatContext {
@@ -100,14 +100,22 @@ export async function POST(request: NextRequest) {
             totalCards?: number;
         };
 
+        const normalizedLanguage = normalizeLanguageCode(language);
         const isSecretPhrase = checkSecretPhrase(messages);
         const deckSummary = await loadDeckSummary();
-        const systemPrompt = getTarotChatPrompt({ language, memoryContext, deckSummary, isReadingMode, flippedCount, totalCards });
+        const systemPrompt = getTarotChatPrompt({ language: normalizedLanguage, memoryContext, deckSummary, isReadingMode, flippedCount, totalCards });
 
         // 메시지가 비어있으면 (초기 인사) 첫 방문 트리거 전송
         const contents = messages.length > 0
             ? toGeminiContents(messages)
-            : [{ role: 'user', parts: [{ text: '(손님이 타로 상담 테이블에 앉는다)' }] }];
+            : [{
+                role: 'user',
+                parts: [{
+                    text: normalizedLanguage === 'en'
+                        ? '(The guest sits at the tarot reading table)'
+                        : '(손님이 타로 상담 테이블에 앉는다)'
+                }]
+            }];
 
         const { text } = await callGemini(systemPrompt, contents);
 

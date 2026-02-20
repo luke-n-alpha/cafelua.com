@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { callGemini, GeminiApiError, parseExpression, cleanMessage } from '@/lib/gemini';
 import { loadDeckSummary } from '@/lib/tarot-data';
+import { normalizeLanguageCode } from '@/lib/alpha-prompt';
 
 const getSummaryPrompt = (
     language: string,
@@ -73,9 +74,10 @@ export async function POST(request: NextRequest) {
             interpretations,
             language = 'ko',
         } = await request.json() as SummaryRequest;
+        const normalizedLanguage = normalizeLanguageCode(language);
 
         const deckSummary = await loadDeckSummary();
-        const systemPrompt = getSummaryPrompt(language, deckSummary, topic, interpretations);
+        const systemPrompt = getSummaryPrompt(normalizedLanguage, deckSummary, topic, interpretations);
 
         const { text } = await callGemini(
             systemPrompt,

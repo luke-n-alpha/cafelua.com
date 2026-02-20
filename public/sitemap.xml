@@ -4,7 +4,7 @@
     <loc>https://cafelua.com/ko</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en"/>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,7 +12,7 @@
     <loc>https://cafelua.com/ko/lounge</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/lounge"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/lounge"/>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -20,7 +20,7 @@
     <loc>https://cafelua.com/ko/counter</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/counter"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/counter"/>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -28,7 +28,7 @@
     <loc>https://cafelua.com/ko/tarot</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/tarot"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/tarot"/>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -36,7 +36,7 @@
     <loc>https://cafelua.com/ko/gallery</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/gallery"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/gallery"/>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -44,7 +44,7 @@
     <loc>https://cafelua.com/ko/guestbook</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/guestbook"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/guestbook"/>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -52,7 +52,7 @@
     <loc>https://cafelua.com/ko/atelier</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/atelier"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/atelier"/>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -60,7 +60,7 @@
     <loc>https://cafelua.com/ko/about</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/about"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/about"/>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -68,7 +68,7 @@
     <loc>https://cafelua.com/ko/desk</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk"/>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1645,14 +1645,6 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20180916-2005년의-시작"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20180916-2005년의-시작"/>
     <lastmod>2018-09-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://cafelua.com/ko/desk/20180915-are-you-living</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20180915-are-you-living"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20180915-are-you-living"/>
-    <lastmod>2018-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -5793,14 +5785,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://cafelua.com/ko/desk/20140101-2014-푸른말과-같은-한해가-되세요-일러스트-창작물</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20140101-2014-푸른말과-같은-한해가-되세요-일러스트-창작물"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20140101-2014-푸른말과-같은-한해가-되세요-일러스트-창작물"/>
-    <lastmod>2014-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://cafelua.com/ko/desk/20131230-숲속얘기의-2013년-it환경예측-얼마나-맞았나-it에-대한-잡설-it이야기</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20131230-숲속얘기의-2013년-it환경예측-얼마나-맞았나-it에-대한-잡설-it이야기"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20131230-숲속얘기의-2013년-it환경예측-얼마나-맞았나-it에-대한-잡설-it이야기"/>
@@ -9145,14 +9129,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://cafelua.com/ko/desk/20110119-공유-스무번째-이야기-세상보기-it이야기</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20110119-공유-스무번째-이야기-세상보기-it이야기"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20110119-공유-스무번째-이야기-세상보기-it이야기"/>
-    <lastmod>2011-01-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://cafelua.com/ko/desk/20110118-특허-ocr을-이용한-스팸-메일-필터-아이디어특허-it이야기</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20110118-특허-ocr을-이용한-스팸-메일-필터-아이디어특허-it이야기"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20110118-특허-ocr을-이용한-스팸-메일-필터-아이디어특허-it이야기"/>
@@ -10701,14 +10677,6 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20091129-국내-기술자중-한명으로-남깁니다-it에-대한-잡설-it이야기"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20091129-국내-기술자중-한명으로-남깁니다-it에-대한-잡설-it이야기"/>
     <lastmod>2009-11-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://cafelua.com/ko/desk/20091127-공유-도둑고양이의-삶-까망고양이-창작물</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20091127-공유-도둑고양이의-삶-까망고양이-창작물"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20091127-공유-도둑고양이의-삶-까망고양이-창작물"/>
-    <lastmod>2009-11-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -14625,30 +14593,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://cafelua.com/ko/desk/20060719-공유-문제의-단체사진최휘영대표님이-없으셩-my-diary-사적이야기-70006328454</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20060719-공유-문제의-단체사진최휘영대표님이-없으셩-my-diary-사적이야기-70006328454"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20060719-공유-문제의-단체사진최휘영대표님이-없으셩-my-diary-사적이야기-70006328454"/>
-    <lastmod>2006-07-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://cafelua.com/ko/desk/20060719-공유-문제의-단체사진최휘영대표님이-없으셩-my-diary-사적이야기-70006328452</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20060719-공유-문제의-단체사진최휘영대표님이-없으셩-my-diary-사적이야기-70006328452"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20060719-공유-문제의-단체사진최휘영대표님이-없으셩-my-diary-사적이야기-70006328452"/>
-    <lastmod>2006-07-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://cafelua.com/ko/desk/20060719-공유-문제의-단체사진최휘영대표님이-없으셩-my-diary-사적이야기</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20060719-공유-문제의-단체사진최휘영대표님이-없으셩-my-diary-사적이야기"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20060719-공유-문제의-단체사진최휘영대표님이-없으셩-my-diary-사적이야기"/>
-    <lastmod>2006-07-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://cafelua.com/ko/desk/20060719-공유-귀여움-vs-절정-간지-my-diary-사적이야기</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20060719-공유-귀여움-vs-절정-간지-my-diary-사적이야기"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20060719-공유-귀여움-vs-절정-간지-my-diary-사적이야기"/>
@@ -15153,14 +15097,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://cafelua.com/ko/desk/20060622-숲속얘기의-싸이월드-갤러리-02-일러스트-창작물</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20060622-숲속얘기의-싸이월드-갤러리-02-일러스트-창작물"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20060622-숲속얘기의-싸이월드-갤러리-02-일러스트-창작물"/>
-    <lastmod>2006-06-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://cafelua.com/ko/desk/20060622-숲속얘기의-싸이월드-갤러리-01-일러스트-창작물</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20060622-숲속얘기의-싸이월드-갤러리-01-일러스트-창작물"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20060622-숲속얘기의-싸이월드-갤러리-01-일러스트-창작물"/>
@@ -15265,14 +15201,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://cafelua.com/ko/desk/20060621-dreaming-일러스트-창작물</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20060621-dreaming-일러스트-창작물"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20060621-dreaming-일러스트-창작물"/>
-    <lastmod>2006-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://cafelua.com/ko/desk/20060621-delete-please-일러스트-창작물</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20060621-delete-please-일러스트-창작물"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20060621-delete-please-일러스트-창작물"/>
@@ -15356,14 +15284,6 @@
     <loc>https://cafelua.com/ko/desk/20060621-우울해지는건-정말-순식간이야-일러스트-창작물</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20060621-우울해지는건-정말-순식간이야-일러스트-창작물"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20060621-우울해지는건-정말-순식간이야-일러스트-창작물"/>
-    <lastmod>2006-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://cafelua.com/ko/desk/20060621-여행-가고-프다-일러스트-창작물</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20060621-여행-가고-프다-일러스트-창작물"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20060621-여행-가고-프다-일러스트-창작물"/>
     <lastmod>2006-06-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -15476,14 +15396,6 @@
     <loc>https://cafelua.com/ko/desk/20060621-기도-일러스트-창작물</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20060621-기도-일러스트-창작물"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20060621-기도-일러스트-창작물"/>
-    <lastmod>2006-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://cafelua.com/ko/desk/20060621-구름새-일러스트-창작물</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cafelua.com/ko/desk/20060621-구름새-일러스트-창작물"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cafelua.com/en/desk/20060621-구름새-일러스트-창작물"/>
     <lastmod>2006-06-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

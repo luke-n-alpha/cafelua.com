@@ -570,6 +570,9 @@ const DeskPost: React.FC<Props> = ({ post }) => {
                                             );
                                         })()
                                     ),
+                                    p: ({ children, ...props }) => (
+                                        <div className="desk-post-p" {...props}>{children}</div>
+                                    ),
                                     img: ({ src, alt, ...props }) => {
                                         const safeSrc = typeof src === 'string' ? src : '';
                                         if (!safeSrc) return null;

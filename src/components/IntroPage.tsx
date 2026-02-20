@@ -171,9 +171,12 @@ const IconSelect = ({
 };
 
 const IntroPage: React.FC = () => {
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
     const router = useRouter();
     const pathname = usePathname();
+    const localeFromPath = pathname.split('/')[1];
+    const preferredLanguage = localeFromPath === 'en' ? 'en' : 'ko';
+    const fixedT = i18n.getFixedT(preferredLanguage);
     const [season, setSeason] = useState<Season>('spring');
     const [time, setTime] = useState<TimeOfDay>('day');
     const [weather, setWeather] = useState<Weather>('sunny');
@@ -182,6 +185,12 @@ const IntroPage: React.FC = () => {
 
     // Audio ref
     const audioRef = useRef<HTMLAudioElement | null>(null);
+
+    useEffect(() => {
+        if (i18n.language !== preferredLanguage) {
+            i18n.changeLanguage(preferredLanguage);
+        }
+    }, [i18n, preferredLanguage]);
 
     // Auto-detect on mount
     const fetchRealWeather = useCallback(async () => {
@@ -372,9 +381,6 @@ const IntroPage: React.FC = () => {
             audioRef.current.play().catch(e => console.log("Audio play failed", e));
         }
 
-        const localeFromPath = pathname.split('/')[1];
-        const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : (i18n.language === 'en' ? 'en' : 'ko');
-        
         // Navigate to Lounge with current environmental state
         const params = new URLSearchParams({
             season,
@@ -384,7 +390,7 @@ const IntroPage: React.FC = () => {
             from: 'entrance'
         });
 
-        router.push(`/${locale}/lounge?${params.toString()}`);
+        router.push(`/${preferredLanguage}/lounge?${params.toString()}`);
     };
 
     return (
@@ -396,7 +402,7 @@ const IntroPage: React.FC = () => {
             
             <div className="control-bar glass">
                 <IconSelect
-                    label={t('season.spring')} // Just label, not translated yet in IconSelect
+                    label={fixedT('season.spring')} // Just label, not translated yet in IconSelect
                     value={season}
                     options={['spring', 'summer', 'autumn', 'winter']}
                     onChange={(v) => setSeason(v as Season)}
@@ -423,7 +429,7 @@ const IntroPage: React.FC = () => {
                         <button
                             className={`xmas-toggle ui-icon-button ${isChristmas ? 'active' : ''}`}
                             onClick={() => setIsChristmas(!isChristmas)}
-                            title={t('intro.christmasMode')}
+                            title={fixedT('intro.christmasMode')}
                         >
                             🎄
                         </button>
@@ -432,7 +438,7 @@ const IntroPage: React.FC = () => {
 
                 <div className="divider" />
 
-                <button className="refresh-btn-icon ui-icon-button" onClick={handleRefresh} title={t('intro.autoDetect')}>
+                <button className="refresh-btn-icon ui-icon-button" onClick={handleRefresh} title={fixedT('intro.autoDetect')}>
                     <RefreshCw size={20} />
                 </button>
             </div>
@@ -445,7 +451,7 @@ const IntroPage: React.FC = () => {
                     onClick={handleEnter}
                 />
                 <button className="enter-text" onClick={handleEnter}>
-                    {t('intro.clickToEnter')}
+                    {fixedT('intro.clickToEnter')}
                 </button>
                 <VisitorCounter />
             </div>

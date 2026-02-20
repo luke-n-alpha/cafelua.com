@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ChatMessage, callGemini, GeminiApiError, toGeminiContents, parseExpression, cleanMessage } from '@/lib/gemini';
-import { FAMILY_MEMBERS } from '@/lib/alpha-prompt';
+import { FAMILY_MEMBERS, normalizeLanguageCode } from '@/lib/alpha-prompt';
 import { loadDeckSummary, loadSpreadGuide, loadCardMeta, loadCardInterpretation } from '@/lib/tarot-data';
 
 const getInterpretPrompt = (
@@ -99,6 +99,7 @@ export async function POST(request: NextRequest) {
             language = 'ko',
             memoryContext = '',
         } = await request.json() as InterpretRequest;
+        const normalizedLanguage = normalizeLanguageCode(language);
 
         const [deckSummary, spreadGuide, cardMeta, cardInterpretation] = await Promise.all([
             loadDeckSummary(),
@@ -138,7 +139,7 @@ ${cardInterpretation}
 `.trim();
 
         const systemPrompt = getInterpretPrompt(
-            language, memoryContext, deckSummary, spreadGuide,
+            normalizedLanguage, memoryContext, deckSummary, spreadGuide,
             topic, cardContext, positionName, isReversed, previousInterpretations
         );
 

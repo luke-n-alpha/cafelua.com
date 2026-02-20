@@ -8,6 +8,11 @@ export default function LocaleLayout({ children }: { children: React.ReactNode }
     const params = useParams();
     const locale = params.locale as string;
 
+    // Synchronously set language before first render to avoid hydration mismatch
+    if (locale && i18n.language !== locale) {
+        i18n.changeLanguage(locale);
+    }
+
     useEffect(() => {
         if (locale && i18n.language !== locale) {
             i18n.changeLanguage(locale);
