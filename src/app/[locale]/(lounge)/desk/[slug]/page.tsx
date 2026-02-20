@@ -7,6 +7,15 @@ interface Props {
     params: Promise<{ slug: string; locale: string }>;
 }
 
+export const revalidate = 3600;
+export const dynamicParams = true;
+
+const DESK_PREBUILD_COUNT = (() => {
+    const raw = Number(process.env.DESK_PREBUILD_COUNT ?? '50');
+    if (!Number.isFinite(raw) || raw < 0) return 50;
+    return Math.floor(raw);
+})();
+
 function cleanOgText(input: string): string {
     return input
         .replace(/\{\{IMG:\d+\}\}/g, '')
@@ -40,7 +49,8 @@ function buildOgDescription(rawContent: string, locale: string): string {
 
 export async function generateStaticParams() {
     const locales = ['ko', 'en'];
-    return locales.flatMap((locale) => DESK_POSTS.map((post) => ({ locale, slug: post.slug })));
+    const prebuiltPosts = DESK_POSTS.slice(0, DESK_PREBUILD_COUNT);
+    return locales.flatMap((locale) => prebuiltPosts.map((post) => ({ locale, slug: post.slug })));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
