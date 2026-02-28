@@ -53,7 +53,7 @@ const GalleryPage: React.FC = () => {
         window.history.replaceState(null, '', url);
     }, [category, spaceSubcat, i18n.language]);
     const [playingBgm, setPlayingBgm] = useState<string | null>(null);
-    const audioRef = useRef<HTMLAudioElement | null>(null);
+    const previewAudioRef = useRef<HTMLAudioElement | null>(null);
 
     // Touch/wheel handling for carousel
     const touchStartX = useRef(0);
@@ -81,26 +81,23 @@ const GalleryPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Start gallery BGM on entering gallery
+    // BGM 미리듣기 정리 (언마운트 시)
     useEffect(() => {
-        if (!showGreeting) {
-            const audio = new Audio('/sounds/gallery.mp3');
-            audio.loop = true;
-            audio.volume = 0.3;
-            audio.play().catch(() => {});
-            audioRef.current = audio;
-            return () => {
-                audio.pause();
-                audio.src = '';
-            };
-        }
-    }, [showGreeting]);
+        return () => {
+            if (previewAudioRef.current) {
+                previewAudioRef.current.pause();
+                previewAudioRef.current.src = '';
+            }
+            window.dispatchEvent(new Event('gallerybgm:resume'));
+        };
+    }, []);
 
     const handleBackToLounge = () => {
-        if (audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current.src = '';
+        if (previewAudioRef.current) {
+            previewAudioRef.current.pause();
+            previewAudioRef.current.src = '';
         }
+        window.dispatchEvent(new Event('gallerybgm:resume'));
         const query = searchParams.toString();
         router.push(query ? `/${i18n.language}/lounge?${query}` : `/${i18n.language}/lounge`);
     };
@@ -150,27 +147,23 @@ const GalleryPage: React.FC = () => {
         return () => el.removeEventListener('wheel', onWheel);
     }, [showGreeting, category, carouselIndex, goTo]);
 
-    // BGM player
+    // BGM player (미리듣기 — 레이아웃 BGM 일시정지 후 개별 재생)
     const handlePlayBgm = (src: string) => {
-        if (audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current.src = '';
+        if (previewAudioRef.current) {
+            previewAudioRef.current.pause();
+            previewAudioRef.current.src = '';
         }
         if (playingBgm === src) {
             setPlayingBgm(null);
-            // Restart gallery BGM
-            const audio = new Audio('/sounds/gallery.mp3');
-            audio.loop = true;
-            audio.volume = 0.3;
-            audio.play().catch(() => {});
-            audioRef.current = audio;
+            window.dispatchEvent(new Event('gallerybgm:resume'));
             return;
         }
+        window.dispatchEvent(new Event('gallerybgm:suspend'));
         const audio = new Audio(src);
         audio.loop = true;
         audio.volume = 0.4;
         audio.play().catch(() => {});
-        audioRef.current = audio;
+        previewAudioRef.current = audio;
         setPlayingBgm(src);
     };
 
@@ -230,10 +223,6 @@ const GalleryPage: React.FC = () => {
                                     href={`/${i18n.language}/gallery/diary/${entry.slug}`}
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        if (audioRef.current) {
-                                            audioRef.current.pause();
-                                            audioRef.current.src = '';
-                                        }
                                         router.push(`/${i18n.language}/gallery/diary/${entry.slug}`);
                                     }}
                                 >

@@ -36,15 +36,15 @@ She is named after Hatsuse No Alpha from the manga *Cafe Alpha*.
 - https://cafelua.com/ko/atelier?oldpc=true — Old PC: browse 1997/1998 homepages in a simulated Windows 98 desktop
 
 ## Content: Master's Desk
-- Total posts: 2133
-- Date range: 2006-06-12 to 2026-02-18
+- Total posts: 2134
+- Date range: 2006-06-12 to 2026-03-01
 - Migrated from Naver Blog (https://blog.naver.com/fstory97), active since 2006
 - Categories:
   - IT: 1187 posts
   - Media Review (films, books, etc.): 270 posts
   - Artwork (illustrations, pixel art): 266 posts
   - Private Notes (personal essays): 240 posts
-  - AI (artificial intelligence, LLMs, agents): 108 posts
+  - AI (artificial intelligence, LLMs, agents): 109 posts
   - XRCLOUD (XR/metaverse platform): 36 posts
   - Believer (faith & reflections): 17 posts
   - Cafe Lua (site updates): 9 posts
@@ -65,7 +65,7 @@ She is named after Hatsuse No Alpha from the manga *Cafe Alpha*.
 - Built with Next.js, React, TypeScript
 - Deployed on Vercel
 - AI: Gemini 2.5 (chat, tarot, translation)
-- Total pages: 4324 (ko + en)
+- Total pages: 4326 (ko + en)
 - Sitemap: https://cafelua.com/sitemap.xml
 
 ## Policy

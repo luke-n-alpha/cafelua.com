@@ -82,6 +82,7 @@ export const SPACE_IMAGES: Record<string, GalleryImage[]> = {
     { src: '/characters/alpha/face-variation/alpha-dissatisfaction.webp', titleKo: '불만', titleEn: 'Dissatisfied', descKo: '불만스러운 표정', descEn: 'Dissatisfied expression' },
   ],
   etc: [
+    { src: '/master-desk-background-img/master-desk-background.png', titleKo: '마스터의 데스크', titleEn: "Master's Desk", descKo: '마스터 루크의 작업 데스크', descEn: "Master Luke's work desk" },
     { src: '/gallery-background-img/gallery-cozy-corner.webp', titleKo: '갤러리 — 아늑한 코너', titleEn: 'Gallery — Cozy Corner', descKo: '갤러리의 아늑한 코너', descEn: 'The cozy corner of the gallery' },
     { src: '/undestruct.webp', titleKo: '청소 중!', titleEn: 'Cleaning in Progress!', descKo: '알파가 열심히 공간을 꾸미는 중이에요', descEn: 'Alpha is busy decorating the space' },
     { src: '/ui/about-modal-bg.webp', titleKo: '웰컴 간판', titleEn: 'Welcome Sign', descKo: '카페루아 소개 배경', descEn: 'Cafe Lua about background' },

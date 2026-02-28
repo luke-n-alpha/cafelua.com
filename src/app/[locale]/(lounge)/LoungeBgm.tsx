@@ -7,14 +7,14 @@ import BackgroundMusic from '@/components/BackgroundMusic';
 export default function LoungeBgm() {
     const pathname = usePathname();
     const [isChatOpen, setIsChatOpen] = useState(false);
+    const [isGalleryPreview, setIsGalleryPreview] = useState(false);
 
     // locale prefix 제거하고 경로만 추출 (/ko/counter -> /counter)
     const pathWithoutLocale = pathname.replace(/^\/(ko|en)/, '') || '/';
 
-    // 갤러리는 자체 BGM이 있으므로 라운지 BGM 정지
     const isGallery = pathWithoutLocale.startsWith('/gallery');
     const isDeskPath = pathWithoutLocale.startsWith('/desk');
-    const bgmSrc = isDeskPath ? '/sounds/atelier.mp3' : '/sounds/lounge.mp3';
+    const bgmSrc = isGallery ? '/sounds/gallery.mp3' : isDeskPath ? '/sounds/atelier.mp3' : '/sounds/lounge.mp3';
 
     // UI 숨김 조건
     const hideUi = pathWithoutLocale === '/counter' || isGallery;
@@ -33,5 +33,19 @@ export default function LoungeBgm() {
         };
     }, []);
 
-    return <BackgroundMusic src={bgmSrc} hideUi={hideUi} suspended={isChatOpen || isGallery} />;
+    // 갤러리 BGM 미리듣기 시 레이아웃 BGM 일시정지
+    useEffect(() => {
+        const handlePreviewStart = () => setIsGalleryPreview(true);
+        const handlePreviewStop = () => setIsGalleryPreview(false);
+
+        window.addEventListener('gallerybgm:suspend', handlePreviewStart);
+        window.addEventListener('gallerybgm:resume', handlePreviewStop);
+
+        return () => {
+            window.removeEventListener('gallerybgm:suspend', handlePreviewStart);
+            window.removeEventListener('gallerybgm:resume', handlePreviewStop);
+        };
+    }, []);
+
+    return <BackgroundMusic src={bgmSrc} hideUi={hideUi} suspended={isChatOpen || isGalleryPreview} />;
 }

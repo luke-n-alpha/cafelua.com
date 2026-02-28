@@ -192,7 +192,7 @@
 .carousel-viewport {
     position: relative;
     width: 100%;
-    max-width: 640px;
+    max-width: 100%;
     aspect-ratio: 16 / 10;
     overflow: hidden;
     border-radius: 14px;
