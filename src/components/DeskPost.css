@@ -85,7 +85,7 @@
 }
 
 .desk-post-feature {
-    width: auto;
+    width: 100%;
     height: auto;
     max-width: 860px;
     border-radius: 12px;
@@ -265,7 +265,7 @@
 }
 
 .desk-post-img {
-    width: auto;
+    width: 100%;
     max-width: 800px;
     height: auto;
     display: block;
