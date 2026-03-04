@@ -19,8 +19,14 @@ const DESK_PREBUILD_COUNT = (() => {
 function cleanOgText(input: string): string {
     return input
         .replace(/\{\{IMG:\d+\}\}/g, '')
+        .replace(/^>.*$/gm, '')
+        .replace(/!\[.*?\]\(.*?\)/g, '')
+        .replace(/^#{1,6}\s+/gm, '')
+        .replace(/^---+$/gm, '')
         .replace(/\*\*/g, '')
         .replace(/\[(.*?)\]\((.*?)\)/g, '$1')
+        .replace(/`([^`]*)`/g, '$1')
+        .replace(/https?:\/\/\S+/g, '')
         .replace(/\u200b/g, '')
         .replace(/\s+/g, ' ')
         .trim();

@@ -267,6 +267,8 @@
 .desk-post-img {
     width: 100%;
     max-width: 800px;
+    max-height: 50vh;
+    object-fit: contain;
     height: auto;
     display: block;
     margin: 0.25rem auto;

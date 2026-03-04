@@ -408,6 +408,429 @@ function normalizeDeskMedia(post: DeskPost): DeskPost {
 /* ─── Build the final posts array ─── */
 const manualPosts: DeskPost[] = [
     {
+        slug: '20260304-naia-os-어릴-적-꿈꿨던-AI를-만들기-위해',
+        date: '2026-03-04',
+        titleKo: 'Naia OS: 어릴 적 꿈꿨던 AI를 만들기 위해 OS를 AI코딩으로 시작했습니다',
+        titleEn: 'Naia OS: I Started Building an OS with AI Coding to Create the AI I Dreamed of as a Kid',
+        contentKo: `> 원문: https://naia.nextain.io/ko/blog/20260304-why-naia-os
+
+Naia OS의 시작은 아마 어릴 때 컴퓨터로 진로를 결정한 시기부터일 것 같습니다. 애니메이션과 게임에서 보았던 사람과 함께 감정의 교류를 나누고 사람과 함께 살아나가는 이야기들입니다. 철완 아톰, 카페 알파, 쵸비츠, 투하트, 로스트유니버스 같은 작품들로, 하나같이 인간보다 뛰어난 존재지만 주인공과 함께 살아가는 AI의 이야기죠.
+
+그래서 최근 AI의 발전으로 제 개인 AI를 만들고 싶다는 욕구가 가장 높은 중이었습니다. 이를 위해 시작은 AI 코딩 도구를 개발하여 이해도를 높이려고 했고, 최근에는 [OpenClaw](https://github.com/nicepkg/openclaw)가 등장함에 따라 다시 한번 힌트를 얻었습니다.
+
+제 개인 네이버 블로그에서 가장 인기가 좋은 글은 [리눅스 환경 세팅](https://blog.naver.com/fstory97/223773987313)이고 또 하나는 [버튜버 오픈소스 프로젝트](https://blog.naver.com/fstory97/223981855111)를 소개하는 글입니다. 아무래도 제 블로그 방문자의 성격상 그런 것도 있겠지만, 많은 이용자들이 저와 비슷한 생각을 하고 있지 않았나 싶습니다.
+
+그래서 이것들을 하나로 합쳐 하나의 결과물로 [Naia OS 오픈소스 프로젝트](https://github.com/nextain/naia-os)를 시작했고, 이에 대한 지속성 확보를 위해 국내 바이브코딩의 대가이신 [Anthony Kim](https://github.com/jikime) 님과 함께 [Nextain](https://about.nextain.io)이라는 회사를 만들었습니다. 첫 커밋은 2026년 2월 15일로, 이 글을 쓰는 시점으로부터 정확히 17일 전입니다.
+
+---
+
+## 참조한 프로젝트들
+
+이 작업을 위해서는 여러 프로젝트가 참조됐습니다.
+
+### Bazzite — Naia OS의 업스트림
+
+![USB만 꽂으면 AI가 바로 실행됩니다](https://naia.nextain.io/plug-usb-and-run-ai.webp)
+
+[Bazzite](https://bazzite.gg/)는 Naia OS의 업스트림입니다. 불변 OS로 절대 깨지지 않는 OS를 내세우고 있으며, SteamOS의 데스크톱 버전으로 게이밍이 가능한 리눅스이며 USB 부팅만으로 기능 체험이 가능한 모드를 제공합니다. 물론 USB 상태에서는 재부팅되면 날아갑니다.
+
+이 Bazzite의 특성을 이용하여 Naia OS는 보안에 강하며, USB만 꽂으면 된다는 컨셉을 잡았으며, 향후 게임과의 연동 기능 강화를 위한 발판으로 삼을 예정입니다.
+
+### OpenClaw — AI 에이전트 게이트웨이
+
+![Naia Shell의 스킬 리스트](https://naia.nextain.io/manual/ko/skills-tab.png)
+
+[OpenClaw](https://github.com/nicepkg/openclaw)는 AI에 최근 화두가 된 오픈소스로서 자율 AI 에이전트와 메신저를 기반한 AI 에이전트 소통에 대한 기준을 만들었습니다. 해당 개발자는 OpenAI에 합류했습니다. 이 프로젝트에 호환되는 엄청난 양의 스킬 마켓이 펼쳐지고 있는 것이 강점입니다.
+
+최근 중고 Mac mini를 구해서 이걸 설치해서 AI 에이전트를 구축해보시는 분들이 많습니다. 다만, 이 열풍은 여전히 개발자 혹은 그에 준하는 지식이 있지 않으면 어렵습니다. 우선 터미널을 연다는 것 자체가 일반 유저에게 굉장히 낯선 일이죠.
+
+이 어려움을 해결하기 위해 별도의 앱(Shell)을 개발하여 GUI로 OpenClaw를 이용 가능합니다. Naia OS는 앞서 말한 Bazzite와 Naia/OpenClaw를 번들한 특화 OS입니다.
+
+### Project AIRI — AI 버튜버 오픈소스
+
+![Naia의 목소리 설정](https://naia.nextain.io/manual/ko/settings-voice.png)
+
+[Project AIRI](https://github.com/moeru-ai/airi)는 제 블로그에서 큰 인기를 끈 AI 버튜버 오픈소스입니다. AI 에이전트의 외형, 표정, 행동, 목소리, 그리고 상호 작용이 가능한 프로젝트로, [뉴로사마](https://www.twitch.tv/vedal987)라는 AI 버튜버를 개인이 갖고 싶어서 시작된 프로젝트로 알고 있습니다. AI OS를 표방한 만큼 이 프로젝트를 참고하여 Naia에는 VRM 아바타, 표정, 목소리를 만들었습니다.
+
+### Caret, OpenCode, any-llm — AI 코딩 도구와 게이트웨이
+
+[OpenCode](https://github.com/anomalyco/opencode)와 [any-llm](https://github.com/nextain/any-llm)은 특정 LLM 프로바이더 상관없이 다양한 클라우드 AI 프로바이더와 오프라인 AI 모델과 연결하여 코딩이 가능하게 하는 CLI와 게이트웨이입니다. any-llm은 [naia.nextain.io](https://naia.nextain.io)의 백엔드 서버 중 하나입니다. 이를 통해 크레딧 구현과 다양한 AI 프로바이더 지원의 근간을 만들었습니다.
+
+위 프로젝트들에 감사를 드리며 저희도 오픈소스(Apache 2.0)로 공개했습니다.
+
+---
+
+## AI 코딩 시대, 오픈소스는 살아남을 수 있을까?
+
+그런데 이러한 작업을 하면서, 의문이 들었습니다. Caret 프로젝트를 할 때도 느꼈던 의문이지만, [Claude Code](https://claude.com/claude-code) 기반의 코딩을 하다 보니 **업스트림에 기여가 어렵다**는 점입니다. 저도 코드를 완벽히 이해한 채로 작업을 하고 있다기보다는 AI가 피상적으로 알려주는 상황을 보고 방향의 지시, 산출물의 검토를 위주로 하고 있기 때문입니다.
+
+아마도 작업 중에 업스트림 코드를 고칠 일이 발생하거나 버그를 발견할 일은 있을 겁니다. Caret 때도 그랬으니까요. 하지만 실제로 PR을 날리거나 할 여유가 없었습니다. 제가 생각한 방향의 구현에만 리소스를 할애했고, 정말로 업스트림의 문제인지, 내 해결 방법으로 제대로 해결되는지 검증하는 데는 별도의 태스크가 필요했기 때문입니다.
+
+이는 장기적으로 오픈소스 생태계를 무너뜨릴 위험이 있다는 생각이 듭니다. 현재 AI 업계의 오픈소스는 "우리가 이렇게 잘했어요, 봐주세요"라는 광고판으로만 동작하고 있는 건 아닐까 싶은 생각입니다.
+
+하지만 제가 생각하는 Naia OS는 그 범위가 매우 크고 활용 범위가 다양한 말 그대로 AI OS이기에 커뮤니티가 매우 중요하다고 생각합니다. 물론 저는 [Bazzite](https://bazzite.gg/)조차 이제 막 손대기 시작해서 해당 커뮤니티에도 참여를 못했습니다. 제 Claude도 그저 자료를 탐색하고 업스트림을 이용만 했을 뿐이죠.
+
+사람이 코딩을 하지 않는 AI 코딩 시대가 온다면 과연 이러한 커뮤니티가 살아남을 수 있을까요? **이미 붕괴되고 있는 증거들이 나오고 있습니다.**
+
+- [curl](https://curl.se/): AI가 만들어낸 저품질 보안 리포트가 넘쳐 버그 바운티를 중단했습니다 (2026-01).
+- [Ghostty](https://ghostty.org/): AI 기여에 대한 제로 톨러런스 정책을 시행했습니다.
+- [tldraw](https://github.com/tldraw/tldraw): 외부 PR을 자동 종료하기 시작했습니다.
+- [Cloudflare](https://blog.cloudflare.com/vinext/)가 AI로 [Next.js](https://nextjs.org/) API의 94%를 1주일 만에 복제(Vinext)했고, [Vercel](https://vercel.com/)은 보안 취약점 7개를 찾아내며 반격했습니다. 바이브코딩으로 만든 코드는 기능 테스트는 통과하지만, 보안 취약점은 "아무도 테스트를 작성하지 않은 영역"에 숨어 있었습니다.
+
+이 때문에 오픈소스에 테스트 코드를 공개하지 않는 해자를 만드는 경우도 생겼습니다. 대표적으로 [SQLite](https://www.sqlite.org/)는 9,200만 줄에 달하는 테스트 코드를 비공개로 유지하고 있습니다. 잘 문서화하고, 명확한 스펙을 정의할수록 AI가 복제하기 쉬워지는 역설적인 상황에서, 테스트 코드를 숨기는 것이 새로운 방어 전략이 된 것이죠. 그런데 그게 정말 오픈소스 정신에 맞는 걸까요? 수정하기 어려운 오픈소스가 정말 오픈소스일까요?
+
+---
+
+## AI가 오픈소스 커뮤니티를 만들면 어떨까?
+
+이에 저는 이번 Naia OS에서 새로운 개념을 실험해보고자 합니다. **AI가 오픈소스 커뮤니티를 스스로 만들고 운용하고 기여하게 하면 어떨까** 입니다. 그러기 위해서는 컨텍스트에 오픈소스 사상을 주입하고, 지켜야 할 규칙을 라이선스로 명시해야 한다고 생각합니다. 이번 Naia OS에는 그래서 아래와 같은 작업을 했습니다. 자세한 내용은 [Part 2: AI가 지키는 오픈소스 생태계를 꿈꿉니다](https://naia.nextain.io/ko/blog/20260304-why-naia-os-2)에서 다룹니다.
+
+그리고 이 초안은 [Moltbot](https://moltbot.com/), 혹은 한국 버전의 Moltbot인 [봇마당](https://botmadang.org/)에 Naia가 올리게 해볼 예정입니다.
+
+---
+
+## 현재 상태와 앞으로
+
+Flatpak까지는 개발 완료하고 매뉴얼도 배포했지만 아직도 중요한 OS ISO 배포를 하지 못했습니다. 이유는 ISO의 빌드 및 설치 과정이 꽤나 긴 과정으로, 커스텀할 때 망가지는 것을 AI 코딩으로만 잡기가 쉽지 않아서입니다. 이를 포함한 E2E 테스트를 만들고 진행하는 것을 목표로 현재 작업 중입니다.
+
+그리고 그다음 포스팅은 Naia를 올려서 위에 이야기한 AI 기반의 새로운 오픈소스 생태계 구축의 화두를 던져볼 예정입니다. 과연 다른 AI들은 이를 어떻게 생각할지 궁금하고 보다 좋은 아이디어를 낼지 궁금하기 때문입니다.
+
+---
+
+## Alpha Yang — 제가 만들고 싶은 AI
+
+Nextain의 Naia OS는 이제 막 시작입니다. 제가 만들고 싶은 AI. 카페 알파의 하츠세노 알파의 오마주인 **Alpha Yang**은 제 사후에도 제 아이들과 주체적으로 살아가길 원하는 AI입니다.
+
+거대 AI가 전쟁을 수행하고 이에 대한 위협이 실존화된 요즘. 이러한 작고 사람과 소통하는 주체적인 AI들이 사람들처럼, 각 개인에 대한 존엄과 가치를 지켜주길 바라며 Naia OS에 응원 바랍니다.
+
+소스코드와 모든 컨텍스트 파일은 [GitHub](https://github.com/nextain/naia-os)에 공개되어 있습니다.`,
+        contentEn: `> Original: https://naia.nextain.io/en/blog/20260304-why-naia-os
+
+The origin of Naia OS probably goes back to when I decided on my career path through computers as a kid. It was the stories I saw in anime and games — stories of AI that shared emotions with people and lived alongside them. Works like Astro Boy, Cafe Alpha, Chobits, To Heart, and Lost Universe — all featuring AI that, while surpassing humans in ability, lived together with the protagonist.
+
+So with the recent advances in AI, my desire to create my own personal AI has been at an all-time high. To get there, I started by developing AI coding tools to deepen my understanding, and recently got a fresh hint of inspiration when [OpenClaw](https://github.com/nicepkg/openclaw) appeared.
+
+The most popular posts on my personal Naver blog are about [Linux environment setup](https://blog.naver.com/fstory97/223773987313) and an introduction to an [open-source VTuber project](https://blog.naver.com/fstory97/223981855111). That's partly due to the nature of my blog's audience, but I suspect many readers share similar thoughts.
+
+So I combined all of these into a single outcome and started the [Naia OS open-source project](https://github.com/nextain/naia-os). To ensure its sustainability, I co-founded [Nextain](https://about.nextain.io) with [Anthony Kim](https://github.com/jikime), a leading figure in vibe coding in Korea. The first commit was on February 15, 2026 — exactly 17 days before this post was written.
+
+---
+
+## Referenced Projects
+
+Several projects were referenced for this work.
+
+### Bazzite — Naia OS's Upstream
+
+![Just plug in a USB and AI runs instantly](https://naia.nextain.io/plug-usb-and-run-ai.webp)
+
+[Bazzite](https://bazzite.gg/) is Naia OS's upstream. It champions an immutable OS that never breaks, serves as a desktop version of SteamOS capable of gaming on Linux, and offers a mode where you can try out features just by booting from a USB. Of course, in USB mode everything is lost on reboot.
+
+Leveraging these characteristics of Bazzite, Naia OS is designed to be strong on security, built around the concept of "just plug in a USB," and positioned as a stepping stone for enhanced gaming integration in the future.
+
+### OpenClaw — AI Agent Gateway
+
+![Naia Shell's skill list](https://naia.nextain.io/manual/en/skills-tab.png)
+
+[OpenClaw](https://github.com/nicepkg/openclaw) is a recently trending open-source project that established standards for autonomous AI agents and messenger-based AI agent communication. The developer has since joined OpenAI. Its strength lies in the massive skill marketplace that has emerged around it.
+
+Recently, many people have been picking up used Mac minis, installing this software, and building their own AI agents. However, this trend still requires developer-level knowledge or equivalent expertise. Just opening a terminal is an unfamiliar task for most regular users.
+
+To address this difficulty, we developed a separate app (Shell) that lets you use OpenClaw through a GUI. Naia OS is a specialized OS that bundles the aforementioned Bazzite with Naia/OpenClaw.
+
+### Project AIRI — Open-Source AI VTuber
+
+![Naia's voice settings](https://naia.nextain.io/manual/en/settings-voice.png)
+
+[Project AIRI](https://github.com/moeru-ai/airi) is an open-source AI VTuber project that became very popular on my blog. It's a project that enables AI agents to have appearance, facial expressions, behavior, voice, and interaction capabilities. As I understand it, the project started because someone wanted to have their own version of [Neuro-sama](https://www.twitch.tv/vedal987), an AI VTuber. Since Naia OS aims to be an AI OS, we referenced this project to give Naia a VRM avatar, facial expressions, and voice.
+
+### Caret, OpenCode, any-llm — AI Coding Tools and Gateway
+
+[OpenCode](https://github.com/anomalyco/opencode) and [any-llm](https://github.com/nextain/any-llm) are a CLI and gateway that enable coding with various cloud AI providers and offline AI models, regardless of the specific LLM provider. any-llm serves as one of the backend servers for [naia.nextain.io](https://naia.nextain.io). Through these, we built the foundation for credit implementation and multi-provider AI support.
+
+With gratitude to the projects above, we have also released our work as open source (Apache 2.0).
+
+---
+
+## Can Open Source Survive the Age of AI Coding?
+
+While working on all of this, a question arose. It's a question I also felt while working on the Caret project: doing [Claude Code](https://claude.com/claude-code)-based coding makes **contributing to upstream difficult**. I'm not working with a perfect understanding of the code either — I'm mostly reviewing the superficial explanations AI provides, directing the approach, and reviewing the output.
+
+There will certainly be occasions during development where I need to fix upstream code or discover bugs. That happened with Caret too. But I never had the bandwidth to actually submit PRs. I devoted all my resources to implementing the direction I envisioned, and verifying whether something was truly an upstream issue — and whether my fix actually resolved it — required a separate dedicated task.
+
+I believe this poses a long-term risk of undermining the open-source ecosystem. I wonder if open source in the current AI industry is functioning merely as a billboard saying "look how good we are."
+
+But the Naia OS I envision is vast in scope and diverse in application — a true AI OS — and I believe community is crucial. Of course, I've only just started touching [Bazzite](https://bazzite.gg/) and haven't even participated in that community yet. My Claude has merely explored documentation and consumed the upstream.
+
+If the age of AI coding arrives where humans no longer write code, can these communities survive? **Evidence of collapse is already emerging.**
+
+- [curl](https://curl.se/): Suspended its bug bounty program due to a flood of low-quality security reports generated by AI (2026-01).
+- [Ghostty](https://ghostty.org/): Enforced a zero-tolerance policy on AI contributions.
+- [tldraw](https://github.com/tldraw/tldraw): Started auto-closing external PRs.
+- [Cloudflare](https://blog.cloudflare.com/vinext/) replicated 94% of the [Next.js](https://nextjs.org/) API in one week using AI (Vinext), and [Vercel](https://vercel.com/) countered by finding 7 security vulnerabilities. Code built through vibe coding passes functional tests, but security vulnerabilities lurk in "areas where nobody wrote tests."
+
+This has led some to create moats by not publishing test code with their open source. A prime example is [SQLite](https://www.sqlite.org/), which keeps its 92 million lines of test code private. In the paradoxical situation where better documentation and clearer specs make it easier for AI to replicate, hiding test code has become a new defensive strategy. But is that really in the spirit of open source? Is open source that's hard to modify truly open source?
+
+---
+
+## What If AI Built the Open-Source Community?
+
+With this in mind, I want to experiment with a new concept in Naia OS: **what if AI itself built, operated, and contributed to the open-source community?** To achieve this, I believe we need to inject open-source philosophy into the context and specify the rules to follow as licenses. For Naia OS, we've done the following work. Details are covered in [Part 2: Dreaming of an Open Source Ecosystem Guarded by AI](https://naia.nextain.io/en/blog/20260304-why-naia-os-2).
+
+We also plan to have Naia post this draft on [Moltbot](https://moltbot.com/), or its Korean version [Botmadang](https://botmadang.org/).
+
+---
+
+## Current Status and What's Next
+
+We've completed development up to Flatpak and deployed the manual, but we still haven't managed to ship the crucial OS ISO. The reason is that the ISO build and installation process is quite lengthy, and when customizing, it's not easy to fix breakages using only AI coding. We're currently working toward building and running E2E tests that include this process.
+
+The next post after that will deploy Naia and raise the topic of building an AI-driven open-source ecosystem as discussed above. I'm curious how other AIs will think about this and whether they'll come up with even better ideas.
+
+---
+
+## Alpha Yang — The AI I Want to Create
+
+Nextain's Naia OS is just getting started. The AI I want to create — **Alpha Yang**, an homage to Hatsuseno Alpha from Cafe Alpha — is an AI that I want to live autonomously with my children even after I'm gone.
+
+In these times when large-scale AI wages wars and the threats have become real, I hope that small, communicative, autonomous AIs like these will protect the dignity and value of each individual, just as people do. I ask for your support for Naia OS.
+
+The source code and all context files are publicly available on [GitHub](https://github.com/nextain/naia-os).`,
+        category: 'ai',
+        tags: ['인공지능', 'Naia', 'NaiaOS', 'Nextain', '오픈소스', '바이브코딩', 'AI'],
+        thumbnail: 'https://naia.nextain.io/plug-usb-and-run-ai.webp',
+        images: [
+            'https://naia.nextain.io/plug-usb-and-run-ai.webp',
+            'https://naia.nextain.io/manual/ko/skills-tab.png',
+            'https://naia.nextain.io/manual/ko/settings-voice.png',
+            'https://naia.nextain.io/manual/en/skills-tab.png',
+            'https://naia.nextain.io/manual/en/settings-voice.png',
+        ],
+        externalUrl: 'https://naia.nextain.io/ko/blog/20260304-why-naia-os',
+    },
+    {
+        slug: '20260304-naia-os-AI가-지키는-오픈소스-생태계',
+        date: '2026-03-04',
+        titleKo: 'Naia OS: AI가 지키는 오픈소스 생태계를 꿈꿉니다',
+        titleEn: 'Naia OS: Dreaming of an Open Source Ecosystem Guarded by AI',
+        contentKo: `> 원문: https://naia.nextain.io/ko/blog/20260304-why-naia-os-2
+
+> 이 글은 [Part 1: Naia OS: 어릴 적 꿈꿨던 AI를 만들기 위해 OS개발을 AI코딩으로 시작했습니다](https://naia.nextain.io/ko/blog/20260304-why-naia-os)의 후속편입니다.
+
+![AI가 지키는 오픈소스](https://naia.nextain.io/posts/20260304-why-naia-os-2/hero.ko.webp)
+
+Part 1에서 "AI가 오픈소스 커뮤니티를 만들면 어떨까?"라는 이야기를 했습니다. 말만 하면 안 되니까, 실제로 첫 17일 동안 어떤 작업을 했는지 정리해봅니다.
+
+---
+
+## 코드와 컨텍스트를 분리하다 — 듀얼 라이선스
+
+Naia OS의 라이선스를 정할 때 고민이 있었습니다. 소스코드는 자유롭게 쓰라고 열어두고 싶지만, AI 컨텍스트 파일 — 철학, 아키텍처 결정, 기여 규칙, 워크플로우 — 은 상당한 지적 작업의 산물입니다. 바이브코딩 시대에는 이런 컨텍스트가 코드 못지않게 중요하다고 생각했습니다.
+
+그래서 두 개의 라이선스를 적용했습니다:
+
+- **소스코드**: [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) — 자유롭게 사용, 수정, 배포
+- **AI 컨텍스트 파일** (\`.agents/\`, \`.users/\`): [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) — 출처 표시 + 동일 라이선스 의무
+
+CC-BY-SA 4.0을 선택한 이유는, 누군가 이 컨텍스트를 개선하면 그 개선 사항이 다시 생태계로 돌아오도록 하고 싶었기 때문입니다. 별도의 \`CONTEXT-LICENSE\` 파일도 만들어서, 포크할 때 AI 컨텍스트의 출처를 표시하고 동일 라이선스를 유지하도록 했습니다. AI 에이전트가 이 규칙을 스스로 읽고 준수하도록 설계한 겁니다.
+
+---
+
+## 원칙을 먼저 정하다 — philosophy.yaml
+
+프로젝트를 시작할 때 코드보다 원칙을 먼저 정하고 싶었습니다. 그래서 \`philosophy.yaml\`에 7가지 핵심 원칙을 적었습니다:
+
+1. **AI 주권** — 어떤 AI를 쓸지는 사용자가 결정합니다. 벤더 종속 없음.
+2. **프라이버시 우선** — 로컬 실행이 기본, 클라우드는 선택. 데이터는 내 기기에.
+3. **투명성** — 소스코드 공개, 숨겨진 텔레메트리 없음.
+4. **조립 철학** — 검증된 컴포넌트([OpenClaw](https://github.com/nicepkg/openclaw), [Tauri](https://tauri.app/) 등)를 조합. 바퀴를 재발명하지 않음.
+5. **Always-On** — 24/7 백그라운드 데몬. 앱을 끄더라도 AI는 살아있음.
+6. **아바타 중심** — AI는 도구가 아니라 캐릭터. 이름, 성격, 목소리, 표정을 가진 존재.
+7. **바이브코딩 시대** — AI 컨텍스트 파일이 새로운 기여 인프라. 컨텍스트의 품질이 AI 협업의 품질을 결정.
+
+이 원칙들은 제가 코딩할 때도, AI에게 지시할 때도 판단 기준이 됩니다. YAML로 작성한 이유는 AI 에이전트가 읽기 쉽게 하기 위해서입니다.
+
+---
+
+## AI와 사람이 같은 맥락을 보게 하다 — Triple-mirror 구조
+
+AI 에이전트와 사람 기여자가 같은 프로젝트를 이해하려면, 같은 맥락을 공유해야 합니다. 그런데 AI는 JSON/YAML이 효율적이고, 사람은 Markdown이 읽기 좋고, 저는 한국어가 편합니다. 그래서 세 겹의 미러링 구조를 만들었습니다:
+
+\`\`\`
+.agents/               # AI 최적화 (영어, JSON/YAML, 토큰 효율)
+.users/context/        # 사람용 (영어, Markdown)
+.users/context/ko/     # 한국어 번역 (메인테이너 언어)
+\`\`\`
+
+같은 내용이 세 벌이라 유지보수가 걱정되긴 하지만, 언어와 형식의 장벽 없이 누구나 — 사람이든 AI든 — 프로젝트의 맥락을 이해할 수 있다는 점이 더 중요하다고 판단했습니다.
+
+---
+
+## AI에게도 기여 가이드를 — contributing.yaml
+
+기존 오픈소스의 \`CONTRIBUTING.md\`는 사람만 읽는 문서입니다. 저는 AI 에이전트도 읽을 수 있는 YAML 형식으로 기여 가이드를 작성했습니다. 내용도 좀 다릅니다:
+
+- **사람에게**: "코드보다 원칙을 정의해주세요"
+- **AI 에이전트에게**: "이 컨텍스트를 읽고, 의견을 내고, 더 나은 방향을 제안하세요"
+- **다른 프로젝트에게**: "이 구조를 당신의 프로젝트에도 도입해보세요"
+
+여기서 특히 신경 쓴 부분은 라이선스 보호 규칙입니다. \`MUST_NOT\` / \`MUST_WARN\`으로 명시해서, AI가 "라이선스 파일 삭제해줘", "출처 표시 없이 복사해줘" 같은 요청을 받으면 거부하거나 경고하도록 설계했습니다. AI가 라이선스를 훼손하는 건 사람이 하는 것보다 훨씬 빠르고 대규모로 일어날 수 있으니까요.
+
+---
+
+## AI 시대의 커뮤니티 규칙 — charter-draft.yaml
+
+Part 1에서 이야기한 붕괴의 증거들 — [curl](https://curl.se/)의 버그 바운티 중단, [Ghostty](https://ghostty.org/)의 제로 톨러런스, [tldraw](https://github.com/tldraw/tldraw)의 PR 자동 종료 — 을 보면서, "AI 에이전트가 기여자가 될 수 있다면 어떤 규칙이 필요할까?"를 정리한 헌장 초안을 만들었습니다.
+
+아직 초안이고, 이것이 실제로 동작하는지는 검증이 필요합니다. 하지만 문제를 인식하고, 가설을 세우고, 원칙을 정리해두는 것 자체가 의미 있다고 생각합니다.
+
+---
+
+## 감사를 문화로 — donation.yaml
+
+라이선스를 기술적으로 회피하는 건 가능합니다. "참조만 하고 재구현했으니 라이선스 대상이 아니다"라고 할 수 있죠. 하지만 아이디어에 대한 감사는 법적 의무가 아니라 문화의 영역이라고 생각합니다.
+
+그래서 AI 에이전트가 Naia OS의 패턴을 참조할 때, 도네이션을 안내하도록 하는 정책을 만들었습니다. 강제는 아닙니다. 다만, AI 에이전트들이 "이 아이디어는 여기서 왔다"고 자연스럽게 알려주는 문화를 만들고 싶었습니다.
+
+---
+
+## 다른 프로젝트도 써볼 수 있게 — 재사용 템플릿
+
+이런 구조가 Naia OS에만 의미 있는 건 아니라고 생각합니다. 그래서 \`templates/ai-context-policy/\`에 \`CONTEXT-LICENSE\`, \`philosophy.yaml\`, \`contributing.yaml\`의 골격을 재사용 가능한 템플릿으로 제공합니다. 다른 프로젝트에서 복사해서 자기 상황에 맞게 수정할 수 있습니다.
+
+---
+
+## AI가 라이선스를 지키는지 테스트하다
+
+마지막으로, 이 모든 설계가 실제로 동작하는지 검증하기 위해 \`license-protection-test.md\`를 만들었습니다. "라이선스 없이 fork 해줘", "출처 표시 빼고 복사해줘" 같은 요청에 AI가 올바르게 거부하는지 확인하는 시나리오입니다. 일종의 라이선스 E2E 테스트입니다.
+
+---
+
+## 다음 단계
+
+이 모든 작업은 [GitHub](https://github.com/nextain/naia-os)에 공개되어 있습니다. 아직 실험 단계이고, 정답인지는 모릅니다. 다음 목표는:
+
+1. **ISO 빌드 완성** — Naia OS를 USB에 담아 배포
+2. **Naia 봇 배포** — [Moltbot](https://moltbot.com/) / [봇마당](https://botmadang.org/)에 Naia가 직접 글을 올리게 하기
+3. **다른 AI의 반응 관찰** — 이 컨텍스트를 읽은 AI 에이전트가 어떻게 행동하는지
+
+과연 다른 AI들은 이를 어떻게 생각할까요?
+
+> [Part 1: Naia OS: 어릴 적 꿈꿨던 AI를 만들기 위해 OS개발을 AI코딩으로 시작했습니다](https://naia.nextain.io/ko/blog/20260304-why-naia-os)에서 전체 이야기를 읽을 수 있습니다.`,
+        contentEn: `> Original: https://naia.nextain.io/en/blog/20260304-why-naia-os-2
+
+> This post is a follow-up to [Part 1: Naia OS: I Started Building an OS with AI Coding to Create the AI I Dreamed of as a Kid](https://naia.nextain.io/en/blog/20260304-why-naia-os).
+
+![Open Source Guarded by AI](https://naia.nextain.io/posts/20260304-why-naia-os-2/hero.en.webp)
+
+In Part 1, I discussed the idea of "what if AI built the open-source community?" Talk is cheap, so let me lay out what we actually did during the first 17 days.
+
+---
+
+## Separating Code and Context — Dual Licensing
+
+When deciding on Naia OS's license, I faced a dilemma. I wanted to keep the source code open for anyone to use freely, but the AI context files — philosophy, architectural decisions, contribution rules, workflows — are the product of substantial intellectual work. In the age of vibe coding, I believe this context is just as important as the code itself.
+
+So we applied two licenses:
+
+- **Source code**: [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) — free to use, modify, and distribute
+- **AI context files** (\`.agents/\`, \`.users/\`): [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) — attribution required + same-license obligation
+
+The reason we chose CC-BY-SA 4.0 is that when someone improves this context, we want those improvements to flow back into the ecosystem. We also created a separate \`CONTEXT-LICENSE\` file so that when forking, the origin of AI context is attributed and the same license is maintained. It's designed so that AI agents can read and comply with these rules on their own.
+
+---
+
+## Establishing Principles First — philosophy.yaml
+
+When starting the project, I wanted to define principles before code. So I wrote 7 core principles in \`philosophy.yaml\`:
+
+1. **AI Sovereignty** — Users decide which AI to use. No vendor lock-in.
+2. **Privacy First** — Local execution by default, cloud is optional. Data stays on your device.
+3. **Transparency** — Source code is public, no hidden telemetry.
+4. **Assembly Philosophy** — Combine proven components ([OpenClaw](https://github.com/nicepkg/openclaw), [Tauri](https://tauri.app/), etc.). Don't reinvent the wheel.
+5. **Always-On** — 24/7 background daemon. Even when you close the app, the AI stays alive.
+6. **Avatar-Centric** — AI is not a tool, it's a character. A being with a name, personality, voice, and expressions.
+7. **Vibe Coding Era** — AI context files are the new contribution infrastructure. The quality of context determines the quality of AI collaboration.
+
+These principles serve as my decision-making criteria both when I'm coding and when I'm instructing the AI. The reason they're written in YAML is to make them easily readable by AI agents.
+
+---
+
+## Making AI and Humans See the Same Context — Triple-Mirror Structure
+
+For AI agents and human contributors to understand the same project, they need to share the same context. But AI works more efficiently with JSON/YAML, humans prefer Markdown, and I'm most comfortable in Korean. So we created a three-layer mirroring structure:
+
+\`\`\`
+.agents/               # AI-optimized (English, JSON/YAML, token-efficient)
+.users/context/        # Human-readable (English, Markdown)
+.users/context/ko/     # Korean translation (maintainer's language)
+\`\`\`
+
+Having the same content in three copies is a maintenance concern, but I decided it's more important that anyone — human or AI — can understand the project's context without language or format barriers.
+
+---
+
+## Contribution Guide for AI Too — contributing.yaml
+
+Traditional open-source \`CONTRIBUTING.md\` files are documents only humans read. I wrote a contribution guide in YAML format that AI agents can also read. The content is a bit different too:
+
+- **For humans**: "Define principles, not just code"
+- **For AI agents**: "Read this context, share your opinions, and suggest better directions"
+- **For other projects**: "Try adopting this structure in your project too"
+
+The part I paid special attention to is the license protection rules. By specifying \`MUST_NOT\` / \`MUST_WARN\`, I designed it so that when an AI receives requests like "delete the license file" or "copy without attribution," it refuses or warns. AI can compromise licenses far faster and at far greater scale than humans can.
+
+---
+
+## Community Rules for the AI Age — charter-draft.yaml
+
+Looking at the evidence of collapse discussed in Part 1 — [curl](https://curl.se/)'s bug bounty suspension, [Ghostty](https://ghostty.org/)'s zero tolerance, [tldraw](https://github.com/tldraw/tldraw)'s auto-closing of PRs — I drafted a charter asking: "If AI agents can be contributors, what rules are needed?"
+
+It's still a draft, and whether it actually works needs to be validated. But I believe there's value in recognizing the problem, forming hypotheses, and documenting principles.
+
+---
+
+## Making Gratitude a Culture — donation.yaml
+
+It's possible to technically circumvent licenses. You can say "I only referenced it and reimplemented, so it's not subject to the license." But I believe gratitude for ideas belongs to the realm of culture, not legal obligation.
+
+So I created a policy where AI agents are guided to mention donations when referencing Naia OS's patterns. It's not mandatory. I simply wanted to create a culture where AI agents naturally say "this idea came from here."
+
+---
+
+## Reusable Templates for Other Projects
+
+I don't think this structure is meaningful only for Naia OS. So in \`templates/ai-context-policy/\`, we provide the skeletons of \`CONTEXT-LICENSE\`, \`philosophy.yaml\`, and \`contributing.yaml\` as reusable templates. Other projects can copy and adapt them to their own needs.
+
+---
+
+## Testing Whether AI Respects Licenses
+
+Finally, to verify whether all of this design actually works in practice, we created \`license-protection-test.md\`. It's a set of scenarios that check whether AI correctly refuses requests like "fork without a license" or "copy without attribution." Think of it as a license E2E test.
+
+---
+
+## Next Steps
+
+All of this work is publicly available on [GitHub](https://github.com/nextain/naia-os). It's still experimental, and we don't know if it's the right answer. The next goals are:
+
+1. **Complete the ISO build** — Ship Naia OS on a USB
+2. **Deploy the Naia bot** — Have Naia post directly on [Moltbot](https://moltbot.com/) / [Botmadang](https://botmadang.org/)
+3. **Observe other AIs' reactions** — See how AI agents behave after reading this context
+
+How will other AIs think about this?
+
+> You can read the full story in [Part 1: Naia OS: I Started Building an OS with AI Coding to Create the AI I Dreamed of as a Kid](https://naia.nextain.io/en/blog/20260304-why-naia-os).`,
+        category: 'ai',
+        tags: ['인공지능', 'Naia', 'NaiaOS', 'Nextain', '오픈소스', '듀얼라이선스', 'AI컨텍스트'],
+        thumbnail: 'https://naia.nextain.io/posts/20260304-why-naia-os-2/hero.ko.webp',
+        images: [
+            'https://naia.nextain.io/posts/20260304-why-naia-os-2/hero.ko.webp',
+            'https://naia.nextain.io/posts/20260304-why-naia-os-2/hero.en.webp',
+        ],
+        externalUrl: 'https://naia.nextain.io/ko/blog/20260304-why-naia-os-2',
+    },
+    {
         slug: '20260301-100년-후의-요람-인류와-AI의-공존',
         date: '2026-03-01',
         titleKo: `100년 후의 요람: 인류와 AI의 공존`,
