@@ -126,6 +126,7 @@
     color: #ffe7a8;
     letter-spacing: 0.03em;
     font-weight: 700;
+    font-family: var(--font-sans);
 }
 
 .desk-post-text h1 {

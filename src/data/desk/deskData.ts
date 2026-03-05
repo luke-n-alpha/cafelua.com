@@ -408,6 +408,168 @@ function normalizeDeskMedia(post: DeskPost): DeskPost {
 /* ─── Build the final posts array ─── */
 const manualPosts: DeskPost[] = [
     {
+        slug: '20260305-바이브-코딩-그-안에서-실제로-무슨-일이-벌어지는가',
+        date: '2026-03-05',
+        titleKo: '바이브 코딩, 그 안에서 실제로 무슨 일이 벌어지는가',
+        titleEn: 'Vibe Coding: What Actually Happens Under the Hood',
+        contentKo: `요즘은 클로드 코드를 주력 개발 도구로 쓰고 있습니다. 클로드는 최근 화두가 되고 있는 skill을 비롯해 다양한 기능들을 제공합니다.
+이러한 코딩 도구들은 LLM모델을 선택할 수 있습니다. 예전에 저는 오픈소스 cline기반의 ai개발도구인 careti를 개발하고 있었습니다.
+그때 들었던 질문 중 하나가 왜 ChatGPT에 직접 물어보고 코딩하면 되는걸 그렇게 하냐라는 질문이 있었는데, 코딩도구, 곧 AI에이전트가 가지는 위치와 동작 방법에 대해 한번 정리해봤습니다.
+
+## 1. 흔한 오해 하나
+
+"Claude Code가 내 코드를 읽고 수정해준다."
+
+사실 LLM(Claude, GPT 같은 AI 모델)은 텍스트를 받으면 텍스트를 돌려주는 것 밖에 못합니다. 파일을 읽을 수도 없고, 터미널을 실행할 수도 없습니다. 기본은 대화만 합니다.
+
+코딩 도구(Claude Code, Cursor, Cline 등)나 OpenClaw 같은 다양한 AI에이전트는 사실 LLM과 사용자 사이에서 중개 역할을 하는 소프트웨어입니다. 파일 읽기, 코드 수정, 터미널 실행, 터미널에서 도구 실행, 설치, 읽기 이런 실제 작업은 전부 이 중개 소프트웨어가 합니다.
+
+비유하자면, LLM은 뇌이고 코딩 도구와 AI에이전트는 손과 눈입니다. 뇌가 아무리 천재여도 손과 눈이 없으면 코드를 읽거나 수정할 수가 없습니다.
+
+## 2. 실제로 벌어지는 일
+
+안에서 돌아가는 구조는 놀라울 정도로 단순합니다.
+
+1단계 : 사용자가 요청을 입력한다.
+2단계 : 코딩 도구가 그 요청을 LLM에게 전달한다.
+3단계 : LLM이 응답한다. 이때 두 가지 종류가 있습니다.
+\\- 그냥 텍스트 응답 → 사용자에게 보여줌
+\\- "도구를 쓰고 싶다"는 요청 → 코딩 도구가 실행하고 결과를 LLM에게 돌려줌
+4단계 : 3단계로 돌아가서 반복
+
+이게 전부입니다. Cline이든, Claude Code든, Cursor든, OpenClaw든 이 루프가 본질입니다.
+
+## 3. "도구(Tool)"라는 개념
+
+LLM은 텍스트밖에 못 다루니까, 코딩 도구가 LLM에게 "너는 이런 도구들을 쓸 수 있어"라고 알려줍니다. 예를 들면 Read(파일 읽기), Edit(파일 수정), Bash(터미널 실행) 같은 것들입니다.
+
+LLM이 "Read 도구로 src/app.ts를 읽고 싶습니다"라고 응답하면, 코딩 도구가 실제로 파일을 읽고 그 내용을 LLM에게 돌려줍니다. LLM이 직접 파일을 읽은 게 아닙니다. "읽고 싶다"는 텍스트를 출력했을 뿐이고, 실행은 코딩 도구가 합니다.
+
+## 4. 모든 LLM이 도구를 쓸 수 있는 건 아닙니다
+
+위에서 설명한 도구 사용(Tool Use, Function Calling)은 모든 LLM이 할 수 있는 게 아닙니다. LLM이 "Read 도구를 쓰고 싶다"고 정해진 형식으로 출력하려면, 그렇게 할 수 있도록 별도로 훈련된 모델이어야 합니다.
+
+현재 도구 사용을 지원하는 대표적인 모델들은 Claude(Anthropic), GPT-4o(OpenAI), Gemini(Google) 등입니다. 오픈소스 진영에서는 Llama, Qwen, Mistral 등 일부 모델이 도구 사용을 지원합니다.
+
+그래서 AI의 성능을 평가할 때 단순히 "대화를 얼마나 잘 하느냐"만이 기준이 아닙니다. 도구를 얼마나 정확하게 선택하고 호출하느냐, 도구 결과를 받아서 다음 판단을 얼마나 잘 하느냐도 중요한 성능 지표입니다.
+
+## 5. 생각보다 답답해 보이는 이유
+
+코딩 도구를 쓰다 보면 "왜 이렇게 오래 걸리지?" 싶을 때가 있습니다. 이유는 사용자가 보는 것보다 훨씬 많은 메시지가 LLM과 코딩 도구 사이에서 오가고 있기 때문입니다.
+
+사용자가 "이 버그 고쳐줘"라고 한 마디 하면, 코딩 도구는 시스템 프롬프트, 프로젝트 설정, 메모리, 도구 정의 같은 것들을 함께 LLM에게 보냅니다. 사용자 눈에는 안 보이지만 이 왕복이 여러 번 반복됩니다. 그리고 이 모든 왕복이 전부 토큰 비용입니다.
+
+그래서 코딩 도구의 성능 중 하나는 이 비용을 줄이는 겁니다. 불필요한 정보를 안 보내고, 도구 정의를 필요할 때만 로딩하고, 오래된 대화를 요약해서 토큰을 아끼는 것. 이런 최적화가 속도와 비용 모두에 직접적으로 영향을 줍니다.
+
+## 6. 코딩 도구의 다양한 기능들
+
+코딩 도구들은 이 기본 루프 위에 여러 기능을 얹습니다. 본질은 두 가지입니다.
+
+첫째, 프롬프트 조작입니다. LLM에게 보내는 텍스트를 언제, 어떻게 구성하느냐의 문제입니다. 프로젝트 설정 파일, 메모리, Skill, Hook 전부 "LLM에게 어떤 텍스트를 끼워넣느냐"의 변주입니다.
+
+둘째, 실행 제어입니다. LLM이 "이 파일 삭제하고 싶어"라고 했을 때 진짜 삭제할 건지 사용자에게 물어보는 것. 위험한 작업을 격리된 환경에서 돌리는 것입니다.
+
+## 7. 같은 LLM인데 왜 도구마다 결과가 다를까
+
+Claude Code, Cursor, Cline, OpenClaw 전부 같은 Claude API를 쓸 수 있습니다. 그런데 결과가 다릅니다. LLM은 입력(프롬프트)에 따라 출력이 달라지기 때문입니다. 각 코딩 도구는 시스템 프롬프트가 다르고, 도구 설명을 어떻게 작성하느냐가 다르고, 한정된 컨텍스트 공간에 어떤 정보를 넣고 빼느냐가 다릅니다.
+
+## 8. 컨텍스트 엔지니어링
+
+이 모든 이야기를 관통하는 핵심 개념이 있습니다. 컨텍스트 엔지니어링, LLM에게 보내는 프롬프트에 무엇을 넣고, 무엇을 빼고, 언제 넣을지를 설계하는 것입니다.
+
+실제로 가장 많이 문제가 생기는 건 세션이 새로 시작될 때입니다. LLM은 이전 대화를 기억하지 못하니까, 새 세션이 열리면 컨텍스트가 비어있는 상태에서 시작합니다. 그래서 이전 대화를 요약해서 이어가는 compact 같은 기능이 있고, 프로젝트 설정 파일이나 메모리를 통해 매 세션마다 핵심 정보를 다시 넣어주는 겁니다.
+
+결국 프로젝트를 잘 굴리려면 코딩 도구의 컨텍스트를 지속적으로 관리해야 합니다. 이게 도구 자체의 설정만큼이나 사용자의 역할이기도 합니다.
+
+## 9. 정리
+
+AI 코딩 도구가 하는 일은 세 가지입니다. 사용자의 요청을 LLM에게 전달한다. LLM의 응답을 사용자에게 보여준다. LLM이 도구 사용을 요청하면 실행하고 결과를 LLM에게 돌려준다.
+
+결국 AI로 코딩을 한다는 건 단순히 똑똑한 모델 하나를 쓰는 게 아닙니다. LLM 모델의 훈련, 도구 사용 프로토콜, 컨텍스트 관리, 프롬프트 설계, 실행 환경 제어 — 다양한 분야의 기술들이 함께 맞물려 돌아가고 있습니다. 이 복잡한 단계들을 어떻게 엮고 조율하느냐, 즉 오케스트레이션이 코딩 도구의 핵심 역량이고, 각 분야의 기술들이 동시에 발전하고 있기 때문에 이 영역은 지금도 빠르게 바뀌고 있습니다.
+
+이걸 알고 쓰면 어떤 도구를 선택하고 어떻게 설정해야 하는지가 좀 더 명확해질 거라고 생각합니다.`,
+        contentEn: `These days I use Claude Code as my primary development tool. Claude offers various features including the recently buzzworthy "skills."
+
+These coding tools let you choose which LLM model to use. I previously developed an AI coding tool called Careti, based on the open-source Cline. One question I often got was: "Why not just ask ChatGPT directly?" So I decided to write up how coding tools — AI agents — actually work.
+
+## 1. A Common Misconception
+
+"Claude Code reads and modifies my code."
+
+In reality, LLMs (AI models like Claude, GPT) can only receive text and return text. They cannot read files or run terminals. All they do is have conversations.
+
+Coding tools (Claude Code, Cursor, Cline, etc.) and AI agents like OpenClaw are middleware software that sits between the LLM and the user. File reading, code editing, terminal execution — all the real work is done by this middleware.
+
+Think of it this way: the LLM is the brain, and the coding tool is the hands and eyes.
+
+## 2. What Actually Happens
+
+The internal structure is surprisingly simple.
+
+Step 1: User enters a request.
+Step 2: The coding tool forwards the request to the LLM.
+Step 3: The LLM responds in one of two ways:
+\\- Text response → shown to the user
+\\- "I want to use a tool" → the coding tool executes it and returns the result to the LLM
+Step 4: Repeat from step 3.
+
+That's it. Whether it's Cline, Claude Code, Cursor, or OpenClaw, this loop is the essence.
+
+## 3. The Concept of "Tools"
+
+Since LLMs can only handle text, the coding tool tells the LLM: "You can use these tools." For example: Read (read files), Edit (modify files), Bash (run terminal commands).
+
+When the LLM responds "I want to read src/app.ts using the Read tool," the coding tool actually reads the file and returns its contents to the LLM. The LLM didn't read the file — it just outputted text saying it wanted to.
+
+## 4. Not All LLMs Can Use Tools
+
+Tool Use (Function Calling) isn't something every LLM can do. The model must be specifically trained to output tool requests in a defined format.
+
+Major models supporting tool use include Claude (Anthropic), GPT-4o (OpenAI), and Gemini (Google). In the open-source space, some models like Llama, Qwen, and Mistral support it.
+
+So AI performance isn't just about "how well it converses." How accurately it selects and calls tools, and how well it makes decisions based on tool results, are equally important metrics.
+
+## 5. Why It Seems Frustratingly Slow
+
+Sometimes you ask one question and wait forever. That's because far more messages are being exchanged between the LLM and the coding tool than you can see.
+
+When you say "fix this bug," the coding tool sends system prompts, project settings, memory, and tool definitions alongside your request. The LLM asks to read files, the tool reads them and returns results, and this round-trip repeats multiple times — all invisible to you. And every round-trip costs tokens.
+
+So one measure of a coding tool's quality is how well it reduces this cost — not sending unnecessary info, lazy-loading tool definitions, summarizing old conversations.
+
+## 6. The Various Features of Coding Tools
+
+Coding tools layer many features on top of this basic loop. They all boil down to two things:
+
+First, prompt manipulation — how and when to compose the text sent to the LLM. Project config files, memory, skills, hooks — all variations of "what text to inject into the LLM's input."
+
+Second, execution control — asking users for confirmation before dangerous operations, running risky tasks in isolated environments.
+
+## 7. Why Do Different Tools Give Different Results with the Same LLM?
+
+Claude Code, Cursor, Cline, and OpenClaw can all use the same Claude API. Yet results differ. Because LLM output varies based on input (prompt). Each tool has different system prompts, different tool descriptions, and different strategies for what information to include or exclude.
+
+## 8. Context Engineering
+
+The core concept threading through all of this: context engineering — designing what goes into the LLM's prompt, what gets excluded, and when.
+
+The biggest issues arise when a new session starts. LLMs don't remember previous conversations, so a new session starts with empty context. That's why features like "compact" exist to summarize and carry over previous conversations, and why project config files and memory re-inject key information every session.
+
+To run a project well, you need to continuously manage the coding tool's context. This is as much the user's responsibility as the tool's configuration.
+
+## 9. Summary
+
+AI coding tools do three things: forward user requests to the LLM, show LLM responses to the user, and execute tool calls then return results to the LLM.
+
+Coding with AI isn't about using one smart model. LLM training, tool-use protocols, context management, prompt design, execution environment control — diverse technologies work together. How you orchestrate these complex stages is the coding tool's core competency, and since each field is advancing simultaneously, this space is evolving rapidly.
+
+Understanding this will help you make clearer choices about which tools to use and how to configure them.`,
+        category: 'ai',
+        tags: ['바이브코딩', 'LLM', 'AI에이전트', 'Claude', 'Cursor', 'Cline', 'OpenClaw', '컨텍스트엔지니어링'],
+        thumbnail: '/desk/20260305-바이브-코딩-그-안에서-실제로-무슨-일이-벌어지는가/thumbnail.webp',
+        images: [],
+    },
+    {
         slug: '20260304-naia-os-어릴-적-꿈꿨던-AI를-만들기-위해',
         date: '2026-03-04',
         titleKo: 'Naia OS: 어릴 적 꿈꿨던 AI를 만들기 위해 OS를 AI코딩으로 시작했습니다',
