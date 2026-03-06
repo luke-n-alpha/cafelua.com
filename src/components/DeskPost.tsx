@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Eye } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -517,6 +517,7 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
 
     const [popularPosts, setPopularPosts] = useState<DeskPostCard[]>([]);
     const [popularLoading, setPopularLoading] = useState(true);
+    const [viewCount, setViewCount] = useState(0);
 
     useEffect(() => {
         const excludeSlugs = new Set([post.slug]);
@@ -544,6 +545,13 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
             });
     }, [post.slug, prevPost, nextPost, fallbackPosts]);
 
+    useEffect(() => {
+        fetch('/api/views')
+            .then((res) => res.ok ? res.json() : null)
+            .then((data) => { if (data?.views?.[post.slug]) setViewCount(data.views[post.slug]); })
+            .catch(() => {});
+    }, [post.slug]);
+
     const handleBack = () => {
         const query = searchParams.toString();
         router.push(`/${i18n.language}/desk${query ? `?${query}` : ''}`);
@@ -559,6 +567,9 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
                     <h1 className="desk-post-title">{title}</h1>
                     <div className="desk-post-meta">
                         <span className="desk-post-date">{post.date}</span>
+                        {viewCount > 0 && (
+                            <span className="desk-post-views"><Eye size={14} /> {viewCount.toLocaleString()}</span>
+                        )}
                         {post.externalUrl && (
                             <a
                                 href={post.externalUrl}

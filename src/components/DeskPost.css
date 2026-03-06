@@ -61,6 +61,14 @@
     color: rgba(245, 242, 235, 0.45);
 }
 
+.desk-post-views {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.75rem;
+    color: rgba(245, 242, 235, 0.4);
+}
+
 .desk-post-external {
     display: inline-flex;
     align-items: center;

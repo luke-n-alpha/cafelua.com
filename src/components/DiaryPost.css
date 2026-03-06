@@ -49,9 +49,23 @@
     line-height: 1.4;
 }
 
+.diary-post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
 .diary-post-date {
     font-size: 0.75rem;
     color: rgba(245, 242, 235, 0.45);
+}
+
+.diary-post-views {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.75rem;
+    color: rgba(245, 242, 235, 0.4);
 }
 
 .diary-post-content {

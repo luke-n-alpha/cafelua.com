@@ -3,6 +3,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
+import { Eye } from 'lucide-react';
 import UnderConstruction from './UnderConstruction';
 import {
     SPACE_IMAGES,
@@ -35,6 +36,14 @@ const GalleryPage: React.FC = () => {
     const [spaceSubcat, setSpaceSubcat] = useState(initialSub);
     const [carouselIndex, setCarouselIndex] = useState(0);
     const [lightboxImage, setLightboxImage] = useState<GalleryImage | null>(null);
+    const [viewCounts, setViewCounts] = useState<Record<string, number>>({});
+
+    useEffect(() => {
+        fetch('/api/views')
+            .then((res) => res.ok ? res.json() : null)
+            .then((data) => { if (data?.views) setViewCounts(data.views); })
+            .catch(() => {});
+    }, []);
 
     // URL 업데이트 헬퍼 (히스토리 교체, 새로고침 없음)
     const updateUrl = useCallback((params: Record<string, string | null>) => {
@@ -240,7 +249,12 @@ const GalleryPage: React.FC = () => {
                                         <div className="diary-card-title">
                                             {isKo ? entry.titleKo : entry.titleEn}
                                         </div>
-                                        <div className="diary-card-date">{entry.date}</div>
+                                        <div className="diary-card-meta">
+                                            <span className="diary-card-date">{entry.date}</span>
+                                            {(viewCounts[entry.slug] ?? 0) > 0 && (
+                                                <span className="diary-card-views"><Eye size={12} /> {viewCounts[entry.slug].toLocaleString()}</span>
+                                            )}
+                                        </div>
                                     </div>
                                 </a>
                             ))}

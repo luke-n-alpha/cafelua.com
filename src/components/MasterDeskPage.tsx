@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
+import { Eye } from 'lucide-react';
 import UnderConstruction from './UnderConstruction';
 import { DESK_POSTS, DESK_CATEGORIES, getTagEn, type DeskCategory } from '@/data/desk/deskData';
 import './MasterDeskPage.css';
@@ -41,7 +42,15 @@ const MasterDeskPage: React.FC = () => {
     const [visibleCount, setVisibleCount] = useState(initialVisibleCount);
     const [isCategoryCollapsed, setIsCategoryCollapsed] = useState(false);
     const [isTagCollapsed, setIsTagCollapsed] = useState(false);
+    const [viewCounts, setViewCounts] = useState<Record<string, number>>({});
     const scrollRestoreTriedRef = useRef(false);
+
+    useEffect(() => {
+        fetch('/api/views')
+            .then((res) => res.ok ? res.json() : null)
+            .then((data) => { if (data?.views) setViewCounts(data.views); })
+            .catch(() => {});
+    }, []);
 
     useEffect(() => {
         const key = 'cafelua_desk_intro_seen';
@@ -302,6 +311,9 @@ const MasterDeskPage: React.FC = () => {
                                         </div>
                                         <div className="desk-card-meta">
                                             <span className="desk-card-date">{post.date}</span>
+                                            {(viewCounts[post.slug] ?? 0) > 0 && (
+                                                <span className="desk-card-views"><Eye size={12} /> {viewCounts[post.slug].toLocaleString()}</span>
+                                            )}
                                             <span className="desk-card-badge">{categoryBadge(post.category)}</span>
                                         </div>
                                     </div>

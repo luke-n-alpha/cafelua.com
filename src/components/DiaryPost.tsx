@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
+import { Eye } from 'lucide-react';
 import type { DiaryEntry } from '@/data/gallery/diaryData';
 import Comments from './Comments';
 import './DiaryPost.css';
@@ -18,9 +19,17 @@ const DiaryPost: React.FC<Props> = ({ entry }) => {
     const isKo = i18n.language === 'ko';
 
     const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+    const [viewCount, setViewCount] = useState(0);
     const lightboxRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const len = entry.images.length;
+
+    useEffect(() => {
+        fetch('/api/views')
+            .then((res) => res.ok ? res.json() : null)
+            .then((data) => { if (data?.views?.[entry.slug]) setViewCount(data.views[entry.slug]); })
+            .catch(() => {});
+    }, [entry.slug]);
 
     const title = isKo ? entry.titleKo : entry.titleEn;
     const content = isKo ? entry.contentKo : entry.contentEn;
@@ -87,7 +96,12 @@ const DiaryPost: React.FC<Props> = ({ entry }) => {
             <div className="diary-panel">
                 <div className="diary-post-header">
                     <h1 className="diary-post-title">{title}</h1>
-                    <div className="diary-post-date">{entry.date}</div>
+                    <div className="diary-post-meta">
+                        <span className="diary-post-date">{entry.date}</span>
+                        {viewCount > 0 && (
+                            <span className="diary-post-views"><Eye size={14} /> {viewCount.toLocaleString()}</span>
+                        )}
+                    </div>
                 </div>
 
                 <div ref={contentRef} className="diary-post-content">

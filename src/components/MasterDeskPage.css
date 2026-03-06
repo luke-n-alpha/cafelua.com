@@ -251,6 +251,14 @@
     color: rgba(245, 242, 235, 0.45);
 }
 
+.desk-card-views {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.68rem;
+    color: rgba(245, 242, 235, 0.4);
+}
+
 .desk-card-badge {
     font-size: 0.65rem;
     padding: 0.15rem 0.45rem;

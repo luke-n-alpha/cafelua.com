@@ -144,9 +144,23 @@
     -webkit-box-orient: vertical;
 }
 
+.diary-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .diary-card-date {
     font-size: 0.72rem;
     color: rgba(245, 242, 235, 0.45);
+}
+
+.diary-card-views {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.68rem;
+    color: rgba(245, 242, 235, 0.4);
 }
 
 /* Subcategory chips */
