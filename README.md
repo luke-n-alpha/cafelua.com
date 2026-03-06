@@ -113,6 +113,19 @@ public/
 
 ## 📝 Changelog
 
+### v0.1.8 (2026-03-06)
+- **Desk Post Navigation & Popular Posts**:
+    - Added prev/next post navigation at the bottom of each desk post.
+    - Added GA4-powered popular posts section (top posts by views, last 30 days, 5-min cache).
+- **Cross-posting from naia.nextain.io**:
+    - Naia blog articles now cross-posted to Master's Desk with full content.
+- **Mobile & UI Fixes**:
+    - Fixed post images overflowing on mobile screens.
+    - Fixed DeskPost heading font styling.
+- **i18n & SEO**:
+    - Locale-aware metadata for all `[locale]` pages.
+    - Restored GA4 gtag.js tracking.
+
 ### v0.1.7 (2026-02-20)
 - **Full English Translation**:
     - All 2,311+ Naver blog posts translated to English via Gemini 2.5 Flash.

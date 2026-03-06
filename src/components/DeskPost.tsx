@@ -143,10 +143,12 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
     const content = isKo ? post.contentKo : post.contentEn;
     const hasImageMarker = /\{\{IMG:\d+\}\}/.test(content);
     const featureImage = post.thumbnail || post.images?.[0] || '';
+    const contentHasImage = /!\[.*?\]\(.*?\)/.test(content) || /\{\{IMG:\d+\}\}/.test(content);
     const shouldRenderFeatureImage =
         !!featureImage &&
         featureImage !== DEFAULT_DESK_THUMBNAIL &&
-        featureImage !== MISSING_IMAGE_FALLBACK;
+        featureImage !== MISSING_IMAGE_FALLBACK &&
+        !contentHasImage;
 
     const normalizeMediaSrc = (raw?: string) => {
         if (!raw) return '';
@@ -652,11 +654,12 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
                                         const safeSrc = typeof src === 'string' ? src : '';
                                         if (!safeSrc) return null;
                                         const idx = findImageIndex(safeSrc);
+                                        const isContentImage = idx >= 0 || /^\/(?:desk|diary)\//.test(safeSrc);
                                         return (
                                             <img
                                                 src={safeSrc}
                                                 alt={alt || ''}
-                                                className={idx >= 0 ? 'desk-post-img' : 'desk-post-inline-img'}
+                                                className={isContentImage ? 'desk-post-img' : 'desk-post-inline-img'}
                                                 onClick={() => idx >= 0 && setLightboxIdx(idx)}
                                                 onError={handleImageError}
                                                 {...props}

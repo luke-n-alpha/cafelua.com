@@ -408,6 +408,214 @@ function normalizeDeskMedia(post: DeskPost): DeskPost {
 /* ─── Build the final posts array ─── */
 const manualPosts: DeskPost[] = [
     {
+        slug: '20260306-카페루아-인프라-거의-공짜로-굴리는-법',
+        date: '2026-03-06',
+        titleKo: '카페루아 인프라 — 개인 웹사이트를 (거의) 공짜로 굴리는 법',
+        titleEn: 'Cafelua Infrastructure — Running a Personal Website for (Almost) Free',
+        contentKo: `![카페루아 인프라](/desk/20260306-카페루아-인프라-거의-공짜로-굴리는-법/hero.ko.png)
+
+지난번 [네이버 블로그 마이그레이션](/ko/desk/20260218-naver-blog-migration/) 글에서 카페루아로 2,393개 글을 이관한 이야기를 했습니다.
+이번에는 인프라 이야기를 드릴까 합니다. 이러한 사이트를 굴리는데 얼마만큼의 돈이 드는지요.
+도메인 비용과 AI API 소량 과금을 제외하면 현재 월 운영비는 거의 0원입니다.
+
+---
+
+## 카페루아의 기술 스택
+
+카페루아는 Next.js 16 (App Router) + React 19 기반의 SSR 웹사이트입니다. 단순한 정적 블로그가 아니라 AI 채팅, 타로 리딩, 실시간 날씨 연동, 방명록까지 갖춘 풀스택 웹앱인데, 이 모든 게 무료 티어 조합으로 돌리고 있습니다.
+
+---
+
+## 1. 호스팅: Vercel (무료)
+
+Vercel은 Next.js를 만든 회사의 호스팅 플랫폼으로 GitHub에 push하면 자동으로 빌드·배포되고 별도의 서버 관리가 필요 없습니다. 도메인 관리도 Vercel에서 하고 있어서 편합니다.
+
+무료 티어 기능:
+- SSR(서버 사이드 렌더링) 지원
+- 자동 HTTPS/SSL
+- 글로벌 CDN
+- 매월 100GB 대역폭
+
+---
+
+## 2. AI 채팅 & 타로: Gemini API (거의 무료)
+
+카페루아 1층 라운지에서 알파와 대화하거나, 카운터에서 타로를 볼 때 Gemini 2.5 Flash 모델을 사용합니다.
+
+솔직히 말하면 이건 완전히 무료는 아닙니다. Google AI Studio에서 API 키를 발급받으면 분당 15회 무료 호출이 가능하고, 그 이상은 토큰당 과금으로 개인 사이트 수준의 사용량이면 월 몇천 원 이내입니다. 사실상 커피 한 잔 값도 안 됩니다.
+
+---
+
+## 3. 방명록: Firebase (무료)
+
+방명록은 Firebase의 Firestore 데이터베이스를 사용합니다. 읽기는 클라이언트 SDK로, 쓰기는 서버 사이드 Admin SDK로 처리해서 보안을 유지합니다.
+
+Firebase 무료 티어:
+- 일 50,000회 읽기
+- 일 20,000회 쓰기
+- 1GB 저장소
+
+방명록 수준의 트래픽이면 이 한도의 1%도 쓰기 어렵습니다.
+
+---
+
+## 4. 방문자 카운터 & 인기 포스팅: GA4 Data API (무료)
+
+인트로 페이지의 레트로 방문자 카운터와 마스터의 데스크 인기 포스팅 목록은 Google Analytics 4의 Data API로 구현했습니다. GA4 자체가 무료이고, Data API도 무료입니다.
+
+방문자 카운터는 60초 캐싱, 인기 포스팅은 5분 캐싱을 걸어서 API 호출을 최소화합니다.
+
+---
+
+## 5. 날씨 연동: OpenWeatherMap (무료)
+
+카페루아 인트로 페이지는 접속자의 실제 날씨에 따라 배경이 바뀝니다. 맑은 날, 비 오는 날, 눈 오는 날 각각 다른 분위기를 연출합니다. OpenWeatherMap 무료 티어로 분당 60회 호출이 가능한데, 방문자당 1회만 호출하므로 충분합니다.
+
+---
+
+## 6. 도메인: cafelua.com (유일한 고정 비용)
+
+도메인 등록비는 연간 약 만 원 내외입니다. 이것이 카페루아의 사실상 유일한 고정 비용입니다.
+
+---
+
+## 7. 소스 코드 저장소: GitHub (무료)
+
+Private 레포(원본 데이터 + AI 컨텍스트)와 Public 레포(배포용 앱)로 이중 구조를 운영하고 있습니다. GitHub는 Private 레포도 무료로 제공합니다.
+
+---
+
+## 정리: 월 운영비
+
+| 항목 | 서비스 | 월 비용 |
+|------|--------|---------|
+| 호스팅 (SSR + CDN) | Vercel | 0원 |
+| AI 채팅/타로 | Gemini API | 0~수천원 |
+| 방명록 DB | Firebase | 0원 |
+| 방문자 분석 | GA4 | 0원 |
+| 날씨 API | OpenWeatherMap | 0원 |
+| 도메인 | cafelua.com | ~월 1,000원 |
+| 소스 관리 | GitHub | 0원 |
+| **합계** | | **~월 1,000~수천원** |
+
+풀스택 웹앱을 커피 한 잔 값으로 운영할 수 있는 시대입니다.
+
+---
+
+## 같은 구조로 시작하고 싶다면
+
+카페루아는 오픈소스입니다. GitHub에서 소스 코드를 확인할 수 있고, 같은 구조로 자신만의 공간을 만들 수 있습니다.
+
+GitHub: https://github.com/luke-n-alpha/cafelua.com
+
+필요한 건 Vercel 계정, Firebase 프로젝트, Google AI Studio API 키, 그리고 도메인 하나입니다. 모두 가입하는 데 30분이면 충분합니다.
+
+git clone 받으셔서 claude code에게 이 프로젝트 아키텍쳐 참고해서 자신만의 홈페이지를 만들어 달라하면 잘 만들어 주고, 환경 셋팅도 AI의 안내대로 따라하시다 보면 어렵지 않게 끝낼 수 있습니다.`,
+        contentEn: `![Cafelua Infrastructure](/desk/20260306-카페루아-인프라-거의-공짜로-굴리는-법/hero.en.png)
+
+In my previous post about [Naver Blog Migration](/en/desk/20260218-naver-blog-migration/), I talked about migrating 2,393 posts to Cafe Lua.
+This time, I'd like to talk about infrastructure. How much does it actually cost to run a site like this?
+Excluding domain costs and minor AI API charges, the monthly operating cost is practically zero.
+
+---
+
+## Cafe Lua's Tech Stack
+
+Cafe Lua is an SSR website built on Next.js 16 (App Router) + React 19. It's not just a static blog — it's a full-stack web app with AI chat, tarot readings, real-time weather integration, and a guestbook, all running on a combination of free tiers.
+
+---
+
+## 1. Hosting: Vercel (Free)
+
+Vercel is the hosting platform from the company that created Next.js. Push to GitHub and it automatically builds and deploys — no server management needed. I also manage the domain through Vercel, which keeps things simple.
+
+Free tier features:
+- SSR (Server-Side Rendering) support
+- Automatic HTTPS/SSL
+- Global CDN
+- 100GB bandwidth per month
+
+---
+
+## 2. AI Chat & Tarot: Gemini API (Almost Free)
+
+When you chat with Alpha in the 1F Lounge or get a tarot reading at the Counter, Cafe Lua uses the Gemini 2.5 Flash model.
+
+Honestly, this isn't completely free. Getting an API key from Google AI Studio gives you 15 free calls per minute, and beyond that it's charged per token. But for a personal site's usage, it's well under a few dollars a month — less than a cup of coffee.
+
+---
+
+## 3. Guestbook: Firebase (Free)
+
+The guestbook uses Firebase's Firestore database. Reads go through the client SDK, writes through the server-side Admin SDK to maintain security.
+
+Firebase free tier:
+- 50,000 reads/day
+- 20,000 writes/day
+- 1GB storage
+
+For guestbook-level traffic, you'd struggle to use even 1% of these limits.
+
+---
+
+## 4. Visitor Counter & Popular Posts: GA4 Data API (Free)
+
+The retro visitor counter on the intro page and the popular posts list on Master's Desk are powered by Google Analytics 4's Data API. GA4 itself is free, and so is the Data API.
+
+The visitor counter uses 60-second caching, and popular posts use 5-minute caching to minimize API calls.
+
+---
+
+## 5. Weather Integration: OpenWeatherMap (Free)
+
+Cafe Lua's intro page changes its background based on the visitor's actual weather — sunny, rainy, snowy days each get a different atmosphere. OpenWeatherMap's free tier allows 60 calls per minute, and since we only call once per visitor session, it's more than enough.
+
+---
+
+## 6. Domain: cafelua.com (The Only Fixed Cost)
+
+Domain registration costs roughly $8–10 per year. This is effectively Cafe Lua's only fixed cost.
+
+---
+
+## 7. Source Code Repository: GitHub (Free)
+
+I run a dual-repo structure with a Private repo (source data + AI context) and a Public repo (deployable app). GitHub provides Private repos for free.
+
+---
+
+## Summary: Monthly Operating Cost
+
+| Item | Service | Monthly Cost |
+|------|---------|-------------|
+| Hosting (SSR + CDN) | Vercel | $0 |
+| AI Chat/Tarot | Gemini API | $0–few |
+| Guestbook DB | Firebase | $0 |
+| Visitor Analytics | GA4 | $0 |
+| Weather API | OpenWeatherMap | $0 |
+| Domain | cafelua.com | ~$1 |
+| Source Management | GitHub | $0 |
+| **Total** | | **~$1–few/month** |
+
+We live in an era where you can run a full-stack web app for the price of a cup of coffee.
+
+---
+
+## Want to Start with the Same Setup?
+
+Cafe Lua is open source. You can check the source code on GitHub and build your own space with the same architecture.
+
+GitHub: https://github.com/luke-n-alpha/cafelua.com
+
+All you need is a Vercel account, a Firebase project, a Google AI Studio API key, and a domain. Signing up for everything takes about 30 minutes.
+
+Just git clone it, ask Claude Code to reference this project's architecture and build your own homepage, and follow the AI's guidance for environment setup — it's easier than you'd think.`,
+        category: 'it',
+        tags: ['인프라', 'Vercel', 'Firebase', 'Gemini', '무료티어', '오픈소스', '카페루아'],
+        thumbnail: '/desk/20260306-카페루아-인프라-거의-공짜로-굴리는-법/hero.ko.png',
+        images: [],
+    },
+    {
         slug: '20260305-바이브-코딩-그-안에서-실제로-무슨-일이-벌어지는가',
         date: '2026-03-05',
         titleKo: '바이브 코딩, 그 안에서 실제로 무슨 일이 벌어지는가',
