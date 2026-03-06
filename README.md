@@ -52,6 +52,8 @@ Copy `.env.example` to `.env` and configure:
 | `FIREBASE_PRIVATE_KEY` | Yes* | Firebase Admin SDK private key |
 | `GA4_PROPERTY_ID` | No | GA4 Property ID for visitor counter on intro page |
 | `DESK_PREBUILD_COUNT` | No | Number of latest desk posts to pre-render at build time (default: `50`). Keeps build fast with ISR for the rest. |
+| `RESEND_API_KEY` | No | Resend API key for email reply notifications (comments/guestbook) |
+| `COMMENT_NOTIFY_FROM` | No | Sender address for reply notification emails |
 
 *Required for Guestbook and AI chat features
 
@@ -78,7 +80,7 @@ src/
 │   │   │   └── about/[tab]/     # About page (tabs)
 │   │   ├── atelier/             # 2F Atelier (Old PC, menu)
 │   │   └── library/             # Redirect → atelier
-│   └── api/                     # API routes (chat, tarot, guestbook, etc.)
+│   └── api/                     # API routes (chat, tarot, comments, guestbook, etc.)
 ├── components/                  # React components
 ├── data/
 │   └── desk/
@@ -112,6 +114,21 @@ public/
 | Sitemap URLs | 4,324 |
 
 ## 📝 Changelog
+
+### v0.1.9 (2026-03-06)
+- **Post Comments System**:
+    - Added comment system for Desk and Diary posts (Firebase Admin SDK).
+    - 1-level nested replies (reply to comment, no reply-to-reply).
+    - Email reply notifications via Resend API.
+- **Guestbook Replies & Notifications**:
+    - Added reply support to guestbook entries (1-level nested).
+    - Email notification when someone replies to your guestbook entry.
+- **Management Tool** (separate repo):
+    - Local admin tool [cafelua.com-manager](https://github.com/luke-n-alpha/cafelua.com-manager) (localhost:3100).
+    - Markdown post editor with split-pane preview, ko/en locale support.
+    - Comment and guestbook moderation (list, delete).
+    - Image upload and Git-based deployment.
+    - Legacy post browsing via content-index.json.
 
 ### v0.1.8 (2026-03-06)
 - **Desk Post Navigation & Popular Posts**:
@@ -239,6 +256,12 @@ public/
     - Implemented the intro page (automatic background image change by time of day).
     - Basic implementation of the lounge page.
     - Set up basic routing.
+
+## Management Tool
+
+A separate local management tool is available:
+
+- **[cafelua.com-manager](https://github.com/luke-n-alpha/cafelua.com-manager)** — Markdown editor, comment/guestbook management, Git deploy (localhost:3100)
 
 ## 🤝 Contributing
 

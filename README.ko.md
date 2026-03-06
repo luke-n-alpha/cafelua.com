@@ -52,6 +52,8 @@
 | `FIREBASE_PRIVATE_KEY` | Yes* | Firebase Admin SDK 비공개 키 |
 | `GA4_PROPERTY_ID` | No | 인트로 페이지 방문자 카운터용 GA4 속성 ID |
 | `DESK_PREBUILD_COUNT` | No | 빌드 시 사전 렌더링할 최신 데스크 포스트 수 (기본값: `50`). 나머지는 ISR로 온디맨드 생성. |
+| `RESEND_API_KEY` | No | 답글 이메일 알림용 Resend API 키 (댓글/방명록) |
+| `COMMENT_NOTIFY_FROM` | No | 답글 알림 발신자 이메일 주소 |
 
 *방명록 및 AI 채팅 기능 사용 시 필수
 
@@ -78,7 +80,7 @@ src/
 │   │   │   └── about/[tab]/     # 소개 페이지 (탭)
 │   │   ├── atelier/             # 2층 아틀리에 (낡은 PC, 메뉴)
 │   │   └── library/             # atelier로 리다이렉트
-│   └── api/                     # API 라우트 (채팅, 타로, 방명록 등)
+│   └── api/                     # API 라우트 (채팅, 타로, 댓글, 방명록 등)
 ├── components/                  # React 컴포넌트
 ├── data/
 │   └── desk/
@@ -112,6 +114,21 @@ public/
 | 사이트맵 URL | 4,324 |
 
 ## 📝 업데이트 내역 (Changelog)
+
+### v0.1.9 (2026-03-06)
+- **포스트 댓글 시스템**:
+    - Desk/Diary 포스트에 댓글 기능 추가 (Firebase Admin SDK).
+    - 대댓글 1단계 지원 (댓글에 답글, 답글에 답글은 불가).
+    - Resend API를 통한 답글 이메일 알림.
+- **방명록 답글 & 알림**:
+    - 방명록 글에 답글 기능 추가 (1단계).
+    - 방명록 답글 시 이메일 알림 발송.
+- **관리 도구** (별도 레포):
+    - 로컬 관리 도구 [cafelua.com-manager](https://github.com/luke-n-alpha/cafelua.com-manager) (localhost:3100).
+    - Markdown 포스트 에디터 (분할 미리보기, ko/en 다국어 지원).
+    - 댓글/방명록 관리 (목록 조회, 삭제).
+    - 이미지 업로드 및 Git 기반 배포.
+    - Legacy 포스트 조회 (content-index.json).
 
 ### v0.1.8 (2026-03-06)
 - **데스크 포스트 네비게이션 & 인기 포스팅**:
@@ -239,6 +256,12 @@ public/
     - 인트로 페이지 구현 (시간대별 배경 이미지 자동 전환).
     - 라운지 페이지 기초 구현.
     - 기본 라우팅 설정.
+
+## 관리 도구
+
+별도 레포의 로컬 관리 도구를 사용합니다:
+
+- **[cafelua.com-manager](https://github.com/luke-n-alpha/cafelua.com-manager)** — Markdown 에디터, 댓글/방명록 관리, Git 배포 (localhost:3100)
 
 ## 🤝 기여하기 (Contributing)
 

@@ -53,6 +53,7 @@ src/
 │   └── api/
 │       ├── chat/                    # Alpha chat (Gemini)
 │       ├── desk/popular/            # GA4 popular posts
+│       ├── comments/                 # Post comments (Firebase Admin)
 │       ├── guestbook/               # Firebase guestbook
 │       ├── link-preview/            # OG metadata fetch
 │       ├── tarot/                   # Tarot cards/interpret
@@ -65,6 +66,7 @@ src/
 ├── services/                        # Business logic
 │   ├── GeminiChatService.ts         # Gemini AI chat
 │   ├── ChatMemoryService.ts         # Chat memory
+│   ├── CommentService.ts            # Post comments API client
 │   ├── GuestbookService.ts          # Firebase guestbook
 │   ├── WeatherService.ts            # OpenWeather API
 │   ├── ContentLoader.ts             # Content loading
@@ -107,9 +109,14 @@ src/
 - `GalleryPage.tsx`, `DiaryPost.tsx`
 
 ### Guestbook (`/guestbook`)
-Firebase 기반 방명록.
+Firebase 기반 방명록. 대댓글(1단계), 이메일 답글 알림(Resend API).
 - `GuestbookPage.tsx`, `GuestbookService.ts`
 - API: `/api/guestbook/*`
+
+### Comments
+Desk/Diary 포스트 댓글 시스템. 대댓글(1단계), 이메일 답글 알림.
+- `Comments.tsx`, `CommentService.ts`
+- API: `/api/comments`
 
 ### About (`/about`)
 사이트맵, Alpha 프로필, Luke 프로필 탭.
@@ -144,7 +151,14 @@ FIREBASE_CLIENT_EMAIL / PRIVATE_KEY   # Firebase Admin
 ALPHA_SECRET_PHRASE                   # Master recognition
 ALPHA_FAMILY_MEMBERS                  # Family info (JSON)
 NEXT_PUBLIC_OPENWEATHER_API_KEY        # Weather API (optional)
+RESEND_API_KEY                        # Email notifications (Resend)
+COMMENT_NOTIFY_FROM                   # Reply notification sender (optional)
 ```
+
+## Management Tool
+
+별도 레포의 로컬 관리 도구:
+- **[cafelua.com-manager](https://github.com/luke-n-alpha/cafelua.com-manager)** — Markdown 에디터, 댓글/방명록 관리, Git 배포 (localhost:3100)
 
 ## Deployment
 
