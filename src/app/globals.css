@@ -55,3 +55,25 @@ main {
     padding: calc(var(--spacing-unit) * 3);
     box-shadow: var(--shadow-paper);
 }
+
+/* CC License badge */
+.cc-license {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 32px;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    font-size: 0.78rem;
+    color: #8b7355;
+}
+.cc-license img {
+    height: 20px;
+    opacity: 0.8;
+}
+.cc-license a {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
