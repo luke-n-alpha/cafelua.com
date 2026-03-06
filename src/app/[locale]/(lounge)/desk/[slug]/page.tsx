@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { DESK_POSTS, getDeskPostBySlug } from '@/data/desk/deskData';
+import { DESK_POSTS, getDeskPostBySlug, getAdjacentPosts, getFallbackPosts } from '@/data/desk/deskData';
 import DeskPost from '@/components/DeskPost';
 
 interface Props {
@@ -94,5 +94,14 @@ export default async function DeskPostPage({ params }: Props) {
     const decodedSlug = decodeURIComponent(slug);
     const post = getDeskPostBySlug(decodedSlug);
     if (!post) notFound();
-    return <DeskPost post={post} />;
+    const { prev, next } = getAdjacentPosts(decodedSlug);
+    const fallbackPosts = getFallbackPosts(decodedSlug, 4);
+    return (
+        <DeskPost
+            post={post}
+            prevPost={prev}
+            nextPost={next}
+            fallbackPosts={fallbackPosts}
+        />
+    );
 }

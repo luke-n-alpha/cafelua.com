@@ -1240,3 +1240,52 @@ const TAG_EN_MAP: Record<string, string> = {
 export function getTagEn(tag: string): string {
     return TAG_EN_MAP[tag] || tag;
 }
+
+/* ─── Post card (lightweight projection for navigation) ─── */
+
+export interface DeskPostCard {
+    slug: string;
+    titleKo: string;
+    titleEn: string;
+    date: string;
+    thumbnail?: string;
+    category: string;
+}
+
+export function toPostCard(post: DeskPost): DeskPostCard {
+    return {
+        slug: post.slug,
+        titleKo: post.titleKo,
+        titleEn: post.titleEn,
+        date: post.date,
+        thumbnail: post.thumbnail || post.images?.[0],
+        category: post.category,
+    };
+}
+
+export function getAdjacentPosts(slug: string): { prev: DeskPostCard | null; next: DeskPostCard | null } {
+    const idx = DESK_POSTS.findIndex((p) => p.slug === slug);
+    if (idx < 0) return { prev: null, next: null };
+    // DESK_POSTS is sorted newest-first: index+1 = older (prev), index-1 = newer (next)
+    const prev = idx < DESK_POSTS.length - 1 ? toPostCard(DESK_POSTS[idx + 1]) : null;
+    const next = idx > 0 ? toPostCard(DESK_POSTS[idx - 1]) : null;
+    return { prev, next };
+}
+
+export function getFallbackPosts(slug: string, count: number): DeskPostCard[] {
+    const current = DESK_POSTS.find((p) => p.slug === slug);
+    if (!current) return [];
+    const sameCat = DESK_POSTS.filter((p) => p.slug !== slug && p.category === current.category);
+    const tagSet = new Set((current.tags || []).map((t) => t.toLowerCase()));
+    const scored = sameCat.map((p) => {
+        const overlap = (p.tags || []).filter((t) => tagSet.has(t.toLowerCase())).length;
+        return { post: p, overlap };
+    });
+    scored.sort((a, b) => b.overlap - a.overlap);
+    return scored.slice(0, count).map((s) => toPostCard(s.post));
+}
+
+export function getPostsBySlugs(slugs: string[]): DeskPostCard[] {
+    const set = new Set(slugs);
+    return DESK_POSTS.filter((p) => set.has(p.slug)).map(toPostCard);
+}

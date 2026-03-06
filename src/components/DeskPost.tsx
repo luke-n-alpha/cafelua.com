@@ -7,11 +7,15 @@ import { ExternalLink } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
-import type { DeskPost as DeskPostType } from '@/data/desk/deskData';
+import type { DeskPost as DeskPostType, DeskPostCard } from '@/data/desk/deskData';
+import { DESK_CATEGORIES } from '@/data/desk/deskData';
 import './DeskPost.css';
 
 interface Props {
     post: DeskPostType;
+    prevPost?: DeskPostCard | null;
+    nextPost?: DeskPostCard | null;
+    fallbackPosts?: DeskPostCard[];
 }
 
 interface LinkPreviewData {
@@ -84,7 +88,46 @@ const LinkPreviewCard: React.FC<{ href: string; fallbackText: string }> = ({ hre
     );
 };
 
-const DeskPost: React.FC<Props> = ({ post }) => {
+const DEFAULT_DESK_THUMBNAIL_NAV = '/master-desk-background-img/master-desk-background.png';
+
+const NavCard: React.FC<{
+    card: DeskPostCard;
+    label: string;
+    locale: string;
+    isKo: boolean;
+}> = ({ card, label, locale, isKo }) => {
+    const catLabel = DESK_CATEGORIES.find((c) => c.key === card.category);
+    return (
+        <a
+            href={`/${locale}/desk/${card.slug}`}
+            className="desk-nav-card"
+            aria-label={`${label}: ${isKo ? card.titleKo : card.titleEn}`}
+        >
+            <img
+                className="desk-nav-card-thumb"
+                src={card.thumbnail || DEFAULT_DESK_THUMBNAIL_NAV}
+                alt=""
+                loading="lazy"
+                onError={(e) => {
+                    const img = e.currentTarget;
+                    if (img.dataset.fallbackApplied === '1') return;
+                    img.dataset.fallbackApplied = '1';
+                    img.src = MISSING_IMAGE_FALLBACK;
+                }}
+            />
+            <div className="desk-nav-card-body">
+                <span className="desk-nav-card-label">{label}</span>
+                <span className="desk-nav-card-title">{isKo ? card.titleKo : card.titleEn}</span>
+                <span className="desk-nav-card-meta">
+                    <span>{card.date}</span>
+                    {catLabel && <span className="desk-nav-card-badge">{isKo ? catLabel.labelKo : catLabel.labelEn}</span>}
+                </span>
+            </div>
+        </a>
+    );
+};
+
+const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) => {
     const { i18n, t } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -469,10 +512,42 @@ const DeskPost: React.FC<Props> = ({ post }) => {
         return () => el.removeEventListener('wheel', onWheel);
     }, [lightboxIdx, goNext, goPrev]);
 
+    const [popularPosts, setPopularPosts] = useState<DeskPostCard[]>([]);
+    const [popularLoading, setPopularLoading] = useState(true);
+
+    useEffect(() => {
+        const excludeSlugs = new Set([post.slug]);
+        if (prevPost) excludeSlugs.add(prevPost.slug);
+        if (nextPost) excludeSlugs.add(nextPost.slug);
+
+        fetch('/api/desk/popular')
+            .then((res) => res.ok ? res.json() : null)
+            .then((data) => {
+                if (data?.popular?.length) {
+                    const filtered = (data.popular as DeskPostCard[])
+                        .filter((p) => !excludeSlugs.has(p.slug))
+                        .slice(0, 4);
+                    setPopularPosts(filtered);
+                } else if (fallbackPosts?.length) {
+                    setPopularPosts(fallbackPosts.filter((p) => !excludeSlugs.has(p.slug)).slice(0, 4));
+                }
+                setPopularLoading(false);
+            })
+            .catch(() => {
+                if (fallbackPosts?.length) {
+                    setPopularPosts(fallbackPosts.filter((p) => !excludeSlugs.has(p.slug)).slice(0, 4));
+                }
+                setPopularLoading(false);
+            });
+    }, [post.slug, prevPost, nextPost, fallbackPosts]);
+
     const handleBack = () => {
         const query = searchParams.toString();
         router.push(`/${i18n.language}/desk${query ? `?${query}` : ''}`);
     };
+
+    const hasPrevNext = prevPost || nextPost;
+    const hasPopular = popularPosts.length > 0;
 
     return (
         <div className="desk-post-container">
@@ -608,6 +683,51 @@ const DeskPost: React.FC<Props> = ({ post }) => {
                                     onError={handleImageError}
                                 />
                             ))}
+                        </div>
+                    )}
+                    {/* Post navigation section */}
+                    {(hasPrevNext || hasPopular || popularLoading) && (
+                        <div className="desk-post-nav">
+                            {hasPrevNext && (
+                                <>
+                                    <h3 className="desk-post-nav-heading">
+                                        {isKo ? '더 둘러보기' : 'Read More'}
+                                    </h3>
+                                    <div className="desk-post-nav-adjacent">
+                                        {prevPost ? (
+                                            <NavCard card={prevPost} label={isKo ? '← 이전' : '← Prev'} locale={i18n.language} isKo={isKo} />
+                                        ) : <div className="desk-nav-card-empty" />}
+                                        {nextPost ? (
+                                            <NavCard card={nextPost} label={isKo ? '다음 →' : 'Next →'} locale={i18n.language} isKo={isKo} />
+                                        ) : <div className="desk-nav-card-empty" />}
+                                    </div>
+                                </>
+                            )}
+
+                            {(hasPopular || popularLoading) && (
+                                <>
+                                    <h3 className="desk-post-nav-heading">
+                                        {isKo ? '인기 포스팅' : 'Popular Posts'}
+                                    </h3>
+                                    <div className="desk-post-nav-popular">
+                                        {popularLoading ? (
+                                            Array.from({ length: 3 }).map((_, i) => (
+                                                <div key={i} className="desk-nav-card desk-nav-card-skeleton">
+                                                    <div className="desk-nav-card-thumb desk-skeleton-shimmer" />
+                                                    <div className="desk-nav-card-body">
+                                                        <span className="desk-skeleton-line desk-skeleton-shimmer" />
+                                                        <span className="desk-skeleton-line short desk-skeleton-shimmer" />
+                                                    </div>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            popularPosts.map((p) => (
+                                                <NavCard key={p.slug} card={p} label="" locale={i18n.language} isKo={isKo} />
+                                            ))
+                                        )}
+                                    </div>
+                                </>
+                            )}
                         </div>
                     )}
                 </div>
