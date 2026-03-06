@@ -9,6 +9,7 @@ import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import type { DeskPost as DeskPostType, DeskPostCard } from '@/data/desk/deskData';
 import { DESK_CATEGORIES } from '@/data/desk/deskData';
+import Comments from './Comments';
 import './DeskPost.css';
 
 interface Props {
@@ -733,6 +734,8 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
                             )}
                         </div>
                     )}
+
+                    <Comments postSlug={post.slug} postType="desk" />
                 </div>
 
                 <button className="desk-post-back" onClick={handleBack}>

@@ -4,4 +4,6 @@ export interface GuestbookEntry {
     message: string;
     isSecret: boolean;
     createdAt: string | null;
+    parentId: string | null;
+    deleted: boolean;
 }

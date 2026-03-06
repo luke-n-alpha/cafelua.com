@@ -20,12 +20,14 @@ export async function addEntry(
     nickname: string,
     message: string,
     password: string,
-    isSecret: boolean = false
+    isSecret: boolean = false,
+    parentId?: string | null,
+    email?: string,
 ): Promise<{ id: string }> {
     const res = await fetch('/api/guestbook/entries', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nickname, message, password, isSecret }),
+        body: JSON.stringify({ nickname, message, password, isSecret, parentId: parentId || null, email: email || undefined }),
     });
     if (!res.ok) {
         if (res.status === 429) throw new Error('rate_limited');
@@ -34,26 +36,28 @@ export async function addEntry(
     return res.json();
 }
 
-export async function deleteEntry(id: string, password: string): Promise<boolean> {
+export async function deleteEntry(id: string, password: string): Promise<{ success: boolean; softDeleted?: boolean }> {
     const res = await fetch('/api/guestbook', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, password }),
     });
-    return res.ok;
+    if (!res.ok) return { success: false };
+    return res.json();
 }
 
 export async function adminDeleteEntry(
     id: string,
     adminNickname: string,
     adminPassword: string
-): Promise<boolean> {
+): Promise<{ success: boolean; softDeleted?: boolean }> {
     const res = await fetch('/api/guestbook', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, adminNickname, adminPassword }),
     });
-    return res.ok;
+    if (!res.ok) return { success: false };
+    return res.json();
 }
 
 export async function getSecretMessages(

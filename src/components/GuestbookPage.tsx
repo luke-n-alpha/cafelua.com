@@ -25,12 +25,21 @@ const GuestbookPage: React.FC = () => {
     // Form state
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [isSecret, setIsSecret] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [cooldownUntil, setCooldownUntil] = useState(0);
 
     const messageRef = useRef<HTMLTextAreaElement>(null);
+
+    // Reply state
+    const [replyTo, setReplyTo] = useState<{ id: string; nickname: string } | null>(null);
+    const [replyNickname, setReplyNickname] = useState('');
+    const [replyPassword, setReplyPassword] = useState('');
+    const [replyEmail, setReplyEmail] = useState('');
+    const [replyMessage, setReplyMessage] = useState('');
+    const replyRef = useRef<HTMLTextAreaElement>(null);
 
     // Secret view state
     const [showSecretModal, setShowSecretModal] = useState(false);
@@ -90,11 +99,30 @@ const GuestbookPage: React.FC = () => {
         }
     };
 
+    // Group entries: top-level + replies
+    const topLevel = entries.filter((e) => !e.parentId);
+    const repliesMap = new Map<string, GuestbookEntry[]>();
+    for (const e of entries) {
+        if (e.parentId) {
+            const arr = repliesMap.get(e.parentId) || [];
+            arr.push(e);
+            repliesMap.set(e.parentId, arr);
+        }
+    }
+
+    // Filter: hide deleted entries with no replies
+    const visibleTopLevel = topLevel.filter((e) => {
+        if (!e.deleted) return true;
+        const replies = repliesMap.get(e.id) || [];
+        return replies.some((r) => !r.deleted);
+    });
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const trimNickname = nickname.trim();
         const trimMessage = message.trim();
         const trimPassword = password.trim();
+        const trimEmail = email.trim();
 
         if (!trimNickname || !trimMessage || !trimPassword) return;
         if (trimNickname.length > 20 || trimMessage.length > 500) return;
@@ -108,7 +136,7 @@ const GuestbookPage: React.FC = () => {
         setSubmitting(true);
         try {
             const result = await Promise.race([
-                addEntry(trimNickname, trimMessage, trimPassword, isSecret),
+                addEntry(trimNickname, trimMessage, trimPassword, isSecret, null, trimEmail || undefined),
                 new Promise<never>((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000)),
             ]);
             const newEntry: GuestbookEntry = {
@@ -117,6 +145,8 @@ const GuestbookPage: React.FC = () => {
                 message: isSecret ? '' : trimMessage,
                 isSecret,
                 createdAt: new Date().toISOString(),
+                parentId: null,
+                deleted: false,
             };
             setEntries((prev) => [newEntry, ...prev]);
             // If it's a secret message, reveal it immediately for the author
@@ -137,6 +167,61 @@ const GuestbookPage: React.FC = () => {
         } finally {
             setSubmitting(false);
         }
+    };
+
+    const handleReplySubmit = async (parentId: string) => {
+        const trimNick = replyNickname.trim();
+        const trimMsg = replyMessage.trim();
+        const trimPass = replyPassword.trim();
+        const trimEmail = replyEmail.trim();
+
+        if (!trimNick || !trimMsg || !trimPass) {
+            showToast(t('comments.fillRequired'));
+            return;
+        }
+        if (trimPass.length < 6 || trimPass.length > 20) return;
+
+        if (Date.now() < cooldownUntil) {
+            showToast(t('guestbook.cooldown'));
+            return;
+        }
+
+        setSubmitting(true);
+        try {
+            const result = await addEntry(trimNick, trimMsg, trimPass, false, parentId, trimEmail || undefined);
+            const newReply: GuestbookEntry = {
+                id: result.id,
+                nickname: trimNick,
+                message: trimMsg,
+                isSecret: false,
+                createdAt: new Date().toISOString(),
+                parentId,
+                deleted: false,
+            };
+            setEntries((prev) => [...prev, newReply]);
+            setReplyMessage('');
+            setReplyTo(null);
+            setCooldownUntil(Date.now() + COOLDOWN_MS);
+            showToast(t('guestbook.writeSuccess'));
+        } catch (err) {
+            console.error('[Guestbook] reply error:', err);
+            if (err instanceof Error && err.message === 'rate_limited') {
+                showToast(t('guestbook.cooldown'));
+            } else {
+                showToast('Failed to submit.');
+            }
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const openReply = (id: string, nick: string) => {
+        setReplyTo({ id, nickname: nick });
+        setReplyMessage('');
+        setReplyNickname('');
+        setReplyPassword('');
+        setReplyEmail('');
+        setTimeout(() => replyRef.current?.focus(), 100);
     };
 
     // --- Secret view ---
@@ -200,14 +285,20 @@ const GuestbookPage: React.FC = () => {
         if (isAdmin && adminCredentials && deleteStep === 'confirm') {
             setDeleting(true);
             try {
-                const success = await adminDeleteEntry(
+                const result = await adminDeleteEntry(
                     deleteTarget,
                     adminCredentials.nickname,
                     adminCredentials.password
                 );
-                if (success) {
+                if (result.success) {
                     showToast(t('guestbook.deleteSuccess'));
-                    setEntries((prev) => prev.filter((e) => e.id !== deleteTarget));
+                    if (result.softDeleted) {
+                        setEntries((prev) =>
+                            prev.map((e) => e.id === deleteTarget ? { ...e, deleted: true, message: '' } : e)
+                        );
+                    } else {
+                        setEntries((prev) => prev.filter((e) => e.id !== deleteTarget));
+                    }
                     setRevealedSecrets((prev) => {
                         const next = { ...prev };
                         delete next[deleteTarget];
@@ -228,10 +319,16 @@ const GuestbookPage: React.FC = () => {
         if (!deletePassword.trim()) return;
         setDeleting(true);
         try {
-            const success = await deleteEntry(deleteTarget, deletePassword.trim());
-            if (success) {
+            const result = await deleteEntry(deleteTarget, deletePassword.trim());
+            if (result.success) {
                 showToast(t('guestbook.deleteSuccess'));
-                setEntries((prev) => prev.filter((e) => e.id !== deleteTarget));
+                if (result.softDeleted) {
+                    setEntries((prev) =>
+                        prev.map((e) => e.id === deleteTarget ? { ...e, deleted: true, message: '' } : e)
+                    );
+                } else {
+                    setEntries((prev) => prev.filter((e) => e.id !== deleteTarget));
+                }
             } else {
                 showToast(t('guestbook.deleteFail'));
             }
@@ -261,6 +358,110 @@ const GuestbookPage: React.FC = () => {
         return `${yyyy}.${mm}.${dd} ${hh}:${min}`;
     };
 
+    const renderEntry = (entry: GuestbookEntry, isReply = false) => {
+        if (entry.deleted) {
+            return (
+                <div key={entry.id} className={`guestbook-entry${isReply ? ' guestbook-reply' : ''} guestbook-entry-deleted`}>
+                    <span className="guestbook-deleted-text">{t('comments.deleted')}</span>
+                </div>
+            );
+        }
+
+        // Hide secret entries that aren't revealed
+        if (entry.isSecret && !canViewSecret(entry)) return null;
+
+        return (
+            <div key={entry.id} className={`guestbook-entry${entry.isSecret ? ' secret' : ''}${isReply ? ' guestbook-reply' : ''}`}>
+                <div className="guestbook-entry-header">
+                    <span className="guestbook-entry-nickname">
+                        {isReply && <span className="guestbook-reply-arrow">&#8627;</span>}
+                        {entry.isSecret && <span className="guestbook-secret-badge">{t('guestbook.secret')}</span>}
+                        {entry.nickname}
+                    </span>
+                    <span className="guestbook-entry-date">{formatDate(entry)}</span>
+                </div>
+                <div className="guestbook-entry-message">
+                    {entry.isSecret ? (revealedSecrets[entry.id] ?? '') : entry.message}
+                </div>
+                <div className="guestbook-entry-footer">
+                    {!isReply && (
+                        <button
+                            className="guestbook-reply-btn"
+                            onClick={() => openReply(entry.id, entry.nickname)}
+                        >
+                            {t('comments.reply')}
+                        </button>
+                    )}
+                    <button
+                        className="guestbook-delete-btn"
+                        onClick={() => handleDeleteRequest(entry.id)}
+                    >
+                        {t('guestbook.delete')}
+                    </button>
+                </div>
+
+                {/* Inline reply form */}
+                {replyTo?.id === entry.id && (
+                    <div className="guestbook-reply-form">
+                        <div className="guestbook-reply-context">
+                            @{replyTo.nickname}
+                        </div>
+                        <div className="guestbook-form-row">
+                            <input
+                                className="guestbook-input nickname"
+                                type="text"
+                                placeholder={t('guestbook.nickname')}
+                                value={replyNickname}
+                                onChange={(e) => setReplyNickname(e.target.value)}
+                                maxLength={20}
+                            />
+                            <input
+                                className="guestbook-input password"
+                                type="password"
+                                placeholder={t('guestbook.password')}
+                                value={replyPassword}
+                                onChange={(e) => setReplyPassword(e.target.value.slice(0, 20))}
+                                maxLength={20}
+                                autoComplete="off"
+                            />
+                        </div>
+                        <input
+                            className="guestbook-input"
+                            type="email"
+                            placeholder={t('comments.emailPlaceholder')}
+                            value={replyEmail}
+                            onChange={(e) => setReplyEmail(e.target.value)}
+                            style={{ width: '100%' }}
+                        />
+                        <textarea
+                            ref={replyRef}
+                            className="guestbook-textarea"
+                            placeholder={t('comments.replyPlaceholder')}
+                            value={replyMessage}
+                            onChange={(e) => setReplyMessage(e.target.value)}
+                            maxLength={500}
+                        />
+                        <div className="guestbook-reply-actions">
+                            <button
+                                className="guestbook-modal-cancel"
+                                onClick={() => setReplyTo(null)}
+                            >
+                                {t('comments.cancel')}
+                            </button>
+                            <button
+                                className="guestbook-submit-btn"
+                                onClick={() => handleReplySubmit(entry.id)}
+                                disabled={submitting || !replyMessage.trim() || !replyNickname.trim() || replyPassword.trim().length < 6}
+                            >
+                                {submitting ? '...' : t('guestbook.submit')}
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    };
+
     // Greeting screen
     if (showGreeting) {
         return (
@@ -276,8 +477,6 @@ const GuestbookPage: React.FC = () => {
             </div>
         );
     }
-
-    const visibleEntries = entries.filter((entry) => !entry.isSecret || canViewSecret(entry));
 
     return (
         <div className="guestbook-container" style={{ backgroundImage: "url('/guestbook-background-img/guestbook-scene.webp')" }}>
@@ -298,29 +497,13 @@ const GuestbookPage: React.FC = () => {
 
                 {/* Entry list */}
                 <div className="guestbook-entries">
-                    {visibleEntries.length === 0 && !loading && (
+                    {visibleTopLevel.length === 0 && !loading && (
                         <div className="guestbook-empty">{t('guestbook.empty')}</div>
                     )}
-                    {visibleEntries.map((entry) => (
-                        <div key={entry.id} className={`guestbook-entry${entry.isSecret ? ' secret' : ''}`}>
-                            <div className="guestbook-entry-header">
-                                <span className="guestbook-entry-nickname">
-                                    {entry.isSecret && <span className="guestbook-secret-badge">{t('guestbook.secret')}</span>}
-                                    {entry.nickname}
-                                </span>
-                                <span className="guestbook-entry-date">{formatDate(entry)}</span>
-                            </div>
-                            <div className="guestbook-entry-message">
-                                {entry.isSecret ? (revealedSecrets[entry.id] ?? '') : entry.message}
-                            </div>
-                            <div className="guestbook-entry-footer">
-                                <button
-                                    className="guestbook-delete-btn"
-                                    onClick={() => handleDeleteRequest(entry.id)}
-                                >
-                                    {t('guestbook.delete')}
-                                </button>
-                            </div>
+                    {visibleTopLevel.map((entry) => (
+                        <div key={entry.id} className="guestbook-thread">
+                            {renderEntry(entry)}
+                            {(repliesMap.get(entry.id) || []).map((r) => renderEntry(r, true))}
                         </div>
                     ))}
                     {hasMore && entries.length > 0 && (
@@ -347,7 +530,7 @@ const GuestbookPage: React.FC = () => {
                         />
                         <input
                             className="guestbook-input password"
-                            type="text"
+                            type="password"
                             placeholder={t('guestbook.password')}
                             value={password}
                             onChange={(e) => setPassword(e.target.value.slice(0, 20))}
@@ -355,6 +538,14 @@ const GuestbookPage: React.FC = () => {
                             autoComplete="off"
                         />
                     </div>
+                    <input
+                        className="guestbook-input"
+                        type="email"
+                        placeholder={t('comments.emailPlaceholder')}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        style={{ width: '100%' }}
+                    />
                     <textarea
                         ref={messageRef}
                         className="guestbook-textarea"

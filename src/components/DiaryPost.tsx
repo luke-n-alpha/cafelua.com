@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import type { DiaryEntry } from '@/data/gallery/diaryData';
+import Comments from './Comments';
 import './DiaryPost.css';
 
 interface Props {
@@ -176,6 +177,7 @@ const DiaryPost: React.FC<Props> = ({ entry }) => {
                             )}
                         </>
                     )}
+                    <Comments postSlug={entry.slug} postType="diary" />
                 </div>
 
                 <button className="diary-back" onClick={handleBack}>
