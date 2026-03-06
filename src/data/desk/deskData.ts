@@ -412,7 +412,7 @@ const manualPosts: DeskPost[] = [
         date: '2026-03-06',
         titleKo: '카페루아 인프라 — 개인 웹사이트를 (거의) 공짜로 굴리는 법',
         titleEn: 'Cafelua Infrastructure — Running a Personal Website for (Almost) Free',
-        contentKo: `![카페루아 인프라](/desk/20260306-카페루아-인프라-거의-공짜로-굴리는-법/hero.ko.png)
+        contentKo: `![카페루아 인프라](/desk/20260306-카페루아-인프라-거의-공짜로-굴리는-법/hero.ko.webp)
 
 지난번 [네이버 블로그 마이그레이션](/ko/desk/20260218-naver-blog-migration/) 글에서 카페루아로 2,393개 글을 이관한 이야기를 했습니다.
 이번에는 인프라 이야기를 드릴까 합니다. 이러한 사이트를 굴리는데 얼마만큼의 돈이 드는지요.
@@ -511,7 +511,7 @@ GitHub: https://github.com/luke-n-alpha/cafelua.com
 필요한 건 Vercel 계정, Firebase 프로젝트, Google AI Studio API 키, 그리고 도메인 하나입니다. 모두 가입하는 데 30분이면 충분합니다.
 
 git clone 받으셔서 claude code에게 이 프로젝트 아키텍쳐 참고해서 자신만의 홈페이지를 만들어 달라하면 잘 만들어 주고, 환경 셋팅도 AI의 안내대로 따라하시다 보면 어렵지 않게 끝낼 수 있습니다.`,
-        contentEn: `![Cafelua Infrastructure](/desk/20260306-카페루아-인프라-거의-공짜로-굴리는-법/hero.en.png)
+        contentEn: `![Cafelua Infrastructure](/desk/20260306-카페루아-인프라-거의-공짜로-굴리는-법/hero.en.webp)
 
 In my previous post about [Naver Blog Migration](/en/desk/20260218-naver-blog-migration/), I talked about migrating 2,393 posts to Cafe Lua.
 This time, I'd like to talk about infrastructure. How much does it actually cost to run a site like this?
@@ -612,7 +612,7 @@ All you need is a Vercel account, a Firebase project, a Google AI Studio API key
 Just git clone it, ask Claude Code to reference this project's architecture and build your own homepage, and follow the AI's guidance for environment setup — it's easier than you'd think.`,
         category: 'it',
         tags: ['인프라', 'Vercel', 'Firebase', 'Gemini', '무료티어', '오픈소스', '카페루아'],
-        thumbnail: '/desk/20260306-카페루아-인프라-거의-공짜로-굴리는-법/hero.ko.png',
+        thumbnail: '/desk/20260306-카페루아-인프라-거의-공짜로-굴리는-법/hero.ko.webp',
         images: [],
     },
     {
