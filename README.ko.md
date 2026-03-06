@@ -269,7 +269,9 @@ public/
 
 ## 📄 라이선스 (License)
 
-(라이선스 정보 추가 예정)
+- **소스코드**: MIT
+- **블로그 포스트 및 콘텐츠** (`src/data/desk/posts/`, `src/data/gallery/`): [CC-BY-NC-SA-4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+- **AI 컨텍스트** (CLAUDE.md, AGENTS.md, GEMINI.md): [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ## 🔄 네이버 이식 실행 요약
 

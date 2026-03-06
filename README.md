@@ -269,7 +269,9 @@ This project is currently being developed as a personal project, and a contribut
 
 ## 📄 License
 
-(License information to be added)
+- **Source code**: MIT
+- **Blog posts & content** (`src/data/desk/posts/`, `src/data/gallery/`): [CC-BY-NC-SA-4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+- **AI context** (CLAUDE.md, AGENTS.md, GEMINI.md): [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ## 🔄 Naver Migration Runbook (Summary)
 
