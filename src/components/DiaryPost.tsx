@@ -178,21 +178,21 @@ const DiaryPost: React.FC<Props> = ({ entry }) => {
                         </>
                     )}
                     <Comments postSlug={entry.slug} postType="diary" />
+
+                    <div className="cc-license">
+                        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">
+                            <img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" alt="CC BY-NC-SA 4.0" />
+                        </a>
+                        <span>{isKo
+                            ? '이 글은 CC BY-NC-SA 4.0 라이선스로 제공됩니다.'
+                            : 'This post is licensed under CC BY-NC-SA 4.0.'
+                        }</span>
+                    </div>
                 </div>
 
                 <button className="diary-back" onClick={handleBack}>
                     {t('gallery.backToGallery')}
                 </button>
-
-                <div className="cc-license">
-                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">
-                        <img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" alt="CC BY-NC-SA 4.0" />
-                    </a>
-                    <span>{isKo
-                        ? '이 글은 CC BY-NC-SA 4.0 라이선스로 제공됩니다.'
-                        : 'This post is licensed under CC BY-NC-SA 4.0.'
-                    }</span>
-                </div>
             </div>
 
             {/* Lightbox */}

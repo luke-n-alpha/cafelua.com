@@ -115,33 +115,14 @@ public/
 
 ## 📝 Changelog
 
-### v0.1.9 (2026-03-06)
-- **Post Comments System**:
-    - Added comment system for Desk and Diary posts (Firebase Admin SDK).
-    - 1-level nested replies (reply to comment, no reply-to-reply).
-    - Email reply notifications via Resend API.
-- **Guestbook Replies & Notifications**:
-    - Added reply support to guestbook entries (1-level nested).
-    - Email notification when someone replies to your guestbook entry.
-- **Management Tool** (separate repo):
-    - Local admin tool [cafelua.com-manager](https://github.com/luke-n-alpha/cafelua.com-manager) (localhost:3100).
-    - Markdown post editor with split-pane preview, ko/en locale support.
-    - Comment and guestbook moderation (list, delete).
-    - Image upload and Git-based deployment.
-    - Legacy post browsing via content-index.json.
-
 ### v0.1.8 (2026-03-06)
-- **Desk Post Navigation & Popular Posts**:
-    - Added prev/next post navigation at the bottom of each desk post.
-    - Added GA4-powered popular posts section (top posts by views, last 30 days, 5-min cache).
-- **Cross-posting from naia.nextain.io**:
-    - Naia blog articles now cross-posted to Master's Desk with full content.
-- **Mobile & UI Fixes**:
-    - Fixed post images overflowing on mobile screens.
-    - Fixed DeskPost heading font styling.
-- **i18n & SEO**:
-    - Locale-aware metadata for all `[locale]` pages.
-    - Restored GA4 gtag.js tracking.
+- **Post Comments**: Comment and nested reply system for Desk/Diary posts with email notifications.
+- **Guestbook Replies**: Reply support and email notifications for guestbook entries.
+- **Management Tool**: Local admin tool [cafelua.com-manager](https://github.com/luke-n-alpha/cafelua.com-manager) — post editor, comment moderation, image upload, deploy.
+- **Desk Post Navigation**: Prev/next navigation and popular posts section.
+- **Cross-posting**: Naia blog articles cross-posted to Master's Desk.
+- **Open Source & License**: CC BY-NC-SA 4.0 badge on posts, GitHub icon on intro page.
+- **Bug Fixes**: Mobile image overflow, heading font, SEO metadata.
 
 ### v0.1.7 (2026-02-20)
 - **Full English Translation**:

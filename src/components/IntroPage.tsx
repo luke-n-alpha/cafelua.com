@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import './IntroPage.css';
 import {
     Sun, Moon, CloudRain, CloudSnow, CloudLightning,
-    Flower2, Leaf, Snowflake, Sunset, DoorClosed, RefreshCw
+    Flower2, Leaf, Snowflake, Sunset, DoorClosed, RefreshCw, Github
 } from 'lucide-react';
 import BackgroundMusic from './BackgroundMusic';
 import VisitorCounter from './VisitorCounter';
@@ -457,9 +457,12 @@ const IntroPage: React.FC = () => {
             </div>
 
             <div className="intro-footer glass" onClick={(e) => e.stopPropagation()}>
-                <span>v0.1.6</span>
-                <a href="https://github.com/luke-n-alpha/cafelua.com" target="_blank" rel="noopener noreferrer">
-                    GitHub
+                <span>v0.1.8</span>
+                <a href="https://github.com/luke-n-alpha/cafelua.com" target="_blank" rel="noopener noreferrer" title="Open Source on GitHub">
+                    <Github size={16} />
+                </a>
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" title="CC BY-NC-SA 4.0">
+                    <img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" alt="CC BY-NC-SA 4.0" className="intro-cc-badge" />
                 </a>
             </div>
         </div>
