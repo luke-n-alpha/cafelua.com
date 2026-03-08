@@ -354,51 +354,62 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
             return result.join('\n');
         };
 
-        const normalizeMarkdown = (input: string) => input
-            .replace(/\u200b/g, '')
-            // Repair malformed bold like "*** text**" from scraped markdown/html mixes.
-            .replace(/\*\*\*\s*([^*\n][^*\n]*?)\s*\*\*(?!\*)/g, '**$1**')
-            // Normalize malformed numbered bold lines from scraping artifacts.
-            .replace(/^\s*\*\*(\d+\.\s*[^*\n]+?)\s+\*\*\s*$/gm, '**$1**')
-            .replace(/^\s*\*\*(\d+\.\s*[^*\n]+?)\s*$/gm, '**$1**')
-            // Fix split numbered bold headings: "**2.\n제목**" -> "**2. 제목**"
-            .replace(/\*\*(\d+)\.\s*\n+\s*([^*\n][^*]*?)\*\*/g, '**$1. $2**')
-            // Fix dangling split numbers in headings/list lines.
-            .replace(/\*\*(\d+)\.\s*\n+\s*/g, '**$1. ')
-            .replace(/(^|\n)(\d+)\.\s*\n+\s*/g, '$1$2. ')
-            // Fix malformed markdown links where href got corrupted during scraping.
-            .replace(/\[(https?:\/\/[^\]\s]+)\]\(([^)]+)\)/g, (_m, labelUrl, href) => {
-                const cleanLabel = String(labelUrl).trim();
-                let cleanHref = String(href).trim();
-                if (cleanHref.includes('%5D(')) cleanHref = cleanHref.replace(/%5D\(.*/i, '');
-                const secondHttp = cleanHref.indexOf('http', cleanHref.indexOf('http') + 4);
-                if (secondHttp > 0) cleanHref = cleanHref.slice(0, secondHttp);
-                // If href still looks broken, trust label URL.
-                try {
-                    new URL(cleanHref);
-                } catch {
-                    cleanHref = cleanLabel;
-                }
-                return `[${cleanLabel}](${cleanHref})`;
-            })
-            // "**1. [제목] **본문" -> "**1. 제목** 본문"
-            .replace(/\*\*(\d+\.\s*)\[([^\]]+)\]\s*\*\*/g, '**$1$2**')
-            // "**[제목]**" -> "**제목**"
-            .replace(/\*\*\[([^\]]+)\]\s*\*\*/g, '**$1**')
-            // add separators when bold closing marker is directly 붙은 경우
-            .replace(/\*\*([^\n*]+)\*\*(?=\S)/g, (_m, inner) => {
-                const text = String(inner).trim();
-                const headingLike = /^\d+[\.\)]/.test(text) || text.length >= 14;
-                return headingLike ? `**${text}**\n\n` : `**${text}** `;
-            })
-            // Recover split numbering artifacts like "2\n\n7. " => "27. " / "1\n0. " => "10. "
-            .replace(/(^|\n)\s*(\d)\s*\n+\s*(\d\.\s)/g, '$1$2$3')
-            // Remove orphan single-digit line right before numbered lines.
-            .replace(/(^|\n)\s*\d\s*\n(?=\s*\d+\.\s)/g, '$1')
-            // restore missing line breaks between numbered sentences in scraped blocks
-            .replace(/([가-힣a-zA-Z\)\]\.])(?=(\d+\.\s))/g, '$1\n')
-            // Keep single-line breaks from scraped markdown (react-markdown ignores them by default)
-            .replace(/([^\n])\n([^\n])/g, '$1  \n$2');
+        const normalizeMarkdown = (input: string) => {
+            // Protect GFM table blocks from aggressive normalization
+            const tables: string[] = [];
+            const safe = input.replace(
+                /^(\|[^\n]+\|\s*\n\|[\s:|-]+\|\s*\n(?:\|[^\n]+\|\s*\n?)*)/gm,
+                (m) => { tables.push(m); return `__TBL${tables.length - 1}__`; },
+            );
+            const result = safe
+                .replace(/\u200b/g, '')
+                // Repair malformed bold like "*** text**" from scraped markdown/html mixes.
+                .replace(/\*\*\*\s*([^*\n][^*\n]*?)\s*\*\*(?!\*)/g, '**$1**')
+                // Normalize malformed numbered bold lines from scraping artifacts.
+                .replace(/^\s*\*\*(\d+\.\s*[^*\n]+?)\s+\*\*\s*$/gm, '**$1**')
+                .replace(/^\s*\*\*(\d+\.\s*[^*\n]+?)\s*$/gm, '**$1**')
+                // Fix split numbered bold headings: "**2.\n제목**" -> "**2. 제목**"
+                .replace(/\*\*(\d+)\.\s*\n+\s*([^*\n][^*]*?)\*\*/g, '**$1. $2**')
+                // Fix dangling split numbers in headings/list lines.
+                .replace(/\*\*(\d+)\.\s*\n+\s*/g, '**$1. ')
+                .replace(/(^|\n)(\d+)\.\s*\n+\s*/g, '$1$2. ')
+                // Fix malformed markdown links where href got corrupted during scraping.
+                .replace(/\[(https?:\/\/[^\]\s]+)\]\(([^)]+)\)/g, (_m, labelUrl, href) => {
+                    const cleanLabel = String(labelUrl).trim();
+                    let cleanHref = String(href).trim();
+                    if (cleanHref.includes('%5D(')) cleanHref = cleanHref.replace(/%5D\(.*/i, '');
+                    const secondHttp = cleanHref.indexOf('http', cleanHref.indexOf('http') + 4);
+                    if (secondHttp > 0) cleanHref = cleanHref.slice(0, secondHttp);
+                    // If href still looks broken, trust label URL.
+                    try {
+                        new URL(cleanHref);
+                    } catch {
+                        cleanHref = cleanLabel;
+                    }
+                    return `[${cleanLabel}](${cleanHref})`;
+                })
+                // "**1. [제목] **본문" -> "**1. 제목** 본문"
+                .replace(/\*\*(\d+\.\s*)\[([^\]]+)\]\s*\*\*/g, '**$1$2**')
+                // "**[제목]**" -> "**제목**"
+                .replace(/\*\*\[([^\]]+)\]\s*\*\*/g, '**$1**')
+                // add separators when bold closing marker is directly 붙은 경우
+                // Only match when followed by word chars, not punctuation like ] | )
+                .replace(/\*\*([^\n*]+)\*\*(?=[가-힣a-zA-Z0-9])/g, (_m, inner) => {
+                    const text = String(inner).trim();
+                    const headingLike = /^\d+[\.\)]/.test(text) || text.length >= 14;
+                    return headingLike ? `**${text}**\n\n` : `**${text}** `;
+                })
+                // Recover split numbering artifacts like "2\n\n7. " => "27. " / "1\n0. " => "10. "
+                .replace(/(^|\n)\s*(\d)\s*\n+\s*(\d\.\s)/g, '$1$2$3')
+                // Remove orphan single-digit line right before numbered lines.
+                .replace(/(^|\n)\s*\d\s*\n(?=\s*\d+\.\s)/g, '$1')
+                // restore missing line breaks between numbered sentences in scraped blocks
+                .replace(/([가-힣a-zA-Z\)\]\.])(?=(\d+\.\s))/g, '$1\n')
+                // Keep single-line breaks from scraped markdown (react-markdown ignores them by default)
+                .replace(/([^\n])\n([^\n])/g, '$1  \n$2');
+            // Restore protected table blocks
+            return result.replace(/__TBL(\d+)__/g, (_, i) => tables[parseInt(i)]);
+        };
 
         const markerRegex = /\{\{IMG:(\d+)\}\}/g;
         const hasMarkers = markerRegex.test(text);
@@ -647,7 +658,7 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
                                                         </a>
                                                     );
                                                 }
-                                                const shouldCard = !isHashTag && (text.length >= 20 || text === safeHref);
+                                                const shouldCard = !isHashTag && (text === safeHref || /^https?:\/\//.test(text));
                                                 if (shouldCard) {
                                                     return <LinkPreviewCard href={safeHref} fallbackText={text} />;
                                                 }
