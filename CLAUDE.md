@@ -165,7 +165,42 @@ COMMENT_NOTIFY_FROM                   # Reply notification sender (optional)
 Vercel (SSR). Push to main → auto-deploy.
 
 이 레포는 Private 레포(`luke-n-alpha/cafelua-private`)의 `public-home/` 서브모듈입니다.
-동기화: `src/scripts/sync-public-home.sh`
+
+## Post Data Management
+
+### 공개 레포 (이 레포)
+
+- `public/desk-posts/*.md` — 실제 블로그 포스트 (2100+ 개)
+- 포스트는 YAML frontmatter + `<!-- ko -->` / `<!-- en -->` 본문 구조
+- `src/data/desk/deskLoader.ts` (서버 전용) — 빌드/요청 시 MD 파일 읽기
+- `src/data/desk/deskData.ts` — 타입, 상수, `manualPosts` (인라인 TypeScript)
+
+### 포스트 추가/편집
+
+1. `public/desk-posts/[slug].md` 파일 생성 또는 수정
+2. 형식:
+   ```markdown
+   ---
+   date: "YYYY-MM-DD"
+   titleKo: 제목 (한국어)
+   titleEn: Title (English)
+   category: cafelua|ai|it|believer|xrcloud|review|art|private
+   tags:
+     - 태그1
+   images: []
+   ---
+   <!-- ko -->
+   한국어 본문
+   <!-- en -->
+   English body
+   ```
+3. `git add public/desk-posts/[slug].md && git commit && git push` → Vercel 자동 배포
+
+### 대규모 데이터 관리
+
+- 네이버 블로그 스크래핑 등 대용량 원본 데이터는 Private 레포에서만 관리
+- `src/data/desk/_naver-posts*.ts` 파일은 `.gitignore`에 등록 (생성 금지)
+- 변환 스크립트: `scripts/migrate-posts-to-md.ts` (일회성, 이미 실행 완료)
 
 ## Open Source
 
