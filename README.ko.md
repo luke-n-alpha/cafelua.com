@@ -84,34 +84,92 @@ src/
 ├── components/                  # React 컴포넌트
 ├── data/
 │   └── desk/
-│       ├── _naver-posts.ts      # 네이버 블로그 2,393개 포스트 원본
-│       └── deskData.ts          # 필터링, 카테고리 분류, 영문 태그 매핑
+│       ├── deskData.ts          # 타입, 상수, manualPosts (클라이언트 safe)
+│       └── deskLoader.ts        # 서버 전용 fs 기반 포스트 로더
 ├── i18n.ts                      # i18next 설정 (ko/en 전체 리소스)
 ├── lib/                         # 유틸리티 (Gemini API, 알파 프롬프트)
 └── services/                    # MIDI 신시사이저 등
 scripts/
 ├── generate-seo-files.ts        # sitemap + llms.txt 생성기
-├── translate-naver-posts.ts     # Gemini 기반 블로그 번역 (샤딩)
-├── fetch-naver-blog.ts          # 네이버 블로그 스크래퍼 (Playwright)
-└── localize-naver-images.ts     # 이미지 다운로드 & 로컬화
+├── migrate-posts-to-md.ts       # TS → MD 일회성 변환 스크립트 (완료)
+└── translate-naver-posts.ts     # Gemini 기반 블로그 번역
 public/
-├── sitemap.xml                  # 자동 생성 (4,324 URL, ko+en)
+├── desk-posts/                  # 블로그 포스트 Markdown 파일 (2,100+개)
+│   └── [slug].md                # YAML frontmatter + <!-- ko --> / <!-- en -->
+├── sitemap.xml                  # 자동 생성
 ├── llms.txt                     # AI 크롤러 정보
 ├── desk/                        # 데스크 포스트 이미지 (로컬화)
 ├── 1997-homepage/               # 아카이브: 1997년 홈페이지
 └── 1998-homepage/               # 아카이브: 1998년 홈페이지
 ```
 
+## 🛠️ 개발 가이드
+
+### 빠른 시작
+
+```bash
+git clone https://github.com/luke-n-alpha/cafelua.com
+cd cafelua.com
+npm install
+cp .env.example .env   # 필요한 값 입력
+npm run dev            # http://localhost:3000
+```
+
+### 주요 커맨드
+
+```bash
+npm run dev              # 개발 서버 (포트 3000)
+npm run build            # 프로덕션 빌드 (~15초)
+npm run test             # Jest + React Testing Library
+npm run e2e              # Playwright E2E 테스트
+npm run lint             # ESLint
+npx tsc --noEmit         # TypeScript 타입 체크
+npm run generate-index   # content-index.json 재생성
+```
+
+### 포스트 추가 방법
+
+`public/desk-posts/[slug].md` 파일을 생성합니다:
+
+```markdown
+---
+date: "YYYY-MM-DD"
+titleKo: 제목 (한국어)
+titleEn: Title (English)
+category: cafelua|ai|it|believer|xrcloud|review|art|private
+tags:
+  - 태그
+images: []
+---
+
+<!-- ko -->
+한국어 본문
+
+<!-- en -->
+English body
+```
+
+그 다음 `git add → commit → push` 하면 Vercel 자동 배포됩니다.
+
+### 포스트 데이터 구조
+
+- **서버 사이드 로딩**: `src/data/desk/deskLoader.ts`가 빌드/요청 시 `public/desk-posts/`의 MD 파일을 읽습니다. `'use client'` 컴포넌트에서 임포트 금지.
+- **클라이언트 safe 데이터**: `src/data/desk/deskData.ts`는 타입, 상수, `manualPosts`만 export. 어디서든 임포트 가능.
+- **수동 포스트**: 짧은 포스트는 `deskData.ts`의 `manualPosts` 배열에 TypeScript로 직접 추가 가능.
+
+### ISR (점진적 정적 재생성)
+
+- 데스크 목록 페이지: 빌드 시 정적 생성
+- 데스크 포스트 페이지: 상위 50개 빌드 시 사전 생성 (`DESK_PREBUILD_COUNT`), 나머지는 요청 시 1시간 캐시
+
 ## 📊 통계
 
 | 항목 | 수량 |
 |------|------|
-| 전체 페이지 (ko + en) | 4,324 |
-| 데스크 포스트 | 2,133 |
+| 데스크 포스트 | 2,100+ |
 | 다이어리 | 20 |
 | 데스크 카테고리 | 8 |
 | 지원 언어 | 2 (ko, en) |
-| 사이트맵 URL | 4,324 |
 
 ## 관리 도구
 
@@ -129,22 +187,3 @@ public/
 - **블로그 포스트 및 콘텐츠** (`src/data/desk/posts/`, `src/data/gallery/`): [CC-BY-NC-SA-4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 - **AI 컨텍스트** (CLAUDE.md, AGENTS.md, GEMINI.md): [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 
-## 🔄 네이버 이식 실행 요약
-
-1. 전체보기 기준 배치 수집(`page=1..160`, `count-per-page=15`) + 이어받기 실행
-2. append 시 `postNo` 기준 중복 스킵
-3. 본문 정규화(`{{IMG:N}}` 복원, 깨진 플레이어 텍스트 제거, 영상 링크 치환)
-4. 미투데이 연동형 + 소설 포스트는 데스크 리스트 노출 제외
-5. SEO 산출물 갱신
-   - `npm run seo:generate`
-
-### 권장 명령 (전수 재수집)
-
-```bash
-node --loader ts-node/esm scripts/fetch-naver-blog.ts \
-  --full-resync \
-  --start-page 1 \
-  --end-page 160 \
-  --count-per-page 15 \
-  --max 2600
-```

@@ -205,7 +205,7 @@ Vercel (SSR). Push to main → auto-deploy.
 ## Open Source
 
 - **소스코드**: MIT
-- **블로그 포스트 및 콘텐츠** (`src/data/desk/posts/`, `src/data/gallery/`): CC-BY-NC-SA-4.0
+- **블로그 포스트 및 콘텐츠** (`public/desk-posts/`, `src/data/gallery/`): CC-BY-NC-SA-4.0
 - **AI 컨텍스트** (CLAUDE.md, AGENTS.md, GEMINI.md): CC-BY-SA-4.0
 
 > 바이브 코딩 시대, AI 컨텍스트는 코드만큼 가치 있는 자산입니다.

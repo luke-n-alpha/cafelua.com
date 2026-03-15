@@ -84,34 +84,93 @@ src/
 ├── components/                  # React components
 ├── data/
 │   └── desk/
-│       ├── _naver-posts.ts      # 2,393 Naver blog posts (source data)
-│       └── deskData.ts          # Filtering, categorization, EN tag mapping
+│       ├── deskData.ts          # Types, constants, manualPosts (client-safe)
+│       └── deskLoader.ts        # Server-only fs-based post loader
 ├── i18n.ts                      # i18next config with full ko/en resources
 ├── lib/                         # Utilities (Gemini API, Alpha prompt)
 └── services/                    # MIDI synth, etc.
 scripts/
 ├── generate-seo-files.ts        # Sitemap + llms.txt generator
-├── translate-naver-posts.ts     # Gemini-based blog translation (sharded)
-├── fetch-naver-blog.ts          # Naver blog scraper (Playwright)
-└── localize-naver-images.ts     # Image download & localization
+├── migrate-posts-to-md.ts       # One-time migration: TS → MD files (done)
+└── translate-naver-posts.ts     # Gemini-based blog translation
 public/
-├── sitemap.xml                  # Auto-generated (4,324 URLs, ko+en)
+├── desk-posts/                  # Blog posts as Markdown files (2,100+)
+│   └── [slug].md                # YAML frontmatter + <!-- ko --> / <!-- en -->
+├── sitemap.xml                  # Auto-generated
 ├── llms.txt                     # AI crawler info
 ├── desk/                        # Desk post images (localized)
 ├── 1997-homepage/               # Archived 1997 homepage
 └── 1998-homepage/               # Archived 1998 homepage
 ```
 
+### Adding a Post
+
+Create `public/desk-posts/[slug].md`:
+
+```markdown
+---
+date: "YYYY-MM-DD"
+titleKo: 제목
+titleEn: Title
+category: cafelua|ai|it|believer|xrcloud|review|art|private
+tags:
+  - 태그
+images: []
+---
+
+<!-- ko -->
+한국어 본문
+
+<!-- en -->
+English body
+```
+
+## 🛠️ Development Guide
+
+### Quick Start
+
+```bash
+git clone https://github.com/luke-n-alpha/cafelua.com
+cd cafelua.com
+npm install
+cp .env.example .env   # fill in required values
+npm run dev            # http://localhost:3000
+```
+
+### Key Commands
+
+```bash
+npm run dev              # Dev server (port 3000)
+npm run build            # Production build (~15 sec)
+npm run test             # Jest + React Testing Library
+npm run e2e              # Playwright E2E tests
+npm run lint             # ESLint
+npx tsc --noEmit         # TypeScript type check
+npm run generate-index   # Regenerate content-index.json
+```
+
+### Post Data Architecture
+
+Blog posts live in `public/desk-posts/` as individual Markdown files.
+
+- **Server-side loading**: `src/data/desk/deskLoader.ts` reads `.md` files at build/request time using Node.js `fs`. Do **not** import this from `'use client'` components.
+- **Client-safe data**: `src/data/desk/deskData.ts` exports only types, constants, and `manualPosts`. Safe to import anywhere.
+- **Manual posts**: Short, hand-written posts can be added directly to `manualPosts` in `deskData.ts` (TypeScript inline).
+
+### ISR (Incremental Static Regeneration)
+
+- Desk list page: statically rendered at build time
+- Desk post pages: top 50 pre-built at build time (`DESK_PREBUILD_COUNT`), rest served on-demand with 1-hour cache
+- To change the pre-build count: set `DESK_PREBUILD_COUNT` env var
+
 ## 📊 Stats
 
 | Metric | Count |
 |--------|-------|
-| Total pages (ko + en) | 4,324 |
-| Desk posts | 2,133 |
+| Desk posts | 2,100+ |
 | Diary entries | 20 |
 | Desk categories | 8 |
 | Supported languages | 2 (ko, en) |
-| Sitemap URLs | 4,324 |
 
 ## Management Tool
 
@@ -129,22 +188,3 @@ This project is currently being developed as a personal project, and a contribut
 - **Blog posts & content** (`src/data/desk/posts/`, `src/data/gallery/`): [CC-BY-NC-SA-4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 - **AI context** (CLAUDE.md, AGENTS.md, GEMINI.md): [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 
-## 🔄 Naver Migration Runbook (Summary)
-
-1. Collect post list in batches (`page=1..160`, `count-per-page=15`) with resume support.
-2. Deduplicate strictly by `postNo` while appending.
-3. Normalize body (inline image markers, broken player cleanup, external video link fallback).
-4. Exclude me2day relay posts + novels from Master's Desk listing policy.
-5. Regenerate SEO artifacts:
-   - `npm run seo:generate`
-
-### Recommended Command (Full Resync)
-
-```bash
-node --loader ts-node/esm scripts/fetch-naver-blog.ts \
-  --full-resync \
-  --start-page 1 \
-  --end-page 160 \
-  --count-per-page 15 \
-  --max 2600
-```
