@@ -2,189 +2,185 @@
 
 # Cafe Lua
 
-**Cafe Lua** is a virtual space project themed around a tranquil teahouse in the forest. It offers visitors a relaxing retreat and warm stories, providing an immersive experience through various interactive elements.
+> A digital sanctuary on the border between reality and another world.
 
-## 🌿 Project Introduction
+**Cafe Lua** is a personal website / virtual teahouse built with Next.js. It features an AI companion (Alpha), a blog, a gallery, a guestbook, and retro nostalgia — all in one immersive space.
 
-This project is an immersive web application built on Next.js 16 (App Router), offering the following spaces and features:
+🌐 **Live site**: [cafelua.com](https://cafelua.com)
 
-*   **Immersive Intro**: Invites you into the world of Cafe Lua with backgrounds that change according to the time of day and weather.
-*   **Lounge Space**: The main area where you can enjoy the atmosphere of Cafe Lua with ambient music.
-*   **Counter**: VN-style Coffee Chat and Celtic Cross (10-card) tarot reading with AI mascot 'Alpha'. Powered by Google Gemini 2.5 Flash.
-*   **Gallery**: Browse cafe space photos, diary entries, tarot card collection, and BGM collection.
-*   **Diary**: Personal diary entries in text + multi-image posting format. Each entry has its own shareable URL with OG metadata.
-*   **Guestbook**: Guestbook with nickname + password authentication. Secret message system and admin mode.
-*   **2F Atelier**: A nostalgic "Win98 PC" experience where you can explore Luke's 1997/1998 homepage memories.
-*   **Responsive Design**: Provides an optimized experience across various devices.
-*   **Multilingual Support**: Full Korean/English bilingual support using i18next.
+---
 
-## 🚀 Key Features
+## 🚀 Quick Start
 
-*   **AI Conversation System**: Coffee Chat and Tarot consultation powered by Google Gemini 2.5 Flash. 8 Alpha expression/mood states, conversation memory via localStorage.
-*   **Tarot Reading**: Celtic Cross (10-card) spread UI with per-card interpretation and final summary. Server-side API routes for Gemini integration.
-*   **Gallery & Diary**: Cafe spaces, tarot cards, and BGM collection gallery. Individual diary URLs with image lightbox (keyboard/mouse/touch navigation).
-*   **Guestbook**: Firestore-based guestbook with secret messages, admin mode, rate limiting, and server-side security.
-*   **Background Music (BGM)**: BGM playback and control features for each space.
-*   **Real-time Environment Reflection**: Location-based weather and time zone background changes via OpenWeather API.
-*   **Visitor Counter**: Retro-style visitor counter on the intro page, powered by GA4 Data API.
+```bash
+git clone https://github.com/luke-n-alpha/cafelua.com
+cd cafelua.com
+npm install
+cp .env.example .env   # fill in your API keys
+npm run dev            # → http://localhost:3000
+```
+
+The site works without any API keys (AI chat, guestbook, and weather features will be disabled).
+
+---
+
+## ✨ Features
+
+| Space | Description |
+|-------|-------------|
+| **Intro** | Weather-reactive entrance with retro visitor counter |
+| **Lounge** | Main space with ambient BGM + Alpha AI chat |
+| **Counter** | VN-style coffee chat & Celtic Cross tarot (Gemini 2.5 Flash) |
+| **Master's Desk** | Blog with 2,100+ posts — category/tag filter, infinite scroll |
+| **Gallery** | Photo gallery + personal diary entries |
+| **Guestbook** | Firebase-backed guestbook with secret messages |
+| **2F Atelier** | Retro Win98 PC experience (1997/1998 homepage archives) |
+
+**Also**: ko/en bilingual, responsive design, OG metadata per post/diary, email reply notifications.
+
+---
 
 ## 🛠️ Tech Stack
 
-*   **Framework**: Next.js 16 (App Router), React 19
-*   **Language**: TypeScript
-*   **Styling**: CSS with design tokens (variables.css)
-*   **Testing**: Jest + React Testing Library (TDD), Playwright for E2E
-*   **AI Integration**: Google Gemini 2.5 Flash API
-*   **Deployment**: Vercel (recommended) or static export
+| | |
+|--|--|
+| Framework | Next.js 16 (App Router) + React 19 |
+| Language | TypeScript |
+| Styling | CSS + design tokens |
+| AI | Google Gemini 2.5 Flash |
+| Backend | Firebase (guestbook/comments), GA4 Data API |
+| i18n | react-i18next (ko/en) |
+| Deployment | Vercel |
+
+---
 
 ## 🔧 Environment Variables
 
-Copy `.env.example` to `.env` and configure:
+Copy `.env.example` to `.env`:
 
 | Variable | Required | Description |
-|----------|----------|-------------|
-| `GEMINI_TOKEN` | Yes* | Google Gemini API key for Coffee Chat & Tarot features. Get it from [AI Studio](https://aistudio.google.com/app/apikey) |
-| `ALPHA_SECRET_PHRASE` | No | Secret phrase for master recognition |
-| `ALPHA_FAMILY_MEMBERS` | No | Family members JSON for Alpha's memory |
-| `ALPHA_MASTER_BIRTHDAY` | No | Master's birthday for Alpha to remember |
-| `VITE_OPENWEATHER_API_KEY` | No | OpenWeather API key for real-time weather |
-| `FIREBASE_CLIENT_EMAIL` | Yes* | Firebase Admin SDK service account email |
-| `FIREBASE_PRIVATE_KEY` | Yes* | Firebase Admin SDK private key |
-| `GA4_PROPERTY_ID` | No | GA4 Property ID for visitor counter on intro page |
-| `DESK_PREBUILD_COUNT` | No | Number of latest desk posts to pre-render at build time (default: `50`). Keeps build fast with ISR for the rest. |
-| `RESEND_API_KEY` | No | Resend API key for email reply notifications (comments/guestbook) |
-| `COMMENT_NOTIFY_FROM` | No | Sender address for reply notification emails |
+|----------|:--------:|-------------|
+| `GEMINI_TOKEN` | ✅* | Gemini API key — [get it here](https://aistudio.google.com/app/apikey) |
+| `FIREBASE_CLIENT_EMAIL` | ✅* | Firebase Admin SDK service account email |
+| `FIREBASE_PRIVATE_KEY` | ✅* | Firebase Admin SDK private key |
+| `NEXT_PUBLIC_FIREBASE_*` | ✅* | Firebase client config (apiKey, projectId, etc.) |
+| `GA4_PROPERTY_ID` | — | GA4 property ID for visitor counter |
+| `GA4_CLIENT_EMAIL` / `GA4_PRIVATE_KEY` | — | GA4 Data API auth (popular posts) |
+| `NEXT_PUBLIC_OPENWEATHER_API_KEY` | — | OpenWeather API key for real-time weather |
+| `RESEND_API_KEY` | — | Email reply notifications (comments/guestbook) |
+| `COMMENT_NOTIFY_FROM` | — | Sender address for reply notification emails |
+| `ALPHA_SECRET_PHRASE` | — | Secret phrase for master (Alpha's owner) recognition |
+| `DESK_PREBUILD_COUNT` | — | Posts pre-rendered at build time (default: `50`) |
 
-*Required for Guestbook and AI chat features
+*Required for guestbook and AI chat
 
-### Vercel Deployment
+---
 
-1. Connect your repository to [Vercel](https://vercel.com)
-2. Add environment variables in Project Settings → Environment Variables
-3. Deploy automatically on push to main branch
-
-**Security**: Never commit `.env` files. They are gitignored.
-
-## 📂 Project Structure
-
-```
-src/
-├── app/
-│   ├── [locale]/                # Locale-based routing (ko/en)
-│   │   ├── (lounge)/            # 1F route group (shared BGM layout)
-│   │   │   ├── desk/            # Master's Desk listing
-│   │   │   │   └── [slug]/      # Individual post (ISR)
-│   │   │   ├── gallery/diary/   # Gallery + diary entries
-│   │   │   ├── counter/         # Coffee chat & tarot
-│   │   │   ├── guestbook/       # Guestbook
-│   │   │   └── about/[tab]/     # About page (tabs)
-│   │   ├── atelier/             # 2F Atelier (Old PC, menu)
-│   │   └── library/             # Redirect → atelier
-│   └── api/                     # API routes (chat, tarot, comments, guestbook, etc.)
-├── components/                  # React components
-├── data/
-│   └── desk/
-│       ├── deskData.ts          # Types, constants, manualPosts (client-safe)
-│       └── deskLoader.ts        # Server-only fs-based post loader
-├── i18n.ts                      # i18next config with full ko/en resources
-├── lib/                         # Utilities (Gemini API, Alpha prompt)
-└── services/                    # MIDI synth, etc.
-scripts/
-├── generate-seo-files.ts        # Sitemap + llms.txt generator
-├── migrate-posts-to-md.ts       # One-time migration: TS → MD files (done)
-└── translate-naver-posts.ts     # Gemini-based blog translation
-public/
-├── desk-posts/                  # Blog posts as Markdown files (2,100+)
-│   └── [slug].md                # YAML frontmatter + <!-- ko --> / <!-- en -->
-├── sitemap.xml                  # Auto-generated
-├── llms.txt                     # AI crawler info
-├── desk/                        # Desk post images (localized)
-├── 1997-homepage/               # Archived 1997 homepage
-└── 1998-homepage/               # Archived 1998 homepage
-```
-
-### Adding a Post
+## ✍️ Adding a Blog Post
 
 Create `public/desk-posts/[slug].md`:
 
 ```markdown
 ---
-date: "YYYY-MM-DD"
-titleKo: 제목
-titleEn: Title
-category: cafelua|ai|it|believer|xrcloud|review|art|private
+date: "2025-01-01"
+titleKo: 제목 (한국어)
+titleEn: Title (English)
+category: cafelua
 tags:
   - 태그
 images: []
 ---
 
 <!-- ko -->
-한국어 본문
+한국어 본문을 여기에 씁니다.
 
 <!-- en -->
-English body
+Write the English body here.
 ```
 
-## 🛠️ Development Guide
+**Slug naming convention**: `YYYYMMDD-title-in-kebab-case`
 
-### Quick Start
+**Categories**: `cafelua` · `ai` · `it` · `believer` · `xrcloud` · `review` · `art` · `private`
+
+Then commit and push → Vercel auto-deploys.
+
+---
+
+## 📂 Project Structure
+
+```
+public/
+└── desk-posts/          # Blog posts as Markdown files (2,100+)
+    └── [slug].md        # YAML frontmatter + <!-- ko --> / <!-- en --> body
+
+src/
+├── app/
+│   ├── [locale]/        # ko/en routing
+│   │   └── (lounge)/    # Shared BGM layout group
+│   │       ├── desk/    # Blog listing + [slug]/ (ISR)
+│   │       ├── gallery/ # Gallery + diary
+│   │       ├── counter/ # Coffee chat & tarot
+│   │       └── guestbook/
+│   └── api/             # Server routes (chat, tarot, comments, etc.)
+├── components/          # React components
+├── data/desk/
+│   ├── deskData.ts      # Types, constants, manualPosts (client-safe)
+│   └── deskLoader.ts    # Server-only: reads MD files via fs at build time
+└── lib/ services/       # Gemini, Firebase, MIDI synth, etc.
+```
+
+### How posts are loaded
+
+- `deskLoader.ts` reads all `public/desk-posts/*.md` files using Node.js `fs` at build/request time
+- **Do not import `deskLoader.ts` from `'use client'` components** — it's server-only
+- `deskData.ts` is client-safe (types + constants only)
+- Short posts can also be added inline to `manualPosts` in `deskData.ts`
+
+### ISR
+
+- Blog list page: fully static at build time
+- Individual post pages: top `DESK_PREBUILD_COUNT` (default 50) pre-built, rest rendered on-demand with 1-hour cache (`revalidate = 3600`)
+
+---
+
+## 🔨 Key Commands
 
 ```bash
-git clone https://github.com/luke-n-alpha/cafelua.com
-cd cafelua.com
-npm install
-cp .env.example .env   # fill in required values
-npm run dev            # http://localhost:3000
+npm run dev          # Dev server (port 3000)
+npm run build        # Production build (~15 sec)
+npm run test         # Jest + React Testing Library
+npm run e2e          # Playwright E2E tests
+npm run lint         # ESLint
+npx tsc --noEmit     # TypeScript type check
 ```
 
-### Key Commands
+### Deploy to Vercel
 
-```bash
-npm run dev              # Dev server (port 3000)
-npm run build            # Production build (~15 sec)
-npm run test             # Jest + React Testing Library
-npm run e2e              # Playwright E2E tests
-npm run lint             # ESLint
-npx tsc --noEmit         # TypeScript type check
-npm run generate-index   # Regenerate content-index.json
-```
+1. Connect `https://github.com/luke-n-alpha/cafelua.com` to [Vercel](https://vercel.com)
+2. Add environment variables in Project Settings
+3. Push to `main` → auto-deploy
 
-### Post Data Architecture
-
-Blog posts live in `public/desk-posts/` as individual Markdown files.
-
-- **Server-side loading**: `src/data/desk/deskLoader.ts` reads `.md` files at build/request time using Node.js `fs`. Do **not** import this from `'use client'` components.
-- **Client-safe data**: `src/data/desk/deskData.ts` exports only types, constants, and `manualPosts`. Safe to import anywhere.
-- **Manual posts**: Short, hand-written posts can be added directly to `manualPosts` in `deskData.ts` (TypeScript inline).
-
-### ISR (Incremental Static Regeneration)
-
-- Desk list page: statically rendered at build time
-- Desk post pages: top 50 pre-built at build time (`DESK_PREBUILD_COUNT`), rest served on-demand with 1-hour cache
-- To change the pre-build count: set `DESK_PREBUILD_COUNT` env var
+---
 
 ## 📊 Stats
 
-| Metric | Count |
-|--------|-------|
-| Desk posts | 2,100+ |
+| | |
+|--|--|
+| Blog posts | 2,100+ |
 | Diary entries | 20 |
-| Desk categories | 8 |
-| Supported languages | 2 (ko, en) |
+| Categories | 8 |
+| Languages | Korean + English |
 
-## Management Tool
+---
 
-A separate local management tool is available:
+## 🧰 Management Tool
 
-- **[cafelua.com-manager](https://github.com/luke-n-alpha/cafelua.com-manager)** — Markdown editor, comment/guestbook management, Git deploy (localhost:3100)
+**[cafelua.com-manager](https://github.com/luke-n-alpha/cafelua.com-manager)** — local Markdown editor, comment/guestbook management, Git deploy (port 3100)
 
-## 🤝 Contributing
-
-This project is currently being developed as a personal project, and a contribution guide will be prepared in the future. Please leave bug reports or feature suggestions through Issues.
+---
 
 ## 📄 License
 
-- **Source code**: MIT
-- **Blog posts & content** (`src/data/desk/posts/`, `src/data/gallery/`): [CC-BY-NC-SA-4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-- **AI context** (CLAUDE.md, AGENTS.md, GEMINI.md): [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/)
-
+- **Source code**: [MIT](./LICENSE)
+- **Blog posts & content** (`public/desk-posts/`, `src/data/gallery/`): [CC-BY-NC-SA-4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+- **AI context files** (CLAUDE.md, AGENTS.md, GEMINI.md): [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/)
