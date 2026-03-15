@@ -12,7 +12,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 async function main() {
     // Dynamic import to handle the TypeScript module
-    const { DESK_POSTS } = await import('../src/data/desk/deskData.js');
+    const { DESK_POSTS } = await import('../src/data/desk/deskLoader.js');
 
     const index = DESK_POSTS.map((p: {
         slug: string;

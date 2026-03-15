@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
-import { DESK_POSTS, toPostCard, type DeskPostCard } from '@/data/desk/deskData';
+import { DESK_POSTS } from '@/data/desk/deskLoader';
+import { toPostCard, type DeskPostCard } from '@/data/desk/deskData';
 
 export const revalidate = 300;
 

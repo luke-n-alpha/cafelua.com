@@ -1,0 +1,54 @@
+---
+date: "2016-03-04"
+titleKo: 차세대 PC와 TV가 될 VR의 현재와 미래 IT에 대한 잡설 / IT이야기
+titleEn: The Present and Future of VR, the Next-Generation
+category: it
+tags:
+  - IT에 대한 잡설
+images:
+  - /desk/20160304-차세대-pc와-tv가-될-vr의-현재와-미래-it에-대한-잡설-it이야기/01.webp
+  - /desk/20160304-차세대-pc와-tv가-될-vr의-현재와-미래-it에-대한-잡설-it이야기/02.webp
+thumbnail: /desk/20160304-차세대-pc와-tv가-될-vr의-현재와-미래-it에-대한-잡설-it이야기/01.webp
+sourceCategoryNo: "41"
+sourceCategory: IT에 대한 잡설
+externalUrl: https://blog.naver.com/fstory97/220645624110
+---
+
+<!-- ko -->
+최근 VR에 대한 관심이 무척이나 뜨거워졌습니다. 그러나, 그 관심에 비해 실제 시장이 열렸다고 보기에는 무리가 있죠. 간만에 제가 보는 VR에 대한 시장 이야기를 해볼까 합니다.
+**2. 게임으로 시작하여 범용 도구로 발전한 PC와 모바일, VR은?** 디지털환경에서 게임이 갖는 의미는 매우 큰 것 같습니다. 제가 기억하는 대부분의 플랫폼이 폭발적으로 성장하게 된 계기에는 바로 게임이 있었습니다. 팩게임을 하고 싶어 사고 싶었던 MSX, AT컴퓨터를 확산 시켰던 윙커멘더, 전국민을 인터넷에 연결한 스타크래프트, 스마트폰을 구매하게 만든 앵그리버드, 카카오톡이 돈된다는 것을 알게한 애니팡까지. 그리고, 현재 VR에 또다시 게임이야기들이 나오고 있습니다.
+{{IMG:1}}**[애니메이션 소드아트온라인의 VR기기 어뮤스피어]**
+늘쌍그랬듯이 과거의 유명 게임을 이식하여 브랜드로 밀어보고자하는 시도가 있고, 새로운 환경에 최적화한 게임을 고민도 하고 있습니다. 과거의 경험에 비춰보면, 전자의 방식으로 주의를 끌 수는 있지만 플랫폼을 끌어올리는 것은 아마도 후자일 것이라고 생각합니다. 그리고 게임으로 하드코어 유저부터 확산된 디지털 기기는 킬러앱의 등장과 함께 범용기기로 거듭납니다. PC는 워드프로세서가, 모바일은 지도가, VR은 또 무엇이 될까요?
+**3. 기술이 정말로 성숙했나?** 기술이 정말로 성숙했는가? 누가 제게 묻는다면, 전 아직 아니오라고 말하겠습니다. 물론, MS의 홀로렌즈나 구글의 매직리프가 UFO를 고문한 수준으로 뚝 떨어질지는 잘 모르겠습니다. 포켓PC판이던 스마트폰에서는 아이폰이 어느정도 비슷한 역할을 했습니다. 하지만 분명한건 현재 느껴지는 체감은 아이폰의 출현을 앞두고 터치폰들이 출현하던 시대즈음 되지 않았나 싶습니다. 따라서 콘텐츠 시장은 현재 조금 빠를수도 있고, 플랫폼 확산이 우선되어야 하며, 기술성숙도는 아직 필요합니다. 늘 그렇지만 개발자들이 만드는 첫 버전은 거지같을 확률이 높습니다. 아이폰이 무르익은건 3g에서, 갤럭시도 2부터였죠. 1을 사면 마루타가 됩니다. 물론, 얼리아답터나 혹은 본 분야에서 기회를 잡고자하면 당연히 구매를 고려해야겠죠. 분명한건 시간문제일뿐 언젠가는 간다는겁니다.
+**4. 그러나 기술문제, 생각보다 문제가 아닐 수 있다.** 기술 미성숙에 대한 많은 이들의 지적 중 하나가, 어지럽다라는 지적이 많습니다. 저도 오래해보니 어지럽더군요. 그런데말입니다. 제가 울펜슈타인 3D를 처음 접했을때 보다는 할 만했습니다. 울펜슈타인3D를 처음 접했던 저는 멀미를 참아가며 플레이를 했습니다. {{IMG:2}}**[FPS의 한획을 그었던 울펜슈타인 3D, 출처:나무위키]****
+**왜냐.. 재밌으니까!  그리고, 좀 지나니 멀미는 줄어들었습니다. 왜냐하면 멀미란 것이 기본적으로 뇌에서 인지하는 부조화에 대한 거부반응에 가까운데, 뇌가 적응하면 크게 문제가 아닐 수 있기 때문입니다. 사람의 뇌는 3차원의 인지를 후천적 경험에 의해 학습합니다. 선천적 맹인이 눈을 떴을때, 맹인은 사진의 사과와 실제사과를 구분하지 못합니다. 다시 말하면 현재 리얼월드에서 학습된 우리의 뇌가 VR에서 느끼는 거부감은 VR이 익숙해지면 덜해질 수 있다는 의미 입니다. 공각기동대의 주인공인 쿠사나기모코토 소령은 갓난아이 일때 전신전뇌(몸을 기계로 바꾸는것)화 한것으로 묘사되는데, 덕분에 쿠사나기 소령은 전신의체(로봇몸과 정신)을 다루는데 탁월한 능력을 발휘하는 것으로 나옵니다.  하지만, 아직은 VR이 아이들에게 부작용을 일으킬지 모른다는 의심이 더 많이 퍼져있는것은 현실인것 같습니다. 얼마전 현대백화점에 가서 기어체험관에서 우리 딸과 아들한테는 진행요원이 체험을 막았습니다. (이미 카드보드와 코코몽 3d eye 로 익숙해진 아이들인데.. ㅜㅜ)  개인적으로는 VR이 아이들에게 큰 위해를 가져올것으로 생각하지 않습니다. 왜냐하면 인간의 뇌란 생각보다 더 적응력이 좋기 때문입니다. 그리고 혼란해할 것 같지만, 뇌는 유사형태의 다른정보를 혼란해 하기보다는 학습효과가 더 강화됩니다. 숫자 1과 영문 I가 비슷하다고, 뇌에 부정적인 영향을 주지 않는것 처럼 말입니다. 다만, 각종 기기에서 나오는 전자파가 DNA파괴의 위험성을 가지고 있다는 이야기가 더 걱정이고, 적절한 콘텐츠가 나온다면 기술적 문제는 커버될것이라고 봅니다. 언제부터 우리가 게임 그래픽이 게임의 전부가 되었나요?
+**5. VR 생태계의 헤게모니를 누가 잡을까?** 결국, 모든 기업들과 정부의 고민은 VR생태계의 헤게모니를 어떻게 가져갈 것인가? 일 겁니다. 콘텐츠를 만들어야 하나? 혹은 플랫폼? 플랫폼만 만든다고 콘텐츠가 거저 오나? 기기는? 이러한 노력은 CPND의 모든 레이어에서 동시다발적으로 이루어질 겁니다. 일반적으로는 Device에서 시작해서 Contents로 이어져가며 성장한 이후에, Platform을 잡는자가 결국 헤게모니를 가져가게 됩니다. 그리고 현재로서는 해당 시장에서 가장 앞서나가고 있는것은 구글과 페이스북 같습니다. 각종 VR영상들이 이미 유투브와 페이스북을 통해 유통되고 있기 때문입니다.
+**[ 아래 영상을 제대로 보려면 유투브에서 직접 보셔야 합니다.]**  그러나, 여전히 남은 고민은 VR영상이 VR이 킬러 콘텐츠일까? 하는 점입니다. 우리는 좀 더 기존의 형식을 버려야할지 모릅니다. 현재까지의 플랫폼의 역사에 의하면 새로운 플랫폼의 킬러 콘텐츠는 플랫폼이 가진 차별성을 가장 극대화하면서 필수적인 가치를 던져주었던 것이었습니다. VR에는 과연 무엇이 될 수 있을까요? 이를 알기까지는 아마도 다양한 실험들이 이루어질 것으로 보입니다.
+
+<!-- en -->
+Recently, interest in VR has become incredibly hot. However, compared to that interest, it's difficult to say that the actual market has opened up. For the first time in a while, I'd like to talk about the VR market from my perspective.
+
+**1. VR is the next-generation PC and TV, AR is the next-generation mobile.**
+First, what I believe VR signifies is the next-generation PC and TV. PCs are representative productivity devices, and TVs are representative entertainment devices. The commonality between these two devices is the physical size limitation of their displays. VR's biggest advantage is that it eliminates this physical size limitation. To explain it with an analogy from past experiences, if you think of a PC as a newspaper and VR as the internet, it will be easier to understand. Once a newspaper was published, it was difficult to change, and the value of the small space in a headline was overwhelmingly expensive. Then, with the advent of the internet, banners on Naver's main page change according to the user's group, in real-time, or even by region. When I joined Naver in 2006, to borrow Naver's expression, the main page, which opened 800 million times a day, was how many tens of thousands of times the size of a football field? Anyway, they used the expression that it had an enormous amount of space. But this was a story limited by the size of the monitor. What if we change this to 3D? VR, which adds 360-degree space and depth beyond a 27-inch monitor, changes the meaning of space. In the case of AR, it provides an enhanced real-life experience, so it's essentially mobile. Of course, AR is a market that will grow larger in the future, and if it covers 100% of space, AR would then mean VR, so it seems fair to say that AR encompasses VR. However, just as mobile followed PC, this is expected to happen sequentially.
+
+**2. PC and Mobile started with games and evolved into general-purpose tools, what about VR?**
+In the digital environment, games seem to hold significant meaning. Most of the platforms I remember had games as the catalyst for their explosive growth. From the MSX I wanted to buy to play cartridge games, Wing Commander which popularized AT computers, StarCraft which connected the entire nation to the internet, Angry Birds which made people buy smartphones, to Anipang which showed that KakaoTalk could make money. And currently, game stories are emerging again for VR.
+
+{{IMG:1}}**[VR device Amusphere from the anime Sword Art Online]**
+
+As always, there are attempts to port famous past games to push them as a brand, and there are also considerations for games optimized for the new environment. Based on past experience, while the former method can attract attention, I believe it will likely be the latter that elevates the platform. And digital devices, which spread from hardcore users through games, are reborn as general-purpose devices with the emergence of killer apps. For PCs, it was word processors; for mobile, it was maps; what will it be for VR?
+
+**3. Has the technology truly matured?**
+Has the technology truly matured? If someone asks me, I would still say no. Of course, I'm not sure if MS's HoloLens or Google's Magic Leap will suddenly appear at an incredibly advanced level, as if they had extracted secrets from a UFO. In the smartphone era, which was once the Pocket PC era, the iPhone played a somewhat similar role. But what's clear is that the current feeling is akin to the era when touch phones were emerging, just before the iPhone appeared. Therefore, the content market might be a bit premature right now, platform dissemination should be prioritized, and technological maturity is still needed. As always, the first versions created by developers are likely to be terrible. The iPhone matured with the 3G, and the Galaxy from its second iteration. If you buy the first version, you become a guinea pig. Of course, early adopters or those looking to seize opportunities in this field should naturally consider purchasing. What's clear is that it's only a matter of time; it will happen eventually.
+
+**4. However, technical issues might not be as problematic as thought.**
+One of the common criticisms regarding technological immaturity is that it causes dizziness. I also felt dizzy after using it for a long time. But here's the thing. It was more tolerable than when I first encountered Wolfenstein 3D. When I first played Wolfenstein 3D, I endured motion sickness to play it.
+{{IMG:2}}**[Wolfenstein 3D, a landmark in FPS history, Source: Namuwiki]**
+**Because... it was fun!** And after a while, the motion sickness decreased. This is because motion sickness is essentially a rejection reaction to a perceived incongruity in the brain, and it might not be a big problem once the brain adapts. The human brain learns 3D perception through acquired experience. When a person born blind gains sight, they cannot distinguish between an apple in a photograph and a real apple. In other words, the rejection our brains, trained in the real world, feel in VR can lessen as we become accustomed to VR. Major Motoko Kusanagi, the protagonist of Ghost in the Shell, is depicted as having undergone full-body cyberization (changing her body to a machine) as an infant, which allows her to exhibit exceptional ability in handling her full-body prosthesis (robot body and mind). However, it seems to be the reality that suspicions about VR potentially causing side effects in children are more widespread. Recently, when I went to Hyundai Department Store, an attendant at the Gear experience zone prevented my daughter and son from trying it. (Even though they are already familiar with Cardboard and Cocomong 3D Eye... ㅜㅜ) Personally, I don't think VR will cause significant harm to children. This is because the human brain is more adaptable than we think. And while it might seem confusing, the brain doesn't get confused by similar but different information; rather, its learning effect is strengthened. Just as the similarity between the number 1 and the English letter 'I' doesn't negatively affect the brain. However, I am more concerned about the claims that electromagnetic waves from various devices pose a risk of DNA damage, and I believe that if appropriate content emerges, technical issues will be covered. Since when did game graphics become the entirety of a game for us?
+
+**5. Who will seize the hegemony of the VR ecosystem?**
+Ultimately, the concern for all companies and governments will be how to seize hegemony in the VR ecosystem. Should they create content? Or a platform? If you only create a platform, will content just come for free? What about devices? These efforts will occur simultaneously across all layers of CPND (Content, Platform, Network, Device). Generally, after starting with Devices and growing through Contents, the one who captures the Platform ultimately gains hegemony. And currently, Google and Facebook seem to be leading in this market. This is because various VR videos are already being distributed through YouTube and Facebook.
+
+**[To view the video below properly, you must watch it directly on YouTube.]**
+
+However, the remaining question is whether VR video will be VR's killer content. We might need to abandon existing formats more. According to the history of platforms to date, the killer content for a new platform was always something that maximized the platform's unique differentiation while providing essential value. What exactly could that be for VR? It seems likely that various experiments will be conducted until we find out.

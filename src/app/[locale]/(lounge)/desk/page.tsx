@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import MasterDeskPage from '@/components/MasterDeskPage';
+import { getDeskPostListItems } from '@/data/desk/deskLoader';
 
 interface Props {
     params: Promise<{ locale: string }>;
@@ -34,5 +35,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function Desk() {
-    return <MasterDeskPage />;
+    const posts = getDeskPostListItems();
+    return <MasterDeskPage posts={posts} />;
 }

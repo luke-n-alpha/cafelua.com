@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { DESK_POSTS, getDeskPostBySlug, getAdjacentPosts, getFallbackPosts } from '@/data/desk/deskData';
+import { DESK_POSTS, getDeskPostBySlug, getAdjacentPosts, getFallbackPosts } from '@/data/desk/deskLoader';
 import DeskPost from '@/components/DeskPost';
 
 interface Props {

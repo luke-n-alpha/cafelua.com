@@ -5,13 +5,13 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Eye } from 'lucide-react';
 import UnderConstruction from './UnderConstruction';
-import { DESK_POSTS, DESK_CATEGORIES, getTagEn, type DeskCategory } from '@/data/desk/deskData';
+import { DESK_CATEGORIES, getTagEn, type DeskCategory, type DeskPostListItem } from '@/data/desk/deskData';
 import './MasterDeskPage.css';
 
 const DEFAULT_DESK_THUMBNAIL = '/master-desk-background-img/master-desk-background.png';
 const MISSING_IMAGE_FALLBACK = '/desk/missing-image.webp';
 
-const MasterDeskPage: React.FC = () => {
+const MasterDeskPage: React.FC<{ posts: DeskPostListItem[] }> = ({ posts }) => {
     const { t, i18n } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -68,8 +68,8 @@ const MasterDeskPage: React.FC = () => {
     }, []);
 
     const basePosts = category === 'all'
-        ? DESK_POSTS
-        : DESK_POSTS.filter(p => p.category === category);
+        ? posts
+        : posts.filter(p => p.category === category);
 
     const tagStats = useMemo(() => {
         const map = new Map<string, { count: number; latest: string }>();
@@ -289,10 +289,10 @@ const MasterDeskPage: React.FC = () => {
                                     className="desk-card"
                                     onClick={() => handlePostClick(post.slug)}
                                 >
-                                    {(post.thumbnail || post.images?.[0] || DEFAULT_DESK_THUMBNAIL) ? (
+                                    {(post.thumbnail || DEFAULT_DESK_THUMBNAIL) ? (
                                         <img
                                             className="desk-card-thumb"
-                                            src={post.thumbnail || post.images?.[0] || DEFAULT_DESK_THUMBNAIL}
+                                            src={post.thumbnail || DEFAULT_DESK_THUMBNAIL}
                                             alt={isKo ? post.titleKo : post.titleEn}
                                             loading="lazy"
                                             onError={(e) => {

@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
-import { DESK_POSTS } from '../src/data/desk/deskData';
+import { DESK_POSTS } from '../src/data/desk/deskLoader';
 import { DIARY_ENTRIES } from '../src/data/gallery/diaryData';
 
 const __filename = fileURLToPath(import.meta.url);

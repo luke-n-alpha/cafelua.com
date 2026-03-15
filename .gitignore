@@ -20,6 +20,9 @@ test-results
 .env.*
 !.env.example
 
+# Naver posts (large legacy TypeScript files, replaced by markdown)
+src/data/desk/_naver-posts*.ts
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
