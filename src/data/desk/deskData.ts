@@ -298,6 +298,215 @@ If you're interested, clone [Naia OS](https://github.com/nextain/naia-os) and op
         externalUrl: 'https://naia.nextain.io/ko/blog/20260307-ai-native-opensource',
     },
     {
+        slug: '20260427-MiniCPM-4.5-omni-vLLM-omni-포팅완료',
+        date: '2026-04-27',
+        titleKo: '개인PC에도 나만의 목소리로 AI와 라이브 대화를! MiniCPM-4.5-omni를 vLLM-omni에 포팅완료',
+        titleEn: "Live AI Conversations with Your Own Voice on Your PC! MiniCPM-4.5-omni Ported to vLLM-omni",
+        contentKo: `> 원문: [Naia 블로그 — MiniCPM-4.5-omni를 vLLM-omni에 포팅완료](https://naia.nextain.io/ko/blog/20260427-minicpm45-vllm-omni-porting-complete)
+
+![MiniCPM-4.5-omni × Naia](/desk/20260427-MiniCPM-4.5-omni-vLLM-omni-포팅완료/hero.ko.webp)
+
+[Gemini 3.1 Flash Live 지원 + MiniCPM-o 4.5 vLLM 도전 — Naia OS의 S2S 실시간 음성 AI 개발기](https://naia.nextain.io/ko/blog/20260310-voice-ai-model-lock) 이후 한동안 글도 업데이트를 올리지 못했습니다.
+
+그 동안 좀 많은 일이 있었습니다. 넥스테인이 한국의 기독교 포털(www.onmam.com)의 운용을 맡아 AI 적용에 대해 지원을 이야기하고 있었고, 한국의 정부과제에 선정되어 Naia의 서비스도 탄력을 받을 수 있게 되었습니다. Vroid Hub의 기본 아바타가 아닌 진짜 Naia의 아바타를 선보일 수 있게 될 것 같습니다.
+
+그리고 이전 글 끝에서 *"다음주에는 그래픽카드를 좀 빌려서 하기로 했으니 좀 상황이 쉬워지리라 생각합니다"* 라고 적었었는데, 그 약속을 이제서야 지킬 수 있게 되었습니다. RTX 3090 두 장 환경에서 MiniCPM-o 4.5를 vllm-omni로 포팅하고 Naia 클라이언트에 연결, 실시간 영어 대화 + 오디오 레퍼런스(voice cloning)까지 1차 동작 검증을 끝냈습니다.
+
+> 참고로 **MiniCPM-o 4.5를 vllm-omni에 올린 건 저희가 처음**이며, 해외에서도 어디까지 됐는지 궁금해하시는 분들도 계셨습니다. upstream의 [#1182](https://github.com/vllm-project/vllm-omni/issues/1182)에 다른 분의 시도가 있긴 한데 머지된 적은 없고, 저희도 별도 트랙으로 진행해 왔습니다. 적당히 굴러가는 수준까지는 와 있고, 지금은 *업스트림 메인테이너가 받아줄 수준*으로 정리하는 단계입니다.
+
+---
+
+## 왜 MiniCPM-o 4.5를 목표 했나?
+
+이전 글에서 적었지만 다시 정리하면, 개인이 RTX 3090 한 장 수준에서 돌릴 수 있으면서 오디오 레퍼런스(voice cloning)와 파인튜닝이 동시에 가능한 옴니 모델은 현재 MiniCPM-o 4.5가 사실상 유일합니다.
+
+- **GPT-4o / Gemini Live** — 클라우드 전용, 가중치 비공개, 파인튜닝 불가
+- **Moshi** — 오픈소스이고 풀듀플렉스 우수, 그러나 영어/프랑스어 위주 + 커뮤니티 비활성
+- **Qwen3-Omni-30B** — 30B라 양자화 없이는 24 GB 한 장에 안 들어가고, 양자화하면 음성 출력이 깨짐
+- **MiniCPM-o 4.5** — 9B (Whisper-medium + Qwen3-8B + CosyVoice2 + SigLip2 결합), 24 GB 한 장으로 돌고, 오디오 레퍼런스로 voice clone, 그리고 **파인튜닝 가능**
+
+하지만 아직 한국어 미지원이 단점이자 저희가 기여할 수 있는 바일 것 같습니다. 그래서 이번 AI 챔피언 대회에 *"너를 기억해"* 라는 팀 이름으로 vLLM-omni 한글 파인튜닝 작업과 Naia-Memory를 이용한 버튜버 서비스를 해보겠다고 제출하기도 했습니다.
+
+*"내 PC에서 나를 기억하고 나만의 목소리로 이야기하는 AI 버튜버는 누구나 가지고 싶지 않을까요?"* 이걸 가능하게 하기 위해 아래 네 가지가 동시에 충족되어야 한다고 생각합니다.
+
+1. **로컬에서 도는 옴니 모델** — STT/LLM/TTS 파이프라인이 아니라 음성-음성 end-to-end. 파이프라인 방식은 누적 지연과 운율 손실이 너무 큽니다. → MiniCPM-o 4.5
+2. **오디오 레퍼런스(voice cloning)** — *"이 목소리로 말해"* 한 번 들려주면 그 음색으로 대화. → CosyVoice2의 spk_emb 기반 클로닝
+3. **장기 기억** — 세션마다 초기화 안 되는, 사용자를 기억하는 메모리 시스템. → 별도로 만들고 있는 [Naia Memory](https://github.com/nextain/naia-memory) (4-tier 뇌과학 영감 기억 시스템)
+4. **한국어** — 위 셋이 한국어로 동작해야 일상에서 씀. → CosyVoice2 한국어 파인튜닝 (AIHub 데이터 확보 완료, GPU 지원 시 즉시 착수)
+
+곧 공개할 또 다른 트랙도 있습니다. **naia-sing** — 이름에서 뭔지 짐작이 가실 듯합니다. 기대해주세요.
+
+---
+
+## 데모 1 — Naia 클라이언트에서 대화
+
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/zeYC1Z9xkwY" title="MiniCPM 4.5-o on Naia" frameborder="0" allowfullscreen></iframe>
+
+> 데모 영상에서 제가 영어를 잘 못하는 점은 양해 부탁드립니다.
+
+vllm-omni에 MiniCPM 4.5-o를 포팅하고 Naia 데스크톱 앱에 연결해 대화를 테스트한 영상입니다. 하드웨어는 RTX-3090 ×2 (2-way), 양자화 없이 bf16. 옴니 모델(S2S, end-to-end speech-to-speech)의 특징답게 부드럽게 흘러가는 대화 흐름과 자연스러운 감정 표현이 그대로 살아납니다. 현재는 영어와 중국어를 지원합니다.
+
+## 데모 2 — MiniCPM-o 데모 페이지 + 오디오 레퍼런스
+
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/KIGL76S54eA" title="MiniCPM 4.5-o DEMO with audio reference" frameborder="0" allowfullscreen></iframe>
+
+MiniCPM-o 4.5의 공식 데모 페이지를 vllm-omni 백엔드로 연결한 포크입니다. **오디오 레퍼런스(voice cloning)** 동작 예시를 함께 담았습니다. WAV 파일을 업로드하면 그 목소리의 음색·억양으로 응답을 합성합니다. 서버 측에서 SHA-256 키 LRU 캐시로 동일 레퍼런스 재계산을 피해 첫 응답 후에는 추가 오버헤드가 거의 없습니다.
+
+---
+
+## 구현 내역 요약
+
+세 개의 리포지토리에서 작업했습니다.
+
+| 리포 | 역할 |
+|---|---|
+| [\`nextain/vllm-omni\`](https://github.com/nextain/vllm-omni) | vllm-omni 포크 — MiniCPM-o 4.5 모델 모듈 + Thinker→Talker→Code2Wav 3-stage 파이프라인 + voice clone |
+| [\`nextain/MiniCPM-o-Demo-forvLLM-omni\`](https://github.com/nextain/MiniCPM-o-Demo-forvLLM-omni) | 공식 PyTorch 데모의 포크 — \`backend=vllm_omni\` 모드 추가, audio-duplex 페이지에서 vllm-omni URL 직접 입력/검증 가능 |
+| [\`nextain/naia-os\`](https://github.com/nextain/naia-os) | Naia 데스크톱 앱 — \`MiniCpmOConfig.refAudio\` first-class 필드 추가, 브라우저(Tauri 웹뷰)에서 AudioContext → 16 kHz mono → base64 WAV 인코더 |
+
+Naia 클라이언트는 데모 게이트웨이를 거치지 않고 vllm-omni의 \`/v1/realtime\` (OpenAI Realtime API 호환) 에 **직결**합니다. 전 작업은 [Claude Code](https://www.anthropic.com/claude-code)로 진행됐습니다.
+
+---
+
+## 하지만 AI slop은 아직
+
+이전 글에서 *"이 작업의 목적은 AI-native Opensource 생태계의 실현, AI가 ai slop 없이 오픈소스에 올바르게 기여할 수 있다는 것이 가능하게 하고 싶어 하는 실험"* 이라고 적었는데, 현재도 그 부분이 가장 어렵습니다. 최종 점검을 하니 역시 또 문제점이 나타났습니다. 하지만 한시라도 빨리 공유 드리고 싶어 이 문제를 해결하기 전에 먼저 이 포스팅을 썼습니다.
+
+지난 며칠 동안 다른 AI 에이전트를 적대적 리뷰어로 4번 돌렸습니다. 1차에서는 **2 BLOCKER + 13 MAJOR**. 그 중 한 건은 *"예제 클라이언트가 동작 안 함 — 백엔드는 오디오 입력 기반인데 text-driven으로 작성됨"* 같은 명백한 거짓말. 2차에서 **1 MAJOR** (예제가 Python 3.13에서 제거된 stdlib \`audioop\` 사용). 3·4차에서 클린 패스. 우리 룰(2 연속 클린)은 충족했습니다. 그런데 거기서 멈추지 않고 **vllm-project 메인테이너 시점**으로 한 번 더 돌렸는데 여전히 문제가 있더군요.
+
+- **3 BLOCKER**:
+  - 단일 모델 기능 위해 \`chunk_transfer_adapter.py\`의 cross-cutting invariant (whitelist→blacklist) 변경
+  - \`prompt_len_override\` 가 MiniCPM-o 전용인데 shared infra 에 위치
+  - \`chat_template_kwargs.ref_audio\` 사이드채널은 layer 위반 — 옆에 first-class 필드 precedent 있음
+- **5 MAJOR + 8 MINOR**
+
+내부 룰은 통과하지만 외부 메인테이너 기준으로는 첫 라운드에 머지가 안될 거라고 합니다. 거기에 더해 upstream/main이 우리 fork의 merge-base 이후 또 업데이트되어 머징 작업도 추가 진행 중입니다.
+
+---
+
+## 다음 작업
+
+1. 업스트림 관점 BLOCKER/MAJOR 수정 — 진행 중
+2. upstream/main 머지 + 충돌 해소 — 곧
+3. PR 제출 — 위 두 개 끝나면. 단일 PR vs 2 PR 분할(모델 모듈 / voice clone) 결정 보류 중
+4. 한국어 파인튜닝 — 모델 자체. CosyVoice2(Code2Wav 백본)가 한국어로 학습 안 된 게 가장 큰 장벽. 현재 한국어 텍스트 생성은 정상이나 음성 합성이 깨져서 들립니다.
+
+이어지는 작업은 또 정리해서 공유 드리겠습니다. AI도 오픈소스에 기여를 할 수 있다는 것을 보여드리겠습니다. 댓글이나 GitHub Issue 환영합니다.
+
+---
+
+**Repos**
+- [nextain/vllm-omni](https://github.com/nextain/vllm-omni)
+- [nextain/MiniCPM-o-Demo-forvLLM-omni](https://github.com/nextain/MiniCPM-o-Demo-forvLLM-omni)
+- [nextain/naia-os](https://github.com/nextain/naia-os)
+
+**Naia**: <https://naia.nextain.io>`,
+        contentEn: `> Original: [Naia Blog — MiniCPM-4.5-omni Ported to vLLM-omni](https://naia.nextain.io/en/blog/20260427-minicpm45-vllm-omni-porting-complete)
+
+![MiniCPM-4.5-omni × Naia](/desk/20260427-MiniCPM-4.5-omni-vLLM-omni-포팅완료/hero.en.webp)
+
+A follow-up to [Gemini 3.1 Flash Live Support + MiniCPM-o 4.5 vLLM Challenge — Naia OS's S2S Real-time Voice AI Development Log](https://naia.nextain.io/en/blog/20260310-voice-ai-model-lock). After that one, I went quiet for a while.
+
+A lot has happened since. Nextain took on operating a Korean Christian portal (www.onmam.com) and we've been talking about its AI integration; on the Naia side, we were selected for a Korean government R&D project, which gives the service real momentum. Soon we'll be able to show Naia's *real* avatar — not just the default Vroid Hub one.
+
+At the end of the previous post I wrote *"next week I'm borrowing some graphics cards, so things should get easier"* — and I'm finally able to keep that promise. On a two-RTX-3090 setup we ported MiniCPM-o 4.5 to vLLM-omni, hooked it up to the Naia client, and verified real-time English conversation + audio reference (voice cloning) end-to-end.
+
+> For context, **we are the first to put MiniCPM-o 4.5 onto vLLM-omni**, and a few people abroad have actually been asking how far we've got. There's another attempt by someone else at upstream's [#1182](https://github.com/vllm-project/vllm-omni/issues/1182), but it was never merged, and we've been on a separate track. It runs at a reasonable level now, and we're at the stage of *cleaning it up to a level upstream maintainers would actually accept*.
+
+---
+
+## Why target MiniCPM-o 4.5?
+
+I covered this in the previous post but it's worth restating: **MiniCPM-o 4.5 is effectively the only omni model an individual can run on a single RTX 3090 that supports both audio-reference voice cloning *and* fine-tuning at the same time**.
+
+- **GPT-4o / Gemini Live** — cloud-only, weights closed, no fine-tuning
+- **Moshi** — open source with excellent full-duplex, but English/French centric and the community has gone quiet
+- **Qwen3-Omni-30B** — at 30B it doesn't fit on a single 24 GB card without quantization, and quantization breaks the audio output
+- **MiniCPM-o 4.5** — 9B (Whisper-medium + Qwen3-8B + CosyVoice2 + SigLip2 stitched together), runs on a single 24 GB card, voice cloning via audio reference, and **fine-tunable**
+
+The Korean-language gap is a real downside *and* the place we can contribute. For this round of the AI Champion competition we submitted under the team name **"Remember You"**, proposing a vLLM-omni Korean fine-tuning effort plus a VTuber service built on Naia Memory.
+
+*"Wouldn't everyone want an AI VTuber on their own PC, that remembers them and speaks in their own voice?"* To make that real, four pieces have to come together — and these are exactly what we're focused on:
+
+1. **A locally runnable omni model** — speech-to-speech end-to-end, not an STT/LLM/TTS pipeline. → MiniCPM-o 4.5
+2. **Audio reference (voice cloning)** — *"speak in this voice"* — play one sample once and the model converses in that timbre. → CosyVoice2 spk_emb-based cloning
+3. **Long-term memory** — a memory system that doesn't reset every session, that actually remembers the user. → our own [Naia Memory](https://github.com/nextain/naia-memory)
+4. **Korean** — for daily use, all three of the above need to work in Korean. → CosyVoice2 Korean fine-tuning (AIHub data already secured)
+
+There's another track coming soon as well: **naia-sing** — you can probably guess what it is from the name. More on that shortly.
+
+---
+
+## Demo 1 — Conversation on the Naia Client
+
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/zeYC1Z9xkwY" title="MiniCPM 4.5-o on Naia" frameborder="0" allowfullscreen></iframe>
+
+> Please excuse my imperfect English in the demo video.
+
+This is a recording of a conversation test after porting MiniCPM 4.5-o to vLLM-omni and connecting it to the Naia desktop app. Hardware: RTX-3090 ×2 (2-way), bf16 with no quantization. As you'd expect from an omni model (S2S, end-to-end speech-to-speech), the conversation flows smoothly and the natural emotional expression is preserved. English and Chinese are supported today.
+
+## Demo 2 — MiniCPM-o demo page + audio reference
+
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/KIGL76S54eA" title="MiniCPM 4.5-o DEMO with audio reference" frameborder="0" allowfullscreen></iframe>
+
+This is a fork of the official MiniCPM-o 4.5 demo page wired to a vLLM-omni backend. It includes an **audio reference (voice cloning)** example — upload a WAV file and the response is synthesized in that voice's timbre and intonation.
+
+---
+
+## Implementation Summary
+
+Work spread across three repositories.
+
+| Repo | Role |
+|---|---|
+| [\`nextain/vllm-omni\`](https://github.com/nextain/vllm-omni) | vLLM-omni fork — MiniCPM-o 4.5 model module + 3-stage pipeline + voice cloning |
+| [\`nextain/MiniCPM-o-Demo-forvLLM-omni\`](https://github.com/nextain/MiniCPM-o-Demo-forvLLM-omni) | Fork of the official PyTorch demo — adds a \`backend=vllm_omni\` mode and lets you set/verify the vLLM-omni URL right from the audio-duplex page |
+| [\`nextain/naia-os\`](https://github.com/nextain/naia-os) | Naia desktop app — adds first-class \`MiniCpmOConfig.refAudio\` field, plus an in-browser (Tauri webview) \`AudioContext\` → 16 kHz mono → base64 WAV encoder |
+
+The Naia client connects **directly** to vLLM-omni's \`/v1/realtime\` (OpenAI Realtime API compatible) — bypassing the demo gateway entirely. Everything was driven through [Claude Code](https://www.anthropic.com/claude-code).
+
+---
+
+## But AI Slop Is Still There
+
+In the [previous post](https://naia.nextain.io/en/blog/20260310-voice-ai-model-lock) I wrote *"the goal of this work is to make an AI-native open-source ecosystem real — to show AI can contribute to open source without ai slop"*. That's still the hardest part, and a final pass turned up new problems again.
+
+I ran another AI agent as an adversarial reviewer four times. Round 1: **2 BLOCKER + 13 MAJOR**. One was a flat-out lie sitting in the code: *"the example client doesn't work — backend is audio-driven but the example was written text-driven"*. Round 2: **1 MAJOR** (the example used the stdlib \`audioop\` module, *removed in Python 3.13* under PEP 594). Rounds 3 and 4: clean. Then I ran one more pass — **from a vLLM-project maintainer's perspective** — and it still has issues:
+
+- **3 BLOCKER**:
+  - Cross-cutting invariant in \`chunk_transfer_adapter.py\` flipped (whitelist → blacklist) for a single model's feature
+  - \`prompt_len_override\` is MiniCPM-o-specific yet sits in shared infra
+  - The \`chat_template_kwargs.ref_audio\` sidechannel is a layering violation
+- **5 MAJOR + 8 MINOR**
+
+Internal rules say it's good; external maintainer standards say it won't merge in a single round. On top of that, upstream/main has moved further past our fork's merge-base, so we're adding the merge work too.
+
+---
+
+## Next Steps
+
+1. Fix the upstream-perspective BLOCKER/MAJOR — in progress
+2. Merge upstream/main + resolve conflicts — coming up
+3. Submit the PR — after the two above
+4. Korean fine-tuning — at the model level, biggest remaining wall
+
+I'll keep sharing as the work continues. The point is to show that AI can contribute meaningfully to open source. Comments and GitHub Issues are welcome.
+
+---
+
+**Repos**
+- [nextain/vllm-omni](https://github.com/nextain/vllm-omni)
+- [nextain/MiniCPM-o-Demo-forvLLM-omni](https://github.com/nextain/MiniCPM-o-Demo-forvLLM-omni)
+- [nextain/naia-os](https://github.com/nextain/naia-os)
+
+**Naia**: <https://naia.nextain.io>`,
+        category: 'ai',
+        tags: ['MiniCPM-o', 'vLLM-omni', 'Naia', 'voice-cloning', 'omni-model', 'opensource', 'AI-native'],
+        thumbnail: '/desk/20260427-MiniCPM-4.5-omni-vLLM-omni-포팅완료/hero.ko.webp',
+        images: [],
+        externalUrl: 'https://naia.nextain.io/ko/blog/20260427-minicpm45-vllm-omni-porting-complete',
+    },
+    {
         slug: '20260306-카페루아-인프라-거의-공짜로-굴리는-법',
         date: '2026-03-06',
         titleKo: '카페루아 인프라 — 개인 웹사이트를 (거의) 공짜로 굴리는 법',
