@@ -31,6 +31,160 @@ export const DESK_CATEGORIES: { key: DeskCategory | 'all'; labelKo: string; labe
 
 export const manualPosts: DeskPost[] = [
     {
+        slug: '20260501-harness-engineering-onmam-story',
+        date: '2026-05-01',
+        titleKo: '넥스테인 x 온맘닷컴 AX의 사례 공유를 통한 하네스의 이해',
+        titleEn: 'Understanding Harness Engineering Through the Nextain x Onmam AX Case Study',
+        contentKo: `> 원문: [Naia 블로그 — 넥스테인 x 온맘닷컴 AX의 사례 공유를 통한 하네스의 이해](https://naia.nextain.io/ko/blog/harness-engineering-onmam-story)
+
+본 포스팅은 2026년 5월 2일 [다바코단](https://www.davacodan.com/) 다오랩 바이브코딩 길드에서 '하네스 엔지니어링'에 대한 사례 소개로 발표한 내용입니다.
+
+넥스테인은 SW제품을 가진 기업의 AX에 대한 기술을 개발하고 지원하는 기업으로, 한국 교회 포털인 온맘닷컴의 시스템운용을 이관 받고, AX에 대한 작업을 진행하고 있습니다. 이에 대한 경험으로서 하네스 엔지니어링을 설명하는 사례로 행사에서 공유했습니다.
+
+![하네스 엔지니어링 사례](/desk/harness-engineering-onmam-story/hero-en.webp)
+
+> **이 글의 한 줄 메시지**
+> "AI를 잘 쓰는 것보다, AI가 실수하지 않는 환경을 만드는 게 더 중요하다."
+
+---
+
+## 1. 먼저, 우리 서비스 소개
+
+**온맘닷컴** — 전국 13,876개 교회가 사용하는 교회 관리 플랫폼
+
+인프라: 구형 IDC 서버 → **2026년 4월 GCP(구글 클라우드) 완전 이전** 완료
+
+---
+
+## 2. 사건 하나로 시작하겠습니다
+
+2026년 4월, 온맘닷컴 전체 서비스 무응답 장애 발생. 원인은 `Board.php`의 게시판 목록 조회 쿼리 — **13,876개 교회 전체 데이터를 매번 풀스캔**하는 쿼리가 145개 동시 실행되어 서버 마비.
+
+이 코드를 AI와 함께 작성했다면? AI는 "이 코드가 13,876개 교회 환경에서 어떻게 작동하는지" 모릅니다. **AI가 우리 서비스를 모르는 채로 코드를 짜면 어떻게 막지?** — 이게 하네스 엔지니어링의 출발점입니다.
+
+---
+
+## 3. 하네스 엔지니어링 — 30초 설명
+
+> 말(馬)을 다룰 때 고삐와 마구(Harness)가 필요하듯, AI 에이전트에게도 제약·가이드·검증 장치가 필요하다.
+
+**에이전트 = 모델 + 하네스**
+
+하네스 = AI가 일하는 환경 전체를 설계하는 것. 단순히 "AI한테 좋은 질문하기"가 아니라, AI가 실수했을 때 **구조적으로 같은 실수를 못 하게 만드는** 시스템 설계.
+
+---
+
+## 4. 온맘닷컴에서 실제로 만든 하네스들
+
+### [하네스 #1] AGENTS.md — AI에게 주는 "우리 서비스 지도"
+AI가 온맘닷컴 코드를 건드리기 전에 반드시 읽는 파일. "Board.php에서 GROUP BY 파생 테이블 패턴은 절대 금지" 같은 규칙이 들어있음.
+
+### [하네스 #2] Hooks — AI 행동 전후에 작동하는 "안전장치"
+운영 배포 차단, 승인 없는 git push 차단, 파괴적 git 명령 차단 등 물리적 안전장치.
+
+### [하네스 #3] Alpha 환경 — AI가 실험하는 전용 운동장
+AI와 함께 하는 모든 작업은 alpha에서만. 2026년 4월 29일, AI가 `home.onmam.com`을 잘못된 앱으로 착각한 실수가 alpha 덕분에 서비스 영향 없이 하네스에 기록됨.
+
+### [하네스 #4] Skills — AI에게 주는 "우리만의 도구들"
+이메일, SMS, 서비스 모니터링 등 스킬 파일로 AI가 매번 물어보지 않고 자동으로 사내 규칙을 따르게 함.
+
+---
+
+## 5. 정리 — 비개발자에게 전하고 싶은 것
+
+**AI 시대에 "잘 한다"의 정의가 바뀌고 있습니다.**
+
+예전: 코드를 잘 짜는 개발자  
+지금: AI가 코드를 짜는 환경을 잘 설계하는 개발자
+
+그 환경 설계의 핵심이 **하네스 엔지니어링**입니다.`,
+        contentEn: '',
+        category: 'ai' as const,
+        tags: ['harness-engineering', 'onmam', 'AX', 'AI'],
+        thumbnail: '/desk/harness-engineering-onmam-story/hero-en.webp',
+        images: [],
+        externalUrl: 'https://naia.nextain.io/ko/blog/harness-engineering-onmam-story',
+    },
+    {
+        slug: '20260501-harness-engineering-final',
+        date: '2026-05-01',
+        titleKo: '하네스 엔지니어링 완전 해설 — 탄생·개념·격차·미래를 한 번에',
+        titleEn: 'Complete Guide to Harness Engineering — Origin, Concept, Gap, and Future',
+        contentKo: `> 원문: [Naia 블로그 — 하네스 엔지니어링 완전 해설 — 탄생·개념·격차·미래를 한 번에](https://naia.nextain.io/ko/blog/harness-engineering-final)
+
+Gemini × Codex × Claude 3자 토론으로 완성한 하네스 엔지니어링 종합 해설입니다.
+
+![하네스 엔지니어링 완전 해설](/desk/harness-engineering-final/hero2-en.webp)
+
+---
+
+## PART 1. 기원 — 2026년 2월, 2주 만에 폭발
+
+| 시점 | 사건 |
+|------|------|
+| **2025.01** | Andrej Karpathy, "Vibe Coding" 최초 언급 |
+| **2026.02.05** | Mitchell Hashimoto (HashiCorp·Terraform 창업자), **"Harness Engineering"** 최초 명명 |
+| **2026.02** | OpenAI 공식 발행 + Martin Fowler·Addy Osmani 독립적으로 동일 결론 |
+| **2026.04** | AWS, Anthropic 등 주요 기업 가이드 발행, 산업 표준화 시작 |
+
+**핵심**: 이미 현장에서 필요로 하던 개념인데, **이름만 없었다.**
+
+---
+
+## PART 2. 개념 — 에이전트 = 모델 + 하네스
+
+**모델은 상품(Commodity)이다. 하네스가 해자(Moat)다.**
+
+### 3단 진화 계보
+
+- **Prompt Engineering (2022–2024)**: "모델에게 뭘 말할까?" → 같은 실수 반복
+- **Context Engineering (2025)**: "모델이 뭘 보게 할까?" → 실행 환경 제어 못함
+- **Harness Engineering (2026~)**: "모델을 둘러싼 실행 환경을 어떻게 설계할까?" → 실수를 구조적으로 제거
+
+### 결정적 실증 데이터
+
+- 같은 Claude Opus: Cursor 하네스 93% vs Claude Code 하네스 77% → **16pp 차이는 오직 하네스**
+- OpenAI Codex 실증: 3인 팀 × 5개월 × 직접 코드 0줄 → 100만 줄 프로덕션, PR 1,500개
+
+---
+
+## PART 3. 바이브코딩 vs 하네스 엔지니어링
+
+**"5분 데모, 3개월 프로덕션"** — 바이브코딩이 프로덕션이 되려면 하네스 설계가 반드시 필요. 대립이 아닌 레이어 스택:
+
+바이브코딩(스케치) → 스펙 코딩(설계) → 하네스 엔지니어링(프로덕션 환경 설계)
+
+---
+
+## PART 4. 개발자 vs 일반 유저 격차
+
+현실: 65%의 엔터프라이즈 AI 실패는 모델이 아닌 **하네스 결함**에서 발생.
+
+- 일반 유저: "AI 잘 쓰는 법" / "프롬프트 업그레이드판"으로 오해
+- 개발자: "에이전트 실행 환경 설계" / "레포 인프라 파일 체계"
+
+---
+
+## PART 5. 3자 토론 합의 (Gemini × Codex × Claude)
+
+- 모델 선택보다 **하네스 설계**가 프로덕션 결과에 더 큰 영향
+- 2027년까지 아제틱 AI 프로젝트 40%+가 하네스 부재로 실패 예상
+- 비개발자도 가능하지만 레벨에 따라 기술 요구 급격히 상승
+
+---
+
+## 핵심 인사이트
+
+> "에이전트 = 모델 + 하네스. 모델은 상품이다. 하네스가 해자다."
+> "2025년은 AI가 코드를 쓰는 해였다. 2026년은 인간이 AI가 일할 환경을 설계하는 해다."`,
+        contentEn: '',
+        category: 'ai' as const,
+        tags: ['harness-engineering', 'AI', 'agentic-ai', 'vibe-coding'],
+        thumbnail: '/desk/harness-engineering-final/hero2-en.webp',
+        images: [],
+        externalUrl: 'https://naia.nextain.io/ko/blog/harness-engineering-final',
+    },
+    {
         slug: '20260307-ai-native-opensource',
         date: '2026-03-07',
         titleKo: 'AI 네이티브 오픈소스 — AI와 함께 만드는 오픈소스',
