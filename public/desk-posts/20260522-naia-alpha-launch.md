@@ -93,6 +93,8 @@ https://www.youtube.com/watch?v=txkzwJwsQbA
 **응원과 (유료) 구독, 부탁드립니다.**
 
 [⬇ 다운로드](https://naia.nextain.io/ko/download) · [🤝 참여하기](https://naia.nextain.io/ko/contribute) · [❤ GitHub 스폰서](https://github.com/sponsors/nextain)
+
+<!-- en -->
 *Originally published at [Naia Blog](https://naia.nextain.io/en/blog/20260522-naia-alpha-launch)*
 
 ---
