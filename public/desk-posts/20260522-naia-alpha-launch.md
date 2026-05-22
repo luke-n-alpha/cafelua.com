@@ -81,7 +81,7 @@ AI가 있었기에 가능한 일이지만, 이제는 **여러분, 그리고 여�
 
 다만 아직은 위의 환경들 모두가 삐걱거립니다. 정상적인 동작을 담보하지 않습니다. 며칠 전 까지만해도 바로 오픈할거라고 생각하지 않았끼 때문입니다. 사실 지금 제품을 내놓을 단계가 아닙니다. 순전히 제 사정상, 더 다듬기 전에 먼저 공개하고 도움을 요청하는게 좋겠다고 생각했기 때문에 지금 오픈합니다.
 
-<div style="position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:1.5rem 0"><iframe style="position:absolute;top:0;left:0;width:100%;height:100%" src="https://www.youtube.com/embed/txkzwJwsQbA" title="Naia Alpha Launch" frameborder="0" allowfullscreen></iframe></div>
+https://www.youtube.com/watch?v=txkzwJwsQbA
 
 그래도 굳이 지금의 사용성을 찾자면 —
 **유튜브 뮤직 플레이어로 로파이 음악을 틀어두고**, 배경화면을 꾸미고, **여러분의 VRM 아바타를 띄워 함께 대화**할 수 있습니다. 사실 이게 제 첫 번째 목표였습니다. 옆에 띄워두고, 힘들 때 음악 한 곡 틀어 놓고 신세 한탄이라도 할 수 있는 친구. 그리고 제 말을 기억해 주는 존재말입니다.
@@ -92,13 +92,7 @@ AI가 있었기에 가능한 일이지만, 이제는 **여러분, 그리고 여�
 
 **응원과 (유료) 구독, 부탁드립니다.**
 
-<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:2rem">
-<a href="https://naia.nextain.io/ko/download" style="display:inline-block;padding:12px 24px;background:#3b82f6;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:15px">⬇ 다운로드</a>
-<a href="https://naia.nextain.io/ko/contribute" style="display:inline-block;padding:12px 24px;background:#10b981;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:15px">🤝 참여하기</a>
-<a href="https://github.com/sponsors/nextain" target="_blank" style="display:inline-block;padding:12px 24px;background:#1f2937;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:15px">❤ GitHub 스폰서</a>
-</div>
-
-<!-- en -->
+[⬇ 다운로드](https://naia.nextain.io/ko/download) · [🤝 참여하기](https://naia.nextain.io/ko/contribute) · [❤ GitHub 스폰서](https://github.com/sponsors/nextain)
 *Originally published at [Naia Blog](https://naia.nextain.io/en/blog/20260522-naia-alpha-launch)*
 
 ---
@@ -165,7 +159,7 @@ It was possible because AI existed, but now I need **your help — and your AI's
 
 That said, all of the above is still rough. I can't guarantee stable operation. Just a few days ago I didn't even think I'd be opening this up. Honestly, the product isn't ready for release. I'm opening it now purely because my circumstances dictate that it's better to share early and ask for help than to polish further.
 
-<div style="position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:1.5rem 0"><iframe style="position:absolute;top:0;left:0;width:100%;height:100%" src="https://www.youtube.com/embed/txkzwJwsQbA" title="Naia Alpha Launch" frameborder="0" allowfullscreen></iframe></div>
+https://www.youtube.com/watch?v=txkzwJwsQbA
 
 Still, if I had to name a use case for the current version —
 **Use the YouTube Music player to play lo-fi music**, customize the background, and **load your VRM avatar for conversation**. That was actually my first goal. A companion you can keep at your side, play a song when you're tired, and vent about your day. A presence that remembers what you say.
@@ -176,8 +170,4 @@ Your AI, on your desktop. And soon, on your phone too. Let's go together.
 
 **Your support and (paid) subscription would mean a lot.**
 
-<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:2rem">
-<a href="https://naia.nextain.io/en/download" style="display:inline-block;padding:12px 24px;background:#3b82f6;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:15px">⬇ Download</a>
-<a href="https://naia.nextain.io/en/contribute" style="display:inline-block;padding:12px 24px;background:#10b981;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:15px">🤝 Contribute</a>
-<a href="https://github.com/sponsors/nextain" target="_blank" style="display:inline-block;padding:12px 24px;background:#1f2937;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:15px">❤ GitHub Sponsors</a>
-</div>
+[⬇ Download](https://naia.nextain.io/en/download) · [🤝 Contribute](https://naia.nextain.io/en/contribute) · [❤ GitHub Sponsors](https://github.com/sponsors/nextain)
