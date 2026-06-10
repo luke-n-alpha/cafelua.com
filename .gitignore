@@ -33,3 +33,4 @@ src/data/desk/_naver-posts*.ts
 *.njsproj
 *.sln
 *.sw?
+.vercel

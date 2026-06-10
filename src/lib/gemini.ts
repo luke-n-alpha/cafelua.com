@@ -3,8 +3,29 @@ export interface ChatMessage {
     content: string;
 }
 
-export const DEFAULT_MODEL = 'gemini-2.5-flash';
+// Vercel AI Gateway 모델 슬러그 (provider/model). 회사(nextain) 팀 크레딧으로 라우팅됨.
+export const DEFAULT_MODEL = 'google/gemini-2.5-flash';
 export const DEFAULT_MAX_TOKENS = 4096;
+
+// Vercel AI Gateway OpenAI 호환 엔드포인트
+const GATEWAY_URL = 'https://ai-gateway.vercel.sh/v1/chat/completions';
+
+interface OpenAIMessage {
+    role: string;
+    content: string;
+}
+
+// 기존 Gemini native contents({role, parts}) → OpenAI 호환 messages({role, content}) 변환
+function toOpenAIMessages(systemPrompt: string, contents: GeminiContent[]): OpenAIMessage[] {
+    const messages: OpenAIMessage[] = [{ role: 'system', content: systemPrompt }];
+    for (const c of contents) {
+        messages.push({
+            role: c.role === 'model' ? 'assistant' : c.role,
+            content: c.parts.map(p => p.text).join(''),
+        });
+    }
+    return messages;
+}
 
 export interface GeminiContent {
     role: string;
@@ -27,45 +48,45 @@ export async function callGemini(
     contents: GeminiContent[],
     options: CallGeminiOptions = {}
 ): Promise<CallGeminiResult> {
-    const apiKey = process.env.GEMINI_TOKEN;
+    // Vercel AI Gateway 인증: 배포 환경은 VERCEL_OIDC_TOKEN 자동 주입,
+    // 로컬/CI는 AI_GATEWAY_API_KEY fallback (`vercel env pull`로 OIDC 토큰 갱신 가능).
+    const apiKey = process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN;
     if (!apiKey) {
-        throw new GeminiApiError('Gemini API key is not configured', 500);
+        throw new GeminiApiError('AI Gateway credentials are not configured', 500);
     }
 
     const model = options.model || DEFAULT_MODEL;
     const maxOutputTokens = options.maxOutputTokens || DEFAULT_MAX_TOKENS;
     const temperature = options.temperature ?? 0.8;
 
-    const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-goog-api-key': apiKey,
-            },
-            body: JSON.stringify({
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-                contents,
-                generationConfig: { maxOutputTokens, temperature },
-            }),
-        }
-    );
+    const response = await fetch(GATEWAY_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+            model,
+            messages: toOpenAIMessages(systemPrompt, contents),
+            max_tokens: maxOutputTokens,
+            temperature,
+        }),
+    });
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error('Gemini API error:', errorData);
+        console.error('AI Gateway error:', errorData);
         throw new GeminiApiError(`API request failed: ${response.status}`, response.status);
     }
 
     const data = await response.json();
-    const finishReason = data.candidates?.[0]?.finishReason;
-    if (finishReason === 'MAX_TOKENS') {
-        console.warn('[Gemini] Response truncated by maxOutputTokens. finishReason:', finishReason);
+    const finishReason = data.choices?.[0]?.finish_reason;
+    if (finishReason === 'length') {
+        console.warn('[Gemini] Response truncated by max_tokens. finishReason:', finishReason);
     }
     console.log('[Gemini] finishReason:', finishReason);
 
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const text = data.choices?.[0]?.message?.content || '';
     return { text, finishReason };
 }
 
