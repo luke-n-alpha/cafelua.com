@@ -1,3 +1,5 @@
+import { getVercelOidcToken } from '@vercel/oidc';
+
 export interface ChatMessage {
     role: 'user' | 'model';
     content: string;
@@ -48,11 +50,19 @@ export async function callGemini(
     contents: GeminiContent[],
     options: CallGeminiOptions = {}
 ): Promise<CallGeminiResult> {
-    // Vercel AI Gateway 인증: 배포 환경은 VERCEL_OIDC_TOKEN 자동 주입,
-    // 로컬/CI는 AI_GATEWAY_API_KEY fallback (`vercel env pull`로 OIDC 토큰 갱신 가능).
-    const apiKey = process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN;
+    // Vercel AI Gateway 인증.
+    // - 프로덕션: OIDC 토큰은 요청 스코프 헤더(x-vercel-oidc-token)로 전달되므로
+    //   getVercelOidcToken()으로 읽어야 함 (process.env 에는 없음).
+    // - 로컬/CI: getVercelOidcToken()이 process.env.VERCEL_OIDC_TOKEN fallback,
+    //   또는 정적 AI_GATEWAY_API_KEY 우선 사용.
+    let apiKey = process.env.AI_GATEWAY_API_KEY;
     if (!apiKey) {
-        throw new GeminiApiError('AI Gateway credentials are not configured', 500);
+        try {
+            apiKey = await getVercelOidcToken();
+        } catch (err) {
+            console.error('AI Gateway OIDC token error:', err);
+            throw new GeminiApiError('AI Gateway credentials are not configured', 500);
+        }
     }
 
     const model = options.model || DEFAULT_MODEL;
