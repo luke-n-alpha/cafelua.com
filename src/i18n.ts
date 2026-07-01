@@ -47,14 +47,14 @@ const resources = {
         "back": "Back to Entrance",
         "backToLounge": "Back to Lounge",
         "currentMode": "Current Mode",
-        "alphaGreeting": "Welcome, Guest.\nWelcome to Cafe Lua.\nPlease take your time — I'll show you the menu when you're ready.",
+        "alphaGreeting": "Welcome, Guest. Please take your time.",
         "greeting": {
-          "sunny": "Welcome, Guest.\nWelcome to Cafe Lua.\nThe lounge feels bright and calm today. Please make yourself comfortable.",
-          "evening": "Welcome, Guest.\nWelcome to Cafe Lua.\nThe sunset light is softly filling the lounge. Shall we take it slow?",
-          "night": "Welcome, Guest.\nWelcome to Cafe Lua.\nIt's a quiet night in the lounge. A perfect time to rest and breathe.",
-          "rain": "Welcome, Guest.\nWelcome to Cafe Lua.\nIt’s raining outside. Enjoy the sound of rain and a warm atmosphere.",
-          "snow": "Welcome, Guest.\nWelcome to Cafe Lua.\nSnow is falling. The lounge is especially cozy right now.",
-          "christmas": "Welcome, Guest.\nWelcome to Cafe Lua.\nMerry Christmas. The lounge is glowing a little brighter today."
+          "sunny": "Welcome, Guest. The lounge is bright and calm today.",
+          "evening": "Welcome, Guest. Sunset is softly filling the lounge.",
+          "night": "Welcome, Guest. The lounge is quiet tonight.",
+          "rain": "Welcome, Guest. Rain is tapping on the windows.",
+          "snow": "Welcome, Guest. Snow is falling outside.",
+          "christmas": "Welcome, Guest. Merry Christmas from Cαfé Luα."
         },
         "greetingFromAtelier": {
           "sunny": "Welcome, Guest.\nWelcome to Cafe Lua.\nYou came down from the atelier — feel free to take a short break in the lounge.",
@@ -70,15 +70,15 @@ const resources = {
       },
       "atelier": {
         "title": "Cαfé Luα Private Atelier (2F)",
-        "alphaIntro": "Welcome, Guest.\nWelcome to Cafe Lua.\nThis is the private atelier on the second floor.\nWhere would you like to go first?",
-        "stairsIntro": "Welcome, Guest.\nYou came up to the second floor.\nThis is the private atelier with a window-side desk and tools ready for work.\nWhere would you like to start?",
+        "alphaIntro": "Welcome, Guest. This is the private atelier on the second floor.",
+        "stairsIntro": "Welcome upstairs, Guest. This is the private atelier.",
         "greeting": {
-          "sunny": "Welcome, Guest.\nWelcome to Cafe Lua.\nThis is the 2F atelier — a calm workspace prepared for creation and focus.",
-          "sunset": "Welcome, Guest.\nWelcome to Cafe Lua.\nThe atelier is bathed in sunset light. A great moment to capture new ideas.",
-          "night": "Welcome, Guest.\nWelcome to Cafe Lua.\nIt's night in the atelier. Quiet, steady, and perfect for deep work.",
-          "rain": "Welcome, Guest.\nWelcome to Cafe Lua.\nRainy atelier vibes. Let the gentle rhythm of rain guide your focus.",
-          "snow": "Welcome, Guest.\nWelcome to Cafe Lua.\nSnow is falling outside. The atelier feels warm under the lights.",
-          "christmas": "Welcome, Guest.\nWelcome to Cafe Lua.\nMerry Christmas. The atelier is softly decorated for the season."
+          "sunny": "Welcome, Guest. The atelier is bright and ready for quiet work.",
+          "sunset": "Welcome, Guest. Sunset is filling the atelier windows.",
+          "night": "Welcome, Guest. The night atelier is calm and focused.",
+          "rain": "Welcome, Guest. The rain makes the atelier a little more thoughtful.",
+          "snow": "Welcome, Guest. Snow is falling, but the atelier is warm.",
+          "christmas": "Welcome, Guest. Merry Christmas from the atelier."
         },
         "explore": "Explore",
         "masterDesk": "Master's Desk",
@@ -336,15 +336,15 @@ const resources = {
       },
       "atelier": {
         "title": "2층 프라이빗 아틀리에",
-        "alphaIntro": "손님, 어서오세요.\n카페루아에 오신 것을 환영합니다.\n여기는 2층 프라이빗 아틀리에예요. 창가의 책상과 작업 도구들이 준비되어 있어요.\n어디부터 살펴볼까요?",
-        "stairsIntro": "손님, 2층으로 올라오셨군요.\n여기는 2층 프라이빗 아틀리에예요. 창가의 책상과 작업 도구들이 준비되어 있어요.\n어디부터 살펴볼까요?",
+        "alphaIntro": "손님, 여기는 2층 프라이빗 아틀리에예요.",
+        "stairsIntro": "손님, 2층 아틀리에로 올라오셨군요.",
         "greeting": {
-          "sunny": "손님, 어서오세요.\n카페루아에 오신 것을 환영합니다.\n여기는 2층 아틀리에예요. 조용히 작업과 창작을 하기 좋은 공간이에요.",
-          "sunset": "손님, 어서오세요.\n카페루아에 오신 것을 환영합니다.\n노을이 창을 물들이고 있어요. 아이디어를 기록하기 딱 좋은 시간이에요.",
-          "night": "손님, 어서오세요.\n카페루아에 오신 것을 환영합니다.\n밤의 아틀리에예요. 조용히 집중하기 좋은 분위기예요.",
-          "rain": "손님, 어서오세요.\n카페루아에 오신 것을 환영합니다.\n비 소리가 작업 리듬을 만들어줘요. 편하게 둘러보세요.",
-          "snow": "손님, 어서오세요.\n카페루아에 오신 것을 환영합니다.\n눈이 조용히 내려요. 따뜻한 조명 아래에서 편안히 머무르세요.",
-          "christmas": "손님, 어서오세요.\n카페루아에 오신 것을 환영합니다.\n메리 크리스마스! 아틀리에에도 작은 장식이 반짝이고 있어요."
+          "sunny": "손님, 밝은 아틀리에가 조용히 작업을 기다리고 있어요.",
+          "sunset": "손님, 노을이 아틀리에 창가를 물들이고 있어요.",
+          "night": "손님, 밤의 아틀리에는 조용히 집중하기 좋아요.",
+          "rain": "손님, 빗소리가 아틀리에의 리듬을 만들어주고 있어요.",
+          "snow": "손님, 밖에는 눈이 내리지만 아틀리에는 따뜻해요.",
+          "christmas": "손님, 메리 크리스마스. 아틀리에에도 작은 불빛이 켜졌어요."
         },
         "explore": "둘러보기",
         "masterDesk": "마스터의 데스크",

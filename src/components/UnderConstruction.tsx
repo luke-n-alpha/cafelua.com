@@ -20,6 +20,7 @@ interface UnderConstructionProps {
     speakerName?: string;
     closeLabel?: string;
     buttons?: ButtonConfig[];
+    overlayClassName?: string;
 }
 
 const UnderConstruction: React.FC<UnderConstructionProps> = ({
@@ -32,7 +33,8 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
     spriteAlt = 'Character Sprite',
     speakerName = 'Alpha',
     closeLabel,
-    buttons
+    buttons,
+    overlayClassName
 }) => {
     const overlayRef = useRef<HTMLDivElement>(null);
     const { t } = useTranslation();
@@ -78,7 +80,7 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
     }, []);
 
     return (
-        <div ref={overlayRef} className="construction-overlay">
+        <div ref={overlayRef} className={`construction-overlay${overlayClassName ? ` ${overlayClassName}` : ''}`}>
             {/* Background Image covering full overlay */}
             <img 
                 src={backgroundSrc}

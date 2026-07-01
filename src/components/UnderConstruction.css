@@ -80,6 +80,15 @@
     filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.45));
 }
 
+.counter-overlay .vn-sprite-wrap {
+    bottom: -32vh;
+}
+
+.counter-overlay .vn-sprite {
+    height: 82vh;
+    max-height: 720px;
+}
+
 /* VN Layout Container */
 .vn-container {
     position: relative;
@@ -197,6 +206,15 @@
 
     .vn-sprite-wrap {
         left: 50%;
+    }
+
+    .counter-overlay .vn-sprite-wrap {
+        bottom: -24vh;
+    }
+
+    .counter-overlay .vn-sprite {
+        height: 62vh;
+        max-height: 560px;
     }
 
     /* Reduce text area size */

@@ -105,6 +105,7 @@ const CounterPage: React.FC = () => {
             spriteAlt="Alpha"
             speakerName="Alpha"
             buttons={buttons}
+            overlayClassName="counter-overlay"
         />
     );
 };

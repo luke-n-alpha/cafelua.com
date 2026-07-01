@@ -381,7 +381,7 @@ const IntroPage: React.FC = () => {
             audioRef.current.play().catch(e => console.log("Audio play failed", e));
         }
 
-        // Navigate to Lounge with current environmental state
+        // Navigate to Lounge with current environmental state.
         const params = new URLSearchParams({
             season,
             time,
