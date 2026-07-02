@@ -24,11 +24,16 @@ import {
     saveSummary,
     type ChatMemory
 } from '../services/ChatMemoryService';
+import {
+    describeRuntimeEnvironment,
+    type RuntimeEnvironmentContext
+} from '../lib/environmentContext';
 import './UnderConstruction.css';
 import './CoffeeChatDialog.css';
 
 interface CoffeeChatDialogProps {
     backgroundSrc: string;
+    environmentContext: RuntimeEnvironmentContext;
     onClose: () => void;
 }
 
@@ -36,6 +41,7 @@ const CHAT_TIMEOUT_MS = 5 * 60 * 1000; // 5분
 
 const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
     backgroundSrc,
+    environmentContext,
     onClose
 }) => {
     const { t, i18n } = useTranslation();
@@ -178,7 +184,8 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
             }
         }
 
-        setCurrentMessage(greeting.message);
+        const environmentLine = describeRuntimeEnvironment(environmentContext, preferredLanguage);
+        setCurrentMessage(`${greeting.message}\n${environmentLine}`);
         setCurrentExpression(greeting.expression);
 
         // 타임아웃 설정
@@ -201,7 +208,7 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
                 clearTimeout(timeoutRef.current);
             }
         };
-    }, [goToLounge, preferredLanguage, summarizeAndSave]);
+    }, [environmentContext, goToLounge, preferredLanguage, summarizeAndSave]);
 
     // 메시지 전송 처리
     const handleSendMessage = async (content: string) => {
@@ -244,6 +251,7 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
                     })),
                     language: preferredLanguage,
                     memoryContext,
+                    environmentContext,
                 })
             });
 
@@ -337,15 +345,6 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
                 aria-hidden="true"
                 className="construction-bg"
             />
-
-            {/* 커피챗 일러스트 (중앙, 라운딩) */}
-            <div className="construction-illustration-frame">
-                <img
-                    src="/characters/alpha/alpha-coffee-chat.webp"
-                    alt="Alpha"
-                    className="construction-illustration"
-                />
-            </div>
 
             {/* VN 컨테이너 */}
             <div className="vn-container">

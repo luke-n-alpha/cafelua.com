@@ -9,12 +9,15 @@ import '@testing-library/jest-dom';
 // Mock next/navigation
 const mockPush = jest.fn();
 const mockSearchParams = new URLSearchParams();
+const mockRouter = {
+    push: mockPush,
+};
 
 jest.mock('next/navigation', () => ({
-    useRouter: () => ({
-        push: mockPush,
-    }),
+    useRouter: () => mockRouter,
     useSearchParams: () => mockSearchParams,
+    usePathname: () => '/ko/counter',
+    useParams: () => ({ locale: 'ko' }),
 }));
 
 // Mock react-i18next
@@ -47,32 +50,62 @@ jest.mock('../../src/services/GeminiChatService', () => ({
     })),
     getExpressionImagePath: jest.fn((exp: string) => `/characters/alpha/face-variation/alpha-${exp}.webp`),
     USER_ACTIONS: [
-        { id: 'silence', icon: '🤫', label: '침묵', aiText: '*손님이 가만히 있다*' },
-        { id: 'smile', icon: '😊', label: '웃음', aiText: '*손님이 미소 짓는다*' },
+        {
+            id: 'silence',
+            icon: '🤫',
+            labelKey: 'coffeeChat.actions.silence',
+            aiTextKo: '*손님이 가만히 있다*',
+            aiTextEn: '*The guest stays silent*',
+        },
+        {
+            id: 'smile',
+            icon: '😊',
+            labelKey: 'coffeeChat.actions.smile',
+            aiTextKo: '*손님이 미소 짓는다*',
+            aiTextEn: '*The guest smiles*',
+        },
     ],
 }));
 
 import CoffeeChatDialog from '../../src/components/CoffeeChatDialog';
-import { sendChatMessage } from '../../src/services/GeminiChatService';
+import type { RuntimeEnvironmentContext } from '../../src/lib/environmentContext';
 
 describe('CoffeeChatDialog', () => {
+    const environmentContext: RuntimeEnvironmentContext = {
+        world: 'Cαfé Luα',
+        character: 'Alpha',
+        space: 'lounge',
+        surface: 'web',
+        season: 'spring',
+        time: 'day',
+        weather: 'sunny',
+        isChristmas: false,
+        isOpen: true,
+        backgroundSrc: '/test-bg.webp',
+    };
+
     const defaultProps = {
         backgroundSrc: '/test-bg.webp',
+        environmentContext,
         onClose: jest.fn(),
     };
 
     beforeEach(() => {
         jest.clearAllMocks();
+        const fetchMock = jest.fn();
+        global.fetch = fetchMock;
+        window.fetch = fetchMock;
         jest.useFakeTimers();
     });
 
     afterEach(() => {
         jest.useRealTimers();
+        jest.restoreAllMocks();
     });
 
     it('초기 인사 메시지가 표시되어야 한다', () => {
         render(<CoffeeChatDialog {...defaultProps} />);
-        expect(screen.getByText('어서오세요, 손님!')).toBeInTheDocument();
+        expect(screen.getByText(/어서오세요, 손님!/)).toBeInTheDocument();
     });
 
     it('Alpha 이름이 표시되어야 한다', () => {
@@ -82,56 +115,67 @@ describe('CoffeeChatDialog', () => {
 
     it('알파 표정 이미지가 렌더링되어야 한다', () => {
         render(<CoffeeChatDialog {...defaultProps} />);
-        const portrait = screen.getByAltText('Alpha');
+        const portrait = screen.getAllByAltText('Alpha').find((image) =>
+            image.getAttribute('class')?.includes('vn-character')
+        );
         expect(portrait).toBeInTheDocument();
         expect(portrait).toHaveAttribute('src', '/characters/alpha/face-variation/alpha-nice-talk.webp');
     });
 
     it('액션 버튼들이 표시되어야 한다', () => {
         render(<CoffeeChatDialog {...defaultProps} />);
-        expect(screen.getByText('침묵')).toBeInTheDocument();
-        expect(screen.getByText('웃음')).toBeInTheDocument();
+        expect(screen.getByText('silence')).toBeInTheDocument();
+        expect(screen.getByText('smile')).toBeInTheDocument();
     });
 
-    it('입력 모드 토글 버튼이 작동해야 한다', () => {
+    it('직접 입력창이 표시되어야 한다', () => {
         render(<CoffeeChatDialog {...defaultProps} />);
-        const toggleButton = screen.getByTitle('직접 입력');
-        fireEvent.click(toggleButton);
         expect(screen.getByPlaceholderText('무슨 말을 할까요?')).toBeInTheDocument();
     });
 
-    it('종료 버튼 클릭 시 라운지로 이동해야 한다', () => {
+    it('종료 버튼 클릭 시 닫기 콜백을 호출해야 한다', () => {
         render(<CoffeeChatDialog {...defaultProps} />);
         const endButton = screen.getByTitle('대화 종료');
         fireEvent.click(endButton);
-        expect(mockPush).toHaveBeenCalledWith('/lounge');
+        expect(defaultProps.onClose).toHaveBeenCalled();
     });
 
     it('액션 버튼 클릭 시 API를 호출해야 한다', async () => {
-        (sendChatMessage as jest.Mock).mockResolvedValue({
-            message: '알파의 응답',
-            expression: 'face',
-            shouldEnd: false,
+        (global.fetch as jest.Mock).mockResolvedValue({
+            ok: true,
+            json: async () => ({
+                message: '알파의 응답',
+                expression: 'face',
+                shouldEnd: false,
+            }),
         });
 
         render(<CoffeeChatDialog {...defaultProps} />);
-        const silenceButton = screen.getByText('침묵').closest('button');
+        const silenceButton = screen.getByText('silence').closest('button');
         fireEvent.click(silenceButton!);
 
         await waitFor(() => {
-            expect(sendChatMessage).toHaveBeenCalled();
+            expect(global.fetch).toHaveBeenCalledWith('/api/chat', expect.any(Object));
         });
     });
 
     it('대화 종료 시 라운지로 이동 메시지가 표시되어야 한다', async () => {
-        (sendChatMessage as jest.Mock).mockResolvedValue({
-            message: '안녕히 가세요!',
-            expression: 'wink-smile',
-            shouldEnd: true,
-        });
+        (global.fetch as jest.Mock)
+            .mockResolvedValueOnce({
+                ok: true,
+                json: async () => ({
+                    message: '안녕히 가세요!',
+                    expression: 'wink-smile',
+                    shouldEnd: true,
+                }),
+            })
+            .mockResolvedValue({
+                ok: true,
+                json: async () => ({}),
+            });
 
         render(<CoffeeChatDialog {...defaultProps} />);
-        const silenceButton = screen.getByText('침묵').closest('button');
+        const silenceButton = screen.getByText('silence').closest('button');
         fireEvent.click(silenceButton!);
 
         await waitFor(() => {

@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import UnderConstruction from './UnderConstruction';
 import CoffeeChatDialog from './CoffeeChatDialog';
-
-type Season = 'spring' | 'summer' | 'autumn' | 'winter';
-type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
-type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
+import { resolveEnvironmentBackgroundSrc, type Season, type TimeOfDay, type Weather } from '../lib/environmentBackgrounds';
+import { parseRuntimeEnvironmentFromSearchParams } from '../lib/environmentContext';
 
 const CounterPage: React.FC = () => {
     const { t } = useTranslation();
@@ -25,24 +23,19 @@ const CounterPage: React.FC = () => {
     const isChristmas = searchParams.get('christmas') === 'true';
 
     const backgroundImage = useMemo(() => {
-        let imageName = 'lounge-sunny';
-
-        if (isChristmas) {
-            imageName = 'lounge-christmas';
-        } else if (season === 'winter' && weather === 'snow') {
-            imageName = 'lounge-snow';
-        } else if (weather === 'rain' || weather === 'storm') {
-            imageName = 'lounge-rain';
-        } else if (weather === 'snow') {
-            imageName = 'lounge-snow';
-        } else if (time === 'sunset') {
-            imageName = 'lounge-evening';
-        } else if (time === 'night' || time === 'closed') {
-            imageName = 'lounge-night';
-        }
-
-        return `/lounge-background-img/${imageName}.webp`;
+        return resolveEnvironmentBackgroundSrc('coffeeChat', season, time, weather, isChristmas);
     }, [isChristmas, season, time, weather]);
+
+    const environmentContext = useMemo(() => {
+        return parseRuntimeEnvironmentFromSearchParams(searchParams, {
+            space: '1층 카운터 커피챗',
+            backgroundSrc: backgroundImage,
+        });
+    }, [backgroundImage, searchParams]);
+
+    useEffect(() => {
+        setIsChatOpen(searchParams.get('chat') === 'open');
+    }, [searchParams]);
 
     const handleBackToLounge = () => {
         const query = searchParams.toString();
@@ -89,6 +82,7 @@ const CounterPage: React.FC = () => {
         return (
             <CoffeeChatDialog
                 backgroundSrc={backgroundImage}
+                environmentContext={environmentContext}
                 onClose={handleCloseCoffeeChat}
             />
         );
@@ -101,8 +95,6 @@ const CounterPage: React.FC = () => {
             message={t('counter.dialogue', '어서오세요, 손님! 무엇을 도와드릴까요?')}
             backgroundSrc={backgroundImage}
             characterSrc="/characters/alpha/alpha-nice-talk.webp"
-            spriteSrc="/characters/alpha/alpha-serving.webp"
-            spriteAlt="Alpha"
             speakerName="Alpha"
             buttons={buttons}
             overlayClassName="counter-overlay"

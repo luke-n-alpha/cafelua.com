@@ -32,6 +32,23 @@ npx tsc --noEmit         # Type check
 npm run generate-index   # Regenerate content-index.json
 ```
 
+## Private Visual Context
+
+This public repo is normally edited inside the private parent repo:
+
+`/var/home/luke/alpha-adk/projects/cafelua.com/`
+
+Before any image generation, image editing, background replacement, logo/signage work, or Alpha/Luke visual work, read the private context first:
+
+- `../.agents/context/visual-generation.yaml`
+- `../data/alpha/design/Alpha_Character_Bible_v3.4_Studio_Edition.md`
+- `../data/alpha/design/reference-img.png`
+- `../data/cafelua/design/cafelua-world-bible.md`
+- `../data/cafelua/design/cafelua-design-refresh-prompt-pack.md`
+- `../data/cafelua/design/cafelua-logo.png`
+
+If this repo is cloned standalone and those files are unavailable, do not guess the character, logo, or space design. Stop and ask Luke for the private reference pack.
+
 ## Project Structure
 
 ```
@@ -130,6 +147,14 @@ Desk/Diary 포스트 댓글 시스템. 대댓글(1단계), 이메일 답글 알�
 AI 타로 리딩. Celtic Cross 스프레드 + Gemini 해석.
 - `tarot/TarotCard.tsx`, `TarotSpread.tsx`, `CelticCrossSpread.tsx`
 - API: `/api/tarot/cards`, `/api/tarot/interpret`, `/api/tarot/summary`
+
+## Visual Asset Rules
+
+- Alpha must follow the private v3.4 character bible. Do not generate a generic anime maid, old pink-haired Alpha, long hair, black maid ribbon, or arbitrary character.
+- Cafe Lua logo/signage must use the official private logo reference. Do not invent a logo.
+- Seasonal/weather/time/open/closed variants must preserve the approved base composition, architecture, door/window scale, camera, and sign placement. Change only atmosphere, lighting, weather, season cues, and open/closed state.
+- Coffee chat backgrounds use `public/lounge-background-img/lounge_bg_*.webp`; create one standard image first, then derive variants from it.
+- Tarot room background is `public/tarot/tarot-room-bg.webp`; the requested scope is one indoor tarot scene.
 
 ## Coding Conventions
 
