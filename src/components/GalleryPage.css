@@ -325,6 +325,26 @@
 }
 
 /* Tarot card grid */
+.tarot-deck-story {
+    margin-bottom: 0.9rem;
+    padding: 0.75rem 0.9rem;
+    background: rgba(10, 10, 14, 0.32);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+}
+
+.tarot-deck-title {
+    font-size: 0.9rem;
+    color: #f5f2eb;
+    margin-bottom: 0.25rem;
+}
+
+.tarot-deck-desc {
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: rgba(245, 242, 235, 0.7);
+}
+
 .tarot-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -354,7 +374,7 @@
 }
 
 .tarot-card-item .tarot-card-name {
-    padding: 0.2rem 0.4rem;
+    padding: 0.28rem 0.45rem 0.1rem;
     font-size: 0.7rem;
     text-align: center;
     color: rgba(245, 242, 235, 0.8);
@@ -362,6 +382,19 @@
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.2;
+}
+
+.tarot-card-scene {
+    padding: 0 0.45rem 0.45rem;
+    min-height: 2.1rem;
+    font-size: 0.64rem;
+    line-height: 1.35;
+    text-align: center;
+    color: rgba(245, 242, 235, 0.56);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 /* Lightbox */
@@ -383,7 +416,23 @@
     to { opacity: 1; }
 }
 
-.lightbox-overlay img {
+.lightbox-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 94vw;
+    max-height: 86vh;
+}
+
+.story-lightbox .lightbox-frame {
+    display: grid;
+    grid-template-columns: minmax(260px, 42vw) minmax(320px, 480px);
+    gap: 1rem;
+    align-items: stretch;
+    width: min(1120px, 94vw);
+}
+
+.lightbox-frame img {
     max-width: 90vw;
     max-height: 70vh;
     object-fit: contain;
@@ -391,10 +440,30 @@
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
 }
 
+.story-lightbox .lightbox-frame img {
+    width: 100%;
+    height: min(76vh, 720px);
+    max-width: none;
+    max-height: none;
+    align-self: center;
+}
+
 .lightbox-info {
     margin-top: 1rem;
     text-align: center;
     color: #f5f2eb;
+}
+
+.story-lightbox .lightbox-info {
+    margin-top: 0;
+    min-height: 0;
+    max-height: min(76vh, 720px);
+    padding: 1rem 1rem 0.9rem;
+    background: rgba(10, 10, 14, 0.52);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    text-align: left;
+    overflow: hidden;
 }
 
 .lightbox-title {
@@ -405,6 +474,82 @@
 .lightbox-desc {
     font-size: 0.85rem;
     color: rgba(245, 242, 235, 0.7);
+}
+
+.lightbox-object-note {
+    margin-top: 0.55rem;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: rgba(245, 242, 235, 0.58);
+}
+
+.lightbox-object-note span {
+    display: inline-block;
+    margin-right: 0.4rem;
+    color: rgba(245, 242, 235, 0.38);
+}
+
+.lightbox-story {
+    width: min(760px, 90vw);
+    margin-top: 0.7rem;
+    padding: 0.75rem 0.9rem;
+    background: rgba(10, 10, 14, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    text-align: left;
+}
+
+.story-lightbox .lightbox-story {
+    width: auto;
+    max-height: calc(min(76vh, 720px) - 5.4rem);
+    margin-top: 0.8rem;
+    padding: 0.1rem 0.25rem 0.2rem 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+
+.story-lightbox .lightbox-story::-webkit-scrollbar {
+    width: 6px;
+}
+
+.story-lightbox .lightbox-story::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px;
+}
+
+.lightbox-story p {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: rgba(245, 242, 235, 0.76);
+}
+
+.lightbox-story p + p {
+    margin-top: 0.45rem;
+    color: rgba(245, 242, 235, 0.62);
+}
+
+.lightbox-card-meaning {
+    margin-top: 0.9rem;
+    padding: 0.75rem 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.055);
+    border-radius: 8px;
+}
+
+.lightbox-card-meaning-title {
+    margin-bottom: 0.35rem;
+    font-size: 0.72rem;
+    color: rgba(245, 242, 235, 0.58);
+}
+
+.lightbox-card-meaning p {
+    margin: 0;
+    color: rgba(245, 242, 235, 0.72);
 }
 
 .lightbox-close {
@@ -564,6 +709,16 @@
         padding: 0.25rem 0.3rem;
     }
 
+    .tarot-card-scene {
+        min-height: 1.8rem;
+        padding: 0 0.3rem 0.35rem;
+        font-size: 0.56rem;
+    }
+
+    .tarot-deck-desc {
+        font-size: 0.72rem;
+    }
+
     .character-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.5rem;
@@ -584,9 +739,45 @@
         font-size: 0.85rem;
     }
 
-    .lightbox-overlay img {
+    .story-lightbox .lightbox-frame {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        width: 95vw;
+        max-height: 84vh;
+    }
+
+    .lightbox-frame img {
         max-width: 95vw;
-        max-height: 60vh;
+        max-height: 52vh;
+    }
+
+    .story-lightbox .lightbox-frame img {
+        width: auto;
+        height: auto;
+        max-width: 95vw;
+        max-height: 46vh;
+    }
+
+    .story-lightbox .lightbox-info {
+        width: 95vw;
+        max-height: 32vh;
+        padding: 0.75rem;
+    }
+
+    .lightbox-story {
+        width: 95vw;
+        padding: 0.65rem 0.75rem;
+    }
+
+    .story-lightbox .lightbox-story {
+        width: auto;
+        max-height: calc(32vh - 4.7rem);
+        padding: 0;
+    }
+
+    .lightbox-story p {
+        font-size: 0.76rem;
     }
 
     .diary-grid {

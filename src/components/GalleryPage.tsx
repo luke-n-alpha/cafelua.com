@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Eye } from 'lucide-react';
@@ -8,11 +8,14 @@ import UnderConstruction from './UnderConstruction';
 import {
     SPACE_IMAGES,
     TAROT_CARDS,
+    TAROT_DECKS,
     BGM_LIST,
     SPACE_SUBCATEGORIES,
     type GalleryImage,
 } from '@/data/gallery/galleryData';
 import { DIARY_ENTRIES } from '@/data/gallery/diaryData';
+import { resolveEnvironmentBackgroundSrc, type Season, type TimeOfDay, type Weather } from '@/lib/environmentBackgrounds';
+import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 import './GalleryPage.css';
 
 type Category = 'diary' | 'spaces' | 'tarot' | 'bgm';
@@ -25,18 +28,31 @@ const GalleryPage: React.FC = () => {
 
     const tabParam = searchParams.get('tab') as Category | null;
     const subParam = searchParams.get('sub');
+    const deckParam = searchParams.get('deck');
     const imgParam = searchParams.get('img');
+    const season = (searchParams.get('season') || 'spring') as Season;
+    const time = (searchParams.get('time') || 'day') as TimeOfDay;
+    const weather = (searchParams.get('weather') || 'sunny') as Weather;
+    const isChristmas = searchParams.get('christmas') === 'true';
+    const backgroundImage = useMemo(() => {
+        return resolveEnvironmentBackgroundSrc('gallery', season, time, weather, isChristmas);
+    }, [season, time, weather, isChristmas]);
     const validTabs: Category[] = ['diary', 'spaces', 'tarot', 'bgm'];
     const initialTab = tabParam && validTabs.includes(tabParam) ? tabParam : 'diary';
     const validSubcats = SPACE_SUBCATEGORIES.map(s => s.key);
     const initialSub = subParam && validSubcats.includes(subParam) ? subParam : 'intro';
+    const validDecks = TAROT_DECKS.map(deck => deck.key);
+    const initialTarotDeck = deckParam && validDecks.includes(deckParam) ? deckParam : 'current-major';
 
     const [showGreeting, setShowGreeting] = useState(!tabParam);
     const [category, setCategory] = useState<Category>(initialTab);
     const [spaceSubcat, setSpaceSubcat] = useState(initialSub);
+    const [tarotDeck, setTarotDeck] = useState(initialTarotDeck);
     const [carouselIndex, setCarouselIndex] = useState(0);
     const [lightboxImage, setLightboxImage] = useState<GalleryImage | null>(null);
     const [viewCounts, setViewCounts] = useState<Record<string, number>>({});
+    const selectedTarotDeck = TAROT_DECKS.find(deck => deck.key === tarotDeck) ?? TAROT_DECKS[0];
+    const tarotCards = TAROT_CARDS.filter(card => card.deckIds?.includes(tarotDeck));
 
     useEffect(() => {
         fetch('/api/views')
@@ -47,10 +63,15 @@ const GalleryPage: React.FC = () => {
 
     // URL 업데이트 헬퍼 (히스토리 교체, 새로고침 없음)
     const updateUrl = useCallback((params: Record<string, string | null>) => {
-        const newParams = new URLSearchParams();
+        const newParams = new URLSearchParams(searchParams.toString());
+        newParams.delete('tab');
+        newParams.delete('sub');
+        newParams.delete('deck');
+        newParams.delete('img');
         const current: Record<string, string | null> = {
             tab: category,
             sub: category === 'spaces' ? spaceSubcat : null,
+            deck: category === 'tarot' ? tarotDeck : null,
             img: null,
         };
         const merged = { ...current, ...params };
@@ -60,7 +81,7 @@ const GalleryPage: React.FC = () => {
         const qs = newParams.toString();
         const url = `/${i18n.language}/gallery${qs ? `?${qs}` : ''}`;
         window.history.replaceState(null, '', url);
-    }, [category, spaceSubcat, i18n.language]);
+    }, [category, spaceSubcat, tarotDeck, i18n.language, searchParams]);
     const [playingBgm, setPlayingBgm] = useState<string | null>(null);
     const previewAudioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -70,6 +91,13 @@ const GalleryPage: React.FC = () => {
     const carouselRef = useRef<HTMLDivElement>(null);
 
     const currentImages = SPACE_IMAGES[spaceSubcat] || [];
+    const storyParagraphs = (isKo ? lightboxImage?.storyKo : lightboxImage?.storyEn)
+        ?.split(/\n{2,}/)
+        .map((paragraph) => paragraph.trim())
+        .filter(Boolean) ?? [];
+    const cardMeaning = isKo
+        ? lightboxImage?.cardMeaningKo
+        : lightboxImage?.cardMeaningEn ?? lightboxImage?.cardMeaningKo;
 
     // Reset carousel index when subcategory changes
     useEffect(() => {
@@ -85,7 +113,7 @@ const GalleryPage: React.FC = () => {
             const images = SPACE_IMAGES[spaceSubcat] || [];
             if (idx < images.length) { setLightboxImage(images[idx]); setCarouselIndex(idx); }
         } else if (category === 'tarot') {
-            if (idx < TAROT_CARDS.length) setLightboxImage(TAROT_CARDS[idx]);
+            if (idx < tarotCards.length) setLightboxImage(tarotCards[idx]);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -118,6 +146,28 @@ const GalleryPage: React.FC = () => {
         setCarouselIndex(((idx % len) + len) % len);
     }, [currentImages.length]);
 
+    const getLightboxImages = useCallback(() => {
+        if (category === 'tarot') return tarotCards;
+        if (category === 'spaces') return currentImages;
+        return [];
+    }, [category, currentImages, tarotCards]);
+
+    const closeLightbox = useCallback(() => {
+        setLightboxImage(null);
+        updateUrl({ img: null });
+    }, [updateUrl]);
+
+    const moveLightbox = useCallback((delta: number) => {
+        if (!lightboxImage) return;
+        const images = getLightboxImages();
+        if (images.length === 0) return;
+        const currentIndex = images.findIndex((img) => img.src === lightboxImage.src);
+        const nextIndex = ((currentIndex + delta) % images.length + images.length) % images.length;
+        setLightboxImage(images[nextIndex]);
+        if (category === 'spaces') setCarouselIndex(nextIndex);
+        updateUrl({ img: String(nextIndex) });
+    }, [category, getLightboxImages, lightboxImage, updateUrl]);
+
     const handleTouchStart = (e: React.TouchEvent) => {
         touchStartX.current = e.touches[0].clientX;
         touchDeltaX.current = 0;
@@ -142,6 +192,17 @@ const GalleryPage: React.FC = () => {
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [showGreeting, category, lightboxImage, carouselIndex, goTo]);
+
+    useEffect(() => {
+        if (!lightboxImage) return;
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowLeft') { e.preventDefault(); moveLightbox(-1); }
+            else if (e.key === 'ArrowRight') { e.preventDefault(); moveLightbox(1); }
+            else if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [closeLightbox, lightboxImage, moveLightbox]);
 
     // Mouse wheel navigation on carousel (non-passive to allow preventDefault)
     useEffect(() => {
@@ -179,12 +240,15 @@ const GalleryPage: React.FC = () => {
     // Greeting screen
     if (showGreeting) {
         return (
-            <div className="gallery-container" style={{ backgroundImage: "url('/gallery-background-img/gallery-cozy-corner.webp')" }}>
+            <div className="gallery-container" style={{ backgroundImage: `url('${backgroundImage}')` }}>
                 <UnderConstruction
-                    onClose={() => { setShowGreeting(false); window.history.replaceState(null, '', `/${i18n.language}/gallery?tab=${category}`); }}
+                    onClose={() => {
+                        setShowGreeting(false);
+                        window.history.replaceState(null, '', buildLocalizedUrlWithQuery(i18n.language, '/gallery', searchParams, { tab: category }));
+                    }}
                     message={t('gallery.greeting')}
-                    backgroundSrc="/gallery-background-img/gallery-cozy-corner.webp"
-                    illustrationSrc="/gallery-background-img/gallery-cozy-corner.webp"
+                    backgroundSrc={backgroundImage}
+                    illustrationSrc={backgroundImage}
                     characterSrc="/characters/alpha/alpha-nice-talk.webp"
                     closeLabel={t('gallery.enter')}
                 />
@@ -205,7 +269,7 @@ const GalleryPage: React.FC = () => {
     };
 
     return (
-        <div className="gallery-container" style={{ backgroundImage: "url('/gallery-background-img/gallery-cozy-corner.webp')" }}>
+        <div className="gallery-container" style={{ backgroundImage: `url('${backgroundImage}')` }}>
             <div className="gallery-panel">
                 {/* Category tabs */}
                 <div className="gallery-tabs">
@@ -213,7 +277,7 @@ const GalleryPage: React.FC = () => {
                         <button
                             key={cat}
                             className={`gallery-tab${category === cat ? ' active' : ''}`}
-                            onClick={() => { setCategory(cat); updateUrl({ tab: cat, sub: cat === 'spaces' ? spaceSubcat : null, img: null }); }}
+                            onClick={() => { setCategory(cat); updateUrl({ tab: cat, sub: cat === 'spaces' ? spaceSubcat : null, deck: cat === 'tarot' ? tarotDeck : null, img: null }); }}
                         >
                             {t(`gallery.${cat === 'tarot' ? 'tarotCards' : cat === 'diary' ? 'diary' : cat}`)}
                         </button>
@@ -232,7 +296,7 @@ const GalleryPage: React.FC = () => {
                                     href={`/${i18n.language}/gallery/diary/${entry.slug}`}
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        router.push(`/${i18n.language}/gallery/diary/${entry.slug}`);
+                                        router.push(buildLocalizedUrlWithQuery(i18n.language, `/gallery/diary/${entry.slug}`, searchParams));
                                     }}
                                 >
                                     {entry.images.length > 0 ? (
@@ -316,24 +380,52 @@ const GalleryPage: React.FC = () => {
 
                     {/* Tarot tab */}
                     {category === 'tarot' && (
-                        <div className="tarot-grid">
-                            {TAROT_CARDS.map((card, i) => (
-                                <div
-                                    key={i}
-                                    className="tarot-card-item"
-                                    onClick={() => { setLightboxImage(card); updateUrl({ img: String(i) }); }}
-                                >
-                                    <img
-                                        src={card.src}
-                                        alt={isKo ? card.titleKo : card.titleEn}
-                                        loading="lazy"
-                                    />
-                                    <div className="tarot-card-name">
-                                        {isKo ? card.titleKo : card.titleEn}
-                                    </div>
+                        <>
+                            <div className="gallery-chips">
+                                {TAROT_DECKS.map((deck) => (
+                                    <button
+                                        key={deck.key}
+                                        className={`gallery-chip${tarotDeck === deck.key ? ' active' : ''}`}
+                                        onClick={() => {
+                                            setTarotDeck(deck.key);
+                                            setLightboxImage(null);
+                                            updateUrl({ tab: 'tarot', deck: deck.key, img: null });
+                                        }}
+                                    >
+                                        {isKo ? deck.labelKo : deck.labelEn}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="tarot-deck-story">
+                                <div className="tarot-deck-title">
+                                    {isKo ? selectedTarotDeck.labelKo : selectedTarotDeck.labelEn}
                                 </div>
-                            ))}
-                        </div>
+                                <div className="tarot-deck-desc">
+                                    {isKo ? selectedTarotDeck.storyKo : selectedTarotDeck.storyEn}
+                                </div>
+                            </div>
+                            <div className="tarot-grid">
+                                {tarotCards.map((card, i) => (
+                                    <div
+                                        key={card.src}
+                                        className="tarot-card-item"
+                                        onClick={() => { setLightboxImage(card); updateUrl({ img: String(i) }); }}
+                                    >
+                                        <img
+                                            src={card.src}
+                                            alt={isKo ? card.titleKo : card.titleEn}
+                                            loading="lazy"
+                                        />
+                                        <div className="tarot-card-name">
+                                            {isKo ? card.titleKo : card.titleEn}
+                                        </div>
+                                        <div className="tarot-card-scene">
+                                            {isKo ? card.descKo : card.descEn}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
                     )}
 
                     {/* BGM tab */}
@@ -380,21 +472,44 @@ const GalleryPage: React.FC = () => {
 
             {/* Lightbox */}
             {lightboxImage && (
-                <div className="lightbox-overlay" onClick={() => { setLightboxImage(null); updateUrl({ img: null }); }}>
-                    <img
-                        src={lightboxImage.src}
-                        alt={isKo ? lightboxImage.titleKo : lightboxImage.titleEn}
-                        onClick={(e) => e.stopPropagation()}
-                    />
-                    <div className="lightbox-info">
-                        <div className="lightbox-title">
-                            {isKo ? lightboxImage.titleKo : lightboxImage.titleEn}
-                        </div>
-                        <div className="lightbox-desc">
-                            {isKo ? lightboxImage.descKo : lightboxImage.descEn}
+                <div className={`lightbox-overlay${lightboxImage.storyKo ? ' story-lightbox' : ''}`} onClick={closeLightbox}>
+                    <div className="lightbox-frame" onClick={(e) => e.stopPropagation()}>
+                        <img
+                            src={lightboxImage.src}
+                            alt={isKo ? lightboxImage.titleKo : lightboxImage.titleEn}
+                        />
+                        <div className="lightbox-info">
+                            <div className="lightbox-title">
+                                {isKo ? lightboxImage.titleKo : lightboxImage.titleEn}
+                            </div>
+                            <div className="lightbox-desc">
+                                {isKo ? lightboxImage.descKo : lightboxImage.descEn}
+                            </div>
+                            {lightboxImage.sceneKo && (
+                                <div className="lightbox-object-note">
+                                    <span>{isKo ? '이미지 오브제' : 'Image Objects'}</span>
+                                    {' '}
+                                    {isKo ? lightboxImage.sceneKo : lightboxImage.sceneEn}
+                                </div>
+                            )}
+                            {(lightboxImage.storyKo || cardMeaning) && (
+                                <div className="lightbox-story">
+                                    {storyParagraphs.map((paragraph, index) => (
+                                        <p key={index}>{paragraph}</p>
+                                    ))}
+                                    {cardMeaning && (
+                                        <div className="lightbox-card-meaning">
+                                            <div className="lightbox-card-meaning-title">
+                                                {isKo ? '카드 해석' : 'Card Reading'}
+                                            </div>
+                                            <p>{cardMeaning}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
-                    <button className="lightbox-close" onClick={(e) => { e.stopPropagation(); setLightboxImage(null); updateUrl({ img: null }); }}>
+                    <button className="lightbox-close" onClick={(e) => { e.stopPropagation(); closeLightbox(); }}>
                         {t('about.close')}
                     </button>
                 </div>
