@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { callGemini, GeminiApiError, parseExpression, cleanMessage } from '@/lib/gemini';
 import { loadDeckSummary } from '@/lib/tarot-data';
 import { normalizeLanguageCode } from '@/lib/alpha-prompt';
+import { getRuntimeEnvironmentPrompt, type RuntimeEnvironmentContext } from '@/lib/environmentContext';
 
 const getSummaryPrompt = (
     language: string,
     deckSummary: string,
     topic: string,
-    interpretations: Array<{ position: string; cardName: string; isReversed: boolean; interpretation: string }>
+    interpretations: Array<{ position: string; cardName: string; isReversed: boolean; interpretation: string }>,
+    environmentContext?: RuntimeEnvironmentContext
 ) => `# 알파 (Alpha Yang) - 타로 리딩 요약
 
 ## 당신은 누구인가
@@ -16,6 +18,7 @@ const getSummaryPrompt = (
 ## 현재 상황: 타로 리딩 요약 🔮
 손님이 "${topic}" 에 대해 10장의 켈틱 크로스 리딩을 모두 마쳤습니다.
 이제 전체 리딩을 요약해서 종합적인 메시지를 전달해야 합니다.
+${environmentContext ? `\n${getRuntimeEnvironmentPrompt(environmentContext, normalizeLanguageCode(language))}\n` : ''}
 
 ${deckSummary}
 
@@ -65,6 +68,7 @@ interface SummaryRequest {
         interpretation: string;
     }>;
     language?: string;
+    environmentContext?: RuntimeEnvironmentContext;
 }
 
 export async function POST(request: NextRequest) {
@@ -73,11 +77,12 @@ export async function POST(request: NextRequest) {
             topic,
             interpretations,
             language = 'ko',
+            environmentContext,
         } = await request.json() as SummaryRequest;
         const normalizedLanguage = normalizeLanguageCode(language);
 
         const deckSummary = await loadDeckSummary();
-        const systemPrompt = getSummaryPrompt(normalizedLanguage, deckSummary, topic, interpretations);
+        const systemPrompt = getSummaryPrompt(normalizedLanguage, deckSummary, topic, interpretations, environmentContext);
 
         const { text } = await callGemini(
             systemPrompt,

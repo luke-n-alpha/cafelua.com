@@ -2,6 +2,15 @@
 
 # Changelog
 
+### v0.1.9 (2026-07-04)
+- **Full Visual Refresh**: Replaced and deployed the Cafe Lua entrance, lounge, about, gallery, guestbook, atelier, and master desk background assets.
+- **Environment Propagation Expanded**: Season, time, weather, open/closed state, and Christmas mode now flow beyond the entrance/lounge into counter, coffee chat, tarot, gallery, guestbook, about, atelier, desk, and diary surfaces.
+- **Alpha Runtime Awareness**: Coffee chat and tarot prompts now receive the guest's visit context so Alpha can recognize the current season, time, weather, and Christmas mode.
+- **AI Model Update**: Cafe Lua AI routes default to `google/gemini-flash-3.1-lite` through Vercel AI Gateway.
+- **Tarot Story Decks**: Gallery tarot cards now support story-deck viewing for the current and old decks. The prose is a work in progress and will be refined against the illustrations.
+- **Open Graph & SEO**: Replaced the OG image with the Cafe Lua entrance and official round logo, updated versioned OG metadata, refreshed README/llms.txt, and documented current SEO entry points.
+- **Version Display**: Intro footer now shows `v0.1.9`.
+
 ### v0.1.8 (2026-03-06)
 - **Post Comments**: Comment and nested reply system for Desk/Diary posts with email notifications.
 - **Guestbook Replies**: Reply support and email notifications for guestbook entries.

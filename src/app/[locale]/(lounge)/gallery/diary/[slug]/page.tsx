@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const description = cleanContent
         ? cleanContent.slice(0, 120) + (cleanContent.length > 120 ? '...' : '')
         : fallbackDesc;
-    const ogImage = entry.images.length > 0 ? entry.images[0] : '/og-cover.png';
+    const ogImage = entry.images.length > 0 ? entry.images[0] : '/og-cafelua-entrance-v019.png';
 
     return {
         title: entryTitle,

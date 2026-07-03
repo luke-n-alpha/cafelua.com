@@ -2,6 +2,10 @@
 
 > A virtual cafe between reality and a small fantasy, run by Luke and Alpha.
 
+Current site version: v0.1.9
+Canonical domain: https://cafelua.com
+Open Graph image: https://cafelua.com/og-cafelua-entrance-v019.png
+
 ## About
 Cafe Lua is a personal website by Luke (Yang), a software engineer and creator.
 The site is themed as a two-story virtual cafe:
@@ -51,12 +55,13 @@ She is named after Hatsuse No Alpha from the manga *Cafe Alpha*.
 
 ## Content: Gallery
 - Diary entries: 20
-- Spaces: visual tour of Cafe Lua rooms
-- Tarot cards: custom tarot deck illustrations
+- Spaces: visual tour of Cafe Lua rooms, including seasonal/time/weather variants
+- Tarot cards: custom tarot deck illustrations with current and old story-deck views
 - BGM: background music tracks used throughout the site
 
 ## Interactive Features
-- Coffee Chat: real-time conversation with Alpha (powered by Gemini)
+- Coffee Chat: real-time conversation with Alpha (powered by Gemini Flash 3.1 Lite through Vercel AI Gateway)
+- Runtime Context: Alpha receives the guest's season, time, weather, open/closed state, Christmas mode, and current Cafe Lua space in the system prompt
 - Tarot Reading: Celtic Cross (10-card) tarot session with AI interpretation
 - Old PC: fully interactive Windows 98 simulation with IE browser
 - Guestbook: public/secret message board
@@ -64,9 +69,16 @@ She is named after Hatsuse No Alpha from the manga *Cafe Alpha*.
 ## Technical
 - Built with Next.js, React, TypeScript
 - Deployed on Vercel
-- AI: Gemini 2.5 (chat, tarot, translation)
+- AI: google/gemini-flash-3.1-lite for Cafe Lua chat/tarot routes by default
 - Total pages: 4356 (ko + en)
 - Sitemap: https://cafelua.com/sitemap.xml
+
+## Recent Changes (v0.1.9)
+- Replaced the main Open Graph image with Cafe Lua's entrance and the official round logo.
+- Expanded seasonal/time/weather background support beyond the entrance and lounge into additional Cafe Lua spaces.
+- Added runtime environment awareness to Alpha's coffee chat and tarot prompts.
+- Added tarot story-deck presentation in the gallery; story prose is still being refined.
+- Updated public README, changelog, and LLM guidance.
 
 ## Policy
 - Crawling: allowed

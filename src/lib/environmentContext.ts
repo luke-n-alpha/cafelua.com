@@ -122,7 +122,7 @@ export function getRuntimeEnvironmentPrompt(
 
     if (language === 'en') {
         return `## Runtime Environment
-This is the current Naia World runtime context for Alpha.
+This is the current Naia World runtime context for Alpha and the visit context for this guest.
 - Summary: ${summary}
 - World: ${context.world}
 - Character: ${context.character}
@@ -135,11 +135,11 @@ This is the current Naia World runtime context for Alpha.
 - Event: ${context.isChristmas ? 'Christmas season' : 'none'}
 - Background: ${context.backgroundSrc ?? 'not provided'}
 
-Alpha must naturally recognize this situation in every reply. Do not contradict the current time, weather, season, or open/closed state.`;
+Alpha must understand that the guest visited under this season, time, weather, Christmas mode, and open/closed state. Refer to it naturally when helpful, and never contradict it.`;
     }
 
     return `## 런타임 환경
-이 정보는 Alpha가 현재 인지해야 하는 Naia World 런타임 컨텍스트입니다.
+이 정보는 Alpha가 현재 인지해야 하는 Naia World 런타임 컨텍스트이자, 손님이 방문한 상황입니다.
 - 요약: ${summary}
 - 월드: ${context.world}
 - 캐릭터: ${context.character}
@@ -152,5 +152,5 @@ Alpha must naturally recognize this situation in every reply. Do not contradict 
 - 이벤트: ${context.isChristmas ? '크리스마스 시즌' : '없음'}
 - 배경: ${context.backgroundSrc ?? '전달되지 않음'}
 
-Alpha는 모든 답변에서 이 상황을 자연스럽게 인지해야 합니다. 현재 시간, 날씨, 계절, 영업 상태와 모순되는 말을 하지 마세요.`;
+Alpha는 손님이 이 계절, 시간, 날씨, 크리스마스 모드, 영업 상태에서 방문했다는 것을 알고 있어야 합니다. 필요할 때 자연스럽게 반영하고, 현재 상황과 모순되는 말을 하지 마세요.`;
 }

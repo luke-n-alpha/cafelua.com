@@ -4,7 +4,7 @@
 
 > 현실과 이세계의 경계에 있는 디지털 안식처.
 
-**카페루아**는 Next.js로 만든 개인 웹사이트 겸 가상 찻집입니다. AI 동반자(알파), 블로그, 갤러리, 방명록, 레트로 추억 공간이 하나로 모인 몰입형 공간입니다.
+**카페루아**는 Next.js로 만든 개인 웹사이트 겸 가상 찻집입니다. AI 동반자(알파), 블로그, 갤러리, 방명록, 계절형 카페 공간, 레트로 추억 공간이 하나로 모인 몰입형 공간입니다.
 
 🌐 **사이트**: [cafelua.com](https://cafelua.com)
 
@@ -28,13 +28,13 @@ API 키 없이도 사이트는 동작합니다 (AI 채팅, 방명록, 날씨 기
 
 | 공간 | 설명 |
 |------|------|
-| **인트로** | 날씨 반응형 입구, 레트로 방문자 카운터 |
-| **라운지** | 메인 공간 — 앰비언트 BGM + 알파 AI 채팅 |
-| **카운터** | VN 스타일 커피챗 & 켈틱 크로스 타로 (Gemini 2.5 Flash) |
+| **인트로** | 계절/시간/날씨 반응형 입구, 레트로 방문자 카운터 |
+| **라운지** | 메인 공간 — 앰비언트 BGM + 환경 상태를 이어받는 내비게이션 |
+| **카운터** | VN 스타일 커피챗 & 켈틱 크로스 타로 (Gemini Flash 3.1 Lite) |
 | **마스터의 데스크** | 블로그 — 2,100+개 포스트, 카테고리/태그 필터, 무한 스크롤 |
-| **갤러리** | 사진 갤러리 + 개인 다이어리 |
-| **방명록** | Firebase 기반 방명록, 비밀글 기능 |
-| **2층 아틀리에** | 레트로 Win98 PC 체험 (1997/1998년 홈페이지 아카이브) |
+| **갤러리** | 사진 갤러리, 카페루아 공간, 타로 스토리 덱, BGM |
+| **방명록** | Firebase 기반 방명록, 계절형 카페 배경, 비밀글 기능 |
+| **2층 아틀리에** | 레트로 Win98 PC 체험과 계절형 아틀리에 배경 |
 
 **공통**: 한/영 이중언어, 반응형, 포스트/다이어리별 OG 메타데이터, 이메일 답글 알림.
 
@@ -47,7 +47,7 @@ API 키 없이도 사이트는 동작합니다 (AI 채팅, 방명록, 날씨 기
 | Framework | Next.js 16 (App Router) + React 19 |
 | Language | TypeScript |
 | Styling | CSS + 디자인 토큰 |
-| AI | Google Gemini 2.5 Flash |
+| AI | Vercel AI Gateway + Google Gemini Flash 3.1 Lite |
 | Backend | Firebase (방명록/댓글), GA4 Data API |
 | i18n | react-i18next (ko/en) |
 | Deployment | Vercel |
@@ -60,7 +60,9 @@ API 키 없이도 사이트는 동작합니다 (AI 채팅, 방명록, 날씨 기
 
 | 변수명 | 필수 | 설명 |
 |--------|:----:|------|
-| `GEMINI_TOKEN` | ✅* | Gemini API 키 — [여기서 발급](https://aistudio.google.com/app/apikey) |
+| `AI_GATEWAY_API_KEY` | ✅* | 로컬/CI용 Vercel AI Gateway 키. 프로덕션은 Vercel OIDC 사용 가능 |
+| `CAFELUA_COFFEE_CHAT_MODEL` | — | 커피챗 모델 override. 기본값: `google/gemini-flash-3.1-lite` |
+| `CAFELUA_TAROT_CHAT_MODEL` | — | 타로챗 모델 override. 기본값: `google/gemini-flash-3.1-lite` |
 | `FIREBASE_CLIENT_EMAIL` | ✅* | Firebase Admin SDK 서비스 계정 이메일 |
 | `FIREBASE_PRIVATE_KEY` | ✅* | Firebase Admin SDK 비공개 키 |
 | `NEXT_PUBLIC_FIREBASE_*` | ✅* | Firebase 클라이언트 설정 (apiKey, projectId 등) |
@@ -170,6 +172,15 @@ npx tsc --noEmit     # TypeScript 타입 체크
 | 다이어리 | 20개 |
 | 카테고리 | 8개 |
 | 지원 언어 | 한국어 + 영어 |
+| 버전 | 0.1.9 |
+
+## 🔎 SEO & AI 인덱싱
+
+- 대표 도메인: `https://cafelua.com`
+- 사이트맵: `https://cafelua.com/sitemap.xml`
+- LLM 안내문: `https://cafelua.com/llms.txt`
+- Open Graph 이미지: 카페루아 현관과 공식 원형 로고
+- 주요 공유 페이지는 링크 프리뷰 캐시 갱신을 위해 버전이 붙은 OG 이미지 경로를 사용합니다.
 
 ---
 

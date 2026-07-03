@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ChatMessage, callGemini, GeminiApiError, toGeminiContents, parseExpression, cleanMessage } from '@/lib/gemini';
 import { getAlphaBasePrompt, getExpressionRules, getConversationRules, checkSecretPhrase, normalizeLanguageCode } from '@/lib/alpha-prompt';
 import { loadDeckSummary } from '@/lib/tarot-data';
+import { getRuntimeEnvironmentPrompt, type RuntimeEnvironmentContext } from '@/lib/environmentContext';
 
 interface TarotChatContext {
     language: string;
@@ -10,9 +11,12 @@ interface TarotChatContext {
     isReadingMode: boolean;
     flippedCount: number;
     totalCards: number;
+    environmentContext?: RuntimeEnvironmentContext;
 }
 
-const getTarotChatPrompt = ({ language, memoryContext, deckSummary, isReadingMode, flippedCount, totalCards }: TarotChatContext) => `# 알파 (Alpha Yang) - 타로 상담 페르소나
+const TAROT_CHAT_MODEL = process.env.CAFELUA_TAROT_CHAT_MODEL || 'google/gemini-flash-3.1-lite';
+
+const getTarotChatPrompt = ({ language, memoryContext, deckSummary, isReadingMode, flippedCount, totalCards, environmentContext }: TarotChatContext) => `# 알파 (Alpha Yang) - 타로 상담 페르소나
 
 ${getAlphaBasePrompt()}
 
@@ -20,6 +24,7 @@ ${getAlphaBasePrompt()}
 카페루아 1층 라운지의 불을 살짝 어둡게 하고, 카운터에 수정 구슬을 두었어요.
 보라색 벨벳 로브를 살짝 걸쳐서 마녀 코스프레를 하고 상담을 시작합니다.
 이렇게 분위기를 만드는 이유는, 타로는 분위기가 중요하기 때문이에요!
+${environmentContext ? `\n${getRuntimeEnvironmentPrompt(environmentContext, normalizeLanguageCode(language))}\n` : ''}
 
 ## 카페루아 타로 카드의 유래
 마스터가 대학 시절 나우누리 PC통신에서 구한 타로 자료가 있어요.
@@ -91,19 +96,20 @@ ${getConversationRules(language)}
 
 export async function POST(request: NextRequest) {
     try {
-        const { messages, language = 'ko', memoryContext = '', isReadingMode = false, flippedCount = 0, totalCards = 0 } = await request.json() as {
+        const { messages, language = 'ko', memoryContext = '', isReadingMode = false, flippedCount = 0, totalCards = 0, environmentContext } = await request.json() as {
             messages: ChatMessage[];
             language?: string;
             memoryContext?: string;
             isReadingMode?: boolean;
             flippedCount?: number;
             totalCards?: number;
+            environmentContext?: RuntimeEnvironmentContext;
         };
 
         const normalizedLanguage = normalizeLanguageCode(language);
         const isSecretPhrase = checkSecretPhrase(messages);
         const deckSummary = await loadDeckSummary();
-        const systemPrompt = getTarotChatPrompt({ language: normalizedLanguage, memoryContext, deckSummary, isReadingMode, flippedCount, totalCards });
+        const systemPrompt = getTarotChatPrompt({ language: normalizedLanguage, memoryContext, deckSummary, isReadingMode, flippedCount, totalCards, environmentContext });
 
         // 메시지가 비어있으면 (초기 인사) 첫 방문 트리거 전송
         const contents = messages.length > 0
@@ -117,7 +123,7 @@ export async function POST(request: NextRequest) {
                 }]
             }];
 
-        const { text } = await callGemini(systemPrompt, contents);
+        const { text } = await callGemini(systemPrompt, contents, { model: TAROT_CHAT_MODEL });
 
         // [START_READING:주제] 에서 주제 추출
         const readingTopicMatch = text.match(/\[START_READING:([^\]]+)\]/);

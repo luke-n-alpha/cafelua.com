@@ -52,12 +52,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             url: `/about/${tab}/`,
             title: ogTitle,
             description,
-            images: ['/og-cover.png'],
+            images: ['/og-cafelua-entrance-v019.png'],
         },
         twitter: {
             title: ogTitle,
             description,
-            images: ['/og-cover.png'],
+            images: ['/og-cafelua-entrance-v019.png'],
         },
     };
 }

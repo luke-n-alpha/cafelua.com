@@ -4,7 +4,7 @@
 
 > A digital sanctuary on the border between reality and another world.
 
-**Cafe Lua** is a personal website / virtual teahouse built with Next.js. It features an AI companion (Alpha), a blog, a gallery, a guestbook, and retro nostalgia — all in one immersive space.
+**Cafe Lua** is a personal website / virtual teahouse built with Next.js. It features an AI companion (Alpha), a blog, a gallery, a guestbook, seasonal cafe spaces, and retro nostalgia — all in one immersive space.
 
 🌐 **Live site**: [cafelua.com](https://cafelua.com)
 
@@ -28,13 +28,13 @@ The site works without any API keys (AI chat, guestbook, and weather features wi
 
 | Space | Description |
 |-------|-------------|
-| **Intro** | Weather-reactive entrance with retro visitor counter |
-| **Lounge** | Main space with ambient BGM + Alpha AI chat |
-| **Counter** | VN-style coffee chat & Celtic Cross tarot (Gemini 2.5 Flash) |
+| **Intro** | Season/time/weather-reactive entrance with retro visitor counter |
+| **Lounge** | Main space with ambient BGM + environment-aware navigation |
+| **Counter** | VN-style coffee chat & Celtic Cross tarot (Gemini Flash 3.1 Lite) |
 | **Master's Desk** | Blog with 2,100+ posts — category/tag filter, infinite scroll |
-| **Gallery** | Photo gallery + personal diary entries |
-| **Guestbook** | Firebase-backed guestbook with secret messages |
-| **2F Atelier** | Retro Win98 PC experience (1997/1998 homepage archives) |
+| **Gallery** | Photo gallery, Cafe Lua spaces, tarot story decks, BGM |
+| **Guestbook** | Firebase-backed guestbook with seasonal cafe backgrounds |
+| **2F Atelier** | Retro Win98 PC experience and seasonal atelier backgrounds |
 
 **Also**: ko/en bilingual, responsive design, OG metadata per post/diary, email reply notifications.
 
@@ -47,7 +47,7 @@ The site works without any API keys (AI chat, guestbook, and weather features wi
 | Framework | Next.js 16 (App Router) + React 19 |
 | Language | TypeScript |
 | Styling | CSS + design tokens |
-| AI | Google Gemini 2.5 Flash |
+| AI | Vercel AI Gateway + Google Gemini Flash 3.1 Lite |
 | Backend | Firebase (guestbook/comments), GA4 Data API |
 | i18n | react-i18next (ko/en) |
 | Deployment | Vercel |
@@ -60,7 +60,9 @@ Copy `.env.example` to `.env`:
 
 | Variable | Required | Description |
 |----------|:--------:|-------------|
-| `GEMINI_TOKEN` | ✅* | Gemini API key — [get it here](https://aistudio.google.com/app/apikey) |
+| `AI_GATEWAY_API_KEY` | ✅* | Vercel AI Gateway key for local/CI. Production can use Vercel OIDC. |
+| `CAFELUA_COFFEE_CHAT_MODEL` | — | Coffee chat model override. Default: `google/gemini-flash-3.1-lite` |
+| `CAFELUA_TAROT_CHAT_MODEL` | — | Tarot chat model override. Default: `google/gemini-flash-3.1-lite` |
 | `FIREBASE_CLIENT_EMAIL` | ✅* | Firebase Admin SDK service account email |
 | `FIREBASE_PRIVATE_KEY` | ✅* | Firebase Admin SDK private key |
 | `NEXT_PUBLIC_FIREBASE_*` | ✅* | Firebase client config (apiKey, projectId, etc.) |
@@ -170,6 +172,15 @@ npx tsc --noEmit     # TypeScript type check
 | Diary entries | 20 |
 | Categories | 8 |
 | Languages | Korean + English |
+| Version | 0.1.9 |
+
+## 🔎 SEO & AI Indexing
+
+- Canonical domain: `https://cafelua.com`
+- Sitemap: `https://cafelua.com/sitemap.xml`
+- LLM guide: `https://cafelua.com/llms.txt`
+- Open Graph image: Cafe Lua entrance with the official round logo
+- Most shareable pages use a versioned OG image path to avoid stale link-preview caches.
 
 ---
 

@@ -12,12 +12,12 @@ export const metadata: Metadata = {
         url: '/lounge/',
         title: '라운지 | 카페루아',
         description: '음악과 함께 쉬어가는 카페루아 1층 라운지.',
-        images: ['/og-cover.webp']
+        images: ['/og-cafelua-entrance-v019.png']
     },
     twitter: {
         title: '라운지 | 카페루아',
         description: '음악과 함께 쉬어가는 카페루아 1층 라운지.',
-        images: ['/og-cover.webp']
+        images: ['/og-cafelua-entrance-v019.png']
     }
 };
 

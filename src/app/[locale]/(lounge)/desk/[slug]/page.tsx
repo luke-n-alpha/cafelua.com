@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const ogTitle = buildOgTitle(sourceTitle, locale);
     const sourceContent = locale === 'en' ? (post.contentEn || post.contentKo) : post.contentKo;
     const description = buildOgDescription(sourceContent, locale);
-    const ogImage = post.thumbnail || '/og-cover.png';
+    const ogImage = post.thumbnail || '/og-cafelua-entrance-v019.png';
 
     return {
         title: cleanOgText(sourceTitle) || (locale === 'en' ? 'Post' : '포스팅'),

@@ -12,6 +12,23 @@ export const metadata: Metadata = {
         template: '%s | 카페루아'
     },
     description: '현실과 이세계의 경계에 있는 작은 가상 카페. 루크와 알파가 함께 운영합니다.',
+    applicationName: 'Cαfé Luα',
+    authors: [{ name: 'Luke Yang', url: 'https://cafelua.com' }],
+    creator: 'Luke Yang',
+    publisher: 'Cαfé Luα',
+    category: 'personal website',
+    keywords: [
+        '카페루아',
+        'Cafe Lua',
+        'Cαfé Luα',
+        'Alpha Yang',
+        '알파',
+        'Luke Yang',
+        'virtual cafe',
+        'AI companion',
+        'tarot',
+        'personal blog'
+    ],
     alternates: {
         canonical: '/'
     },
@@ -24,9 +41,10 @@ export const metadata: Metadata = {
         locale: 'ko_KR',
         images: [
             {
-                url: '/og-cover.webp',
+                url: '/og-cafelua-entrance-v019.png',
                 width: 1200,
                 height: 630,
+                type: 'image/png',
                 alt: '카페루아 (Café Luα)'
             }
         ]
@@ -35,7 +53,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: '카페루아 (Café Luα)',
         description: '현실과 이세계의 경계에 있는 작은 가상 카페. 루크와 알파가 함께 운영합니다.',
-        images: ['/og-cover.webp']
+        images: ['/og-cafelua-entrance-v019.png']
     },
     robots: {
         index: true,

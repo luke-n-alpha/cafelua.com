@@ -32,12 +32,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             url: `/about/${tab}/`,
             title: meta.titleKo,
             description: meta.descKo,
-            images: ['/og-cover.webp'],
+            images: ['/og-cafelua-entrance-v019.png'],
         },
         twitter: {
             title: meta.titleKo,
             description: meta.descKo,
-            images: ['/og-cover.webp'],
+            images: ['/og-cafelua-entrance-v019.png'],
         },
     };
 }

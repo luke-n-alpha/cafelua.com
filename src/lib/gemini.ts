@@ -6,7 +6,7 @@ export interface ChatMessage {
 }
 
 // Vercel AI Gateway 모델 슬러그 (provider/model). 회사(nextain) 팀 크레딧으로 라우팅됨.
-export const DEFAULT_MODEL = 'google/gemini-2.5-flash';
+export const DEFAULT_MODEL = 'google/gemini-flash-3.1-lite';
 export const DEFAULT_MAX_TOKENS = 4096;
 
 // Vercel AI Gateway OpenAI 호환 엔드포인트

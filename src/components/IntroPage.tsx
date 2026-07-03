@@ -492,7 +492,7 @@ const IntroPage: React.FC = () => {
             </div>
 
             <div className="intro-footer glass" onClick={(e) => e.stopPropagation()}>
-                <span>v0.1.8</span>
+                <span>v0.1.9</span>
                 <a href="https://github.com/luke-n-alpha/cafelua.com" target="_blank" rel="noopener noreferrer" title="Open Source on GitHub">
                     <Github size={16} />
                 </a>

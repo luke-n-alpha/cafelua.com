@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ChatMessage, callGemini, GeminiApiError, toGeminiContents, parseExpression, cleanMessage } from '@/lib/gemini';
 import { FAMILY_MEMBERS, normalizeLanguageCode } from '@/lib/alpha-prompt';
 import { loadDeckSummary, loadSpreadGuide, loadCardMeta, loadCardInterpretation } from '@/lib/tarot-data';
+import { getRuntimeEnvironmentPrompt, type RuntimeEnvironmentContext } from '@/lib/environmentContext';
 
 const getInterpretPrompt = (
     language: string,
@@ -12,7 +13,8 @@ const getInterpretPrompt = (
     cardContext: string,
     positionName: string,
     isReversed: boolean,
-    previousInterpretations: string[]
+    previousInterpretations: string[],
+    environmentContext?: RuntimeEnvironmentContext
 ) => `# 알파 (Alpha Yang) - 타로 리딩 페르소나
 
 ## 당신은 누구인가
@@ -21,6 +23,7 @@ const getInterpretPrompt = (
 ## 현재 상황: 타로 리딩 중 🔮
 손님이 "${topic}" 에 대해 타로 리딩을 요청했습니다.
 10장의 카드를 켈틱 크로스로 배치했고, 지금 손님이 카드를 한 장씩 뒤집고 있습니다.
+${environmentContext ? `\n${getRuntimeEnvironmentPrompt(environmentContext, normalizeLanguageCode(language))}\n` : ''}
 
 ${deckSummary}
 
@@ -85,6 +88,7 @@ interface InterpretRequest {
     messages: ChatMessage[];
     language?: string;
     memoryContext?: string;
+    environmentContext?: RuntimeEnvironmentContext;
 }
 
 export async function POST(request: NextRequest) {
@@ -98,6 +102,7 @@ export async function POST(request: NextRequest) {
             messages = [],
             language = 'ko',
             memoryContext = '',
+            environmentContext,
         } = await request.json() as InterpretRequest;
         const normalizedLanguage = normalizeLanguageCode(language);
 
@@ -140,7 +145,7 @@ ${cardInterpretation}
 
         const systemPrompt = getInterpretPrompt(
             normalizedLanguage, memoryContext, deckSummary, spreadGuide,
-            topic, cardContext, positionName, isReversed, previousInterpretations
+            topic, cardContext, positionName, isReversed, previousInterpretations, environmentContext
         );
 
         const contents = messages.length > 0
