@@ -12,16 +12,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const title = isEn ? 'Entrance' : '현관';
     const description = isEn
-        ? 'Enter Cafe Lua through the entrance that changes with season, time, and weather.'
-        : '계절/시간/날씨에 따라 달라지는 현관에서 카페루아로 입장합니다.';
+        ? 'A small virtual cafe run by Luke and Alpha, with coffee chat, tarot stories, and rooms that change with the season and weather.'
+        : '루크와 알파가 함께 운영하는 작은 가상 카페. 계절과 날씨에 따라 달라지는 공간에서 커피챗, 타로, 기록을 만납니다.';
     const ogTitle = isEn ? 'Entrance | CafeLua' : '현관 | 카페루아';
 
     return {
         title,
         description,
-        alternates: { canonical: '/' },
+        alternates: {
+            canonical: isEn ? '/en' : '/ko',
+            languages: {
+                ko: '/ko',
+                en: '/en',
+                'x-default': '/',
+            },
+        },
         openGraph: {
-            url: '/',
+            url: isEn ? '/en' : '/ko',
             title: ogTitle,
             description,
             images: ['/og-cafelua-entrance-v019.png'],

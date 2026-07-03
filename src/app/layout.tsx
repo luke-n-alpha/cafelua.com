@@ -4,6 +4,7 @@ import '../app/globals.css';
 import Providers from './providers';
 
 const GA_ID = 'G-EDLFFFY25M';
+const SITE_DESCRIPTION = '루크와 알파가 함께 운영하는 작은 가상 카페. 계절과 날씨에 따라 달라지는 공간에서 커피챗, 타로, 기록을 만납니다.';
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://cafelua.com'),
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
         default: '카페루아 (Café Luα)',
         template: '%s | 카페루아'
     },
-    description: '현실과 이세계의 경계에 있는 작은 가상 카페. 루크와 알파가 함께 운영합니다.',
+    description: SITE_DESCRIPTION,
     applicationName: 'Cαfé Luα',
     authors: [{ name: 'Luke Yang', url: 'https://cafelua.com' }],
     creator: 'Luke Yang',
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
         type: 'website',
         url: '/',
         title: '카페루아 (Café Luα)',
-        description: '현실과 이세계의 경계에 있는 작은 가상 카페. 루크와 알파가 함께 운영합니다.',
+        description: SITE_DESCRIPTION,
         siteName: '카페루아',
         locale: 'ko_KR',
         images: [
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
     twitter: {
         card: 'summary_large_image',
         title: '카페루아 (Café Luα)',
-        description: '현실과 이세계의 경계에 있는 작은 가상 카페. 루크와 알파가 함께 운영합니다.',
+        description: SITE_DESCRIPTION,
         images: ['/og-cafelua-entrance-v019.png']
     },
     robots: {
