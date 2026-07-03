@@ -61,8 +61,8 @@ Copy `.env.example` to `.env`:
 | Variable | Required | Description |
 |----------|:--------:|-------------|
 | `AI_GATEWAY_API_KEY` | ✅* | Vercel AI Gateway key for local/CI. Production can use Vercel OIDC. |
-| `CAFELUA_COFFEE_CHAT_MODEL` | — | Coffee chat model override. Default: `google/gemini-flash-3.1-lite` |
-| `CAFELUA_TAROT_CHAT_MODEL` | — | Tarot chat model override. Default: `google/gemini-flash-3.1-lite` |
+| `CAFELUA_COFFEE_CHAT_MODEL` | — | Coffee chat model override. Default: `google/gemini-3.1-flash-lite` |
+| `CAFELUA_TAROT_CHAT_MODEL` | — | Tarot chat model override. Default: `google/gemini-3.1-flash-lite` |
 | `FIREBASE_CLIENT_EMAIL` | ✅* | Firebase Admin SDK service account email |
 | `FIREBASE_PRIVATE_KEY` | ✅* | Firebase Admin SDK private key |
 | `NEXT_PUBLIC_FIREBASE_*` | ✅* | Firebase client config (apiKey, projectId, etc.) |

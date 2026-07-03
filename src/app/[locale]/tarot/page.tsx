@@ -173,7 +173,7 @@ export default function TarotPage() {
 
     // 카드 데이터 로드
     useEffect(() => {
-        fetch('/api/tarot/cards')
+        fetch('/api/tarot/cards/')
             .then(res => res.json())
             .then(data => setAllCards(data.cards || []))
             .catch(() => {});
@@ -218,7 +218,7 @@ export default function TarotPage() {
         // AI가 첫 인사를 생성하도록 API 호출
         setIsLoading(true);
         const memoryContext = getMemoryContext(mem);
-        fetch('/api/chat/tarot', {
+        fetch('/api/chat/tarot/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -314,7 +314,7 @@ export default function TarotPage() {
         setCurrentMessage(t('tarot.interpreting', '{{cardName}} 카드를 해석하고 있어요... 🔮', { cardName: getCardName(card.card) }));
 
         try {
-            const res = await fetch('/api/tarot/interpret', {
+            const res = await fetch('/api/tarot/interpret/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -373,7 +373,7 @@ export default function TarotPage() {
         }));
 
         try {
-            const summaryRes = await fetch('/api/tarot/summary', {
+            const summaryRes = await fetch('/api/tarot/summary/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -493,7 +493,7 @@ export default function TarotPage() {
         try {
             const memoryContext = getMemoryContext(updatedMemory);
 
-            const response = await fetch('/api/chat/tarot', {
+            const response = await fetch('/api/chat/tarot/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

@@ -61,8 +61,8 @@ API 키 없이도 사이트는 동작합니다 (AI 채팅, 방명록, 날씨 기
 | 변수명 | 필수 | 설명 |
 |--------|:----:|------|
 | `AI_GATEWAY_API_KEY` | ✅* | 로컬/CI용 Vercel AI Gateway 키. 프로덕션은 Vercel OIDC 사용 가능 |
-| `CAFELUA_COFFEE_CHAT_MODEL` | — | 커피챗 모델 override. 기본값: `google/gemini-flash-3.1-lite` |
-| `CAFELUA_TAROT_CHAT_MODEL` | — | 타로챗 모델 override. 기본값: `google/gemini-flash-3.1-lite` |
+| `CAFELUA_COFFEE_CHAT_MODEL` | — | 커피챗 모델 override. 기본값: `google/gemini-3.1-flash-lite` |
+| `CAFELUA_TAROT_CHAT_MODEL` | — | 타로챗 모델 override. 기본값: `google/gemini-3.1-flash-lite` |
 | `FIREBASE_CLIENT_EMAIL` | ✅* | Firebase Admin SDK 서비스 계정 이메일 |
 | `FIREBASE_PRIVATE_KEY` | ✅* | Firebase Admin SDK 비공개 키 |
 | `NEXT_PUBLIC_FIREBASE_*` | ✅* | Firebase 클라이언트 설정 (apiKey, projectId 등) |

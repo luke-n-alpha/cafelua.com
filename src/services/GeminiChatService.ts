@@ -1,7 +1,7 @@
 /**
  * GeminiChatService - 알파와의 커피챗을 위한 클라이언트 서비스
  *
- * 사용 모델: google/gemini-flash-3.1-lite (server default)
+ * 사용 모델: google/gemini-3.1-flash-lite (server default)
  * API: /api/chat (서버 사이드)
  */
 
@@ -106,7 +106,7 @@ export async function sendChatMessage(
     language: string = 'ko'
 ): Promise<ChatResponse> {
     try {
-        const response = await fetch('/api/chat', {
+        const response = await fetch('/api/chat/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

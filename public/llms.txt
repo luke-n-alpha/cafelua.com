@@ -69,7 +69,7 @@ She is named after Hatsuse No Alpha from the manga *Cafe Alpha*.
 ## Technical
 - Built with Next.js, React, TypeScript
 - Deployed on Vercel
-- AI: google/gemini-flash-3.1-lite for Cafe Lua chat/tarot routes by default
+- AI: google/gemini-3.1-flash-lite for Cafe Lua chat/tarot routes by default
 - Total pages: 4356 (ko + en)
 - Sitemap: https://cafelua.com/sitemap.xml
 
