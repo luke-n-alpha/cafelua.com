@@ -95,6 +95,8 @@ const CounterPage: React.FC = () => {
             message={t('counter.dialogue', '어서오세요, 손님! 무엇을 도와드릴까요?')}
             backgroundSrc={backgroundImage}
             characterSrc="/characters/alpha/alpha-nice-talk.webp"
+            spriteSrc="/characters/alpha/alpha-serving.webp"
+            spriteAlt="Alpha"
             speakerName="Alpha"
             buttons={buttons}
             overlayClassName="counter-overlay"

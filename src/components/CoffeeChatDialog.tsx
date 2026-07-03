@@ -346,6 +346,15 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
                 className="construction-bg"
             />
 
+            {/* 커피챗 일러스트 (중앙, 라운딩) */}
+            <div className="construction-illustration-frame">
+                <img
+                    src="/characters/alpha/alpha-coffee-chat.webp"
+                    alt="Alpha"
+                    className="construction-illustration"
+                />
+            </div>
+
             {/* VN 컨테이너 */}
             <div className="vn-container">
                 <div className="vn-dialogue-box">

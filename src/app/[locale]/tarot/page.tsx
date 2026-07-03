@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import BackgroundMusic from '@/components/BackgroundMusic';
@@ -26,6 +26,7 @@ import {
     type ConversationMessage
 } from '@/services/ChatMemoryService';
 import { renderMessage } from '@/lib/format-message';
+import { parseRuntimeEnvironmentFromSearchParams } from '@/lib/environmentContext';
 import '@/components/UnderConstruction.css';
 import '@/components/CoffeeChatDialog.css';
 import '@/components/tarot/TarotReading.css';
@@ -56,6 +57,12 @@ export default function TarotPage() {
     const localeFromPath = pathname.split('/')[1];
     const preferredLanguage = localeFromPath === 'en' ? 'en' : 'ko';
     const isEnglish = preferredLanguage === 'en';
+    const environmentContext = useMemo(() => {
+        return parseRuntimeEnvironmentFromSearchParams(searchParams, {
+            space: '1층 라운지 타로룸',
+            backgroundSrc: '/tarot/tarot-room-bg.webp',
+        });
+    }, [searchParams]);
     const overlayRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -218,6 +225,7 @@ export default function TarotPage() {
                 messages: [],
                 language: preferredLanguage,
                 memoryContext,
+                environmentContext,
             }),
             signal: abortController.signal,
         })
@@ -321,6 +329,7 @@ export default function TarotPage() {
                         return `[${getPositionName(p)} - ${getCardName(c.card)}${c.isReversed ? ` ${reversedTag}` : ''}]: ${interp}`;
                     }),
                     language: preferredLanguage,
+                    environmentContext,
                 }),
             });
 
@@ -371,6 +380,7 @@ export default function TarotPage() {
                     topic: readingTopic || t('tarot.defaultTopic', '오늘의 운세'),
                     interpretations: allInterpretations,
                     language: preferredLanguage,
+                    environmentContext,
                 }),
             });
             if (summaryRes.ok) {
@@ -493,6 +503,7 @@ export default function TarotPage() {
                     isReadingMode,
                     flippedCount: drawnCards.filter(c => c.isFlipped).length,
                     totalCards: drawnCards.length,
+                    environmentContext,
                 })
             });
 
