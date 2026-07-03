@@ -7,6 +7,7 @@ import UnderConstruction from './UnderConstruction';
 import CoffeeChatDialog from './CoffeeChatDialog';
 import { resolveEnvironmentBackgroundSrc, type Season, type TimeOfDay, type Weather } from '../lib/environmentBackgrounds';
 import { parseRuntimeEnvironmentFromSearchParams } from '../lib/environmentContext';
+import { resolveCoffeeChatIllustrationSrc } from '../lib/coffeeChatIllustrations';
 
 const CounterPage: React.FC = () => {
     const { t } = useTranslation();
@@ -28,10 +29,14 @@ const CounterPage: React.FC = () => {
 
     const environmentContext = useMemo(() => {
         return parseRuntimeEnvironmentFromSearchParams(searchParams, {
-            space: '1층 카운터 커피챗',
+            space: '카페루아 커피챗',
             backgroundSrc: backgroundImage,
         });
     }, [backgroundImage, searchParams]);
+
+    const coffeeChatIllustrationSrc = useMemo(() => {
+        return resolveCoffeeChatIllustrationSrc(season, time, weather, isChristmas);
+    }, [isChristmas, season, time, weather]);
 
     useEffect(() => {
         setIsChatOpen(searchParams.get('chat') === 'open');
@@ -82,6 +87,7 @@ const CounterPage: React.FC = () => {
         return (
             <CoffeeChatDialog
                 backgroundSrc={backgroundImage}
+                illustrationSrc={coffeeChatIllustrationSrc}
                 environmentContext={environmentContext}
                 onClose={handleCloseCoffeeChat}
             />

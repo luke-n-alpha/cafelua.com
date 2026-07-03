@@ -607,9 +607,7 @@ export default function TarotPage() {
             <div
                 className="construction-bg"
                 style={{
-                    backgroundImage: isReadingMode
-                        ? 'url(/characters/alpha/alpha-tarot-ready.webp)'
-                        : 'url(/lounge-background-img/lounge-night.webp)',
+                    backgroundImage: 'url(/tarot/tarot-room-bg.webp)',
                     backgroundSize: 'cover',
                     backgroundPosition: isReadingMode ? 'center top' : 'center'
                 }}

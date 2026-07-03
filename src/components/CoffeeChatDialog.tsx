@@ -33,6 +33,7 @@ import './CoffeeChatDialog.css';
 
 interface CoffeeChatDialogProps {
     backgroundSrc: string;
+    illustrationSrc?: string;
     environmentContext: RuntimeEnvironmentContext;
     onClose: () => void;
 }
@@ -41,6 +42,7 @@ const CHAT_TIMEOUT_MS = 5 * 60 * 1000; // 5분
 
 const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
     backgroundSrc,
+    illustrationSrc = '/characters/alpha/alpha-coffee-chat.webp',
     environmentContext,
     onClose
 }) => {
@@ -349,7 +351,7 @@ const CoffeeChatDialog: React.FC<CoffeeChatDialogProps> = ({
             {/* 커피챗 일러스트 (중앙, 라운딩) */}
             <div className="construction-illustration-frame">
                 <img
-                    src="/characters/alpha/alpha-coffee-chat.webp"
+                    src={illustrationSrc}
                     alt="Alpha"
                     className="construction-illustration"
                 />
