@@ -17,7 +17,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const ogTitle = isEn ? 'Entrance | CafeLua' : '현관 | 카페루아';
 
     return {
-        title,
+        title: {
+            absolute: ogTitle,
+        },
         description,
         alternates: {
             canonical: isEn ? '/en' : '/ko',
