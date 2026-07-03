@@ -5,10 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import AboutModal from './AboutModal';
 import './AboutPage.css';
-
-type Season = 'spring' | 'summer' | 'autumn' | 'winter';
-type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
-type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
+import { resolveEnvironmentBackgroundSrc, type Season, type TimeOfDay, type Weather } from '../lib/environmentBackgrounds';
 type AboutTab = 'sitemap' | 'alpha' | 'luke';
 
 interface AboutPageProps {
@@ -25,23 +22,7 @@ const AboutPage: React.FC<AboutPageProps> = ({ activeTab = 'sitemap' }) => {
     const isChristmas = searchParams.get('christmas') === 'true';
 
     const backgroundImage = useMemo(() => {
-        let imageName = 'lounge-sunny';
-
-        if (isChristmas) {
-            imageName = 'lounge-christmas';
-        } else if (season === 'winter' && weather === 'snow') {
-            imageName = 'lounge-snow';
-        } else if (weather === 'rain' || weather === 'storm') {
-            imageName = 'lounge-rain';
-        } else if (weather === 'snow') {
-            imageName = 'lounge-snow';
-        } else if (time === 'sunset') {
-            imageName = 'lounge-evening';
-        } else if (time === 'night' || time === 'closed') {
-            imageName = 'lounge-night';
-        }
-
-        return `/lounge-background-img/${imageName}.webp`;
+        return resolveEnvironmentBackgroundSrc('about', season, time, weather, isChristmas);
     }, [isChristmas, season, time, weather]);
 
     const handleBackToLounge = () => {

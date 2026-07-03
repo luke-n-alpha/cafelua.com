@@ -6,16 +6,43 @@ import { useTranslation } from 'react-i18next';
 import { Eye } from 'lucide-react';
 import UnderConstruction from './UnderConstruction';
 import { DESK_CATEGORIES, getTagEn, type DeskCategory, type DeskPostListItem } from '@/data/desk/deskData';
+import { resolveEnvironmentBackgroundSrc, type Season, type TimeOfDay, type Weather } from '@/lib/environmentBackgrounds';
 import './MasterDeskPage.css';
 
-const DEFAULT_DESK_THUMBNAIL = '/master-desk-background-img/master-desk-background.png';
+const DEFAULT_DESK_THUMBNAIL = '/master-desk-background-img/master_desk_bg_spring_day_sunny.webp';
 const MISSING_IMAGE_FALLBACK = '/desk/missing-image.webp';
+const DESK_QUERY_KEYS = ['cat', 'q', 'tags', 'vc', 'tagsOpen'];
+
+const buildDeskParams = (
+    searchParams: { toString(): string },
+    category: DeskCategory | 'all',
+    searchText: string,
+    selectedTags: string[],
+    visibleCount: number,
+    showAllTags: boolean
+) => {
+    const params = new URLSearchParams(searchParams.toString());
+    DESK_QUERY_KEYS.forEach((key) => params.delete(key));
+    if (category !== 'all') params.set('cat', category);
+    if (searchText.trim()) params.set('q', searchText);
+    if (selectedTags.length > 0) params.set('tags', selectedTags.join(','));
+    if (visibleCount > 24) params.set('vc', String(visibleCount));
+    if (showAllTags) params.set('tagsOpen', '1');
+    return params;
+};
 
 const MasterDeskPage: React.FC<{ posts: DeskPostListItem[] }> = ({ posts }) => {
     const { t, i18n } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
     const pathname = usePathname();
+    const season = (searchParams.get('season') || 'spring') as Season;
+    const time = (searchParams.get('time') || 'day') as TimeOfDay;
+    const weather = (searchParams.get('weather') || 'sunny') as Weather;
+    const isChristmas = searchParams.get('christmas') === 'true';
+    const backgroundImage = useMemo(() => {
+        return resolveEnvironmentBackgroundSrc('masterDesk', season, time, weather, isChristmas);
+    }, [season, time, weather, isChristmas]);
     const localeFromPath = pathname.split('/')[1];
     const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : (i18n.language === 'en' ? 'en' : 'ko');
     const isKo = i18n.language === 'ko';
@@ -145,16 +172,11 @@ const MasterDeskPage: React.FC<{ posts: DeskPostListItem[] }> = ({ posts }) => {
     }, [visiblePosts.length]);
 
     useEffect(() => {
-        const params = new URLSearchParams();
-        if (category !== 'all') params.set('cat', category);
-        if (searchText.trim()) params.set('q', searchText);
-        if (selectedTags.length > 0) params.set('tags', selectedTags.join(','));
-        if (visibleCount > 24) params.set('vc', String(visibleCount));
-        if (showAllTags) params.set('tagsOpen', '1');
+        const params = buildDeskParams(searchParams, category, searchText, selectedTags, visibleCount, showAllTags);
         const query = params.toString();
         const url = `/${locale}/desk${query ? `?${query}` : ''}`;
         window.history.replaceState(null, '', url);
-    }, [category, locale, searchText, selectedTags, visibleCount, showAllTags]);
+    }, [category, locale, searchParams, searchText, selectedTags, visibleCount, showAllTags]);
 
     const handleSelectCategory = (cat: DeskCategory | 'all') => {
         setCategory(cat);
@@ -166,12 +188,7 @@ const MasterDeskPage: React.FC<{ posts: DeskPostListItem[] }> = ({ posts }) => {
 
     const handlePostClick = (slug: string) => {
         sessionStorage.setItem('cafelua_desk_scroll_y', String(window.scrollY || 0));
-        const params = new URLSearchParams();
-        if (category !== 'all') params.set('cat', category);
-        if (searchText.trim()) params.set('q', searchText);
-        if (selectedTags.length > 0) params.set('tags', selectedTags.join(','));
-        if (visibleCount > 24) params.set('vc', String(visibleCount));
-        if (showAllTags) params.set('tagsOpen', '1');
+        const params = buildDeskParams(searchParams, category, searchText, selectedTags, visibleCount, showAllTags);
         const query = params.toString();
         router.push(`/${locale}/desk/${slug}${query ? `?${query}` : ''}`);
     };
@@ -194,15 +211,15 @@ const MasterDeskPage: React.FC<{ posts: DeskPostListItem[] }> = ({ posts }) => {
 
     if (showIntro) {
         return (
-            <div className="desk-container">
+            <div className="desk-container" style={{ backgroundImage: `url('${backgroundImage}')` }}>
                 <UnderConstruction
                     onClose={() => {
                         sessionStorage.setItem('cafelua_desk_intro_seen', 'true');
                         setShowIntro(false);
                     }}
                     message={t('atelier.masterDeskMessage')}
-                    backgroundSrc="/master-desk-background-img/master-desk-background.png"
-                    illustrationSrc="/master-desk-background-img/master-desk-background.png"
+                    backgroundSrc={backgroundImage}
+                    illustrationSrc={backgroundImage}
                     characterSrc="/characters/alpha/alpha-nice-talk.webp"
                     closeLabel={t('atelier.explore')}
                 />
@@ -211,7 +228,7 @@ const MasterDeskPage: React.FC<{ posts: DeskPostListItem[] }> = ({ posts }) => {
     }
 
     return (
-        <div className="desk-container">
+        <div className="desk-container" style={{ backgroundImage: `url('${backgroundImage}')` }}>
             <div className="desk-panel">
                 <div className="desk-header">
                     <h1 className="desk-title">{t('desk.title')}</h1>

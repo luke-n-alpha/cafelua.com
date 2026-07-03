@@ -9,6 +9,7 @@ import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import type { DeskPost as DeskPostType, DeskPostCard } from '@/data/desk/deskData';
 import { DESK_CATEGORIES } from '@/data/desk/deskData';
+import { resolveEnvironmentBackgroundSrc, type Season, type TimeOfDay, type Weather } from '@/lib/environmentBackgrounds';
 import Comments from './Comments';
 import './DeskPost.css';
 
@@ -29,7 +30,7 @@ interface LinkPreviewData {
 }
 
 const linkPreviewCache = new Map<string, LinkPreviewData | null>();
-const DEFAULT_DESK_THUMBNAIL = '/master-desk-background-img/master-desk-background.png';
+const DEFAULT_DESK_THUMBNAIL = '/master-desk-background-img/master_desk_bg_spring_day_sunny.webp';
 const MISSING_IMAGE_FALLBACK = '/desk/missing-image.webp';
 
 const LinkPreviewCard: React.FC<{ href: string; fallbackText: string }> = ({ href, fallbackText }) => {
@@ -89,7 +90,7 @@ const LinkPreviewCard: React.FC<{ href: string; fallbackText: string }> = ({ hre
     );
 };
 
-const DEFAULT_DESK_THUMBNAIL_NAV = '/master-desk-background-img/master-desk-background.png';
+const DEFAULT_DESK_THUMBNAIL_NAV = '/master-desk-background-img/master_desk_bg_spring_day_sunny.webp';
 
 const NavCard: React.FC<{
     card: DeskPostCard;
@@ -133,6 +134,13 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
     const router = useRouter();
     const searchParams = useSearchParams();
     const isKo = i18n.language === 'ko';
+    const season = (searchParams.get('season') || 'spring') as Season;
+    const time = (searchParams.get('time') || 'day') as TimeOfDay;
+    const weather = (searchParams.get('weather') || 'sunny') as Weather;
+    const isChristmas = searchParams.get('christmas') === 'true';
+    const backgroundImage = useMemo(() => {
+        return resolveEnvironmentBackgroundSrc('masterDesk', season, time, weather, isChristmas);
+    }, [season, time, weather, isChristmas]);
 
     const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
     const lightboxRef = useRef<HTMLDivElement>(null);
@@ -572,7 +580,7 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
     const hasPopular = popularPosts.length > 0;
 
     return (
-        <div className="desk-post-container">
+        <div className="desk-post-container" style={{ backgroundImage: `url('${backgroundImage}')` }}>
             <div className="desk-post-panel">
                 <div className="desk-post-header">
                     <h1 className="desk-post-title">{title}</h1>

@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import UnderConstruction from './UnderConstruction';
 import { getEntries, addEntry, deleteEntry, adminDeleteEntry, getSecretMessages } from '@/services/GuestbookService';
 import type { GuestbookEntry } from '@/data/gallery/guestbookData';
+import { resolveEnvironmentBackgroundSrc, type Season, type TimeOfDay, type Weather } from '@/lib/environmentBackgrounds';
 import './GuestbookPage.css';
 
 const PAGE_SIZE = 20;
@@ -15,6 +16,13 @@ const GuestbookPage: React.FC = () => {
     const { t, i18n } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
+    const season = (searchParams.get('season') || 'spring') as Season;
+    const time = (searchParams.get('time') || 'day') as TimeOfDay;
+    const weather = (searchParams.get('weather') || 'sunny') as Weather;
+    const isChristmas = searchParams.get('christmas') === 'true';
+    const backgroundImage = useMemo(() => {
+        return resolveEnvironmentBackgroundSrc('guestbook', season, time, weather, isChristmas);
+    }, [season, time, weather, isChristmas]);
 
     const [showGreeting, setShowGreeting] = useState(true);
     const [entries, setEntries] = useState<GuestbookEntry[]>([]);
@@ -465,12 +473,12 @@ const GuestbookPage: React.FC = () => {
     // Greeting screen
     if (showGreeting) {
         return (
-            <div className="guestbook-container" style={{ backgroundImage: "url('/guestbook-background-img/guestbook-scene.webp')" }}>
+            <div className="guestbook-container" style={{ backgroundImage: `url('${backgroundImage}')` }}>
                 <UnderConstruction
                     onClose={() => setShowGreeting(false)}
                     message={t('guestbook.greeting')}
-                    backgroundSrc="/guestbook-background-img/guestbook-scene.webp"
-                    illustrationSrc="/guestbook-background-img/guestbook-scene.webp"
+                    backgroundSrc={backgroundImage}
+                    illustrationSrc={backgroundImage}
                     characterSrc="/characters/alpha/alpha-nice-talk.webp"
                     closeLabel={t('guestbook.enter')}
                 />
@@ -479,7 +487,7 @@ const GuestbookPage: React.FC = () => {
     }
 
     return (
-        <div className="guestbook-container" style={{ backgroundImage: "url('/guestbook-background-img/guestbook-scene.webp')" }}>
+        <div className="guestbook-container" style={{ backgroundImage: `url('${backgroundImage}')` }}>
             <div className="guestbook-panel">
                 <div className="guestbook-header-row">
                     <div className="guestbook-title">{t('guestbook.title')}</div>

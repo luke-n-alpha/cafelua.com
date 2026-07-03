@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import './IntroPage.css';
 import {
@@ -20,42 +20,39 @@ type Weather = AppWeather;
 
 // Known asset filenames (without extension)
 const AVAILABLE_BACKGROUNDS = new Set([
-    // Spring
-    'intro_bg_spring_day_rain',
-    'intro_bg_spring_day_sunny',
-    'intro_bg_spring_night_clear',
-    'intro_bg_spring_night_closed',
-    'intro_bg_spring_sunset_clear',
-    // Summer
-    'intro_bg_summer_day_rain',
-    'intro_bg_summer_day_sunny',
-    'intro_bg_summer_night_clear',
-    'intro_bg_summer_night_closed',
-    'intro_bg_summer_sunset_clear',
-    // Autumn
     'intro_bg_autumn_day_rain',
     'intro_bg_autumn_day_storm',
     'intro_bg_autumn_day_sunny',
     'intro_bg_autumn_night_clear',
     'intro_bg_autumn_night_closed',
     'intro_bg_autumn_sunset_clear',
-    // Winter (base)
+    'intro_bg_reference_master',
+    'intro_bg_spring_day_rain',
+    'intro_bg_spring_day_sunny',
+    'intro_bg_spring_night_clear',
+    'intro_bg_spring_night_closed',
+    'intro_bg_spring_sunset_clear',
+    'intro_bg_summer_day_rain',
+    'intro_bg_summer_day_sunny',
+    'intro_bg_summer_night_clear',
+    'intro_bg_summer_night_closed',
+    'intro_bg_summer_sunset_clear',
     'intro_bg_winter_day_snow',
-    'intro_bg_winter_day_sunny',
-    'intro_bg_winter_night_clear',
-    'intro_bg_winter_night_closed',
-    'intro_bg_winter_night_snow',
-    'intro_bg_winter_sunset_clear',
-    // Winter (xmas)
     'intro_bg_winter_day_snow_xmas',
+    'intro_bg_winter_day_sunny',
     'intro_bg_winter_day_sunny_xmas',
+    'intro_bg_winter_night_clear',
     'intro_bg_winter_night_clear_xmas',
-    'intro_bg_winter_night_closed_xmas',
+    'intro_bg_winter_night_closed',
     'intro_bg_winter_night_closed_snow_xmas',
+    'intro_bg_winter_night_closed_xmas',
+    'intro_bg_winter_night_snow',
     'intro_bg_winter_night_snow_xmas',
+    'intro_bg_winter_sunset_clear',
     'intro_bg_winter_sunset_clear_xmas',
     'intro_bg_winter_sunset_xmas',
 ]);
+const FALLBACK_BACKGROUND = 'intro_bg_reference_master';
 
 // Helper functions (restored)
 const getSeason = (month: number): Season => {
@@ -105,6 +102,15 @@ const getWeatherIcon = (w: Weather) => {
         case 'closed': return <Sun size={20} />; // Default to sunny icon
     }
 };
+
+const isSeason = (value: string | null): value is Season =>
+    value === 'spring' || value === 'summer' || value === 'autumn' || value === 'winter';
+
+const isTimeOfDay = (value: string | null): value is TimeOfDay =>
+    value === 'day' || value === 'sunset' || value === 'night' || value === 'closed';
+
+const isWeather = (value: string | null): value is Weather =>
+    value === 'sunny' || value === 'clear' || value === 'rain' || value === 'snow' || value === 'storm' || value === 'closed';
 
 // Custom Icon Select Component
 const IconSelect = ({
@@ -174,6 +180,7 @@ const IntroPage: React.FC = () => {
     const { i18n } = useTranslation();
     const router = useRouter();
     const pathname = usePathname();
+    const searchParams = useSearchParams();
     const localeFromPath = pathname.split('/')[1];
     const preferredLanguage = localeFromPath === 'en' ? 'en' : 'ko';
     const fixedT = i18n.getFixedT(preferredLanguage);
@@ -181,7 +188,7 @@ const IntroPage: React.FC = () => {
     const [time, setTime] = useState<TimeOfDay>('day');
     const [weather, setWeather] = useState<Weather>('sunny');
     const [isChristmas, setIsChristmas] = useState(false);
-    const [bgImage, setBgImage] = useState<string>('');
+    const [bgImage, setBgImage] = useState<string>('/intro-background-img/intro_bg_spring_day_sunny.webp');
 
     // Audio ref
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -252,10 +259,12 @@ const IntroPage: React.FC = () => {
         let displayTime: TimeOfDay = time;
         let displayWeather: Weather | 'closed' = weather;
 
-        // Closed time uses night slot in filenames
+        // Closed time uses the night slot; keep explicit weather when selected.
         if (displayTime === 'closed') {
             displayTime = 'night';
-            displayWeather = 'closed';
+            displayWeather = weather === 'sunny' || weather === 'clear' || weather === 'closed'
+                ? 'closed'
+                : weather;
         }
 
         // Sunny at sunset/night uses clear art; day/clear maps to sunny
@@ -315,7 +324,7 @@ const IntroPage: React.FC = () => {
         candidates.push(baseName(season, 'day', 'sunny', isChristmas && season === 'winter'));
         candidates.push(baseName(season, 'day', 'sunny', false));
 
-        const chosen = candidates.find((name) => AVAILABLE_BACKGROUNDS.has(name)) ?? candidates[candidates.length - 1];
+        const chosen = candidates.find((name) => AVAILABLE_BACKGROUNDS.has(name)) ?? FALLBACK_BACKGROUND;
         setBgImage(`/intro-background-img/${chosen}.webp`);
     }, [season, time, weather, isChristmas]);
 
@@ -350,6 +359,30 @@ const IntroPage: React.FC = () => {
         
     }, [season]); // Re-sort priority when season changes
 
+    const applyQueryEnvironment = useCallback(() => {
+        const querySeason = searchParams.get('season');
+        const queryTime = searchParams.get('time');
+        const queryWeather = searchParams.get('weather');
+        const queryChristmas = searchParams.get('christmas');
+
+        if (isSeason(querySeason) || isTimeOfDay(queryTime) || isWeather(queryWeather) || queryChristmas !== null) {
+            const nextSeason = isSeason(querySeason) ? querySeason : undefined;
+            if (nextSeason) {
+                setSeason(nextSeason);
+            }
+            if (isTimeOfDay(queryTime)) {
+                setTime(queryTime);
+            }
+            if (isWeather(queryWeather)) {
+                setWeather(queryWeather);
+            }
+            setIsChristmas(nextSeason === 'winter' && (queryChristmas === 'true' || queryChristmas === '1'));
+            return true;
+        }
+
+        return false;
+    }, [searchParams]);
+
     const handleRefresh = useCallback(async () => {
         const now = new Date();
         const s = getSeason(now.getMonth());
@@ -371,10 +404,12 @@ const IntroPage: React.FC = () => {
     }, [fetchRealWeather, isChristmasPeriod]);
 
     useEffect(() => {
-        void handleRefresh();
+        if (!applyQueryEnvironment()) {
+            void handleRefresh();
+        }
         // Preload sound if available
         audioRef.current = new Audio('/sounds/footsteps.mp3');
-    }, [handleRefresh]);
+    }, [applyQueryEnvironment, handleRefresh]);
 
     const handleEnter = () => {
         if (audioRef.current) {
@@ -444,10 +479,10 @@ const IntroPage: React.FC = () => {
             </div>
 
             <div className="center-content">
-                <img 
-                    src="/intro-logo.webp" 
-                    alt="Cafelua Logo" 
-                    className="intro-logo" 
+                <img
+                    src="/intro-logo.webp"
+                    alt="Cαfé Luα"
+                    className="intro-logo"
                     onClick={handleEnter}
                 />
                 <button className="enter-text" onClick={handleEnter}>

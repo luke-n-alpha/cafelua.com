@@ -5,11 +5,14 @@ import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import UnderConstruction from './UnderConstruction';
 import './LoungePage.css';
-
-// Types inherited from IntroPage (could be shared, but redefined here for simplicity)
-type Season = 'spring' | 'summer' | 'autumn' | 'winter';
-type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
-type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
+import {
+    getPreloadBackgrounds,
+    resolveEnvironmentMood,
+    resolveEnvironmentBackgroundSrc,
+    type Season,
+    type TimeOfDay,
+    type Weather,
+} from '../lib/environmentBackgrounds';
 
 const LoungePage: React.FC = () => {
     const { t } = useTranslation();
@@ -19,7 +22,6 @@ const LoungePage: React.FC = () => {
     const localeFromPath = pathname.split('/')[1];
     const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : 'ko';
     const [bgImage, setBgImage] = useState<string>('');
-    const [loungeVariant, setLoungeVariant] = useState('lounge-sunny');
     const entrySource = searchParams.get('from');
     const [showGreeting, setShowGreeting] = useState(() => entrySource === 'entrance');
     const season = (searchParams.get('season') as Season) || 'spring';
@@ -41,48 +43,14 @@ const LoungePage: React.FC = () => {
 
     // Resolve background image based on state
     useEffect(() => {
-        let imageName = 'lounge-sunny'; // Default fallback
-
-        // Christmas priority
-        if (isChristmas) {
-            imageName = 'lounge-christmas';
-        } else if (season === 'winter' && weather === 'snow') {
-            imageName = 'lounge-snow';
-        } else {
-            // Weather/Time priority
-            if (weather === 'rain' || weather === 'storm') {
-                imageName = 'lounge-rain';
-            } else if (weather === 'snow') {
-                imageName = 'lounge-snow';
-            } else {
-                // Clear/Sunny conditions
-                if (time === 'sunset') {
-                    imageName = 'lounge-evening';
-                } else if (time === 'night' || time === 'closed') {
-                    imageName = 'lounge-night';
-                } else {
-                    imageName = 'lounge-sunny';
-                }
-            }
-        }
-
-        setLoungeVariant(imageName);
-        setBgImage(`/lounge-background-img/${imageName}.webp`);
+        setBgImage(resolveEnvironmentBackgroundSrc('lounge', season, time, weather, isChristmas));
     }, [season, time, weather, isChristmas]);
 
     // Preload all lounge images
     useEffect(() => {
-        const images = [
-            'lounge-christmas.webp',
-            'lounge-evening.webp',
-            'lounge-night.webp',
-            'lounge-rain.webp',
-            'lounge-snow.webp',
-            'lounge-sunny.webp'
-        ];
-        images.forEach(img => {
+        getPreloadBackgrounds('lounge').forEach(src => {
             const i = new Image();
-            i.src = `/lounge-background-img/${img}`;
+            i.src = src;
         });
     }, []);
 
@@ -96,7 +64,7 @@ const LoungePage: React.FC = () => {
         router.replace(query ? `/${locale}/lounge?${query}` : `/${locale}/lounge`);
     };
 
-    const greetingVariant = loungeVariant.replace(/^lounge-/, '');
+    const greetingVariant = resolveEnvironmentMood('lounge', season, time, weather, isChristmas);
     const greetingKey = `lounge.greeting.${greetingVariant}`;
     const greetingMessage = t(greetingKey, { defaultValue: t('lounge.alphaGreeting') });
 

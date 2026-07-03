@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Eye } from 'lucide-react';
 import type { DiaryEntry } from '@/data/gallery/diaryData';
+import { resolveEnvironmentBackgroundSrc, type Season, type TimeOfDay, type Weather } from '@/lib/environmentBackgrounds';
+import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 import Comments from './Comments';
 import './DiaryPost.css';
 
@@ -17,6 +19,13 @@ const DiaryPost: React.FC<Props> = ({ entry }) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const isKo = i18n.language === 'ko';
+    const season = (searchParams.get('season') || 'spring') as Season;
+    const time = (searchParams.get('time') || 'day') as TimeOfDay;
+    const weather = (searchParams.get('weather') || 'sunny') as Weather;
+    const isChristmas = searchParams.get('christmas') === 'true';
+    const backgroundImage = useMemo(() => {
+        return resolveEnvironmentBackgroundSrc('gallery', season, time, weather, isChristmas);
+    }, [season, time, weather, isChristmas]);
 
     const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
     const [viewCount, setViewCount] = useState(0);
@@ -85,13 +94,13 @@ const DiaryPost: React.FC<Props> = ({ entry }) => {
     }, [lightboxIdx]);
 
     const handleBack = () => {
-        router.push(`/${i18n.language}/gallery?tab=diary`);
+        router.push(buildLocalizedUrlWithQuery(i18n.language, '/gallery', searchParams, { tab: 'diary' }));
     };
 
     return (
         <div
             className="diary-container"
-            style={{ backgroundImage: "url('/gallery-background-img/gallery-cozy-corner.webp')" }}
+            style={{ backgroundImage: `url('${backgroundImage}')` }}
         >
             <div className="diary-panel">
                 <div className="diary-post-header">

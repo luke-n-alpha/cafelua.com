@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import { SITEMAP_SECTIONS } from '@/data/sitemapData';
+import { resolveEnvironmentBackgroundSrc, type Season, type TimeOfDay, type Weather } from '@/lib/environmentBackgrounds';
+import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 import './AboutModal.css';
 
 type AboutTab = 'sitemap' | 'alpha' | 'luke';
@@ -20,6 +22,13 @@ const AboutModal: React.FC<AboutModalProps> = ({ activeTab: initialTab, onClose 
     const searchParams = useSearchParams();
     const [activeTab, setActiveTab] = useState<AboutTab>(initialTab);
     const isKo = i18n.language === 'ko';
+    const season = (searchParams.get('season') || 'spring') as Season;
+    const time = (searchParams.get('time') || 'day') as TimeOfDay;
+    const weather = (searchParams.get('weather') || 'sunny') as Weather;
+    const isChristmas = searchParams.get('christmas') === 'true';
+    const backgroundImage = useMemo(() => {
+        return resolveEnvironmentBackgroundSrc('about', season, time, weather, isChristmas);
+    }, [season, time, weather, isChristmas]);
 
     useEffect(() => {
         const onKeyDown = (event: KeyboardEvent) => {
@@ -41,7 +50,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ activeTab: initialTab, onClose 
 
     const handleNavigate = (path: string) => {
         onClose();
-        router.push(`/${i18n.language}${path}`);
+        router.push(buildLocalizedUrlWithQuery(i18n.language, path, searchParams));
     };
 
     const title = t('about.title', { defaultValue: t('nav.about') });
@@ -63,7 +72,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ activeTab: initialTab, onClose 
         <div className="about-modal-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label={title}>
             <div className="about-modal-stage" onClick={(e) => e.stopPropagation()}>
                 <img
-                    src="/ui/about-modal-bg.webp"
+                    src={backgroundImage}
                     alt=""
                     className="about-modal-illustration"
                     aria-hidden="true"

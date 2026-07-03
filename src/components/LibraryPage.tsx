@@ -7,14 +7,20 @@ import BackgroundMusic from './BackgroundMusic';
 import UnderConstruction from './UnderConstruction';
 import { LegacyMidiSynthPlayer } from '../services/LegacyMidiSynth';
 import './LibraryPage.css';
+import {
+    getPreloadBackgrounds,
+    resolveEnvironmentMood,
+    resolveEnvironmentBackgroundName,
+    resolveEnvironmentBackgroundSrc,
+    type Season,
+    type TimeOfDay,
+    type Weather,
+} from '../lib/environmentBackgrounds';
+import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 
 type LibraryMode = 'menu' | 'booting' | 'desktop' | 'shutdown';
 type IeTarget = '1997' | '1998';
 
-// Types inherited from IntroPage (could be shared, but redefined here for simplicity)
-type Season = 'spring' | 'summer' | 'autumn' | 'winter';
-type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
-type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
 type IeHistoryContext = 'iframe' | 'frame2';
 
 type IeHistoryEntry = {
@@ -169,39 +175,14 @@ const LibraryPage: React.FC = () => {
     }, []);
 
     const backgroundName = useMemo(() => {
-        let imageName = '2f-sunny'; // Default fallback
-
-        // Christmas priority
-        if (isChristmas) {
-            imageName = '2f-christmas';
-        } else if (season === 'winter' && weather === 'snow') {
-            imageName = '2f-snow';
-        } else {
-            // Weather/Time priority
-            if (weather === 'rain' || weather === 'storm') {
-                imageName = '2f-rain';
-            } else if (weather === 'snow') {
-                imageName = '2f-snow';
-            } else {
-                // Clear/Sunny conditions
-                if (time === 'sunset') {
-                    imageName = '2f-sunset';
-                } else if (time === 'night' || time === 'closed') {
-                    imageName = '2f-night';
-                } else {
-                    imageName = '2f-sunny';
-                }
-            }
-        }
-
-        return imageName;
+        return resolveEnvironmentBackgroundName('atelier', season, time, weather, isChristmas);
     }, [season, time, weather, isChristmas]);
 
     const backgroundImage = useMemo(() => {
-        return `/atelier-background-img/${backgroundName}.webp`;
-    }, [backgroundName]);
+        return resolveEnvironmentBackgroundSrc('atelier', season, time, weather, isChristmas);
+    }, [season, time, weather, isChristmas]);
 
-    const greetingVariant = backgroundName.replace(/^2f-/, '');
+    const greetingVariant = resolveEnvironmentMood('atelier', season, time, weather, isChristmas);
     const entrySource = searchParams.get('from');
     const greetingMessage = entrySource === 'lounge'
         ? t('atelier.stairsIntro', {
@@ -229,17 +210,9 @@ const LibraryPage: React.FC = () => {
 
     // Preload all atelier images
     useEffect(() => {
-        const images = [
-            '2f-christmas.webp',
-            '2f-night.webp',
-            '2f-rain.webp',
-            '2f-snow.webp',
-            '2f-sunny.webp',
-            '2f-sunset.webp'
-        ];
-        images.forEach(img => {
+        getPreloadBackgrounds('atelier').forEach(src => {
             const i = new Image();
-            i.src = `/atelier-background-img/${img}`;
+            i.src = src;
         });
     }, []);
 
@@ -569,7 +542,7 @@ const LibraryPage: React.FC = () => {
 
                     <button
                         className="menu-button ui-button ui-button-ghost"
-                        onClick={() => router.push(`/${locale}/desk`)}
+                        onClick={() => router.push(buildLocalizedUrlWithQuery(locale, '/desk', searchParams))}
                     >
                         {t('atelier.masterDesk')}
                     </button>
