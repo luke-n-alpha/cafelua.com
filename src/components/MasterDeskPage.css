@@ -1,7 +1,7 @@
 .desk-container {
     width: 100vw;
     height: 100vh;
-    background-image: url('/master-desk-background-img/master-desk-background.png');
+    background-image: url('/master-desk-background-img/master-desk-background.webp');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -218,7 +218,7 @@
 
 .desk-card-thumb-placeholder {
     background: linear-gradient(135deg, rgba(40, 36, 46, 0.6), rgba(24, 20, 28, 0.8));
-    background-image: url('/master-desk-background-img/master-desk-background.png');
+    background-image: url('/master-desk-background-img/master-desk-background.webp');
     background-size: cover;
     background-position: center;
 }

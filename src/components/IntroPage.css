@@ -3,13 +3,22 @@
     width: 100vw;
     height: 100vh;
     background-color: #1a1f2b;
-    /* Fallback color */
+    /* Neutral base color shown before the artwork fades in */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background artwork layer — fades in via opacity (background-image can't transition) */
+.intro-bg-layer {
+    position: absolute;
+    inset: 0;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    transition: background-image 0.8s ease-in-out;
-    position: relative;
-    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    z-index: 0;
+    pointer-events: none;
 }
 
 .glass {

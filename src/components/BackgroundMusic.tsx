@@ -27,6 +27,14 @@ function getOrCreateBgm(src: string): HTMLAudioElement {
     return audio;
 }
 
+// Pause every registered BGM except the one for `keepSrc`. Guarantees only a
+// single track is ever audible, independent of the async activeBgmSrc tracking.
+function stopOtherBgm(keepSrc: string): void {
+    bgmPlayers.forEach((audio, key) => {
+        if (key !== keepSrc && !audio.paused) audio.pause();
+    });
+}
+
 const BackgroundMusic: React.FC<BackgroundMusicProps> = ({
     src,
     autoPlay = true,
@@ -68,32 +76,36 @@ const BackgroundMusic: React.FC<BackgroundMusicProps> = ({
 
     // Handle audio source changes and play state
     useEffect(() => {
-        if (audioRef.current) {
-            audioRef.current.volume = 0.5;
+        if (!audioRef.current) return;
+        audioRef.current.volume = 0.5;
 
-            if (suspended || isMuted || !autoPlay) {
-                if (activeBgmSrc === src) activeBgmSrc = null;
-                audioRef.current.pause();
-                setIsPlaying(false);
-                return;
-            }
+        if (suspended || isMuted || !autoPlay) {
+            if (activeBgmSrc === src) activeBgmSrc = null;
+            audioRef.current.pause();
+            setIsPlaying(false);
+            return;
+        }
 
-            if (activeBgmSrc && activeBgmSrc !== src) {
-                const prev = bgmPlayers.get(activeBgmSrc);
-                prev?.pause();
-            }
-            const playPromise = audioRef.current.play();
-            if (playPromise !== undefined) {
-                playPromise
-                    .then(() => {
-                        activeBgmSrc = src;
-                        setIsPlaying(true);
-                    })
-                    .catch(error => {
-                        console.log("Autoplay prevented:", error);
-                        setIsPlaying(false);
-                    });
-            }
+        // Stop every other registered BGM before starting this one so only a
+        // single track can ever be audible. Relying on `activeBgmSrc` alone is
+        // racy: during a route transition (e.g. entrance intro.mp3 -> lounge.mp3)
+        // the previous player's async play() promise may not have resolved yet,
+        // so activeBgmSrc is still null/stale and its pause() gets skipped —
+        // that's the overlap bug. Iterating the player map is race-proof.
+        stopOtherBgm(src);
+        activeBgmSrc = src;
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    // Re-assert exclusivity in case another src started during the async gap.
+                    if (activeBgmSrc === src) stopOtherBgm(src);
+                    setIsPlaying(true);
+                })
+                .catch(error => {
+                    console.log("Autoplay prevented:", error);
+                    setIsPlaying(false);
+                });
         }
     }, [src, isMuted, autoPlay, suspended]);
 
@@ -138,7 +150,14 @@ const BackgroundMusic: React.FC<BackgroundMusicProps> = ({
     // Retry play on any user interaction if autoplay failed
     useEffect(() => {
         const handleUserInteraction = () => {
-            if (audioRef.current && !suspended && !isMuted && !isPlaying && autoPlay) {
+            // Only retry when this instance is (or is about to become) the active
+            // track. Without the activeBgmSrc guard, the entrance click that
+            // navigates intro -> lounge could revive the not-yet-unmounted
+            // intro player and overlap it with the lounge track.
+            if (audioRef.current && !suspended && !isMuted && !isPlaying && autoPlay
+                && (!activeBgmSrc || activeBgmSrc === src)) {
+                stopOtherBgm(src);
+                activeBgmSrc = src;
                 audioRef.current.play()
                     .then(() => setIsPlaying(true))
                     .catch(e => console.log("Still blocked:", e));
@@ -152,7 +171,7 @@ const BackgroundMusic: React.FC<BackgroundMusicProps> = ({
             window.removeEventListener('click', handleUserInteraction);
             window.removeEventListener('keydown', handleUserInteraction);
         };
-    }, [suspended, isMuted, isPlaying, autoPlay]);
+    }, [suspended, isMuted, isPlaying, autoPlay, src]);
 
     // Close menu on outside click
     useEffect(() => {

@@ -5,8 +5,8 @@ titleEn: Cafe Lua v0.1.6 Update - Master Desk Naver Blog Migration
 category: it
 tags: []
 images:
-  - /master-desk-background-img/master-desk-background.png
-thumbnail: /master-desk-background-img/master-desk-background.png
+  - /master-desk-background-img/master-desk-background.webp
+thumbnail: /master-desk-background-img/master-desk-background.webp
 externalUrl: https://github.com/luke-n-alpha/cafelua.com
 ---
 

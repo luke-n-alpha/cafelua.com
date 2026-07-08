@@ -21,13 +21,17 @@ const LoungePage: React.FC = () => {
     const pathname = usePathname();
     const localeFromPath = pathname.split('/')[1];
     const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : 'ko';
-    const [bgImage, setBgImage] = useState<string>('');
     const entrySource = searchParams.get('from');
     const [showGreeting, setShowGreeting] = useState(() => entrySource === 'entrance');
     const season = (searchParams.get('season') as Season) || 'spring';
     const time = (searchParams.get('time') as TimeOfDay) || 'day';
     const weather = (searchParams.get('weather') as Weather) || 'sunny';
     const isChristmas = searchParams.get('christmas') === 'true';
+    // Resolve immediately from the URL params so the greeting never flashes the
+    // "under construction" placeholder (/undestruct.webp) before the effect runs.
+    const [bgImage, setBgImage] = useState<string>(() =>
+        resolveEnvironmentBackgroundSrc('lounge', season, time, weather, isChristmas)
+    );
 
     const pushWithParams = (path: string) => {
         const query = searchParams.toString();

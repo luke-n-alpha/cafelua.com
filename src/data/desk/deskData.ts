@@ -1600,8 +1600,8 @@ Naver Blog is still a good platform, but as a developer I wanted my own long-ter
 
 This post is also the first Tech article written inside Cafe Lua itself.`,
         category: 'it',
-        thumbnail: '/master-desk-background-img/master-desk-background.png',
-        images: ['/master-desk-background-img/master-desk-background.png'],
+        thumbnail: '/master-desk-background-img/master-desk-background.webp',
+        images: ['/master-desk-background-img/master-desk-background.webp'],
         externalUrl: 'https://github.com/luke-n-alpha/cafelua.com',
     },
 ];

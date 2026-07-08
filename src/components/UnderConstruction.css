@@ -80,13 +80,31 @@
     filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.45));
 }
 
+/* Counter sprite — Alpha is sized RELATIVE TO THE BACKGROUND so she stays a
+   constant fraction of the scene at every window ratio, exactly like a person
+   standing inside the café photo.
+   The background (.construction-bg) is object-fit:cover of a 16:9 (1.792) image,
+   so its rendered height is max(100vh, 100vw / ar):
+     - window aspect <= 1.792  -> bg fills height  -> rendered height = 100vh
+     - window aspect  > 1.792  -> bg fills width   -> rendered height = 100vw/ar
+   Tying Alpha's height to that value (not a raw vh + px cap) is what keeps her
+   from shrinking on 1440p or ballooning on tall windows.
+   bottom:0 stands her on the floor (lower body hidden by the dialogue box) so
+   she can never sink off-screen. */
+.counter-overlay {
+    --bg-ar: 1.792;
+}
+
 .counter-overlay .vn-sprite-wrap {
-    bottom: -32vh;
+    left: 54%;
+    bottom: 0;
 }
 
 .counter-overlay .vn-sprite {
-    height: 82vh;
-    max-height: 720px;
+    height: calc(0.8 * max(100vh, 100vw / var(--bg-ar)));
+    max-height: none;
+    max-width: none;
+    transform: none;
 }
 
 /* VN Layout Container */
@@ -208,14 +226,9 @@
         left: 50%;
     }
 
-    .counter-overlay .vn-sprite-wrap {
-        bottom: -24vh;
-    }
-
-    .counter-overlay .vn-sprite {
-        height: 62vh;
-        max-height: 560px;
-    }
+    /* Counter keeps the unified background-relative sizing on phones too
+       (bottom:0 + calc height). The old -24vh here pushed Alpha's legs off the
+       bottom on tall/narrow windows. */
 
     /* Reduce text area size */
     .vn-dialogue-box {

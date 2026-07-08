@@ -13,8 +13,8 @@ tags:
   - 특허
   - 인공지능
 images:
-  - /desk/20260527-naia-patents-portfolio/hero-ko.png
-thumbnail: /desk/20260527-naia-patents-portfolio/hero-ko.png
+  - /desk/20260527-naia-patents-portfolio/hero-ko.webp
+thumbnail: /desk/20260527-naia-patents-portfolio/hero-ko.webp
 externalUrl: https://naia.nextain.io/ko/blog/20260527-naia-patents-portfolio
 ---
 
@@ -55,7 +55,7 @@ https://m.boannews.com/html/detail.html?idx=125653
 
 제가 직접 부딪히고, 넥스테인이 직접 풀어낸 그 구조적 구멍들과 해답을 몇 가지 짚어보겠습니다.
 
-![](/desk/20260527-naia-patents-portfolio/hero-ko.png)
+![](/desk/20260527-naia-patents-portfolio/hero-ko.webp)
 
 ---
 
@@ -156,7 +156,7 @@ But when you push this seriously, you run into unexpectedly enormous walls. Thes
 
 Let me walk through some of the structural gaps I personally hit, and the solutions Nextain developed.
 
-![](/desk/20260527-naia-patents-portfolio/hero-en.png)
+![](/desk/20260527-naia-patents-portfolio/hero-en.webp)
 
 ---
 

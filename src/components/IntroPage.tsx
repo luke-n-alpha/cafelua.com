@@ -188,7 +188,9 @@ const IntroPage: React.FC = () => {
     const [time, setTime] = useState<TimeOfDay>('day');
     const [weather, setWeather] = useState<Weather>('sunny');
     const [isChristmas, setIsChristmas] = useState(false);
-    const [bgImage, setBgImage] = useState<string>('/intro-background-img/intro_bg_spring_day_sunny.webp');
+    // Start empty so the neutral base color shows first and the real background
+    // fades in once season/time are detected — avoids the spring→night flash.
+    const [bgImage, setBgImage] = useState<string>('');
 
     // Audio ref
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -429,10 +431,17 @@ const IntroPage: React.FC = () => {
     };
 
     return (
-        <div
-            className="intro-container"
-            style={{ backgroundImage: `url('${bgImage}')` }}
-        >
+        <div className="intro-container">
+            {/* Background as its own layer so it can cross-fade via opacity
+                (background-image itself is not transitionable). */}
+            <div
+                className="intro-bg-layer"
+                style={{
+                    backgroundImage: bgImage ? `url('${bgImage}')` : 'none',
+                    opacity: bgImage ? 1 : 0,
+                }}
+                aria-hidden="true"
+            />
             <BackgroundMusic src="/sounds/intro.mp3" />
             
             <div className="control-bar glass">
