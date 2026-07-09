@@ -34,3 +34,4 @@ src/data/desk/_naver-posts*.ts
 *.sln
 *.sw?
 .vercel
+.env*.local

@@ -5,6 +5,12 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import type { TarotCardMeta, DrawnCard, SpreadPosition } from './types';
 import { SPREAD_POSITIONS } from './types';
+import {
+  FALLBACK_DECK_SUMMARY,
+  FALLBACK_SPREAD_GUIDE,
+  getFallbackCardInterpretation,
+  getFallbackCardMeta,
+} from './fallbackCards';
 
 // 카드 폴더명 목록 (22장)
 const CARD_FOLDERS = [
@@ -38,7 +44,7 @@ export async function loadCardMeta(cardId: number): Promise<TarotCardMeta | null
     return JSON.parse(content) as TarotCardMeta;
   } catch (error) {
     console.error(`Failed to load card ${cardId}:`, error);
-    return null;
+    return getFallbackCardMeta(cardId);
   }
 }
 
@@ -52,7 +58,7 @@ export async function loadCardInterpretation(cardId: number): Promise<string | n
     return await fs.readFile(mdPath, 'utf-8');
   } catch (error) {
     console.error(`Failed to load interpretation ${cardId}:`, error);
-    return null;
+    return getFallbackCardInterpretation(cardId);
   }
 }
 
@@ -73,7 +79,7 @@ export async function loadDeckSummary(): Promise<string | null> {
     return await fs.readFile(summaryPath, 'utf-8');
   } catch (error) {
     console.error('Failed to load deck summary:', error);
-    return null;
+    return FALLBACK_DECK_SUMMARY;
   }
 }
 
@@ -84,7 +90,7 @@ export async function loadSpreadGuide(): Promise<string | null> {
     return await fs.readFile(guidePath, 'utf-8');
   } catch (error) {
     console.error('Failed to load spread guide:', error);
-    return null;
+    return FALLBACK_SPREAD_GUIDE;
   }
 }
 

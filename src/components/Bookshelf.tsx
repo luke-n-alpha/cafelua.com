@@ -1,12 +1,19 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ContentLoader } from '../services/ContentLoader';
 import type { ContentItem } from '../services/ContentLoader';
 import { Book } from 'lucide-react';
+import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 import './Bookshelf.css';
 
 const Bookshelf = () => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const localeFromPath = pathname.split('/')[1];
+    const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : 'ko';
     const [novels, setNovels] = useState<ContentItem[]>([]);
 
     useEffect(() => {
@@ -15,9 +22,7 @@ const Bookshelf = () => {
     }, []);
 
     const handleOpen = (novelId: string) => {
-        // TODO: route to reader when available
-        const target = `/atelier?id=${encodeURIComponent(novelId)}`;
-        window.location.href = target;
+        router.push(buildLocalizedUrlWithQuery(locale, '/atelier', searchParams, { id: novelId }));
     };
 
     const novelsBySeries = useMemo(() => {

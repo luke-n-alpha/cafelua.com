@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { FALLBACK_TAROT_CARDS } from '@/data/tarot/fallbackCards';
 
 // 카드 폴더명 목록
 const CARD_FOLDERS = [
@@ -44,7 +45,17 @@ export async function GET() {
       }
     }
 
-    return NextResponse.json({ cards });
+    const source = cards.length > 0 ? cards : FALLBACK_TAROT_CARDS;
+
+    return NextResponse.json({
+      cards: source.map((meta) => ({
+        id: meta.id,
+        nameEn: meta.nameEn,
+        nameKr: meta.nameKr,
+        imagePath: meta.imagePath,
+        keywords: meta.keywords,
+      })),
+    });
   } catch (error) {
     console.error('Failed to load cards:', error);
     return NextResponse.json(

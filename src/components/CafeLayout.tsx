@@ -2,16 +2,18 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Sun, Moon, Volume2, VolumeX } from 'lucide-react';
 import cafeDay from '../assets/cafe_day.png';
+import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 import './CafeLayout.css';
 import AboutModal from './AboutModal';
 
 const CafeLayout = ({ children }: { children?: React.ReactNode }) => {
     const { t } = useTranslation();
     const pathname = usePathname();
+    const searchParams = useSearchParams();
     const localeFromPath = pathname.split('/')[1];
     const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : 'ko';
     const [isNight, setIsNight] = useState(false);
@@ -60,12 +62,12 @@ const CafeLayout = ({ children }: { children?: React.ReactNode }) => {
                         <h1>Café Luα</h1>
                     </div>
                     <nav className="cafe-nav">
-                        <Link href={`/${locale}`} onClick={playClickSound}>{t('nav.home') || 'Home'}</Link>
+                        <Link href={buildLocalizedUrlWithQuery(locale, '', searchParams)} onClick={playClickSound}>{t('nav.home') || 'Home'}</Link>
                         <a href="#" onClick={() => { playClickSound(); setShowAboutModal(true); }}>{t('nav.about')}</a>
-                        <Link href={`/${locale}/profile`} onClick={playClickSound}>{t('nav.profile') || 'Profile'}</Link>
-                        <Link href={`/${locale}/cafe-life`} onClick={playClickSound}>{t('nav.cafe_life') || 'Cafe Life'}</Link>
-                        <Link href={`/${locale}/atelier`} onClick={playClickSound}>{t('nav.library') || 'Atelier'}</Link>
-                        <Link href={`/${locale}/lab`} onClick={playClickSound}>{t('nav.lab') || 'Lab'}</Link>
+                        <Link href={buildLocalizedUrlWithQuery(locale, '/profile', searchParams)} onClick={playClickSound}>{t('nav.profile') || 'Profile'}</Link>
+                        <Link href={buildLocalizedUrlWithQuery(locale, '/cafe-life', searchParams)} onClick={playClickSound}>{t('nav.cafe_life') || 'Cafe Life'}</Link>
+                        <Link href={buildLocalizedUrlWithQuery(locale, '/atelier', searchParams)} onClick={playClickSound}>{t('nav.library') || 'Atelier'}</Link>
+                        <Link href={buildLocalizedUrlWithQuery(locale, '/lab', searchParams)} onClick={playClickSound}>{t('nav.lab') || 'Lab'}</Link>
                     </nav>
                     <div className="controls">
                         <button onClick={() => setIsMuted(!isMuted)} className="icon-btn ui-icon-button">

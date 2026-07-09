@@ -192,9 +192,6 @@ const IntroPage: React.FC = () => {
     // fades in once season/time are detected — avoids the spring→night flash.
     const [bgImage, setBgImage] = useState<string>('');
 
-    // Audio ref
-    const audioRef = useRef<HTMLAudioElement | null>(null);
-
     useEffect(() => {
         if (i18n.language !== preferredLanguage) {
             i18n.changeLanguage(preferredLanguage);
@@ -409,15 +406,9 @@ const IntroPage: React.FC = () => {
         if (!applyQueryEnvironment()) {
             void handleRefresh();
         }
-        // Preload sound if available
-        audioRef.current = new Audio('/sounds/footsteps.mp3');
     }, [applyQueryEnvironment, handleRefresh]);
 
     const handleEnter = () => {
-        if (audioRef.current) {
-            audioRef.current.play().catch(e => console.log("Audio play failed", e));
-        }
-
         // Navigate to Lounge with current environmental state.
         const params = new URLSearchParams({
             season,
