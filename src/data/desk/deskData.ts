@@ -15,6 +15,7 @@ export interface DeskPost {
     thumbnail?: string;
     images: string[];
     externalUrl?: string;
+    canonicalUrl?: string;
 }
 
 export const DESK_CATEGORIES: { key: DeskCategory | 'all'; labelKo: string; labelEn: string }[] = [

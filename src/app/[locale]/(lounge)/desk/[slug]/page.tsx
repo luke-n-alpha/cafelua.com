@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
         title: cleanOgText(sourceTitle) || (locale === 'en' ? 'Post' : '포스팅'),
         description,
-        alternates: { canonical: `/desk/${slug}` },
+        alternates: { canonical: post.canonicalUrl ? post.canonicalUrl.replace('{locale}', locale) : `/desk/${slug}` },
         openGraph: {
             url: `/desk/${slug}`,
             title: ogTitle,

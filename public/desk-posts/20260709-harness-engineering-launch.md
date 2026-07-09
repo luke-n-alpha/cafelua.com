@@ -1,7 +1,7 @@
 ---
 date: "2026-07-09"
 titleKo: "Re:제로, 나이아의 「하네스 엔지니어링」 이야기를 공개 합니다."
-titleEn: "Re:Zero — Naia's Harness Engineering, Now Public"
+titleEn: "'Harness Engineering'? It's Just Software Engineering — I Wrote a Book"
 category: ai
 tags:
   - 하네스 엔지니어링
@@ -10,12 +10,13 @@ tags:
   - 오픈소스
   - 개발서적
 images:
-  - /desk/20260709-harness-engineering-launch/blog-cover.webp
-thumbnail: /desk/20260709-harness-engineering-launch/blog-cover.webp
+  - /desk/20260709-harness-engineering-launch/harness-launch-hero.webp
+thumbnail: /desk/20260709-harness-engineering-launch/harness-launch-hero.webp
+canonicalUrl: "https://naia.land/{locale}/blog/20260709-harness-engineering-launch"
 ---
 
 <!-- ko -->
-![하네스 엔지니어링 — Re:제로부터 시작하는 AI 소프트웨어 공학](/desk/20260709-harness-engineering-launch/blog-cover.webp)
+![하네스 엔지니어링 — Re:제로부터 시작하는 AI 소프트웨어 공학](/desk/20260709-harness-engineering-launch/harness-launch-hero.webp)
 
 안녕하세요. 오픈소스 '나이아'를 만드는 루크입니다. 책을 하나 준비했습니다 — 「하네스 엔지니어링: Re:제로부터 시작하는 AI 소프트웨어 공학」.
 
@@ -46,12 +47,32 @@ AI와 개발하다 보면 그럴듯하게 완성된 줄 알았던 게 검증에�
 책을 덮은 뒤 여러분이 자기 프로젝트에서 AI에게 더 좋은 질문을 던지고, 결과를 검증하고, 반복해 무너지는 걸 줄일 하네스를 직접 설계하게 된다면 — 그리고 AI를 도구가 아니라 함께 일하는 동료로 받아들이게 된다면, 이 책은 제 몫을 한 겁니다.
 
 <!-- en -->
-![Harness Engineering — Re:Starting AI Software Engineering from Zero](/desk/20260709-harness-engineering-launch/blog-cover.webp)
+![Harness Engineering — Re:Zero, starting AI software engineering from zero](/desk/20260709-harness-engineering-launch/harness-launch-hero.webp)
 
-Hi, I'm Luke, building the open-source project "naia." I wrote a book — *Harness Engineering: Re:Starting AI Software Engineering from Zero*.
+Hi, I'm Luke, the one building the (rather ambitious) open-source project "naia." I've been working on a book — *Harness Engineering: Re:Zero, Starting AI Software Engineering from Zero*.
 
-**It's a dev book, but don't expect a typical clone-coding book.** There's real code linked to open source so you can check and run it — but it was never meant to be typed out line by line. That code was made for AI to read, not for people to copy. The point isn't transcription; it's understanding how AI behaves and therefore what a human must still watch over.
+**Don't expect a typical clone-coding book.** The era of typing out code line by line is over; this book assumes developers who already work with Claude Code or Codex. There's real code, linked to open source so you can check and run it yourself — but I don't recommend copying it by hand.
 
-**Why "Re:Zero"?** When you build with AI, something that looked finished collapses at verification and you rebuild from scratch — over and over. This book says: record why it broke, pin down what matters, and cut the same failure next time. *Even if you return to zero, don't stand on the same zero every time.* That's harness engineering.
+That's because the code was made for AI to read, not for people to transcribe. What I wanted to share is this — **how AI actually behaves, and therefore what a human still has to watch over**, and which questions and standards to hold onto in that moment. So I share the code, but it's closer to sharing war stories.
 
-**Free, and already out.** Read it now on WikiDocs → **[wikidocs.net/book/20530](https://wikidocs.net/book/20530)** (Korean first; English edition in progress). License: CC BY-NC-ND 4.0.
+## Why "Re:Zero"
+
+When you build with AI, something that looked finished collapses at the verification step, and you end up rebuilding the structure from scratch — over and over. Instead of resigning yourself to that loop, this book says: record why it broke, decide what to pin down, and cut the same failure next time. **Even if you return to zero, don't stand on the same zero every time.** That's what I mean by harness engineering — and I kept finding and fixing problems even while writing this very book.
+
+## A dev book by an ex-webtoon PD
+
+I worked as an AI and web-service developer at Naver, and also as a webtoon PD (producer). I leaned on that — mixing in comic panels, dev memes, and anime parodies. Rather than making you memorize dry methodology, I wanted the everyday life and funny failures of a dev team to make "what to hand to AI, and what a human must keep" actually stick.
+
+![A field report, not an answer key — a developer and an AI new hire](/desk/20260709-harness-engineering-launch/not-answer-key-report-illustration-en.webp)
+
+## What the book is really for
+
+naia is still only half tidied up after our open-source meetup — spread across several repositories, and in need of good docs to explain it. So as I clean and structure that code, I'm releasing it for learning and inviting people in. That's another reason this book and its code aren't one-and-done: **I'll keep updating them.**
+
+And you might catch it, you might not — but from the cover all the way to Chapter 17, the illustrations hide my journey toward welcoming "Alpha" as a companion. The reason I built naia in the first place was to build that Alpha. This book, and the journey in those pictures, is a step toward Alpha too.
+
+## Where to read it
+
+The **English edition is on Leanpub → [leanpub.com/naia-harness](https://leanpub.com/naia-harness)**. The book is open-licensed (CC BY-NC-ND 4.0), so it's yours to read and share; the Korean edition is free on WikiDocs → [wikidocs.net/book/20530](https://wikidocs.net/book/20530). You're welcome to pitch in too, from typo reports to adding cases, via Issues and PRs.
+
+If, after closing the book, you start asking AI better questions in your own projects, verifying the results, and designing a harness that cuts the repeated collapse — and if you come to treat AI not as a tool but as a colleague you work alongside — then the book did its job.

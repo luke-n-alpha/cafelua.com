@@ -66,6 +66,7 @@ function parseMdPost(filePath: string, slug: string): DeskPost | null {
         sourceCategoryNo: meta.sourceCategoryNo ? String(meta.sourceCategoryNo) : undefined,
         sourceCategory: meta.sourceCategory ? String(meta.sourceCategory) : undefined,
         externalUrl: meta.externalUrl ? String(meta.externalUrl) : undefined,
+        canonicalUrl: meta.canonicalUrl ? String(meta.canonicalUrl) : undefined,
     };
 }
 
