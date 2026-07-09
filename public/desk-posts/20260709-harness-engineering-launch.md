@@ -72,6 +72,6 @@ And you might catch it, you might not — but from the cover all the way to Chap
 
 ## Where to read it
 
-The **English edition is on Leanpub → [leanpub.com/naia-harness](https://leanpub.com/naia-harness)**. The book is open-licensed (CC BY-NC-ND 4.0), so it's yours to read and share; the Korean edition is free on WikiDocs → [wikidocs.net/book/20530](https://wikidocs.net/book/20530). You're welcome to pitch in too, from typo reports to adding cases, via Issues and PRs.
+The **English edition is on Leanpub → [leanpub.com/naia-harness](https://leanpub.com/naia-harness)**. The book is open-licensed (CC BY-NC-ND 4.0), so it's yours to read and share. You're welcome to pitch in too, from typo reports to adding cases, via Issues and PRs.
 
 If, after closing the book, you start asking AI better questions in your own projects, verifying the results, and designing a harness that cuts the repeated collapse — and if you come to treat AI not as a tool but as a colleague you work alongside — then the book did its job.
