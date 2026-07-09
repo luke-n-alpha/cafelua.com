@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Volume2, VolumeX, Music, Map as MapIcon } from 'lucide-react';
 import { SITEMAP_SECTIONS } from '@/data/sitemapData';
+import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 import './BackgroundMusic.css';
 
 interface BackgroundMusicProps {
@@ -45,6 +46,7 @@ const BackgroundMusic: React.FC<BackgroundMusicProps> = ({
     const params = useParams();
     const locale = typeof params?.locale === 'string' ? params.locale : i18n.language;
     const router = useRouter();
+    const searchParams = useSearchParams();
     const isKo = locale === 'ko';
     const muteTitle = isKo ? '음악 끄기' : 'Mute BGM';
     const unmuteTitle = isKo ? '음악 켜기' : 'Unmute BGM';
@@ -205,7 +207,7 @@ const BackgroundMusic: React.FC<BackgroundMusicProps> = ({
 
     const handleNavigate = (path: string) => {
         setIsMenuOpen(false);
-        router.push(`/${locale}${path}`);
+        router.push(buildLocalizedUrlWithQuery(locale, path, searchParams));
     };
 
     return (

@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { ContentLoader, type ContentItem } from '../services/ContentLoader';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 import './BookViewer.css';
 
 const BookViewer = () => {
@@ -52,7 +53,10 @@ const BookViewer = () => {
     return (
         <div className="book-viewer-overlay">
             <div className="book-viewer-container">
-                <button className="close-btn ui-button ui-button-ghost" onClick={() => router.push(`/${i18n.language}/atelier`)}>
+                <button
+                    className="close-btn ui-button ui-button-ghost"
+                    onClick={() => router.push(buildLocalizedUrlWithQuery(i18n.language, '/atelier', searchParams, { id: null }))}
+                >
                     <ArrowLeft size={24} /> Back to Shelf
                 </button>
 

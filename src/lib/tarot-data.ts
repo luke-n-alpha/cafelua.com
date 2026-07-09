@@ -1,5 +1,11 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import {
+    FALLBACK_DECK_SUMMARY,
+    FALLBACK_SPREAD_GUIDE,
+    getFallbackCardInterpretation,
+    getFallbackCardMeta,
+} from '@/data/tarot/fallbackCards';
 
 const CARD_FOLDERS = [
     '00-the-fool', '01-the-magician', '02-the-high-priestess', '03-the-empress',
@@ -23,7 +29,7 @@ export async function loadDeckSummary(): Promise<string> {
         const summaryPath = path.join(getBasePath(), 'deck-summary.md');
         return await fs.readFile(summaryPath, 'utf-8');
     } catch {
-        return '';
+        return FALLBACK_DECK_SUMMARY;
     }
 }
 
@@ -32,7 +38,7 @@ export async function loadSpreadGuide(): Promise<string> {
         const guidePath = path.join(getBasePath(), 'spread-guide.md');
         return await fs.readFile(guidePath, 'utf-8');
     } catch {
-        return '';
+        return FALLBACK_SPREAD_GUIDE;
     }
 }
 
@@ -44,7 +50,7 @@ export async function loadCardMeta(cardId: number): Promise<any | null> {
         const content = await fs.readFile(metaPath, 'utf-8');
         return JSON.parse(content);
     } catch {
-        return null;
+        return getFallbackCardMeta(cardId);
     }
 }
 
@@ -55,6 +61,6 @@ export async function loadCardInterpretation(cardId: number): Promise<string> {
         const mdPath = path.join(getBasePath(), 'cards', folder, 'interpretation.md');
         return await fs.readFile(mdPath, 'utf-8');
     } catch {
-        return '';
+        return getFallbackCardInterpretation(cardId);
     }
 }

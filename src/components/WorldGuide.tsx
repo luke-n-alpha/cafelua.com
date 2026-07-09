@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react';
 import { ContentLoader } from '../services/ContentLoader';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 import './WorldGuide.css';
 
 const WorldGuide = () => {
     const pathname = usePathname();
+    const searchParams = useSearchParams();
     const localeFromPath = pathname.split('/')[1];
     const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : 'ko';
     const [guideContent, setGuideContent] = useState<string>('');
@@ -41,7 +43,7 @@ const WorldGuide = () => {
 
     return (
         <div className="world-guide-container">
-            <Link className="back-btn ui-button ui-button-ghost" href={`/${locale}/atelier`}>
+            <Link className="back-btn ui-button ui-button-ghost" href={buildLocalizedUrlWithQuery(locale, '/atelier', searchParams)}>
                 <ArrowLeft size={20} /> Back to Atelier
             </Link>
 
