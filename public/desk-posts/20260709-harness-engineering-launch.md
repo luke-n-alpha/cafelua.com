@@ -9,8 +9,7 @@ tags:
   - naia
   - 오픈소스
   - 개발서적
-images:
-  - /desk/20260709-harness-engineering-launch/harness-launch-hero.webp
+images: []
 thumbnail: /desk/20260709-harness-engineering-launch/harness-launch-hero.webp
 canonicalUrl: "https://naia.land/{locale}/blog/20260709-harness-engineering-launch"
 ---
