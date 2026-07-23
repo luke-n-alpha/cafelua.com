@@ -2,7 +2,6 @@
 
 import {
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -37,6 +36,7 @@ import {
   type TimeOfDay,
   type Weather,
 } from "@/lib/environmentBackgrounds";
+import { splitMarkdownTable } from "@/lib/library-table-pagination";
 import "./LibraryShelfPage.css";
 
 type ReaderState = {
@@ -130,7 +130,15 @@ function splitMarkdownIntoPages(
       /^\|.*\|$/m.test(trimmedBlock) &&
       /^\|?\s*:?-{3,}/m.test(trimmedBlock);
     const isCodeBlock = /^```/.test(trimmedBlock);
-    if (isImageBlock || isTableBlock || isCodeBlock) {
+    if (isTableBlock) {
+      if (page) pages.push(page);
+      pages.push(
+        ...splitMarkdownTable(block, pageCharacterLimit, isCompact),
+      );
+      page = "";
+      continue;
+    }
+    if (isImageBlock || isCodeBlock) {
       if (!isCompact && page && page.length < 180) {
         pages.push(`${page}\n\n${block}`);
       } else {
@@ -230,7 +238,6 @@ export default function LibraryShelfPage({
     src: string;
     alt: string;
   } | null>(null);
-  const [pageFitScale, setPageFitScale] = useState<Record<number, number>>({});
   const pendingChapterIndexRef = useRef<number | null>(null);
   const readerPanelRef = useRef<HTMLElement>(null);
   const readerGestureStartRef = useRef<{ x: number; y: number } | null>(null);
@@ -288,53 +295,6 @@ export default function LibraryShelfPage({
     if (!reader) return;
     readerPanelRef.current?.focus();
   }, [reader]);
-
-  useEffect(() => {
-    setPageFitScale({});
-  }, [fontScale, isCompact, reader?.edition.sourceSlug]);
-
-  useLayoutEffect(() => {
-    if (!reader || !readerPanelRef.current) return;
-    const pageElements = Array.from(
-      readerPanelRef.current.querySelectorAll<HTMLElement>(
-        "[data-reader-page-index]",
-      ),
-    );
-    setPageFitScale((current) => {
-      let changed = false;
-      const next = { ...current };
-      for (const pageElement of pageElements) {
-        const pageIndex = Number(pageElement.dataset.readerPageIndex);
-        const content = pageElement.querySelector<HTMLElement>(
-          ".library-paper-content",
-        );
-        if (!content || content.scrollHeight <= content.clientHeight + 1) {
-          continue;
-        }
-        const currentScale = next[pageIndex] ?? 1;
-        const nextScale = Math.max(
-          0.74,
-          Number(
-            (
-              currentScale *
-              (content.clientHeight / content.scrollHeight) *
-              0.98
-            ).toFixed(3),
-          ),
-        );
-        if (nextScale < currentScale) {
-          next[pageIndex] = nextScale;
-          changed = true;
-        }
-      }
-      return changed ? next : current;
-    });
-  }, [
-    fontScale,
-    isCompact,
-    reader?.edition.sourceSlug,
-    reader?.pageIndex,
-  ]);
 
   useEffect(() => {
     if (!reader || pendingChapterIndexRef.current === null) return;
@@ -403,6 +363,13 @@ export default function LibraryShelfPage({
     } catch {
       // Fullscreen can be blocked by a browser or embedded webview policy.
     }
+  };
+  const toggleReaderFullscreen = async () => {
+    if (document.fullscreenElement === readerPanelRef.current) {
+      await document.exitFullscreen();
+      return;
+    }
+    await enterReaderFullscreen();
   };
   const trapDialog = (
     event: KeyboardEvent<HTMLElement>,
@@ -649,32 +616,45 @@ export default function LibraryShelfPage({
                   <Menu size={17} />
                   <span>{copy.contents}</span>
                 </button>
-                <div className="library-font-size" aria-label="Font size">
+                <div className="library-font-size" aria-label={copy.fontSize}>
                   <button
                     onClick={() => changeFontScale(-0.05)}
                     disabled={fontScale <= 0.85}
-                    aria-label="Decrease font size"
+                    aria-label={copy.decreaseFontSize}
+                    title={copy.decreaseFontSize}
                   >
                     A−
                   </button>
                   <button
                     onClick={() => changeFontScale(0.05)}
                     disabled={fontScale >= 1.15}
-                    aria-label="Increase font size"
+                    aria-label={copy.increaseFontSize}
+                    title={copy.increaseFontSize}
                   >
                     A+
                   </button>
                 </div>
-                {!isReaderFullscreen && (
-                  <button
-                    className="library-fullscreen-toggle"
-                    onClick={() => void enterReaderFullscreen()}
-                    aria-label={locale === "ko" ? "전체 화면" : "Full screen"}
-                    title={locale === "ko" ? "전체 화면" : "Full screen"}
-                  >
+                <button
+                  className="library-fullscreen-toggle"
+                  onClick={() => void toggleReaderFullscreen()}
+                  aria-label={
+                    isReaderFullscreen
+                      ? copy.exitFullscreen
+                      : copy.enterFullscreen
+                  }
+                  title={
+                    isReaderFullscreen
+                      ? copy.exitFullscreen
+                      : copy.enterFullscreen
+                  }
+                  aria-pressed={isReaderFullscreen}
+                >
+                  {isReaderFullscreen ? (
+                    <Minimize2 size={16} />
+                  ) : (
                     <Maximize2 size={16} />
-                  </button>
-                )}
+                  )}
+                </button>
               </div>
               <span>{reader.edition.title}</span>
               {reader.edition.lang === "ko" && reader.edition.links.wikidocs && (
@@ -684,7 +664,7 @@ export default function LibraryShelfPage({
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <span>위키북스</span>
+                  <span>위키독스</span>
                   <ExternalLink size={14} />
                 </a>
               )}
@@ -701,29 +681,11 @@ export default function LibraryShelfPage({
               )}
               <button
                 className="library-reader-close"
-                onClick={() => {
-                  if (document.fullscreenElement) {
-                    void document.exitFullscreen();
-                  } else {
-                    closeReader();
-                  }
-                }}
-                aria-label={
-                  isReaderFullscreen
-                    ? locale === "ko"
-                      ? "돌아오기"
-                      : "Exit full screen"
-                    : copy.close
-                }
-                title={
-                  isReaderFullscreen
-                    ? locale === "ko"
-                      ? "돌아오기"
-                      : "Exit full screen"
-                    : copy.close
-                }
+                onClick={closeReader}
+                aria-label={copy.close}
+                title={copy.close}
               >
-                {isReaderFullscreen ? <Minimize2 size={18} /> : <X size={18} />}
+                <X size={18} />
               </button>
             </header>
             <div className="library-reading-progress" aria-hidden="true">
@@ -813,8 +775,6 @@ export default function LibraryShelfPage({
                     movePages(-1);
                   } else if (touchPosition > 2 / 3) {
                     movePages(1);
-                  } else {
-                    void enterReaderFullscreen();
                   }
                 }}
               >
@@ -831,17 +791,7 @@ export default function LibraryShelfPage({
                         <span>{page.chapterTitle}</span>
                         <small>{reader.pageIndex + spreadPageIndex + 1}</small>
                       </header>
-                      <div
-                        className="library-paper-content"
-                        style={
-                          {
-                            "--page-fit-scale":
-                              pageFitScale[
-                                reader.pageIndex + spreadPageIndex
-                              ] ?? 1,
-                          } as CSSProperties
-                        }
-                      >
+                      <div className="library-paper-content">
                         <ReactMarkdown
                           remarkPlugins={[remarkGfm]}
                           components={{

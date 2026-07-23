@@ -3,6 +3,11 @@
 # Changelog
 
 ### v0.2.0 (2026-07-23)
+- **July 24 Follow-up**: Added sequential Play All playback to the Gallery BGM tab while preserving each scene track's individual loop behavior.
+- **Reader Layout Fixes**: Long tables now split across pages with repeated headers, and reader text stays at a consistent size instead of shrinking differently from page to page.
+- **Clearer Reader Controls**: Placed an icon-only screen expand/reduce control beside the font-size buttons, separated it from the close action, and removed the ambiguous mobile center-tap fullscreen gesture.
+- **Desk Post Update**: Refined the Korean and English announcement titles and added the Cafe Lua GitHub repository URL to both article bodies.
+- **Link Label Fix**: Corrected the Korean edition label from WikiBooks to WikiDocs.
 - **2F Library Opened**: Added `/ko/library` and `/en/library` as an independent Cafe Lua space.
 - **Ebook Reader**: Added desktop two-page and mobile single-page reading, table of contents, font sizing, progress, fullscreen, page-edge clicks, three-zone mobile touch controls, and swipe navigation.
 - **Books Available**: Readers can open *Harness Engineering: Re:Zero — Software Engineering for AI-Assisted Development* and *The Invasion of Mars & AI Fiction Writing* directly inside Cafe Lua.

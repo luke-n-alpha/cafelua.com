@@ -576,6 +576,33 @@
     gap: 0.7rem;
 }
 
+.bgm-play-all-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.15rem;
+}
+
+.bgm-play-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid rgba(180, 160, 120, 0.35);
+    border-radius: 999px;
+    background: rgba(18, 18, 24, 0.45);
+    color: #f5f2eb;
+    font: inherit;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.bgm-play-all-btn:hover,
+.bgm-play-all-btn.playing {
+    border-color: rgba(210, 185, 130, 0.65);
+    background: rgba(180, 160, 120, 0.2);
+}
+
 .bgm-card {
     display: flex;
     align-items: center;

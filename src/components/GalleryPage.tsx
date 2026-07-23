@@ -84,6 +84,7 @@ const GalleryPage: React.FC = () => {
         window.history.replaceState(null, '', url);
     }, [category, spaceSubcat, tarotDeck, i18n.language, searchParams]);
     const [playingBgm, setPlayingBgm] = useState<string | null>(null);
+    const [isPlayingAllBgm, setIsPlayingAllBgm] = useState(false);
     const previewAudioRef = useRef<HTMLAudioElement | null>(null);
 
     // Touch/wheel handling for carousel
@@ -218,24 +219,64 @@ const GalleryPage: React.FC = () => {
         return () => el.removeEventListener('wheel', onWheel);
     }, [showGreeting, category, carouselIndex, goTo]);
 
-    // BGM player (미리듣기 — 레이아웃 BGM 일시정지 후 개별 재생)
-    const handlePlayBgm = (src: string) => {
+    const stopBgmPreview = useCallback((resumeLayout = true) => {
+        if (previewAudioRef.current) {
+            previewAudioRef.current.pause();
+            previewAudioRef.current.src = '';
+            previewAudioRef.current = null;
+        }
+        setPlayingBgm(null);
+        setIsPlayingAllBgm(false);
+        if (resumeLayout) {
+            window.dispatchEvent(new Event('gallerybgm:resume'));
+        }
+    }, []);
+
+    const playAllBgmFrom = useCallback((index: number) => {
+        const bgm = BGM_LIST[index % BGM_LIST.length];
+        if (!bgm) return;
+
         if (previewAudioRef.current) {
             previewAudioRef.current.pause();
             previewAudioRef.current.src = '';
         }
-        if (playingBgm === src) {
-            setPlayingBgm(null);
-            window.dispatchEvent(new Event('gallerybgm:resume'));
+        window.dispatchEvent(new Event('gallerybgm:suspend'));
+        const audio = new Audio(bgm.src);
+        audio.loop = false;
+        audio.volume = 0.4;
+        audio.addEventListener('ended', () => playAllBgmFrom(index + 1), { once: true });
+        audio.play().catch(() => stopBgmPreview());
+        previewAudioRef.current = audio;
+        setPlayingBgm(bgm.src);
+        setIsPlayingAllBgm(true);
+    }, [stopBgmPreview]);
+
+    // 갤러리 BGM 목록 미리듣기: 개별 반복 재생 또는 전체 순차 재생
+    const handlePlayBgm = (src: string) => {
+        if (playingBgm === src && !isPlayingAllBgm) {
+            stopBgmPreview();
             return;
+        }
+        if (previewAudioRef.current) {
+            previewAudioRef.current.pause();
+            previewAudioRef.current.src = '';
         }
         window.dispatchEvent(new Event('gallerybgm:suspend'));
         const audio = new Audio(src);
         audio.loop = true;
         audio.volume = 0.4;
-        audio.play().catch(() => {});
+        audio.play().catch(() => stopBgmPreview());
         previewAudioRef.current = audio;
         setPlayingBgm(src);
+        setIsPlayingAllBgm(false);
+    };
+
+    const handlePlayAllBgm = () => {
+        if (isPlayingAllBgm) {
+            stopBgmPreview();
+            return;
+        }
+        playAllBgmFrom(0);
     };
 
     // Greeting screen
@@ -434,14 +475,32 @@ const GalleryPage: React.FC = () => {
                     {/* BGM tab */}
                     {category === 'bgm' && (
                         <div className="bgm-list">
+                            <div className="bgm-play-all-row">
+                                <button
+                                    type="button"
+                                    className={"bgm-play-all-btn" + (isPlayingAllBgm ? " playing" : "")}
+                                    onClick={handlePlayAllBgm}
+                                    aria-pressed={isPlayingAllBgm}
+                                >
+                                    <span aria-hidden="true">{isPlayingAllBgm ? '⏸' : '▶'}</span>
+                                    {t(isPlayingAllBgm ? 'gallery.stopAll' : 'gallery.playAll')}
+                                </button>
+                            </div>
                             {BGM_LIST.map((bgm) => (
                                 <div
                                     key={bgm.src}
                                     className={`bgm-card${playingBgm === bgm.src ? ' playing' : ''}`}
                                 >
                                     <button
+                                        type="button"
                                         className="bgm-play-btn"
                                         onClick={() => handlePlayBgm(bgm.src)}
+                                        aria-label={t(
+                                            playingBgm === bgm.src && !isPlayingAllBgm
+                                                ? 'gallery.pauseTrack'
+                                                : 'gallery.playTrack',
+                                            { title: isKo ? bgm.titleKo : bgm.titleEn },
+                                        )}
                                     >
                                         {playingBgm === bgm.src ? '⏸' : '▶'}
                                     </button>
