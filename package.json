@@ -1,7 +1,7 @@
 {
   "name": "cafelua-app",
   "private": true,
-  "version": "0.1.9",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "next dev",
@@ -11,6 +11,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "e2e": "playwright test",
+    "optimize:library-assets": "node scripts/optimize-library-assets.mjs",
     "generate-index": "node scripts/generate-content-index.js",
     "seo:generate": "tsx scripts/generate-seo-files.ts"
   },

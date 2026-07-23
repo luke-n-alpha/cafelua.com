@@ -2,6 +2,20 @@
 
 # Changelog
 
+### v0.2.0 (2026-07-23)
+- **2F Library Opened**: Added `/ko/library` and `/en/library` as an independent Cafe Lua space.
+- **Ebook Reader**: Added desktop two-page and mobile single-page reading, table of contents, font sizing, progress, fullscreen, page-edge clicks, three-zone mobile touch controls, and swipe navigation.
+- **Books Available**: Readers can open *Harness Engineering: Re:Zero — Software Engineering for AI-Assisted Development* and *The Invasion of Mars & AI Fiction Writing* directly inside Cafe Lua.
+- **Shareable Book URLs**: Added dedicated book detail URLs and `?read=1` reader URLs for sharing a specific book or reading view.
+- **English Mars Edition**: Connected the English manuscript and cover to the English Library together with the [published Leanpub edition](https://leanpub.com/invasionofmars).
+- **Edition-Aware Links**: Korean pages lead to WikiDocs, while English pages show published Leanpub editions.
+- **Mobile Library**: Reworked the shelf into a two-column vertical grid and shortened the path to book details and Direct View.
+- **Shared Image Viewer**: Reused one lightbox for enlarged book illustrations and Gallery images.
+- **Reader Stability**: Fixed Markdown image hydration, table pagination, image flicker, and mobile overflow.
+- **Room Experience**: Added dedicated Library and Master's Desk BGM, seasonal Library backgrounds, WebP background optimization, and tighter mobile reader spacing.
+- **Master's Desk**: Published the Cafe Lua 0.2.0 Library announcement as a bilingual post.
+- **Version Display**: Updated the app and entrance footer to `v0.2.0`.
+
 ### v0.1.9 (2026-07-04)
 - **Full Visual Refresh**: Replaced and deployed the Cafe Lua entrance, lounge, about, gallery, guestbook, atelier, and master desk background assets.
 - **Environment Propagation Expanded**: Season, time, weather, open/closed state, and Christmas mode now flow beyond the entrance/lounge into counter, coffee chat, tarot, gallery, guestbook, about, atelier, desk, and diary surfaces.

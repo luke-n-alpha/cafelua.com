@@ -59,9 +59,16 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
                 descEn: "Luke's writings and other works",
             },
             {
+                labelKo: '서재',
+                labelEn: 'Library',
+                path: '/library',
+                descKo: '루크가 집필한 소설과 전자책',
+                descEn: "Luke's novels and ebooks",
+            },
+            {
                 labelKo: '낡은 PC',
                 labelEn: 'Old PC',
-                path: '/library',
+                path: '/atelier',
                 descKo: '1997/1998 홈페이지',
                 descEn: '1997/1998 homepages',
             },

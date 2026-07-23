@@ -196,7 +196,7 @@ const MasterDeskPage: React.FC<{ posts: DeskPostListItem[] }> = ({ posts }) => {
     const handleBack = () => {
         const params = new URLSearchParams(searchParams.toString());
         params.set('from', 'desk');
-        router.push(`/${locale}/library?${params.toString()}`);
+        router.push(`/${locale}/atelier?${params.toString()}`);
     };
 
     const categoryBadge = (cat: string) => {
