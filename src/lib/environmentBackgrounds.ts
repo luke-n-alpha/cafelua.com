@@ -2,7 +2,7 @@ export type Season = 'spring' | 'summer' | 'autumn' | 'winter';
 export type TimeOfDay = 'day' | 'sunset' | 'night' | 'closed';
 export type Weather = 'sunny' | 'clear' | 'rain' | 'snow' | 'storm' | 'closed';
 
-type Space = 'lounge' | 'coffeeChat' | 'atelier' | 'guestbook' | 'masterDesk' | 'gallery' | 'about';
+type Space = 'lounge' | 'coffeeChat' | 'atelier' | 'guestbook' | 'masterDesk' | 'gallery' | 'about' | 'library';
 
 const AVAILABLE_LOUNGE_BACKGROUNDS = new Set([
     'lounge_bg_autumn_day_rain',
@@ -136,12 +136,22 @@ const AVAILABLE_ABOUT_BACKGROUNDS = new Set([
     'about_bg_winter_night_snow_xmas',
 ]);
 
+const AVAILABLE_LIBRARY_BACKGROUNDS = new Set([
+    'library_bg_autumn_sunset_clear',
+    'library_bg_spring_day_sunny',
+    'library_bg_summer_day_rain',
+    'library_bg_summer_night_closed',
+    'library_bg_winter_day_snow',
+    'library_bg_winter_night_snow_xmas',
+]);
+
 const getAvailableSet = (space: Space) => {
     if (space === 'lounge' || space === 'coffeeChat') return AVAILABLE_LOUNGE_BACKGROUNDS;
     if (space === 'guestbook') return AVAILABLE_GUESTBOOK_BACKGROUNDS;
     if (space === 'masterDesk') return AVAILABLE_MASTER_DESK_BACKGROUNDS;
     if (space === 'gallery') return AVAILABLE_GALLERY_BACKGROUNDS;
     if (space === 'about') return AVAILABLE_ABOUT_BACKGROUNDS;
+    if (space === 'library') return AVAILABLE_LIBRARY_BACKGROUNDS;
     return AVAILABLE_ATELIER_BACKGROUNDS;
 };
 
@@ -151,6 +161,7 @@ const getPrefix = (space: Space) => {
     if (space === 'masterDesk') return 'master_desk_bg';
     if (space === 'gallery') return 'gallery_bg';
     if (space === 'about') return 'about_bg';
+    if (space === 'library') return 'library_bg';
     return 'lounge_bg';
 };
 
@@ -160,6 +171,7 @@ const getFolder = (space: Space) => {
     if (space === 'masterDesk') return 'master-desk-background-img';
     if (space === 'gallery') return 'gallery-background-img';
     if (space === 'about') return 'about-background-img';
+    if (space === 'library') return 'library-background-img';
     return 'lounge-background-img';
 };
 
@@ -177,6 +189,15 @@ const getLegacyFallbackName = (
         if (time === 'sunset') return 'about_bg_autumn_sunset_clear';
         if (time === 'night' || time === 'closed') return 'about_bg_summer_night_closed';
         return 'about_bg_spring_day_sunny';
+    }
+
+    if (space === 'library') {
+        if (isChristmas && season === 'winter') return 'library_bg_winter_night_snow_xmas';
+        if (season === 'winter' && weather === 'snow') return 'library_bg_winter_day_snow';
+        if (weather === 'rain' || weather === 'storm') return 'library_bg_summer_day_rain';
+        if (time === 'sunset') return 'library_bg_autumn_sunset_clear';
+        if (time === 'night' || time === 'closed') return 'library_bg_summer_night_closed';
+        return 'library_bg_spring_day_sunny';
     }
 
     if (space === 'gallery') {

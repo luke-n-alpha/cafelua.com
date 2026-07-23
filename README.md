@@ -35,6 +35,7 @@ The site works without any API keys (AI chat, guestbook, and weather features wi
 | **Gallery** | Photo gallery, Cafe Lua spaces, tarot story decks, BGM |
 | **Guestbook** | Firebase-backed guestbook with seasonal cafe backgrounds |
 | **2F Atelier** | Retro Win98 PC experience and seasonal atelier backgrounds |
+| **2F Library** | Korean/English ebook reader with mobile touch/swipe controls, shareable book/reader URLs, and WikiDocs/Leanpub editions |
 
 **Also**: ko/en bilingual, responsive design, OG metadata per post/diary, email reply notifications.
 
@@ -172,7 +173,7 @@ npx tsc --noEmit     # TypeScript type check
 | Diary entries | 20 |
 | Categories | 8 |
 | Languages | Korean + English |
-| Version | 0.1.9 |
+| Version | 0.2.0 |
 
 ## 🔎 SEO & AI Indexing
 

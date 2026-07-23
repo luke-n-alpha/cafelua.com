@@ -1,24 +1,21 @@
-import { redirect } from 'next/navigation';
+import type { Metadata } from 'next';
+
+import BackgroundMusic from '@/components/BackgroundMusic';
+import LibraryShelfPage from '@/components/LibraryShelfPage';
 
 type Params = { locale: string };
-type SearchParams = Record<string, string | string[] | undefined>;
 
-export default async function LibraryRedirect({ params, searchParams }: { params: Promise<Params>; searchParams?: Promise<SearchParams> }) {
+export const metadata: Metadata = {
+    title: 'Cafe Lua Library',
+    description: '하네스 엔지니어링과 화성침공을 읽을 수 있는 Cafe Lua의 서재입니다.',
+};
+
+export default async function Library({ params }: { params: Promise<Params> }) {
     const { locale: rawLocale } = await params;
-    const locale = rawLocale === 'en' ? 'en' : 'ko';
-    const resolvedSearchParams = searchParams ? await searchParams : undefined;
-    const query = new URLSearchParams();
-
-    if (resolvedSearchParams) {
-        for (const [key, value] of Object.entries(resolvedSearchParams)) {
-            if (!value) continue;
-            if (Array.isArray(value)) {
-                if (value[0]) query.set(key, value[0]);
-                continue;
-            }
-            query.set(key, value);
-        }
-    }
-
-    redirect(query.size > 0 ? `/${locale}/atelier?${query.toString()}` : `/${locale}/atelier`);
+    return (
+        <>
+            <BackgroundMusic src="/sounds/library.mp3" />
+            <LibraryShelfPage locale={rawLocale === 'en' ? 'en' : 'ko'} />
+        </>
+    );
 }

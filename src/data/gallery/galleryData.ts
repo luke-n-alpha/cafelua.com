@@ -39,6 +39,9 @@ const withDefaultTags = (images: GalleryImage[], tagsKo: string[], tagsEn: strin
     tagsEn: image.tagsEn ?? tagsEn,
   }));
 
+const newestAlphaFirst = (images: GalleryImage[]): GalleryImage[] =>
+  [...images].sort((left, right) => Number(left.src.includes('/legacy/')) - Number(right.src.includes('/legacy/')));
+
 const ATELIER_MATRIX_IMAGES: GalleryImage[] = [
   { src: '/atelier-background-img/atelier_bg_spring_day_sunny.webp', titleKo: '아틀리에 - 봄 낮', titleEn: 'Atelier - Spring Day', descKo: '봄빛이 들어오는 2층 아뜰리에 새 디자인', descEn: 'New 2F atelier design in spring daylight', tagsKo: ['새 디자인', '카페루아 공간', '아뜰리에'], tagsEn: ['New Design', 'Cafe Lua Space', 'Atelier'] },
   { src: '/atelier-background-img/atelier_bg_spring_day_rain.webp', titleKo: '아틀리에 - 봄 비', titleEn: 'Atelier - Spring Rain', descKo: '봄비가 내리는 2층 아뜰리에 새 디자인', descEn: 'New 2F atelier design on a rainy spring day', tagsKo: ['새 디자인', '카페루아 공간', '아뜰리에'], tagsEn: ['New Design', 'Cafe Lua Space', 'Atelier'] },
@@ -71,6 +74,37 @@ const ATELIER_MATRIX_IMAGES: GalleryImage[] = [
   { src: '/atelier-background-img/atelier_bg_winter_night_closed_xmas.webp', titleKo: '아틀리에 - 크리스마스 영업종료', titleEn: 'Atelier - Christmas Closed', descKo: '크리스마스 밤 영업종료 후 2층 아뜰리에 새 디자인', descEn: 'New 2F atelier design after closing on Christmas night', tagsKo: ['새 디자인', '카페루아 공간', '아뜰리에'], tagsEn: ['New Design', 'Cafe Lua Space', 'Atelier'] },
   { src: '/atelier-background-img/atelier_bg_winter_night_closed_snow_xmas.webp', titleKo: '아틀리에 - 크리스마스 눈 영업종료', titleEn: 'Atelier - Snowy Christmas Closed', descKo: '눈 오는 크리스마스 밤 영업종료 후 2층 아뜰리에 새 디자인', descEn: 'New 2F atelier design after closing on a snowy Christmas night', tagsKo: ['새 디자인', '카페루아 공간', '아뜰리에'], tagsEn: ['New Design', 'Cafe Lua Space', 'Atelier'] },
 ];
+
+const SHOWCASE_ENVIRONMENTS = [
+  { suffix: 'spring_day_sunny', titleKo: '봄 낮', titleEn: 'Spring Day', descKo: '봄빛이 들어오는', descEn: 'in spring daylight' },
+  { suffix: 'summer_day_rain', titleKo: '여름 비', titleEn: 'Summer Rain', descKo: '여름비가 내리는', descEn: 'on a rainy summer day' },
+  { suffix: 'autumn_sunset_clear', titleKo: '가을 노을', titleEn: 'Autumn Sunset', descKo: '가을 노을빛의', descEn: 'in autumn sunset light' },
+  { suffix: 'summer_night_closed', titleKo: '여름 밤', titleEn: 'Summer Night', descKo: '조용한 여름밤의', descEn: 'on a quiet summer night' },
+  { suffix: 'winter_day_snow', titleKo: '겨울 눈', titleEn: 'Winter Snow', descKo: '눈 내리는 겨울날의', descEn: 'on a snowy winter day' },
+  { suffix: 'winter_night_snow_xmas', titleKo: '크리스마스 눈밤', titleEn: 'Snowy Christmas Night', descKo: '눈 내리는 크리스마스 밤의', descEn: 'on a snowy Christmas night' },
+] as const;
+
+const makeShowcaseSpaceImages = ({
+  key,
+  folder,
+  extension = 'webp',
+  labelKo,
+  labelEn,
+}: {
+  key: string;
+  folder: string;
+  extension?: 'webp' | 'png';
+  labelKo: string;
+  labelEn: string;
+}): GalleryImage[] => SHOWCASE_ENVIRONMENTS.map((environment) => ({
+  src: `/${folder}/${key}_bg_${environment.suffix}.${extension}`,
+  titleKo: `${labelKo} - ${environment.titleKo}`,
+  titleEn: `${labelEn} - ${environment.titleEn}`,
+  descKo: `${environment.descKo} 카페루아 ${labelKo}`,
+  descEn: `Cafe Lua ${labelEn.toLowerCase()} ${environment.descEn}`,
+  tagsKo: ['카페루아 공간', labelKo],
+  tagsEn: ['Cafe Lua Space', labelEn],
+}));
 
 export const SPACE_IMAGES: Record<string, GalleryImage[]> = {
   intro: withDefaultTags([
@@ -129,7 +163,12 @@ export const SPACE_IMAGES: Record<string, GalleryImage[]> = {
     { src: '/gallery/generated/2026-07-design-refresh/lounge/lounge_bg_winter_night_snow_xmas.webp', titleKo: '라운지 — 크리스마스 새 디자인', titleEn: 'Lounge — Christmas New Design', descKo: '크리스마스 장식과 눈 내리는 밤의 카페루아 1층 라운지 새 디자인', descEn: 'New Cafe Lua first-floor lounge on a snowy Christmas night', tagsKo: ['새 디자인', '카페루아 공간', '라운지'], tagsEn: ['New Design', 'Cafe Lua Space', 'Lounge'] },
   ],
   atelier: ATELIER_MATRIX_IMAGES,
-  character: [
+  guestbook: makeShowcaseSpaceImages({ key: 'guestbook', folder: 'guestbook-background-img', labelKo: '방명록', labelEn: 'Guestbook' }),
+  gallery: makeShowcaseSpaceImages({ key: 'gallery', folder: 'gallery-background-img', labelKo: '갤러리', labelEn: 'Gallery' }),
+  about: makeShowcaseSpaceImages({ key: 'about', folder: 'about-background-img', labelKo: '카페 소개', labelEn: 'About Cafe' }),
+  masterDesk: makeShowcaseSpaceImages({ key: 'master_desk', folder: 'master-desk-background-img', labelKo: '마스터의 데스크', labelEn: "Master's Desk" }),
+  library: makeShowcaseSpaceImages({ key: 'library', folder: 'library-background-img', labelKo: '서재', labelEn: 'Library' }),
+  character: newestAlphaFirst([
     { src: '/gallery/legacy/2026-06-design-refresh/alpha-coffee-chat-old.webp', titleKo: '알파 — 커피챗', titleEn: 'Alpha — Coffee Chat', descKo: '커피를 앞에 두고 대화하는 알파', descEn: 'Alpha chatting over coffee' },
     { src: '/gallery/legacy/2026-06-design-refresh/alpha-tarot-ready-old.webp', titleKo: '알파 — 타로 준비', titleEn: 'Alpha — Tarot Ready', descKo: '타로 카드를 준비하는 알파', descEn: 'Alpha preparing tarot cards' },
     { src: '/gallery/generated/2026-06-design-refresh/alpha-coffee-chat-v3-4.webp', titleKo: 'Alpha Coffee Chat v3.4', titleEn: 'Alpha Coffee Chat v3.4', descKo: 'Alpha v3.4 coffee chat illustration, 1376x768', descEn: 'Alpha v3.4 coffee chat illustration, 1376x768', tagsKo: ['New Design', 'Alpha', 'Coffee Chat'], tagsEn: ['New Design', 'Alpha', 'Coffee Chat'] },
@@ -142,8 +181,8 @@ export const SPACE_IMAGES: Record<string, GalleryImage[]> = {
     { src: '/characters/alpha/coffee-chat/coffee_chat_night_clear_a.webp', titleKo: '커피챗 - 밤 맑음 공통', titleEn: 'Coffee Chat - Night Clear Fallback', descKo: '맑은 밤에 쓰는 실내 카페루아 커피챗 공통 이미지', descEn: 'Cafe Lua indoor coffee chat fallback for clear nights', tagsKo: ['새 디자인', '알파', '커피챗', '밤', '맑음'], tagsEn: ['New Design', 'Alpha', 'Coffee Chat', 'Night', 'Clear'] },
     { src: '/gallery/generated/2026-06-design-refresh/alpha-tarot-ready-v3-4.webp', titleKo: 'Alpha Tarot Ready v3.4', titleEn: 'Alpha Tarot Ready v3.4', descKo: 'Alpha v3.4 tarot preparation illustration, 1376x768', descEn: 'Alpha v3.4 tarot preparation illustration, 1376x768', tagsKo: ['New Design', 'Alpha', 'Tarot'], tagsEn: ['New Design', 'Alpha', 'Tarot'] },
     { src: '/gallery/legacy/2026-06-design-refresh/alpha-serving-old.webp', titleKo: '알파 — 서빙', titleEn: 'Alpha — Serving', descKo: '음료를 서빙하는 알파', descEn: 'Alpha serving drinks' },
-  ],
-  expression: [
+  ]),
+  expression: newestAlphaFirst([
     { src: '/gallery/legacy/2026-06-design-refresh/face-variation/alpha-face-old.webp', titleKo: '기본 표정', titleEn: 'Default', descKo: '알파의 기본 표정', descEn: 'Alpha\'s default expression' },
     { src: '/gallery/legacy/2026-06-design-refresh/face-variation/alpha-nice-talk-old.webp', titleKo: '다정함', titleEn: 'Friendly', descKo: '다정하게 이야기하는 표정', descEn: 'Friendly talking expression' },
     { src: '/gallery/legacy/2026-06-design-refresh/face-variation/alpha-wink-smile-old.webp', titleKo: '윙크', titleEn: 'Wink', descKo: '윙크하며 웃는 표정', descEn: 'Winking smile' },
@@ -159,32 +198,10 @@ export const SPACE_IMAGES: Record<string, GalleryImage[]> = {
     { src: '/gallery/generated/2026-06-design-refresh/face-variation/alpha-trouble-v3-4.webp', titleKo: 'Alpha Troubled v3.4', titleEn: 'Alpha Troubled v3.4', descKo: 'Alpha v3.4 troubled face variation, 190x210 transparent WebP', descEn: 'Alpha v3.4 troubled face variation, 190x210 transparent WebP', tagsKo: ['New Design', 'Alpha', 'Face Variation'], tagsEn: ['New Design', 'Alpha', 'Face Variation'] },
     { src: '/gallery/generated/2026-06-design-refresh/face-variation/alpha-pouty-cheeks-v3-4.webp', titleKo: 'Alpha Pouty v3.4', titleEn: 'Alpha Pouty v3.4', descKo: 'Alpha v3.4 pouty cheeks face variation, 190x210 transparent WebP', descEn: 'Alpha v3.4 pouty cheeks face variation, 190x210 transparent WebP', tagsKo: ['New Design', 'Alpha', 'Face Variation'], tagsEn: ['New Design', 'Alpha', 'Face Variation'] },
     { src: '/gallery/generated/2026-06-design-refresh/face-variation/alpha-disappointed-v3-4.webp', titleKo: 'Alpha Disappointed v3.4', titleEn: 'Alpha Disappointed v3.4', descKo: 'Alpha v3.4 disappointed face variation, 190x210 transparent WebP', descEn: 'Alpha v3.4 disappointed face variation, 190x210 transparent WebP', tagsKo: ['New Design', 'Alpha', 'Face Variation'], tagsEn: ['New Design', 'Alpha', 'Face Variation'] },
-    { src: '/gallery/generated/2026-06-design-refresh/face-variation/alpha-dissatisfaction-v3-4.webp', titleKo: 'Alpha Dissatisfied v3.4', titleEn: 'Alpha Dissatisfied v3.4', descKo: 'Alpha v3.4 dissatisfied face variation, 190x210 transparent WebP', descEn: 'Alpha v3.4 dissatisfied face variation, 190x210 transparent WebP', tagsKo: ['New Design', 'Alpha', 'Face Variation'], tagsEn: ['New Design', 'Alpha', 'Face Variation'] },  ],
+    { src: '/gallery/generated/2026-06-design-refresh/face-variation/alpha-dissatisfaction-v3-4.webp', titleKo: 'Alpha Dissatisfied v3.4', titleEn: 'Alpha Dissatisfied v3.4', descKo: 'Alpha v3.4 dissatisfied face variation, 190x210 transparent WebP', descEn: 'Alpha v3.4 dissatisfied face variation, 190x210 transparent WebP', tagsKo: ['New Design', 'Alpha', 'Face Variation'], tagsEn: ['New Design', 'Alpha', 'Face Variation'] },
+  ]),
   etc: [
-    { src: '/master-desk-background-img/master_desk_bg_spring_day_sunny.webp', titleKo: '마스터의 데스크', titleEn: "Master's Desk", descKo: '마스터 루크의 작업 데스크', descEn: "Master Luke's work desk", tagsKo: ['마스터데스크'], tagsEn: ['Master Desk'] },
-    { src: '/gallery/generated/2026-07-design-refresh/reference-corrections/master-desk-background-reference.png', titleKo: 'Master Desk — Reference Correction', titleEn: 'Master Desk — Reference Correction', descKo: '레퍼런스 후보를 기준으로 복구한 마스터 데스크', descEn: 'Master desk restored from the reference candidate', tagsKo: ['새 디자인', '마스터 데스크'], tagsEn: ['New Design', 'Master Desk'] },
-    { src: '/gallery/generated/2026-07-design-refresh/master-desk/master_desk_bg_spring_day_sunny.webp', titleKo: '마스터데스크 - 봄 낮 새 디자인', titleEn: 'Master Desk - Spring Day New Design', descKo: '봄빛이 들어오는 루크의 마스터데스크 새 디자인', descEn: "Luke's master desk in spring daylight", tagsKo: ['새 디자인', '마스터 데스크'], tagsEn: ['New Design', 'Master Desk'] },
-    { src: '/gallery/generated/2026-07-design-refresh/master-desk/master_desk_bg_summer_day_rain.webp', titleKo: '마스터데스크 - 여름 비 새 디자인', titleEn: 'Master Desk - Summer Rain New Design', descKo: '여름비가 내리는 루크의 마스터데스크 새 디자인', descEn: "Luke's master desk on a rainy summer day", tagsKo: ['새 디자인', '마스터 데스크'], tagsEn: ['New Design', 'Master Desk'] },
-    { src: '/gallery/generated/2026-07-design-refresh/master-desk/master_desk_bg_autumn_sunset_clear.webp', titleKo: '마스터데스크 - 가을 노을 새 디자인', titleEn: 'Master Desk - Autumn Sunset New Design', descKo: '가을 노을빛의 루크 마스터데스크 새 디자인', descEn: "Luke's master desk in autumn sunset light", tagsKo: ['새 디자인', '마스터 데스크'], tagsEn: ['New Design', 'Master Desk'] },
-    { src: '/gallery/generated/2026-07-design-refresh/master-desk/master_desk_bg_winter_day_snow.webp', titleKo: '마스터데스크 - 겨울 눈 새 디자인', titleEn: 'Master Desk - Winter Snow New Design', descKo: '눈 내리는 겨울 루크 마스터데스크 새 디자인', descEn: "Luke's master desk on a snowy winter day", tagsKo: ['새 디자인', '마스터 데스크'], tagsEn: ['New Design', 'Master Desk'] },
-    { src: '/gallery/generated/2026-07-design-refresh/master-desk/master_desk_bg_summer_night_closed.webp', titleKo: '마스터데스크 - 밤 영업종료 새 디자인', titleEn: 'Master Desk - Closed Night New Design', descKo: '영업종료 후 조용한 루크 마스터데스크 새 디자인', descEn: "Luke's master desk after closing at night", tagsKo: ['새 디자인', '마스터 데스크'], tagsEn: ['New Design', 'Master Desk'] },
-    { src: '/gallery/generated/2026-07-design-refresh/master-desk/master_desk_bg_winter_night_snow_xmas.webp', titleKo: '마스터데스크 - 크리스마스 눈밤 새 디자인', titleEn: 'Master Desk - Snowy Christmas Night New Design', descKo: '눈 내리는 크리스마스 밤의 루크 마스터데스크 새 디자인', descEn: "Luke's master desk on a snowy Christmas night", tagsKo: ['새 디자인', '마스터 데스크'], tagsEn: ['New Design', 'Master Desk'] },
-    { src: '/gallery/generated/2026-07-design-refresh/gallery/gallery_bg_spring_day_sunny.webp', titleKo: '갤러리 - 봄 낮 새 디자인', titleEn: 'Gallery - Spring Day New Design', descKo: '봄빛이 들어오는 카페루아 갤러리 새 디자인', descEn: 'Cafe Lua gallery in spring daylight', tagsKo: ['새 디자인', '카페루아 공간', '갤러리'], tagsEn: ['New Design', 'Cafe Lua Space', 'Gallery'] },
-    { src: '/gallery/generated/2026-07-design-refresh/gallery/gallery_bg_summer_day_rain.webp', titleKo: '갤러리 - 여름 비 새 디자인', titleEn: 'Gallery - Summer Rain New Design', descKo: '여름비가 내리는 카페루아 갤러리 새 디자인', descEn: 'Cafe Lua gallery on a rainy summer day', tagsKo: ['새 디자인', '카페루아 공간', '갤러리'], tagsEn: ['New Design', 'Cafe Lua Space', 'Gallery'] },
-    { src: '/gallery/generated/2026-07-design-refresh/gallery/gallery_bg_autumn_sunset_clear.webp', titleKo: '갤러리 - 가을 노을 새 디자인', titleEn: 'Gallery - Autumn Sunset New Design', descKo: '가을 노을빛의 카페루아 갤러리 새 디자인', descEn: 'Cafe Lua gallery in autumn sunset light', tagsKo: ['새 디자인', '카페루아 공간', '갤러리'], tagsEn: ['New Design', 'Cafe Lua Space', 'Gallery'] },
-    { src: '/gallery/generated/2026-07-design-refresh/gallery/gallery_bg_winter_day_snow.webp', titleKo: '갤러리 - 겨울 눈 새 디자인', titleEn: 'Gallery - Winter Snow New Design', descKo: '눈 내리는 겨울 카페루아 갤러리 새 디자인', descEn: 'Cafe Lua gallery on a snowy winter day', tagsKo: ['새 디자인', '카페루아 공간', '갤러리'], tagsEn: ['New Design', 'Cafe Lua Space', 'Gallery'] },
-    { src: '/gallery/generated/2026-07-design-refresh/gallery/gallery_bg_summer_night_closed.webp', titleKo: '갤러리 - 밤 영업종료 새 디자인', titleEn: 'Gallery - Closed Night New Design', descKo: '영업종료 후 조용한 카페루아 갤러리 새 디자인', descEn: 'Cafe Lua gallery after closing at night', tagsKo: ['새 디자인', '카페루아 공간', '갤러리'], tagsEn: ['New Design', 'Cafe Lua Space', 'Gallery'] },
-    { src: '/gallery/generated/2026-07-design-refresh/gallery/gallery_bg_winter_night_snow_xmas.webp', titleKo: '갤러리 - 크리스마스 눈밤 새 디자인', titleEn: 'Gallery - Snowy Christmas Night New Design', descKo: '눈 내리는 크리스마스 밤의 카페루아 갤러리 새 디자인', descEn: 'Cafe Lua gallery on a snowy Christmas night', tagsKo: ['새 디자인', '카페루아 공간', '갤러리'], tagsEn: ['New Design', 'Cafe Lua Space', 'Gallery'] },
-    { src: '/gallery/generated/2026-06-design-refresh/gallery-cozy-corner-v3-4.webp', titleKo: 'Gallery Daily Memories v3.4', titleEn: 'Gallery Daily Memories v3.4', descKo: 'Cafe Lua gallery background with Alpha and Luke daily-life frames', descEn: 'Cafe Lua gallery background with Alpha and Luke daily-life frames', tagsKo: ['New Design', 'Alpha', 'Luke', 'Gallery'], tagsEn: ['New Design', 'Alpha', 'Luke', 'Gallery'] },
     { src: '/undestruct.webp', titleKo: '청소 중!', titleEn: 'Cleaning in Progress!', descKo: '알파가 열심히 공간을 꾸미는 중이에요', descEn: 'Alpha is busy decorating the space' },
-    { src: '/ui/about-modal-bg.webp', titleKo: '카페소개 - 현재 적용 이미지', titleEn: 'Cafe Introduction - Current Image', descKo: '현재 카페소개 모달에 적용된 카페루아 소개 이미지', descEn: 'Current Cafe Lua introduction image used in the about modal', tagsKo: ['카페소개'], tagsEn: ['Cafe Introduction'] },
-    { src: '/gallery/generated/2026-07-design-refresh/guestbook/guestbook_bg_spring_day_sunny.webp', titleKo: '방명록 - 봄 낮 새 디자인', titleEn: 'Guestbook - Spring Day New Design', descKo: '봄빛이 들어오는 카페루아 방명록 책상 새 디자인', descEn: 'New Cafe Lua guestbook desk in spring daylight', tagsKo: ['새 디자인', '카페루아 공간', '방명록'], tagsEn: ['New Design', 'Cafe Lua Space', 'Guestbook'] },
-    { src: '/gallery/generated/2026-07-design-refresh/guestbook/guestbook_bg_summer_day_rain.webp', titleKo: '방명록 - 여름 비 새 디자인', titleEn: 'Guestbook - Summer Rain New Design', descKo: '여름비가 내리는 카페루아 방명록 책상 새 디자인', descEn: 'New Cafe Lua guestbook desk on a rainy summer day', tagsKo: ['새 디자인', '카페루아 공간', '방명록'], tagsEn: ['New Design', 'Cafe Lua Space', 'Guestbook'] },
-    { src: '/gallery/generated/2026-07-design-refresh/guestbook/guestbook_bg_autumn_sunset_clear.webp', titleKo: '방명록 - 가을 노을 새 디자인', titleEn: 'Guestbook - Autumn Sunset New Design', descKo: '가을 노을빛의 카페루아 방명록 책상 새 디자인', descEn: 'New Cafe Lua guestbook desk in autumn sunset light', tagsKo: ['새 디자인', '카페루아 공간', '방명록'], tagsEn: ['New Design', 'Cafe Lua Space', 'Guestbook'] },
-    { src: '/gallery/generated/2026-07-design-refresh/guestbook/guestbook_bg_winter_day_snow.webp', titleKo: '방명록 - 겨울 눈 새 디자인', titleEn: 'Guestbook - Winter Snow New Design', descKo: '눈 내리는 겨울 카페루아 방명록 책상 새 디자인', descEn: 'New Cafe Lua guestbook desk on a snowy winter day', tagsKo: ['새 디자인', '카페루아 공간', '방명록'], tagsEn: ['New Design', 'Cafe Lua Space', 'Guestbook'] },
-    { src: '/gallery/generated/2026-07-design-refresh/guestbook/guestbook_bg_summer_night_closed.webp', titleKo: '방명록 - 밤 영업종료 새 디자인', titleEn: 'Guestbook - Closed Night New Design', descKo: '영업종료 후 조용한 카페루아 방명록 책상 새 디자인', descEn: 'New Cafe Lua guestbook desk after closing at night', tagsKo: ['새 디자인', '카페루아 공간', '방명록'], tagsEn: ['New Design', 'Cafe Lua Space', 'Guestbook'] },
-    { src: '/gallery/generated/2026-07-design-refresh/guestbook/guestbook_bg_winter_night_snow_xmas.webp', titleKo: '방명록 - 크리스마스 눈밤 새 디자인', titleEn: 'Guestbook - Snowy Christmas Night New Design', descKo: '눈 내리는 크리스마스 밤의 카페루아 방명록 책상 새 디자인', descEn: 'New Cafe Lua guestbook desk on a snowy Christmas night', tagsKo: ['새 디자인', '카페루아 공간', '방명록'], tagsEn: ['New Design', 'Cafe Lua Space', 'Guestbook'] },
-    { src: '/gallery/generated/2026-06-design-refresh/guestbook-rolling-paper-v3-4.webp', titleKo: 'Guestbook Rolling Paper v3.4', titleEn: 'Guestbook Rolling Paper v3.4', descKo: 'Cafe Lua guestbook as rolling paper with visitor notes, stickers, coffee marks, and small memories', descEn: 'Cafe Lua guestbook as rolling paper with visitor notes, stickers, coffee marks, and small memories', tagsKo: ['새 디자인', '방명록'], tagsEn: ['New Design', 'Guestbook'] },
     { src: '/gallery/generated/2026-06-design-refresh/intro-logo-new-design.webp', titleKo: '카페루아 원형 로고 새 디자인', titleEn: 'Cafe Lua Round Logo New Design', descKo: '2026 디자인 리프레시 기준의 카페루아 메인 원형 로고', descEn: 'Cafe Lua main round logo for the 2026 design refresh', tagsKo: ['새 디자인', '카페소개', '로고'], tagsEn: ['New Design', 'Cafe Introduction', 'Logo'] },
   ],
 };
@@ -328,6 +345,8 @@ export const BGM_LIST: GalleryMusic[] = [
   { src: '/sounds/intro.mp3', titleKo: '숲 끝자락의 문', titleEn: 'The Door at Forest\'s Edge', descKo: '카페루아의 입구에서 흐르는 음악', descEn: 'Music playing at the entrance of Cafe Lua', usedIn: 'intro' },
   { src: '/sounds/lounge.mp3', titleKo: '라운지의 오후', titleEn: 'Afternoon in the Lounge', descKo: '라운지에서 흐르는 따뜻한 선율', descEn: 'A warm melody flowing through the lounge', usedIn: 'lounge' },
   { src: '/sounds/atelier.mp3', titleKo: '아틀리에의 고요', titleEn: 'Stillness of the Atelier', descKo: '2층 작업 공간의 잔잔한 배경음악', descEn: 'Calm background music of the 2F workspace', usedIn: 'atelier' },
+  { src: '/sounds/master-desk.mp3', titleKo: '한 페이지만 더', titleEn: 'One More Page', descKo: '마스터의 데스크에서 글을 읽을 때 흐르는 음악', descEn: "Music for reading at the Master's Desk", usedIn: 'masterDesk' },
+  { src: '/sounds/library.mp3', titleKo: '천천히 넘기는 페이지', titleEn: 'Slow Turning Pages', descKo: '2층 서재에서 책장을 넘길 때 흐르는 음악', descEn: 'Music for turning pages in the second-floor Library', usedIn: 'library' },
   { src: '/sounds/coffee-chat.mp3', titleKo: '커피 한 잔의 대화', titleEn: 'A Chat Over Coffee', descKo: '알파와 커피챗을 할 때 흐르는 음악', descEn: 'Music playing during a coffee chat with Alpha', usedIn: 'coffeeChat' },
   { src: '/sounds/taro-bgm.mp3', titleKo: '별빛 아래 카드', titleEn: 'Cards Under Starlight', descKo: '타로 상담 시 흐르는 신비로운 음악', descEn: 'Mystical music during tarot readings', usedIn: 'tarot' },
   { src: '/sounds/gallery.mp3', titleKo: '갤러리의 여운', titleEn: 'Gallery Reverie', descKo: '갤러리에서 흐르는 잔잔한 음악', descEn: 'Gentle music flowing through the gallery', usedIn: 'gallery' },
@@ -337,6 +356,11 @@ export const SPACE_SUBCATEGORIES = [
   { key: 'intro', labelKo: '인트로(현관)', labelEn: 'Intro (Entrance)' },
   { key: 'lounge', labelKo: '라운지(1F)', labelEn: 'Lounge (1F)' },
   { key: 'atelier', labelKo: '아틀리에(2F)', labelEn: 'Atelier (2F)' },
+  { key: 'library', labelKo: '서재(2F)', labelEn: 'Library (2F)' },
+  { key: 'masterDesk', labelKo: '마스터의 데스크', labelEn: "Master's Desk" },
+  { key: 'guestbook', labelKo: '방명록', labelEn: 'Guestbook' },
+  { key: 'gallery', labelKo: '갤러리', labelEn: 'Gallery' },
+  { key: 'about', labelKo: '카페 소개', labelEn: 'About Cafe' },
   { key: 'etc', labelKo: '기타', labelEn: 'Others' },
   { key: 'character', labelKo: '캐릭터', labelEn: 'Characters' },
   { key: 'expression', labelKo: '표정', labelEn: 'Expressions' },

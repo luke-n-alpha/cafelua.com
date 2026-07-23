@@ -4,6 +4,7 @@ import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Eye } from 'lucide-react';
+import ImageLightbox from './ImageLightbox';
 import UnderConstruction from './UnderConstruction';
 import {
     SPACE_IMAGES,
@@ -261,6 +262,8 @@ const GalleryPage: React.FC = () => {
             intro: isKo ? '인트로' : 'Intro',
             lounge: isKo ? '라운지' : 'Lounge',
             atelier: isKo ? '아틀리에' : 'Atelier',
+            library: isKo ? '서재' : 'Library',
+            masterDesk: isKo ? '마스터의 데스크' : "Master's Desk",
             coffeeChat: isKo ? '커피챗' : 'Coffee Chat',
             tarot: isKo ? '타로' : 'Tarot',
             gallery: isKo ? '갤러리' : 'Gallery',
@@ -472,47 +475,41 @@ const GalleryPage: React.FC = () => {
 
             {/* Lightbox */}
             {lightboxImage && (
-                <div className={`lightbox-overlay${lightboxImage.storyKo ? ' story-lightbox' : ''}`} onClick={closeLightbox}>
-                    <div className="lightbox-frame" onClick={(e) => e.stopPropagation()}>
-                        <img
-                            src={lightboxImage.src}
-                            alt={isKo ? lightboxImage.titleKo : lightboxImage.titleEn}
-                        />
-                        <div className="lightbox-info">
-                            <div className="lightbox-title">
-                                {isKo ? lightboxImage.titleKo : lightboxImage.titleEn}
-                            </div>
-                            <div className="lightbox-desc">
-                                {isKo ? lightboxImage.descKo : lightboxImage.descEn}
-                            </div>
-                            {lightboxImage.sceneKo && (
-                                <div className="lightbox-object-note">
-                                    <span>{isKo ? '이미지 오브제' : 'Image Objects'}</span>
-                                    {' '}
-                                    {isKo ? lightboxImage.sceneKo : lightboxImage.sceneEn}
-                                </div>
-                            )}
-                            {(lightboxImage.storyKo || cardMeaning) && (
-                                <div className="lightbox-story">
-                                    {storyParagraphs.map((paragraph, index) => (
-                                        <p key={index}>{paragraph}</p>
-                                    ))}
-                                    {cardMeaning && (
-                                        <div className="lightbox-card-meaning">
-                                            <div className="lightbox-card-meaning-title">
-                                                {isKo ? '카드 해석' : 'Card Reading'}
-                                            </div>
-                                            <p>{cardMeaning}</p>
-                                        </div>
-                                    )}
+                <ImageLightbox
+                    src={lightboxImage.src}
+                    alt={isKo ? lightboxImage.titleKo : lightboxImage.titleEn}
+                    onClose={closeLightbox}
+                    closeLabel={t('about.close')}
+                    detailsLayout
+                >
+                    <div className="lightbox-title">
+                        {isKo ? lightboxImage.titleKo : lightboxImage.titleEn}
+                    </div>
+                    <div className="lightbox-desc">
+                        {isKo ? lightboxImage.descKo : lightboxImage.descEn}
+                    </div>
+                    {lightboxImage.sceneKo && (
+                        <div className="lightbox-object-note">
+                            <span>{isKo ? '이미지 오브제' : 'Image Objects'}</span>{' '}
+                            {isKo ? lightboxImage.sceneKo : lightboxImage.sceneEn}
+                        </div>
+                    )}
+                    {(lightboxImage.storyKo || cardMeaning) && (
+                        <div className="lightbox-story">
+                            {storyParagraphs.map((paragraph, index) => (
+                                <p key={index}>{paragraph}</p>
+                            ))}
+                            {cardMeaning && (
+                                <div className="lightbox-card-meaning">
+                                    <div className="lightbox-card-meaning-title">
+                                        {isKo ? '카드 해석' : 'Card Reading'}
+                                    </div>
+                                    <p>{cardMeaning}</p>
                                 </div>
                             )}
                         </div>
-                    </div>
-                    <button className="lightbox-close" onClick={(e) => { e.stopPropagation(); closeLightbox(); }}>
-                        {t('about.close')}
-                    </button>
-                </div>
+                    )}
+                </ImageLightbox>
             )}
         </div>
     );

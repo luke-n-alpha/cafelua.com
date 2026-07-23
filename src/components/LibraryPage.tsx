@@ -554,7 +554,7 @@ const LibraryPage: React.FC = () => {
                     </button>
                     <button
                         className="menu-button ui-button ui-button-ghost"
-                        onClick={() => handleMenuNotReady(t('atelier.libraryMessage'))}
+                        onClick={() => router.push(buildLocalizedUrlWithQuery(locale, '/library', searchParams))}
                     >
                         {t('atelier.library')}
                     </button>

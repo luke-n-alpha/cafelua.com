@@ -14,7 +14,7 @@ export default function LoungeBgm() {
 
     const isGallery = pathWithoutLocale.startsWith('/gallery');
     const isDeskPath = pathWithoutLocale.startsWith('/desk');
-    const bgmSrc = isGallery ? '/sounds/gallery.mp3' : isDeskPath ? '/sounds/atelier.mp3' : '/sounds/lounge.mp3';
+    const bgmSrc = isGallery ? '/sounds/gallery.mp3' : isDeskPath ? '/sounds/master-desk.mp3' : '/sounds/lounge.mp3';
 
     // UI 숨김 조건
     const hideUi = pathWithoutLocale === '/counter' || isGallery;
