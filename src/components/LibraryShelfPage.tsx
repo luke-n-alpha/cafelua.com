@@ -139,12 +139,8 @@ function splitMarkdownIntoPages(
       continue;
     }
     if (isImageBlock || isCodeBlock) {
-      if (!isCompact && page && page.length < 180) {
-        pages.push(`${page}\n\n${block}`);
-      } else {
-        if (page) pages.push(page);
-        pages.push(block);
-      }
+      if (page) pages.push(page);
+      pages.push(block);
       page = "";
       continue;
     }

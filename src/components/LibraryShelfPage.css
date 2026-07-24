@@ -613,7 +613,7 @@
 .library-paper-content {
   height: calc(100% - 47px);
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   padding: clamp(20px, 3.5vw, 52px);
   font-family: Georgia, "Times New Roman", serif;
   line-height: 1.92;
@@ -641,13 +641,27 @@
 .library-paper-content h1 {
   font-size: calc(1.75rem * var(--reader-font-scale));
 }
+.library-paper-content:has(table) {
+  padding: clamp(12px, 2vw, 28px);
+  line-height: 1.5;
+}
+.library-paper-content:has(pre) {
+  padding: clamp(12px, 2vw, 28px);
+}
+.library-paper-content pre {
+  margin: 0.5em 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.78em;
+  line-height: 1.45;
+}
 .library-paper-content table {
   width: 100%;
   table-layout: fixed;
   margin: 1.2em 0;
   border-collapse: collapse;
   color: inherit;
-  font-size: 0.9em;
+  font-size: 0.82em;
 }
 .library-paper-content th,
 .library-paper-content td {
@@ -853,17 +867,27 @@
   .library-paper-content {
     padding: 27px 22px;
   }
+  .library-paper-content:has(table) {
+    padding: 12px;
+  }
+  .library-paper-content:has(pre) {
+    padding: 12px;
+  }
+  .library-paper-content pre {
+    font-size: 0.7em;
+    line-height: 1.35;
+  }
   .library-paper-content table {
-    margin: 0.7em 0;
-    font-size: 0.78em;
-    line-height: 1.4;
+    margin: 0.45em 0;
+    font-size: 0.72em;
+    line-height: 1.32;
   }
   .library-paper-content th,
   .library-paper-content td {
     padding: 0.34em 0.38em;
   }
   .library-illustration img {
-    max-height: 30vh;
+    max-height: 26vh;
   }
   .library-spread-navigation {
     right: 17px;

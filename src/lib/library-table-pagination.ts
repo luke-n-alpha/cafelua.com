@@ -8,9 +8,9 @@ export function splitMarkdownTable(
 
   const tableHeader = tableLines.slice(0, 2);
   const tableRows = tableLines.slice(2);
-  const maxRowsPerPage = isCompact ? 3 : 6;
+  const maxRowsPerPage = isCompact ? 1 : 2;
   const tableCharacterLimit = Math.round(
-    pageCharacterLimit * (isCompact ? 1.2 : 1.35),
+    pageCharacterLimit * (isCompact ? 0.72 : 0.9),
   );
   const pages: string[] = [];
   let tablePageRows: string[] = [];
@@ -24,7 +24,7 @@ export function splitMarkdownTable(
   };
 
   for (const row of tableRows) {
-    const rowWeight = Math.max(50, row.length);
+    const rowWeight = Math.max(80, row.length);
     if (
       tablePageRows.length > 0 &&
       (tablePageRows.length >= maxRowsPerPage ||
