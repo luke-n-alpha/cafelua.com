@@ -3,6 +3,8 @@
 # Changelog
 
 ### v0.2.0 (2026-07-23)
+- **Auto-turn and Read Aloud**: Added a configurable 3–120 second auto-turn timer plus browser-native speech playback, pause, voice, and rate controls. Pages never turn while speech is active.
+- **Canonical Library Reader**: Declared the deployed Library as the single ebook reader and removed the disconnected legacy BookViewer, Bookshelf, WorldGuide, and loader implementation.
 - **July 24 Follow-up**: Added sequential Play All playback to the Gallery BGM tab while preserving each scene track's individual loop behavior.
 - **Reader Layout Fixes**: Long tables now split across pages with repeated headers, and reader text stays at a consistent size instead of shrinking differently from page to page.
 - **Clearer Reader Controls**: Placed an icon-only screen expand/reduce control beside the font-size buttons, separated it from the close action, and removed the ambiguous mobile center-tap fullscreen gesture.

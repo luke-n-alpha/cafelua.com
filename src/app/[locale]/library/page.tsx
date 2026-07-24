@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import BackgroundMusic from '@/components/BackgroundMusic';
-import LibraryShelfPage from '@/components/LibraryShelfPage';
+import LibraryPage from '@/components/LibraryPage';
 
 type Params = { locale: string };
 
@@ -15,7 +15,7 @@ export default async function Library({ params }: { params: Promise<Params> }) {
     return (
         <>
             <BackgroundMusic src="/sounds/library.mp3" />
-            <LibraryShelfPage locale={rawLocale === 'en' ? 'en' : 'ko'} />
+            <LibraryPage locale={rawLocale === 'en' ? 'en' : 'ko'} />
         </>
     );
 }

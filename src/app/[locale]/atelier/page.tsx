@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import LibraryPage from '@/components/LibraryPage';
+import AtelierPage from '@/components/AtelierPage';
 
 interface Props {
     params: Promise<{ locale: string }>;
@@ -35,5 +35,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function Atelier() {
-    return <LibraryPage />;
+    return <AtelierPage />;
 }

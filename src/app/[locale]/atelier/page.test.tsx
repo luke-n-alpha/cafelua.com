@@ -11,7 +11,7 @@ jest.mock('next/navigation', () => ({
     })
 }));
 
-describe('LibraryPage', () => {
+describe('AtelierPage', () => {
     it('boots the old PC and opens the 1997 IE window', async () => {
         jest.useFakeTimers();
         const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });

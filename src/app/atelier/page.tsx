@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import LibraryPage from '../../components/LibraryPage';
+import AtelierPage from '../../components/AtelierPage';
 
 export const metadata: Metadata = {
     title: '2층 아틀리에',
@@ -22,5 +22,5 @@ export const metadata: Metadata = {
 };
 
 export default function Atelier() {
-    return <LibraryPage />;
+    return <AtelierPage />;
 }

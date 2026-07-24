@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import BackgroundMusic from '@/components/BackgroundMusic';
-import LibraryShelfPage from '@/components/LibraryShelfPage';
+import LibraryPage from '@/components/LibraryPage';
 import { libraryBooks, type LibraryBook } from '@/data/library/libraryContent';
 
 type Params = { locale: string; bookId: string };
@@ -35,7 +35,7 @@ export default async function LibraryBookPage({
     return (
         <>
             <BackgroundMusic src="/sounds/library.mp3" />
-            <LibraryShelfPage
+            <LibraryPage
                 locale={rawLocale === 'en' ? 'en' : 'ko'}
                 initialBookId={book.id as LibraryBook['id']}
                 initialRead={query.read === '1'}

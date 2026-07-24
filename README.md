@@ -35,7 +35,7 @@ The site works without any API keys (AI chat, guestbook, and weather features wi
 | **Gallery** | Photo gallery, Cafe Lua spaces, tarot story decks, BGM |
 | **Guestbook** | Firebase-backed guestbook with seasonal cafe backgrounds |
 | **2F Atelier** | Retro Win98 PC experience and seasonal atelier backgrounds |
-| **2F Library** | Korean/English ebook reader with mobile touch/swipe controls, shareable book/reader URLs, and WikiDocs/Leanpub editions |
+| **2F Library** | Korean/English ebook reader with auto-turn, browser read-aloud, mobile touch/swipe controls, shareable URLs, and WikiDocs/Leanpub editions |
 
 **Also**: ko/en bilingual, responsive design, OG metadata per post/diary, email reply notifications.
 
