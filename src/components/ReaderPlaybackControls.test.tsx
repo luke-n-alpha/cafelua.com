@@ -14,6 +14,13 @@ const pages: MeasuredReaderPage[] = [
     availableHeight: 200,
   },
 ];
+const nextPages: MeasuredReaderPage[] = [
+  {
+    ...pages[0],
+    pageInChapter: 1,
+    html: "<p>다음 펼침의 본문입니다.</p>",
+  },
+];
 
 class MockUtterance {
   text: string;
@@ -70,7 +77,7 @@ describe("ReaderPlaybackControls", () => {
   });
 
   function renderControls(onAdvance = jest.fn()) {
-    render(
+    const view = render(
       <ReaderPlaybackControls
         pages={pages}
         pageIndex={0}
@@ -81,11 +88,11 @@ describe("ReaderPlaybackControls", () => {
         onAdvance={onAdvance}
       />,
     );
-    return onAdvance;
+    return { onAdvance, ...view };
   }
 
   it("turns the page after the configured interval", () => {
-    const onAdvance = renderControls();
+    const { onAdvance } = renderControls();
     fireEvent.click(screen.getByRole("button", { name: "읽기 재생 설정" }));
     const panel = screen.getByRole("region", { name: "읽기 재생 설정" });
     fireEvent.change(within(panel).getByRole("spinbutton", { name: "자동 넘김" }), {
@@ -109,8 +116,8 @@ describe("ReaderPlaybackControls", () => {
     expect(utterance.lang).toBe("ko-KR");
   });
 
-  it("waits until speech ends before starting the auto-turn delay", () => {
-    const onAdvance = renderControls();
+  it("stops auto-turn and continues to the next spread when speech ends", () => {
+    const { onAdvance, rerender } = renderControls();
     fireEvent.click(screen.getByRole("button", { name: "읽기 재생 설정" }));
     const panel = screen.getByRole("region", { name: "읽기 재생 설정" });
     fireEvent.change(within(panel).getByRole("spinbutton", { name: "자동 넘김" }), {
@@ -123,6 +130,38 @@ describe("ReaderPlaybackControls", () => {
     expect(onAdvance).not.toHaveBeenCalled();
 
     act(() => speak.mock.calls[0][0].onend?.());
+    expect(onAdvance).toHaveBeenCalledTimes(1);
+
+    rerender(
+      <ReaderPlaybackControls
+        pages={nextPages}
+        pageIndex={1}
+        pageStep={1}
+        totalPages={3}
+        locale="ko"
+        copy={libraryCopy.ko.playback}
+        onAdvance={onAdvance}
+      />,
+    );
+    act(() => jest.advanceTimersByTime(0));
+    expect(speak).toHaveBeenCalledTimes(2);
+    expect(speak.mock.calls[1][0].text).toBe("다음 펼침의 본문입니다.");
+  });
+
+  it("stops speech when auto-turn starts and ignores the stale utterance", () => {
+    const { onAdvance } = renderControls();
+    fireEvent.click(screen.getByRole("button", { name: "소리 내어 읽기" }));
+    const staleUtterance = speak.mock.calls[0][0];
+
+    fireEvent.click(screen.getByRole("button", { name: "읽기 재생 설정" }));
+    const panel = screen.getByRole("region", { name: "읽기 재생 설정" });
+    fireEvent.change(within(panel).getByRole("spinbutton", { name: "자동 넘김" }), {
+      target: { value: "3" },
+    });
+    fireEvent.click(within(panel).getAllByRole("button", { name: "시작" })[0]);
+
+    act(() => staleUtterance.onend?.());
+    expect(onAdvance).not.toHaveBeenCalled();
     act(() => jest.advanceTimersByTime(2_999));
     expect(onAdvance).not.toHaveBeenCalled();
     act(() => jest.advanceTimersByTime(1));

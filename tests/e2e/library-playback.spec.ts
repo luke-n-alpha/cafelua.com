@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("auto-turn and browser speech share the canonical ebook reader", async ({ page }) => {
+test("Mars title spreads continue reading and playback modes are exclusive", async ({ page }) => {
   test.setTimeout(120_000);
   await page.addInitScript(() => {
     class MockUtterance {
@@ -19,7 +19,9 @@ test("auto-turn and browser speech share the canonical ebook reader", async ({ p
 
     const state = window as typeof window & {
       __readerUtterance?: MockUtterance;
+      __readerUtterances?: MockUtterance[];
     };
+    state.__readerUtterances = [];
     Object.defineProperty(window, "SpeechSynthesisUtterance", {
       configurable: true,
       value: MockUtterance,
@@ -29,6 +31,7 @@ test("auto-turn and browser speech share the canonical ebook reader", async ({ p
       value: {
         speak(utterance: MockUtterance) {
           state.__readerUtterance = utterance;
+          state.__readerUtterances?.push(utterance);
           utterance.onstart?.();
         },
         cancel() {},
@@ -41,11 +44,19 @@ test("auto-turn and browser speech share the canonical ebook reader", async ({ p
     });
   });
 
-  await page.goto("/ko/library/harness-engineering/?read=1");
+  await page.goto("/ko/library/mars-invasion/?read=1");
   await page.waitForFunction(() => {
     const counter = document.querySelector(".library-spread-navigation span")?.textContent ?? "";
     return /\/\s*[1-9]/u.test(counter);
   });
+
+  await page.locator(".library-toc-toggle").click();
+  await page.locator("#library-reader-toc button", { hasText: "1장. 전쟁의 전야" }).click();
+  await page.waitForFunction(() =>
+    document
+      .querySelector("[data-reader-page-index] > header span")
+      ?.textContent?.includes("1장. 전쟁의 전야"),
+  );
 
   const pageCounter = page.locator(".library-spread-navigation span");
   const initialCounter = await pageCounter.textContent();
@@ -65,7 +76,7 @@ test("auto-turn and browser speech share the canonical ebook reader", async ({ p
     const state = window as typeof window & { __readerUtterance?: { text: string } };
     return state.__readerUtterance?.text ?? "";
   });
-  expect(spokenText.length).toBeGreaterThan(20);
+  expect(spokenText).toContain("01.");
 
   await page.evaluate(() => {
     const state = window as typeof window & {
@@ -73,5 +84,28 @@ test("auto-turn and browser speech share the canonical ebook reader", async ({ p
     };
     state.__readerUtterance?.onend?.();
   });
-  await expect(pageCounter).not.toHaveText(initialCounter ?? "", { timeout: 5_000 });
+  await expect(pageCounter).not.toHaveText(initialCounter ?? "", { timeout: 2_000 });
+  await page.waitForFunction(() => {
+    const state = window as typeof window & { __readerUtterances?: unknown[] };
+    return (state.__readerUtterances?.length ?? 0) >= 2;
+  });
+  const continuedText = await page.evaluate(() => {
+    const state = window as typeof window & {
+      __readerUtterances?: { text: string }[];
+    };
+    return state.__readerUtterances?.[1]?.text ?? "";
+  });
+  expect(continuedText).not.toBe(spokenText);
+
+  const counterBeforeTimedTurn = await pageCounter.textContent();
+  await page.getByRole("button", { name: "시작", exact: true }).first().click();
+  await page.evaluate(() => {
+    const state = window as typeof window & {
+      __readerUtterances?: { onend: (() => void) | null }[];
+    };
+    state.__readerUtterances?.[1]?.onend?.();
+  });
+  await page.waitForTimeout(2_000);
+  await expect(pageCounter).toHaveText(counterBeforeTimedTurn ?? "");
+  await expect(pageCounter).not.toHaveText(counterBeforeTimedTurn ?? "", { timeout: 2_000 });
 });

@@ -81,9 +81,9 @@ export function useReaderPlayback({
   const [isPageVisible, setIsPageVisible] = useState(true);
   const speechGenerationRef = useRef(0);
   const continuousSpeechRef = useRef(false);
-  const autoTurnStateRef = useRef(autoTurnState);
+  const speechAdvancePendingRef = useRef(false);
   const onAdvanceRef = useRef(onAdvance);
-  const speakCurrentPageRef = useRef<(continuous?: boolean) => void>(() => undefined);
+  const speakCurrentPageRef = useRef<() => void>(() => undefined);
   const pageText = useMemo(() => readerPagesToText(pages), [pages]);
   const pageKey = `${pageIndex}:${pageStep}:${totalPages}`;
   const atLastPage = totalPages === 0 || pageIndex + pageStep >= totalPages;
@@ -95,10 +95,6 @@ export function useReaderPlayback({
   useEffect(() => {
     onAdvanceRef.current = onAdvance;
   }, [onAdvance]);
-
-  useEffect(() => {
-    autoTurnStateRef.current = autoTurnState;
-  }, [autoTurnState]);
 
   useEffect(() => {
     const syncVisibility = () => setIsPageVisible(document.visibilityState !== "hidden");
@@ -144,18 +140,21 @@ export function useReaderPlayback({
 
   const stopSpeech = useCallback(() => {
     continuousSpeechRef.current = false;
+    speechAdvancePendingRef.current = false;
     speechGenerationRef.current += 1;
     if (speechSupported) window.speechSynthesis.cancel();
     setSpeechState(speechSupported ? "idle" : "unsupported");
   }, [speechSupported]);
 
   const speakCurrentPage = useCallback(
-    (continuous = false) => {
+    () => {
       if (!speechSupported || !pageText) return;
       const synth = window.speechSynthesis;
       const generation = speechGenerationRef.current + 1;
       speechGenerationRef.current = generation;
-      continuousSpeechRef.current = continuous;
+      continuousSpeechRef.current = true;
+      speechAdvancePendingRef.current = false;
+      setAutoTurnState("stopped");
       synth.cancel();
 
       const utterance = new SpeechSynthesisUtterance(pageText);
@@ -170,10 +169,10 @@ export function useReaderPlayback({
         setSpeechState("idle");
         if (atLastPage) {
           continuousSpeechRef.current = false;
-          setAutoTurnState("stopped");
-        } else if (autoTurnStateRef.current !== "running") {
-          continuousSpeechRef.current = false;
+          return;
         }
+        speechAdvancePendingRef.current = true;
+        onAdvanceRef.current();
       };
       utterance.onerror = () => {
         if (speechGenerationRef.current !== generation) return;
@@ -219,11 +218,9 @@ export function useReaderPlayback({
   }, []);
 
   const startAutoTurn = useCallback(() => {
-    if (speechState === "speaking" || speechState === "paused") {
-      continuousSpeechRef.current = true;
-    }
+    stopSpeech();
     setAutoTurnState("running");
-  }, [speechState]);
+  }, [stopSpeech]);
 
   useEffect(() => {
     if (autoTurnState !== "running" || atLastPage) return;
@@ -234,30 +231,24 @@ export function useReaderPlayback({
   }, [atLastPage, autoTurnSeconds, autoTurnState, isPageVisible, pageKey, speechState]);
 
   useEffect(() => {
-    if (
-      atLastPage &&
-      autoTurnState === "running" &&
-      speechState === "idle" &&
-      !continuousSpeechRef.current
-    ) {
-      continuousSpeechRef.current = false;
+    if (atLastPage && autoTurnState === "running") {
       setAutoTurnState("stopped");
     }
-  }, [atLastPage, autoTurnState, speechState]);
+  }, [atLastPage, autoTurnState]);
 
   useEffect(() => {
     if (!speechSupported) return;
+    const shouldContinue =
+      continuousSpeechRef.current && speechAdvancePendingRef.current;
+    speechAdvancePendingRef.current = false;
     speechGenerationRef.current += 1;
     window.speechSynthesis.cancel();
     setSpeechState("idle");
-    if (
-      continuousSpeechRef.current &&
-      autoTurnStateRef.current === "running" &&
-      pageText
-    ) {
-      const timer = window.setTimeout(() => speakCurrentPageRef.current(true), 0);
+    if (shouldContinue && pageText) {
+      const timer = window.setTimeout(() => speakCurrentPageRef.current(), 0);
       return () => window.clearTimeout(timer);
     }
+    continuousSpeechRef.current = false;
   }, [atLastPage, pageKey, pageText, speechSupported]);
 
   useEffect(
@@ -282,7 +273,7 @@ export function useReaderPlayback({
     setVoiceURI,
     speechRate,
     setSpeechRate,
-    speakCurrentPage: () => speakCurrentPage(autoTurnStateRef.current === "running"),
+    speakCurrentPage,
     pauseSpeech,
     resumeSpeech,
     stopSpeech,
