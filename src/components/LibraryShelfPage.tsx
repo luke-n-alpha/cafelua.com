@@ -2,6 +2,7 @@
 
 import {
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -36,7 +37,10 @@ import {
   type TimeOfDay,
   type Weather,
 } from "@/lib/environmentBackgrounds";
-import { splitMarkdownTable } from "@/lib/library-table-pagination";
+import {
+  measureRenderedReaderPages,
+  type MeasuredReaderPage,
+} from "@/lib/library-dom-pagination";
 import "./LibraryShelfPage.css";
 
 type ReaderState = {
@@ -44,19 +48,6 @@ type ReaderState = {
   edition: LibraryEdition;
   pageIndex: number;
 };
-
-type ReaderPage = {
-  chapterIndex: number;
-  chapterTitle: string;
-  pageInChapter: number;
-  markdown: string;
-};
-
-const getReaderPageCharacterLimit = (fontScale: number, isCompact: boolean) =>
-  Math.max(
-    isCompact ? 80 : 260,
-    Math.round((isCompact ? 110 : 420) / fontScale),
-  );
 
 const editionFor = (book: LibraryBook, locale: LibraryLocale) =>
   book.editions.find((edition) => edition.lang === locale) ?? book.editions[0];
@@ -86,99 +77,6 @@ function focusableElements(container: HTMLElement) {
   return Array.from(
     container.querySelectorAll<HTMLElement>(
       'button:not(:disabled), a[href], [tabindex]:not([tabindex="-1"])',
-    ),
-  );
-}
-
-function splitMarkdownIntoPages(
-  markdown: string,
-  fontScale: number,
-  isCompact: boolean,
-) {
-  const pageCharacterLimit = getReaderPageCharacterLimit(fontScale, isCompact);
-  const blocks = markdown
-    .trim()
-    .split(/\n{2,}/)
-    .filter(Boolean);
-  const pages: string[] = [];
-  let page = "";
-  const take = (text: string, limit: number) => {
-    if (text.length <= limit) return [text, ""] as const;
-    const punctuation = Math.max(
-      text.lastIndexOf(". ", limit),
-      text.lastIndexOf("? ", limit),
-      text.lastIndexOf("! ", limit),
-    );
-    const breakAt = Math.max(
-      text.lastIndexOf("\n", limit),
-      punctuation,
-      text.lastIndexOf(" ", limit),
-    );
-    const safeBreakAt =
-      breakAt > limit * 0.42
-        ? breakAt + (text[breakAt] === " " ? 0 : 1)
-        : limit;
-    return [
-      text.slice(0, safeBreakAt).trim(),
-      text.slice(safeBreakAt).trim(),
-    ] as const;
-  };
-  for (const block of blocks) {
-    const trimmedBlock = block.trim();
-    const isImageBlock = /^!\[/.test(trimmedBlock);
-    const isTableBlock =
-      /^\|.*\|$/m.test(trimmedBlock) &&
-      /^\|?\s*:?-{3,}/m.test(trimmedBlock);
-    const isCodeBlock = /^```/.test(trimmedBlock);
-    if (isTableBlock) {
-      if (page) pages.push(page);
-      pages.push(
-        ...splitMarkdownTable(block, pageCharacterLimit, isCompact),
-      );
-      page = "";
-      continue;
-    }
-    if (isImageBlock || isCodeBlock) {
-      if (page) pages.push(page);
-      pages.push(block);
-      page = "";
-      continue;
-    }
-    let remaining = block;
-    while (remaining) {
-      const separator = page ? 2 : 0;
-      const available = pageCharacterLimit - page.length - separator;
-      if (available < 80 && page) {
-        pages.push(page);
-        page = "";
-        continue;
-      }
-      const [segment, rest] = take(remaining, Math.max(available, 80));
-      page = page ? `${page}\n\n${segment}` : segment;
-      remaining = rest;
-      if (remaining) {
-        pages.push(page);
-        page = "";
-      }
-    }
-  }
-  if (page) pages.push(page);
-  return pages.length ? pages : [markdown];
-}
-
-function paginateEdition(
-  edition: LibraryEdition,
-  fontScale: number,
-  isCompact: boolean,
-): ReaderPage[] {
-  return edition.chapters.flatMap((chapter, chapterIndex) =>
-    splitMarkdownIntoPages(chapter.markdown, fontScale, isCompact).map(
-      (markdown, pageInChapter) => ({
-        chapterIndex,
-        chapterTitle: chapter.title,
-        pageInChapter,
-        markdown,
-      }),
     ),
   );
 }
@@ -229,47 +127,88 @@ export default function LibraryShelfPage({
   const [tocOpen, setTocOpen] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
   const [fontScale, setFontScale] = useState(1);
+  const [documentPages, setDocumentPages] = useState<MeasuredReaderPage[]>([]);
   const [isReaderFullscreen, setIsReaderFullscreen] = useState(false);
   const [expandedImage, setExpandedImage] = useState<{
     src: string;
     alt: string;
   } | null>(null);
   const pendingChapterIndexRef = useRef<number | null>(null);
+  const documentPagesRef = useRef<MeasuredReaderPage[]>([]);
   const readerPanelRef = useRef<HTMLElement>(null);
+  const readerSourceRef = useRef<HTMLDivElement>(null);
+  const readerPageTemplateRef = useRef<HTMLElement>(null);
   const readerGestureStartRef = useRef<{ x: number; y: number } | null>(null);
   const edition = useMemo(
     () => (selected ? editionFor(selected, locale) : null),
     [locale, selected],
   );
-  const documentPages = useMemo(
-    () => (reader ? paginateEdition(reader.edition, fontScale, isCompact) : []),
-    [fontScale, isCompact, reader?.edition],
-  );
+  const readerEdition = reader?.edition;
+  useLayoutEffect(() => {
+    if (!readerEdition || !readerSourceRef.current || !readerPageTemplateRef.current) {
+      documentPagesRef.current = [];
+      setDocumentPages([]);
+      return;
+    }
+    const source = readerSourceRef.current;
+    const template = readerPageTemplateRef.current;
+    let cancelled = false;
+    let animationFrame = 0;
 
-  useEffect(() => {
-    if (!reader || !documentPages.length) return;
-    const step = isCompact ? 1 : 2;
-    const nearbyPages = documentPages.slice(
-      Math.max(0, reader.pageIndex - step),
-      Math.min(documentPages.length, reader.pageIndex + step * 3),
-    );
-    const sources = new Set<string>();
-    for (const page of nearbyPages) {
-      for (const match of page.markdown.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)) {
-        const rawSource = match[1];
-        sources.add(
-          rawSource.startsWith("http")
-            ? rawSource
-            : `/library-books/${reader.edition.sourceSlug}/${rawSource.replace(/^(?:(?:\.\.)?\/)+/, "")}`,
-        );
-      }
-    }
-    for (const source of sources) {
-      const image = new Image();
-      image.src = source;
-      void image.decode().catch(() => undefined);
-    }
-  }, [documentPages, isCompact, reader]);
+    const measure = async () => {
+      if ("fonts" in document) await document.fonts.ready;
+      await Promise.all(
+        Array.from(source.querySelectorAll("img")).map((image) =>
+          image.complete ? image.decode().catch(() => undefined) : Promise.resolve(),
+        ),
+      );
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(() => {
+        if (cancelled) return;
+        const nextPages = measureRenderedReaderPages(source, template);
+        if (!nextPages.length) return;
+        const previousPages = documentPagesRef.current;
+        documentPagesRef.current = nextPages;
+        setDocumentPages(nextPages);
+        setReader((current) => {
+          if (!current) return current;
+          const previous = previousPages[current.pageIndex];
+          if (!previous) return { ...current, pageIndex: 0 };
+          const oldChapterPages = previousPages.filter(
+            (page) => page.chapterIndex === previous.chapterIndex,
+          );
+          const newChapterPages = nextPages.filter(
+            (page) => page.chapterIndex === previous.chapterIndex,
+          );
+          const ratio = previous.pageInChapter / Math.max(1, oldChapterPages.length - 1);
+          const targetInChapter = Math.round(ratio * Math.max(0, newChapterPages.length - 1));
+          const pageIndex = nextPages.findIndex(
+            (page) =>
+              page.chapterIndex === previous.chapterIndex &&
+              page.pageInChapter === targetInChapter,
+          );
+          return { ...current, pageIndex: Math.max(0, pageIndex) };
+        });
+      });
+    };
+
+    const observer = new ResizeObserver(() => void measure());
+    observer.observe(template);
+    source.querySelectorAll("img").forEach((image) => {
+      image.addEventListener("load", measure);
+      image.addEventListener("error", measure);
+    });
+    void measure();
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(animationFrame);
+      observer.disconnect();
+      source.querySelectorAll("img").forEach((image) => {
+        image.removeEventListener("load", measure);
+        image.removeEventListener("error", measure);
+      });
+    };
+  }, [fontScale, isCompact, isReaderFullscreen, readerEdition]);
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 720px)");
@@ -774,6 +713,45 @@ export default function LibraryShelfPage({
                   }
                 }}
               >
+                <article
+                  ref={readerPageTemplateRef}
+                  className="library-paper-page library-paper-template"
+                  data-measure-template
+                  aria-hidden="true"
+                >
+                  <header><span>{reader.edition.title}</span><small>0</small></header>
+                  <div className="library-paper-content" />
+                </article>
+                <div
+                  ref={readerSourceRef}
+                  className="library-reader-measure-source library-paper-content"
+                  aria-hidden="true"
+                >
+                  {reader.edition.chapters.map((chapter, chapterIndex) => (
+                    <section
+                      key={chapter.path}
+                      data-reader-chapter
+                      data-chapter-index={chapterIndex}
+                      data-chapter-title={chapter.title}
+                    >
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          img: ({ src, alt }) => (
+                            <ReaderIllustration
+                              sourceSlug={reader.edition.sourceSlug}
+                              src={typeof src === "string" ? src : undefined}
+                              alt={alt}
+                              onOpen={() => undefined}
+                            />
+                          ),
+                        }}
+                      >
+                        {chapter.markdown || copy.noChapter}
+                      </ReactMarkdown>
+                    </section>
+                  ))}
+                </div>
                 {readerPages.map((page, spreadPageIndex) => {
                   return (
                     <article
@@ -787,23 +765,16 @@ export default function LibraryShelfPage({
                         <span>{page.chapterTitle}</span>
                         <small>{reader.pageIndex + spreadPageIndex + 1}</small>
                       </header>
-                      <div className="library-paper-content">
-                        <ReactMarkdown
-                          remarkPlugins={[remarkGfm]}
-                          components={{
-                            img: ({ src, alt }) => (
-                              <ReaderIllustration
-                                sourceSlug={reader.edition.sourceSlug}
-                                src={typeof src === "string" ? src : undefined}
-                                alt={alt}
-                                onOpen={(image) => setExpandedImage(image)}
-                              />
-                            ),
-                          }}
-                        >
-                          {page.markdown || copy.noChapter}
-                        </ReactMarkdown>
-                      </div>
+                      <div
+                        className="library-paper-content"
+                        dangerouslySetInnerHTML={{ __html: page.html }}
+                        onClick={(event) => {
+                          const image = (event.target as Element).closest("img");
+                          if (image instanceof HTMLImageElement) {
+                            setExpandedImage({ src: image.src, alt: image.alt });
+                          }
+                        }}
+                      />
                     </article>
                   );
                 })}

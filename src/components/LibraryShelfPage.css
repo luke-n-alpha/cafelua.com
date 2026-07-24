@@ -585,6 +585,27 @@
   border: 1px solid rgba(112, 78, 44, 0.2);
   cursor: pointer;
 }
+.library-paper-template {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 50%;
+  visibility: hidden;
+  pointer-events: none;
+}
+.library-reader-measure-source {
+  position: fixed;
+  top: 0;
+  left: -200vw;
+  width: min(42vw, 620px);
+  height: auto;
+  padding: 0;
+  overflow: visible;
+  visibility: hidden;
+  pointer-events: none;
+}
+.library-reader-measure-source > section {
+  display: contents;
+}
 .library-paper-page:first-child {
   box-shadow: inset -16px 0 22px rgba(89, 62, 35, 0.11);
 }
@@ -863,6 +884,9 @@
   }
   .library-paper-page {
     box-shadow: none !important;
+  }
+  .library-paper-template {
+    width: 100%;
   }
   .library-paper-content {
     padding: 27px 22px;
