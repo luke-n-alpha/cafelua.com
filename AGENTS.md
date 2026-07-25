@@ -165,6 +165,28 @@ AI 타로 리딩. Celtic Cross 스프레드 + Gemini 해석.
 - **'use client'**: Only when hooks/browser APIs needed
 - **API routes**: Server-only (Firebase Admin, Gemini, GA4 Data API)
 
+## Page Metadata (OG / SEO) — 새 페이지 필수 규칙
+
+새 라우트(`page.tsx`)를 만들면 **반드시 `og:image`를 포함한 OpenGraph·Twitter 메타데이터를 지정**한다. 지정하지 않으면 카드 미리보기에 이미지가 사라진다.
+
+- **왜 상속에 의존하면 안 되나**: `src/app/[locale]/layout.tsx`가 `openGraph`를 **이미지 없이** 재정의한다. Next.js 메타데이터는 세그먼트별로 `openGraph` 키 전체를 덮어쓰므로(얕은 override), 루트 `layout.tsx`의 기본 `og:image`가 하위 로케일 트리에서 **유실**된다. 따라서 각 페이지가 `openGraph.images`를 **직접** 주지 않으면 `og:image`가 빈다.
+- **필수 필드**: `openGraph.images`(배열) + `twitter.images` + `twitter.card: 'summary_large_image'` + `alternates.canonical`.
+- **이미지 선택**: 개별 콘텐츠(글/책/다이어리)는 그 콘텐츠의 대표 이미지(표지·히어로·첫 이미지), 없으면 `'/og-cafelua-entrance-v019.png'`로 폴백. 목록/공간 페이지는 그 공간의 배경 이미지.
+- **경로**: `metadataBase`가 `https://cafelua.com`이므로 `/`로 시작하는 절대 경로 문자열이면 Next가 절대 URL로 변환한다.
+- **참고 구현**: `gallery/diary/[slug]/page.tsx`(콘텐츠 이미지+폴백), `library/[bookId]/page.tsx`(책 표지, `bookCoverFor`), `library/page.tsx`(공간 배경).
+
+```ts
+export async function generateMetadata(...): Promise<Metadata> {
+    const ogImage = itemImage ?? '/og-cafelua-entrance-v019.png';
+    return {
+        title, description,
+        alternates: { canonical: `/route/${slug}` },
+        openGraph: { url: `/route/${slug}`, title, description, images: [ogImage] },
+        twitter: { card: 'summary_large_image', title, description, images: [ogImage] },
+    };
+}
+```
+
 ## Environment Variables
 
 ```

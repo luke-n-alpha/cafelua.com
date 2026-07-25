@@ -31,6 +31,7 @@ import {
   type LibraryEdition,
 } from "@/data/library/libraryContent";
 import { libraryCopy, type LibraryLocale } from "@/data/library/libraryCopy";
+import { coverSourceFor } from "@/data/library/libraryCover";
 import {
   resolveEnvironmentBackgroundSrc,
   type Season,
@@ -51,27 +52,6 @@ type ReaderState = {
 
 const editionFor = (book: LibraryBook, locale: LibraryLocale) =>
   book.editions.find((edition) => edition.lang === locale) ?? book.editions[0];
-
-const editionCoverSources: Partial<Record<LibraryEdition["sourceSlug"], string>> = {
-  "naia-harness-book-en":
-    "/library-books/naia-harness-book-en/assets/cover-rezero-sw-en-final.webp",
-};
-
-const coverSourceFor = (
-  edition: LibraryEdition,
-  fallbackEditions: LibraryEdition[] = [],
-) => {
-  const knownCover = editionCoverSources[edition.sourceSlug];
-  if (knownCover) return knownCover;
-  for (const candidate of [edition, ...fallbackEditions]) {
-    const coverMarkdown = candidate.chapters[0]?.markdown ?? "";
-    const match = coverMarkdown.match(/!\[[^\]]*\]\(([^)]+)\)/);
-    if (match) {
-      return `/library-books/${candidate.sourceSlug}/${match[1].replace(/^\.\//, "")}`;
-    }
-  }
-  return null;
-};
 
 function focusableElements(container: HTMLElement) {
   return Array.from(
