@@ -86,7 +86,6 @@ src/
 │   ├── CommentService.ts            # Post comments API client
 │   ├── GuestbookService.ts          # Firebase guestbook
 │   ├── WeatherService.ts            # OpenWeather API
-│   ├── ContentLoader.ts             # Content loading
 │   └── LegacyMidiSynth.ts          # MIDI synth for BGM
 ├── lib/                             # Utilities
 │   ├── alpha-prompt.ts              # Alpha persona prompt
@@ -141,7 +140,11 @@ Desk/Diary 포스트 댓글 시스템. 대댓글(1단계), 이메일 답글 알�
 
 ### Atelier (`/atelier`)
 2층 아틀리에. Win98 PC로 1997/1998 추억 홈페이지 감상.
-- `BookViewer.tsx`, `Bookshelf.tsx`, `WorldGuide.tsx`
+- `AtelierPage.tsx`
+
+### Library (`/[locale]/library`, `/[locale]/library/[bookId]?read=1`)
+아틀리에와 분리된 전자책 서재. `LibraryPage.tsx`가 유일한 정본 리더이며 양면/단면 페이지, 목차, 글자 크기, 전체 화면, 시간 기반 자동 넘김과 펼침 단위 연속 브라우저 TTS를 담당합니다. 자동 넘김과 TTS는 상호 배타적으로 실행합니다.
+- `LibraryPage.tsx`, `ReaderPlaybackControls.tsx`, `useReaderPlayback.ts`
 
 ### Tarot (`/tarot`)
 AI 타로 리딩. Celtic Cross 스프레드 + Gemini 해석.

@@ -1,732 +1,881 @@
-'use client';
+"use client";
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
-import BackgroundMusic from './BackgroundMusic';
-import UnderConstruction from './UnderConstruction';
-import { LegacyMidiSynthPlayer } from '../services/LegacyMidiSynth';
-import './LibraryPage.css';
 import {
-    getPreloadBackgrounds,
-    resolveEnvironmentMood,
-    resolveEnvironmentBackgroundName,
-    resolveEnvironmentBackgroundSrc,
-    type Season,
-    type TimeOfDay,
-    type Weather,
-} from '../lib/environmentBackgrounds';
-import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type KeyboardEvent,
+} from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import {
+  ArrowLeft,
+  BookOpen,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  Maximize2,
+  Minimize2,
+  Menu,
+  X,
+} from "lucide-react";
+import UnderConstruction from "./UnderConstruction";
+import ImageLightbox from "./ImageLightbox";
+import ReaderPlaybackControls from "./ReaderPlaybackControls";
+import {
+  libraryBooks,
+  type LibraryBook,
+  type LibraryEdition,
+} from "@/data/library/libraryContent";
+import { libraryCopy, type LibraryLocale } from "@/data/library/libraryCopy";
+import { coverSourceFor } from "@/data/library/libraryCover";
+import {
+  resolveEnvironmentBackgroundSrc,
+  type Season,
+  type TimeOfDay,
+  type Weather,
+} from "@/lib/environmentBackgrounds";
+import {
+  measureRenderedReaderPages,
+  type MeasuredReaderPage,
+} from "@/lib/library-dom-pagination";
+import "./LibraryPage.css";
 
-type LibraryMode = 'menu' | 'booting' | 'desktop' | 'shutdown';
-type IeTarget = '1997' | '1998';
-
-type IeHistoryContext = 'iframe' | 'frame2';
-
-type IeHistoryEntry = {
-    context: IeHistoryContext;
-    path: string;
+type ReaderState = {
+  book: LibraryBook;
+  edition: LibraryEdition;
+  pageIndex: number;
 };
 
-const DEFAULT_IE_VIEWPORT = { width: 1024, height: 768 };
-const IE_VIEWPORTS: Record<IeTarget, { width: number; height: number }> = {
-    '1997': DEFAULT_IE_VIEWPORT,
-    '1998': { width: 800, height: 600 }
-};
+const editionFor = (book: LibraryBook, locale: LibraryLocale) =>
+  book.editions.find((edition) => edition.lang === locale) ?? book.editions[0];
 
-const formatClock = (date: Date) => {
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${hours}:${minutes}`;
-};
+function focusableElements(container: HTMLElement) {
+  return Array.from(
+    container.querySelectorAll<HTMLElement>(
+      'button:not(:disabled), a[href], [tabindex]:not([tabindex="-1"])',
+    ),
+  );
+}
 
-const getIeUrl = (target: IeTarget) => {
-    if (target === '1997') return '/1997-homepage/index.html';
-    return '/1998-homepage/index.html';
-};
-
-const getIeTitle = (target: IeTarget) => {
-    if (target === '1997') return 'Internet Explorer - 1997';
-    return 'Internet Explorer - 1998';
-};
-
-const ScaledLegacyFrame = ({
-    src,
-    iframeRef,
-    onLoad,
-    viewportWidth,
-    viewportHeight,
-    maxScale = 1,
-    fitMode = 'contain'
+export default function LibraryPage({
+  locale,
+  initialBookId = null,
+  initialRead = false,
 }: {
+  locale: LibraryLocale;
+  initialBookId?: LibraryBook["id"] | null;
+  initialRead?: boolean;
+}) {
+  const copy = libraryCopy[locale];
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialBook = initialBookId
+    ? libraryBooks.find((book) => book.id === initialBookId) ?? null
+    : null;
+  const initialEdition = initialBook ? editionFor(initialBook, locale) : null;
+  const season = (searchParams.get("season") || "spring") as Season;
+  const time = (searchParams.get("time") || "day") as TimeOfDay;
+  const weather = (searchParams.get("weather") || "sunny") as Weather;
+  const isChristmas = searchParams.get("christmas") === "true";
+  const backgroundSrc = useMemo(
+    () =>
+      resolveEnvironmentBackgroundSrc(
+        "library",
+        season,
+        time,
+        weather,
+        isChristmas,
+      ),
+    [isChristmas, season, time, weather],
+  );
+  const [selected, setSelected] = useState<LibraryBook | null>(
+    initialRead ? null : initialBook,
+  );
+  const [showGreeting, setShowGreeting] = useState(!initialBook);
+  const [reader, setReader] = useState<ReaderState | null>(() =>
+    initialRead &&
+    initialBook &&
+    initialEdition?.status === "published" &&
+    initialEdition.chapters.length
+      ? { book: initialBook, edition: initialEdition, pageIndex: 0 }
+      : null,
+  );
+  const [tocOpen, setTocOpen] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
+  const [fontScale, setFontScale] = useState(1);
+  const [documentPages, setDocumentPages] = useState<MeasuredReaderPage[]>([]);
+  const [isReaderFullscreen, setIsReaderFullscreen] = useState(false);
+  const [expandedImage, setExpandedImage] = useState<{
     src: string;
-    iframeRef: React.MutableRefObject<HTMLIFrameElement | null>;
-    onLoad: () => void;
-    viewportWidth: number;
-    viewportHeight: number;
-    maxScale?: number;
-    fitMode?: 'contain' | 'heightOnNarrow';
-}) => {
-    const containerRef = useRef<HTMLDivElement | null>(null);
-    const [scale, setScale] = useState(1);
+    alt: string;
+  } | null>(null);
+  const pendingChapterIndexRef = useRef<number | null>(null);
+  const documentPagesRef = useRef<MeasuredReaderPage[]>([]);
+  const readerPanelRef = useRef<HTMLElement>(null);
+  const readerSourceRef = useRef<HTMLDivElement>(null);
+  const readerPageTemplateRef = useRef<HTMLElement>(null);
+  const readerGestureStartRef = useRef<{ x: number; y: number } | null>(null);
+  const edition = useMemo(
+    () => (selected ? editionFor(selected, locale) : null),
+    [locale, selected],
+  );
+  const readerEdition = reader?.edition;
+  useLayoutEffect(() => {
+    if (!readerEdition || !readerSourceRef.current || !readerPageTemplateRef.current) {
+      documentPagesRef.current = [];
+      setDocumentPages([]);
+      return;
+    }
+    const source = readerSourceRef.current;
+    const template = readerPageTemplateRef.current;
+    let cancelled = false;
+    let animationFrame = 0;
 
-    useEffect(() => {
-        const el = containerRef.current;
-        if (!el) return;
+    const measure = async () => {
+      if ("fonts" in document) await document.fonts.ready;
+      await Promise.all(
+        Array.from(source.querySelectorAll("img")).map((image) =>
+          image.complete ? image.decode().catch(() => undefined) : Promise.resolve(),
+        ),
+      );
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(() => {
+        if (cancelled) return;
+        const nextPages = measureRenderedReaderPages(source, template);
+        if (!nextPages.length) return;
+        const previousPages = documentPagesRef.current;
+        documentPagesRef.current = nextPages;
+        setDocumentPages(nextPages);
+        setReader((current) => {
+          if (!current) return current;
+          const previous = previousPages[current.pageIndex];
+          if (!previous) return { ...current, pageIndex: 0 };
+          const oldChapterPages = previousPages.filter(
+            (page) => page.chapterIndex === previous.chapterIndex,
+          );
+          const newChapterPages = nextPages.filter(
+            (page) => page.chapterIndex === previous.chapterIndex,
+          );
+          const ratio = previous.pageInChapter / Math.max(1, oldChapterPages.length - 1);
+          const targetInChapter = Math.round(ratio * Math.max(0, newChapterPages.length - 1));
+          const pageIndex = nextPages.findIndex(
+            (page) =>
+              page.chapterIndex === previous.chapterIndex &&
+              page.pageInChapter === targetInChapter,
+          );
+          return { ...current, pageIndex: Math.max(0, pageIndex) };
+        });
+      });
+    };
 
-        const updateScale = () => {
-            const rect = el.getBoundingClientRect();
-            const fitScale = Math.min(
-                maxScale,
-                rect.width / viewportWidth,
-                rect.height / viewportHeight
+    const observer = new ResizeObserver(() => void measure());
+    observer.observe(template);
+    source.querySelectorAll("img").forEach((image) => {
+      image.addEventListener("load", measure);
+      image.addEventListener("error", measure);
+    });
+    void measure();
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(animationFrame);
+      observer.disconnect();
+      source.querySelectorAll("img").forEach((image) => {
+        image.removeEventListener("load", measure);
+        image.removeEventListener("error", measure);
+      });
+    };
+  }, [fontScale, isCompact, isReaderFullscreen, readerEdition]);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 720px)");
+    const sync = () => setIsCompact(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    const syncFullscreen = () => {
+      setIsReaderFullscreen(document.fullscreenElement === readerPanelRef.current);
+    };
+    document.addEventListener("fullscreenchange", syncFullscreen);
+    return () => document.removeEventListener("fullscreenchange", syncFullscreen);
+  }, []);
+
+  useEffect(() => {
+    if (!reader) return;
+    readerPanelRef.current?.focus();
+  }, [reader]);
+
+  useEffect(() => {
+    if (!reader || pendingChapterIndexRef.current === null) return;
+    const pageIndex = documentPages.findIndex(
+      (page) => page.chapterIndex === pendingChapterIndexRef.current,
+    );
+    setReader(
+      (current) => current && { ...current, pageIndex: Math.max(0, pageIndex) },
+    );
+    pendingChapterIndexRef.current = null;
+  }, [documentPages, reader]);
+
+  const openDetail = (book: LibraryBook) => {
+    setSelected(book);
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("read");
+    const query = params.toString();
+    router.push(`/${locale}/library/${book.id}${query ? `?${query}` : ""}`);
+  };
+  const closeDetail = () => {
+    setSelected(null);
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("read");
+    const query = params.toString();
+    router.push(`/${locale}/library${query ? `?${query}` : ""}`);
+  };
+  const openReader = () => {
+    if (
+      selected &&
+      edition?.status === "published" &&
+      edition.chapters.length
+    ) {
+      setReader({ book: selected, edition, pageIndex: 0 });
+      setSelected(null);
+      setTocOpen(false);
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("read", "1");
+      router.push(`/${locale}/library/${selected.id}?${params.toString()}`);
+    }
+  };
+  const closeReader = () => {
+    if (document.fullscreenElement) {
+      void document.exitFullscreen();
+    }
+    const book = reader?.book ?? null;
+    setReader(null);
+    setSelected(book);
+    setTocOpen(false);
+    setExpandedImage(null);
+    if (book) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("read");
+      const query = params.toString();
+      router.push(`/${locale}/library/${book.id}${query ? `?${query}` : ""}`);
+    }
+  };
+  const enterReaderFullscreen = async () => {
+    if (
+      document.fullscreenElement ||
+      !readerPanelRef.current?.requestFullscreen
+    ) {
+      return;
+    }
+    try {
+      await readerPanelRef.current.requestFullscreen();
+    } catch {
+      // Fullscreen can be blocked by a browser or embedded webview policy.
+    }
+  };
+  const toggleReaderFullscreen = async () => {
+    if (document.fullscreenElement === readerPanelRef.current) {
+      await document.exitFullscreen();
+      return;
+    }
+    await enterReaderFullscreen();
+  };
+  const trapDialog = (
+    event: KeyboardEvent<HTMLElement>,
+    close: () => void,
+    navigate?: (offset: number) => void,
+  ) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      if (document.fullscreenElement) {
+        void document.exitFullscreen();
+        return;
+      }
+      close();
+      return;
+    }
+    const isPlaybackInput =
+      event.target instanceof Element &&
+      Boolean(event.target.closest("input, select, textarea"));
+    if (
+      navigate &&
+      !isPlaybackInput &&
+      (event.key === "ArrowLeft" || event.key === "ArrowRight")
+    ) {
+      event.preventDefault();
+      navigate(event.key === "ArrowLeft" ? -1 : 1);
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const elements = focusableElements(event.currentTarget);
+    if (!elements.length) return;
+    const first = elements[0];
+    const last = elements[elements.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  const roomStyle = { backgroundImage: `url('${backgroundSrc}')` };
+  if (showGreeting) {
+    return (
+      <main
+        className="library-room"
+        style={roomStyle}
+        data-time={time}
+        data-weather={weather}
+        data-season={season}
+      >
+        <UnderConstruction
+          onClose={() => setShowGreeting(false)}
+          message={copy.alphaGreeting}
+          backgroundSrc={backgroundSrc}
+          illustrationSrc={backgroundSrc}
+          characterSrc="/characters/alpha/alpha-nice-talk.webp"
+          closeLabel={copy.shelf}
+        />
+      </main>
+    );
+  }
+
+  const readerStep = isCompact ? 1 : 2;
+  const readerPages = reader
+    ? documentPages.slice(reader.pageIndex, reader.pageIndex + readerStep)
+    : [];
+  const movePages = (offset: number) =>
+    setReader((current) => {
+      if (!current) return current;
+      const step = isCompact ? 1 : 2;
+      const lastStart = Math.max(
+        0,
+        Math.floor((documentPages.length - 1) / step) * step,
+      );
+      return {
+        ...current,
+        pageIndex: Math.max(
+          0,
+          Math.min(lastStart, current.pageIndex + offset * step),
+        ),
+      };
+    });
+  const chooseChapter = (index: number) =>
+    setReader(
+      (current) =>
+        current && {
+          ...current,
+          pageIndex: Math.max(
+            0,
+            documentPages.findIndex((page) => page.chapterIndex === index),
+          ),
+        },
+    );
+  const returnToAtelier = () => {
+    const query = searchParams.toString();
+    router.push(`/${locale}/atelier${query ? `?${query}` : ""}`);
+  };
+  const changeFontScale = (delta: number) => {
+    if (reader)
+      pendingChapterIndexRef.current =
+        documentPages[reader.pageIndex]?.chapterIndex ?? 0;
+    setFontScale((current) =>
+      Math.max(0.85, Math.min(1.15, Number((current + delta).toFixed(2)))),
+    );
+  };
+
+  return (
+    <main
+      className="library-room"
+      style={roomStyle}
+      data-time={time}
+      data-weather={weather}
+      data-season={season}
+    >
+      <section className="library-panel" aria-labelledby="library-title">
+        <header className="library-panel-header">
+          <div>
+            <p>{copy.eyebrow}</p>
+            <h1 id="library-title">{copy.title}</h1>
+          </div>
+        </header>
+        <div className="library-book-rail" aria-label={copy.shelf}>
+          {libraryBooks.map((book) => {
+            const localEdition = editionFor(book, locale);
+            const isPublished =
+              localEdition.status === "published" &&
+              localEdition.chapters.length > 0;
+            const coverSrc = coverSourceFor(localEdition, book.editions);
+            return (
+              <button
+                className={`library-book-card ${book.coverTone}`}
+                key={book.id}
+                onClick={() => openDetail(book)}
+              >
+                {coverSrc ? (
+                  <img src={coverSrc} alt={`${localEdition.title} 표지`} />
+                ) : (
+                  <span className="library-book-cover-fallback">
+                    {!isPublished && <small>{copy.preparing}</small>}
+                    <strong>{localEdition.title}</strong>
+                    <em>{localEdition.biblio.author}</em>
+                  </span>
+                )}
+                {!isPublished && (
+                  <span className="library-book-status">{copy.preparing}</span>
+                )}
+              </button>
             );
-            const nextScale = fitMode === 'heightOnNarrow' && rect.width < 520
-                ? Math.min(maxScale, rect.height / viewportHeight)
-                : fitScale;
-            setScale(Number.isFinite(nextScale) && nextScale > 0 ? nextScale : 1);
-        };
+          })}
+        </div>
+        <button className="library-back-to-atelier" onClick={returnToAtelier}>
+          <ArrowLeft size={15} />
+          {locale === "ko" ? "아뜰리에로 돌아가기" : "Back to Atelier"}
+        </button>
+      </section>
 
-        updateScale();
-
-        const ro = new ResizeObserver(updateScale);
-        ro.observe(el);
-        return () => ro.disconnect();
-    }, [viewportWidth, viewportHeight, maxScale, fitMode]);
-
-    const scaledWidth = Math.round(viewportWidth * scale);
-    const scaledHeight = Math.round(viewportHeight * scale);
-
-    return (
-        <div className="legacy-viewport" ref={containerRef}>
-            <div className="legacy-viewport-frame" style={{ width: scaledWidth, height: scaledHeight }}>
-                <div
-                    className="legacy-viewport-inner"
-                    style={{
-                        width: viewportWidth,
-                        height: viewportHeight,
-                        transform: `scale(${scale})`
-                    }}
-                >
-                    <iframe
-                        className="legacy-iframe"
-                        src={src}
-                        title="Legacy Homepage"
-                        style={{ width: viewportWidth, height: viewportHeight }}
-                        ref={(node) => {
-                            iframeRef.current = node;
-                        }}
-                        onLoad={onLoad}
-                    />
-                </div>
+      {selected && edition && (
+        <div className="library-layer" role="presentation">
+          <section
+            className="library-detail-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label={copy.detail}
+            tabIndex={-1}
+            onKeyDown={(event) => trapDialog(event, closeDetail)}
+          >
+            <button
+              className="library-close"
+              onClick={closeDetail}
+              aria-label={copy.close}
+            >
+              <X size={18} />
+            </button>
+            <div className={`library-detail-cover ${selected.coverTone}`}>
+              {coverSourceFor(edition, selected.editions) ? (
+                <img
+                  src={coverSourceFor(edition, selected.editions) ?? undefined}
+                  alt={`${edition.title} 표지`}
+                />
+              ) : (
+                <span>{edition.title}</span>
+              )}
             </div>
+            <div className="library-detail-copy">
+              <p>{copy.detail}</p>
+              <h2>{edition.title}</h2>
+              {edition.subtitle && <h3>{edition.subtitle}</h3>}
+              <div className="library-detail-actions">
+                {edition.status === "published" && edition.chapters.length > 0 ? (
+                  <button className="library-read-action" onClick={openReader}>
+                    {copy.read}
+                    <ChevronRight size={18} />
+                  </button>
+                ) : (
+                  <p className="library-pending">{copy.unavailable}</p>
+                )}
+                <div className="library-external-actions">
+                  {edition.lang === "ko" && (
+                    <ExternalLinkButton
+                      href={edition.links.wikidocs}
+                      label={copy.wikidocs}
+                    />
+                  )}
+                  {edition.lang === "en" && (
+                    <ExternalLinkButton
+                      href={edition.links.leanpub}
+                      label={copy.leanpub}
+                    />
+                  )}
+                </div>
+              </div>
+              <p>
+                {selected.id === "mars-invasion" ? copy.mars : copy.harness}
+              </p>
+              <small>
+                {[
+                  edition.biblio.author,
+                  edition.biblio.publisher,
+                  edition.biblio.date
+                    ? `${copy.publishedDate} ${edition.biblio.date}`
+                    : null,
+                ]
+                  .filter(Boolean)
+                  .join(" · ")}
+              </small>
+            </div>
+          </section>
         </div>
-    );
-};
+      )}
 
-const LibraryPage: React.FC = () => {
-    const { t, i18n } = useTranslation();
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const localeFromPath = pathname.split('/')[1];
-    const locale = localeFromPath === 'ko' || localeFromPath === 'en' ? localeFromPath : (i18n.language.startsWith('en') ? 'en' : 'ko');
-    const [showIntro, setShowIntro] = useState(true);
-    const [mode, setMode] = useState<LibraryMode>('menu');
-    const [ieTarget, setIeTarget] = useState<IeTarget | null>(null);
-    const [ieAddress, setIeAddress] = useState<string>('');
-    const [canIeGoBack, setCanIeGoBack] = useState(false);
-    const [isIeInaccessible, setIsIeInaccessible] = useState(false);
-    const [isLegacyMidiActive, setIsLegacyMidiActive] = useState(false);
-    const [dialogue, setDialogue] = useState<string | null>(null);
-    const [clock, setClock] = useState(() => formatClock(new Date()));
-    const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
-    const legacyIframeRef = useRef<HTMLIFrameElement | null>(null);
-    const ieHistoryRef = useRef<IeHistoryEntry[]>([]);
-    const frame2ListenerRef = useRef<{ frame: HTMLFrameElement; handler: () => void } | null>(null);
-    const startupAudioRef = useRef<HTMLAudioElement | null>(null);
-    const shutdownAudioRef = useRef<HTMLAudioElement | null>(null);
-    const legacyMidiPlayerRef = useRef<LegacyMidiSynthPlayer | null>(null);
-    const shouldAutoBootOldPc = searchParams.get('oldpc') === 'true';
-
-    useEffect(() => {
-        if (i18n.language !== locale) {
-            void i18n.changeLanguage(locale);
-        }
-    }, [i18n, locale]);
-
-    useEffect(() => {
-        if (!shouldAutoBootOldPc) return;
-        setShowIntro(false);
-        setDialogue(null);
-        setIsStartMenuOpen(false);
-        setMode('booting');
-        const timerId = window.setTimeout(() => setMode('desktop'), 900);
-        return () => window.clearTimeout(timerId);
-    }, [shouldAutoBootOldPc]);
-    const season = (searchParams.get('season') as Season) || 'spring';
-    const time = (searchParams.get('time') as TimeOfDay) || 'day';
-    const weather = (searchParams.get('weather') as Weather) || 'sunny';
-    const isChristmas = searchParams.get('christmas') === 'true';
-
-    useEffect(() => {
-        const interval = setInterval(() => setClock(formatClock(new Date())), 1000 * 10);
-        return () => clearInterval(interval);
-    }, []);
-
-    const backgroundName = useMemo(() => {
-        return resolveEnvironmentBackgroundName('atelier', season, time, weather, isChristmas);
-    }, [season, time, weather, isChristmas]);
-
-    const backgroundImage = useMemo(() => {
-        return resolveEnvironmentBackgroundSrc('atelier', season, time, weather, isChristmas);
-    }, [season, time, weather, isChristmas]);
-
-    const greetingVariant = resolveEnvironmentMood('atelier', season, time, weather, isChristmas);
-    const entrySource = searchParams.get('from');
-    const greetingMessage = entrySource === 'lounge'
-        ? t('atelier.stairsIntro', {
-            defaultValue: t('atelier.alphaIntro')
-        })
-        : t(`atelier.greeting.${greetingVariant}`, { defaultValue: t('atelier.alphaIntro') });
-
-    const legacyMidiSrc = useMemo(() => {
-        if (!ieTarget) return null;
-        if (ieTarget === '1997') return '/1997-homepage/music/back1.mid';
-        return '/1998-homepage/music/Totoro%27.mid';
-    }, [ieTarget]);
-
-    const ieViewport = useMemo(() => {
-        if (!ieTarget) return DEFAULT_IE_VIEWPORT;
-        return IE_VIEWPORTS[ieTarget] ?? DEFAULT_IE_VIEWPORT;
-    }, [ieTarget]);
-
-    const ieMaxScale = useMemo(() => {
-        if (ieTarget === '1998') return 1.35;
-        return 1;
-    }, [ieTarget]);
-
-    const ieFitMode: 'contain' | 'heightOnNarrow' = 'contain';
-
-    // Preload all atelier images
-    useEffect(() => {
-        getPreloadBackgrounds('atelier').forEach(src => {
-            const i = new Image();
-            i.src = src;
-        });
-    }, []);
-
-    useEffect(() => {
-        legacyMidiPlayerRef.current = new LegacyMidiSynthPlayer();
-        return () => {
-            legacyMidiPlayerRef.current?.stop();
-        };
-    }, []);
-
-    useEffect(() => {
-        const player = legacyMidiPlayerRef.current;
-        if (!player) return;
-
-        player.stop();
-        setIsLegacyMidiActive(false);
-
-        if (!legacyMidiSrc) return;
-
-        let canceled = false;
-        let retryHandler: ((e?: Event) => void) | null = null;
-
-        const attemptStart = async () => {
-            try {
-                const isMuted = localStorage.getItem('cafelua_bgm_muted') === 'true';
-                if (isMuted) return false;
-            } catch {
-                // If localStorage is blocked/unavailable, allow playback attempts.
-            }
-
-            const started = await player.start(legacyMidiSrc, {
-                onEnded: () => {
-                    if (canceled) return;
-                    setIsLegacyMidiActive(false);
-                }
-            });
-            if (canceled) {
-                player.stop();
-                return false;
-            }
-
-            setIsLegacyMidiActive(started);
-            return started;
-        };
-
-        void attemptStart().then((started) => {
-            if (canceled || started) return;
-
-            const handler = async () => {
-                const startedNow = await attemptStart();
-                if (!startedNow) return;
-                if (!retryHandler) return;
-                window.removeEventListener('click', retryHandler);
-                window.removeEventListener('keydown', retryHandler);
-                retryHandler = null;
-            };
-
-            retryHandler = handler;
-            window.addEventListener('click', retryHandler);
-            window.addEventListener('keydown', retryHandler);
-        });
-
-        return () => {
-            canceled = true;
-            player.stop();
-            if (retryHandler) {
-                window.removeEventListener('click', retryHandler);
-                window.removeEventListener('keydown', retryHandler);
-            }
-        };
-    }, [legacyMidiSrc]);
-
-    const cleanupFrame2Listener = () => {
-        const current = frame2ListenerRef.current;
-        if (!current) return;
-
-        current.frame.removeEventListener('load', current.handler);
-        frame2ListenerRef.current = null;
-    };
-
-    useEffect(() => {
-        cleanupFrame2Listener();
-        if (!ieTarget) {
-            ieHistoryRef.current = [];
-            setIeAddress('');
-            setCanIeGoBack(false);
-            setIsIeInaccessible(false);
-            return;
-        }
-
-        const startPath = getIeUrl(ieTarget);
-        ieHistoryRef.current = [{ context: 'iframe', path: startPath }];
-        setIeAddress(startPath);
-        setCanIeGoBack(false);
-        setIsIeInaccessible(false);
-    }, [ieTarget]);
-
-    useEffect(() => {
-        return () => {
-            const current = frame2ListenerRef.current;
-            if (!current) return;
-            current.frame.removeEventListener('load', current.handler);
-            frame2ListenerRef.current = null;
-        };
-    }, []);
-
-    const registerIeNavigation = (context: IeHistoryContext, path: string) => {
-        const stack = ieHistoryRef.current;
-        const last = stack[stack.length - 1];
-
-        setIsIeInaccessible(false);
-        if (last && last.context === context && last.path === path) {
-            setIeAddress(path);
-            setCanIeGoBack(stack.length > 1);
-            return;
-        }
-
-        stack.push({ context, path });
-
-        const MAX_STACK = 50;
-        if (stack.length > MAX_STACK) {
-            stack.splice(0, stack.length - MAX_STACK);
-        }
-
-        setIeAddress(path);
-        setCanIeGoBack(stack.length > 1);
-    };
-
-    const getFrame2Window = () => {
-        const iframe = legacyIframeRef.current;
-        if (!iframe) return null;
-
-        const win = iframe.contentWindow;
-        if (!win) return null;
-
-        try {
-            const frameEl = win.document.querySelector('frame[name="frame2"]') as HTMLFrameElement | null;
-            return frameEl?.contentWindow ?? null;
-        } catch {
-            return null;
-        }
-    };
-
-    const handleIeLoad = () => {
-        const iframe = legacyIframeRef.current;
-        if (!iframe) return;
-
-        try {
-            const location = iframe.contentWindow?.location;
-            if (location) {
-                registerIeNavigation('iframe', `${location.pathname}${location.search}${location.hash}`);
-            }
-        } catch {
-            cleanupFrame2Listener();
-            setIsIeInaccessible(true);
-            const stack = ieHistoryRef.current;
-            setCanIeGoBack(stack.length > 0);
-        }
-
-        const win = iframe.contentWindow;
-        if (!win) return;
-
-        try {
-            const frameEl = win.document.querySelector('frame[name="frame2"]') as HTMLFrameElement | null;
-            if (!frameEl) {
-                cleanupFrame2Listener();
-                return;
-            }
-
-            const existing = frame2ListenerRef.current;
-            if (existing && existing.frame === frameEl) return;
-
-            if (existing) {
-                existing.frame.removeEventListener('load', existing.handler);
-                frame2ListenerRef.current = null;
-            }
-
-            const handler = () => {
-                const frameWin = getFrame2Window();
-                if (!frameWin) return;
-
-                try {
-                    const loc = frameWin.location;
-                    registerIeNavigation('frame2', `${loc.pathname}${loc.search}${loc.hash}`);
-                } catch {
-                    setIsIeInaccessible(true);
-                    const stack = ieHistoryRef.current;
-                    setCanIeGoBack(stack.length > 0);
-                }
-            };
-
-            frameEl.addEventListener('load', handler);
-            frame2ListenerRef.current = { frame: frameEl, handler };
-        } catch {
-            // ignore
-        }
-    };
-
-    const navigateIeTo = (entry: IeHistoryEntry) => {
-        const iframe = legacyIframeRef.current;
-        if (!iframe) return;
-
-        if (entry.context === 'frame2') {
-            const frameWin = getFrame2Window();
-            if (frameWin) {
-                try {
-                    frameWin.location.replace(entry.path);
+      {reader && (
+        <div className="library-layer library-reader-layer" role="presentation">
+          <section
+            className="library-reader-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label={reader.edition.title}
+            tabIndex={-1}
+            ref={readerPanelRef}
+            onKeyDown={(event) => trapDialog(event, closeReader, movePages)}
+          >
+            <header className="library-reader-toolbar">
+              <div className="library-reader-tools">
+                <button
+                  className="library-toc-toggle"
+                  onClick={() => setTocOpen((open) => !open)}
+                  aria-expanded={tocOpen}
+                  aria-controls="library-reader-toc"
+                >
+                  <Menu size={17} />
+                  <span>{copy.contents}</span>
+                </button>
+                <div className="library-font-size" aria-label={copy.fontSize}>
+                  <button
+                    onClick={() => changeFontScale(-0.05)}
+                    disabled={fontScale <= 0.85}
+                    aria-label={copy.decreaseFontSize}
+                    title={copy.decreaseFontSize}
+                  >
+                    A−
+                  </button>
+                  <button
+                    onClick={() => changeFontScale(0.05)}
+                    disabled={fontScale >= 1.15}
+                    aria-label={copy.increaseFontSize}
+                    title={copy.increaseFontSize}
+                  >
+                    A+
+                  </button>
+                </div>
+                <button
+                  className="library-fullscreen-toggle"
+                  onClick={() => void toggleReaderFullscreen()}
+                  aria-label={
+                    isReaderFullscreen
+                      ? copy.exitFullscreen
+                      : copy.enterFullscreen
+                  }
+                  title={
+                    isReaderFullscreen
+                      ? copy.exitFullscreen
+                      : copy.enterFullscreen
+                  }
+                  aria-pressed={isReaderFullscreen}
+                >
+                  {isReaderFullscreen ? (
+                    <Minimize2 size={16} />
+                  ) : (
+                    <Maximize2 size={16} />
+                  )}
+                </button>
+                <ReaderPlaybackControls
+                  pages={readerPages}
+                  pageIndex={reader.pageIndex}
+                  pageStep={readerStep}
+                  totalPages={documentPages.length}
+                  locale={locale}
+                  copy={copy.playback}
+                  onAdvance={() => movePages(1)}
+                />
+              </div>
+              <span>{reader.edition.title}</span>
+              {reader.edition.lang === "ko" && reader.edition.links.wikidocs && (
+                <a
+                  className="library-reader-publisher-link"
+                  href={reader.edition.links.wikidocs}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span>위키독스</span>
+                  <ExternalLink size={14} />
+                </a>
+              )}
+              {reader.edition.lang === "en" && reader.edition.links.leanpub && (
+                <a
+                  className="library-reader-publisher-link"
+                  href={reader.edition.links.leanpub}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span>LeanPub</span>
+                  <ExternalLink size={14} />
+                </a>
+              )}
+              <button
+                className="library-reader-close"
+                onClick={closeReader}
+                aria-label={copy.close}
+                title={copy.close}
+              >
+                <X size={18} />
+              </button>
+            </header>
+            <div className="library-reading-progress" aria-hidden="true">
+              <span
+                style={{
+                  width: `${Math.min(
+                    100,
+                    ((reader.pageIndex + readerStep) /
+                      Math.max(1, documentPages.length)) *
+                      100,
+                  )}%`,
+                }}
+              />
+            </div>
+            <div className="library-reader-layout">
+              <aside
+                id="library-reader-toc"
+                className={`library-reader-toc ${tocOpen ? "open" : ""}`}
+                aria-hidden={!tocOpen}
+              >
+                <div>
+                  <BookOpen size={17} />
+                  <p>{copy.contents}</p>
+                </div>
+                {reader.edition.chapters.map((chapter, index) => (
+                  <button
+                    key={chapter.path}
+                    className={
+                      readerPages.some((page) => page.chapterIndex === index)
+                        ? "active"
+                        : ""
+                    }
+                    tabIndex={tocOpen ? 0 : -1}
+                    onClick={() => {
+                      chooseChapter(index);
+                      setTocOpen(false);
+                    }}
+                  >
+                    {chapter.title}
+                  </button>
+                ))}
+              </aside>
+              <div
+                className={`library-reader-spread ${isCompact ? "compact" : ""}`}
+                aria-label={copy.read}
+                style={{ "--reader-font-scale": fontScale } as CSSProperties}
+                onPointerDown={(event) => {
+                  if (
+                    event.target instanceof Element &&
+                    event.target.closest("a, button, .library-illustration")
+                  ) {
                     return;
-                } catch {
-                    // ignore
-                }
-            }
-        }
+                  }
+                  readerGestureStartRef.current = {
+                    x: event.clientX,
+                    y: event.clientY,
+                  };
+                }}
+                onPointerUp={(event) => {
+                  if (
+                    event.target instanceof Element &&
+                    event.target.closest("a, button, .library-illustration")
+                  ) {
+                    return;
+                  }
+                  const start = readerGestureStartRef.current;
+                  readerGestureStartRef.current = null;
+                  if (!start) return;
 
-        try {
-            iframe.contentWindow?.location.replace(entry.path);
-            return;
-        } catch {
-            // ignore
-        }
+                  const bounds = event.currentTarget.getBoundingClientRect();
+                  if (!isCompact) {
+                    movePages(
+                      event.clientX < bounds.left + bounds.width / 2 ? -1 : 1,
+                    );
+                    return;
+                  }
 
-        iframe.src = entry.path;
-    };
+                  const deltaX = event.clientX - start.x;
+                  const deltaY = event.clientY - start.y;
+                  if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                    movePages(deltaX > 0 ? -1 : 1);
+                    return;
+                  }
 
-    const handleIeBack = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        const stack = ieHistoryRef.current;
-        if (stack.length === 0) return;
-
-        if (isIeInaccessible) {
-            const lastKnown = stack[stack.length - 1];
-            if (!lastKnown) return;
-            setIeAddress(lastKnown.path);
-            setIsIeInaccessible(false);
-            setCanIeGoBack(stack.length > 1);
-            navigateIeTo(lastKnown);
-            return;
-        }
-
-        if (stack.length <= 1) return;
-
-        stack.pop();
-        const prev = stack[stack.length - 1];
-        if (!prev) return;
-
-        setIeAddress(prev.path);
-        setCanIeGoBack(stack.length > 1);
-        navigateIeTo(prev);
-    };
-
-    const playSfx = (audio: HTMLAudioElement | null) => {
-        if (!audio) return;
-
-        try {
-            const isMuted = localStorage.getItem('cafelua_bgm_muted') === 'true';
-            if (isMuted) return;
-        } catch {
-            // If localStorage is blocked/unavailable, allow SFX attempts.
-        }
-
-        try {
-            audio.currentTime = 0;
-            audio.volume = 0.7;
-            const playPromise = audio.play();
-            if (playPromise && typeof playPromise.catch === 'function') {
-                playPromise.catch(() => {
-                    // Ignore playback errors (unsupported formats, autoplay policies, etc).
-                });
-            }
-        } catch {
-            // Ignore playback errors (browser autoplay policies, etc).
-        }
-    };
-
-    const handlePowerOn = () => {
-        if (mode !== 'menu') return;
-        setIeTarget(null);
-        setDialogue(null);
-        setIsStartMenuOpen(false);
-        playSfx(startupAudioRef.current);
-        setMode('booting');
-        setTimeout(() => setMode('desktop'), 900);
-    };
-
-    const handlePowerOff = () => {
-        if (mode !== 'desktop') return;
-        setIeTarget(null);
-        setDialogue(null);
-        setIsStartMenuOpen(false);
-        playSfx(shutdownAudioRef.current);
-        setMode('shutdown');
-        setTimeout(() => setMode('menu'), 900);
-    };
-
-    const handleMissing1999 = () => {
-        setDialogue(t('library.missing1999'));
-    };
-
-    const handleMenuNotReady = (message: string) => {
-        setDialogue(message);
-    };
-
-    const handleBackToLounge = () => {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set('from', 'atelier');
-        router.push(`/${locale}/lounge?${params.toString()}`);
-    };
-
-    return (
-        <div
-            className="library-container"
-            style={{ backgroundImage: `url('${backgroundImage}')` }}
-        >
-            <BackgroundMusic
-                src="/sounds/atelier.mp3"
-                hideUi={mode !== 'menu'}
-                suspended={isLegacyMidiActive}
-            />
-            <audio ref={startupAudioRef} src="/sounds/windows-startup.mp3" preload="auto" />
-            <audio ref={shutdownAudioRef} src="/sounds/windows-shutdown.mp3" preload="auto" />
-
-            {mode === 'menu' && (
-                <div className="game-menu">
-                    <div className="menu-title">{t('atelier.title')}</div>
-
-                    <button
-                        className="menu-button ui-button ui-button-ghost"
-                        onClick={() => router.push(buildLocalizedUrlWithQuery(locale, '/desk', searchParams))}
+                  const touchPosition = (event.clientX - bounds.left) / bounds.width;
+                  if (touchPosition < 1 / 3) {
+                    movePages(-1);
+                  } else if (touchPosition > 2 / 3) {
+                    movePages(1);
+                  }
+                }}
+              >
+                <article
+                  ref={readerPageTemplateRef}
+                  className="library-paper-page library-paper-template"
+                  data-measure-template
+                  aria-hidden="true"
+                >
+                  <header><span>{reader.edition.title}</span><small>0</small></header>
+                  <div className="library-paper-content" />
+                </article>
+                <div
+                  ref={readerSourceRef}
+                  className="library-reader-measure-source library-paper-content"
+                  aria-hidden="true"
+                >
+                  {reader.edition.chapters.map((chapter, chapterIndex) => (
+                    <section
+                      key={chapter.path}
+                      data-reader-chapter
+                      data-chapter-index={chapterIndex}
+                      data-chapter-title={chapter.title}
                     >
-                        {t('atelier.masterDesk')}
-                    </button>
-                    <button
-                        className="menu-button ui-button ui-button-ghost"
-                        onClick={() => handleMenuNotReady(t('atelier.alphaStationMessage'))}
-                    >
-                        {t('atelier.alphaStation')}
-                    </button>
-                    <button
-                        className="menu-button ui-button ui-button-ghost"
-                        onClick={() => router.push(buildLocalizedUrlWithQuery(locale, '/library', searchParams))}
-                    >
-                        {t('atelier.library')}
-                    </button>
-                    <button
-                        className="menu-button ui-button ui-button-ghost"
-                        onClick={() => handleMenuNotReady(t('atelier.terraceMessage'))}
-                    >
-                        {t('atelier.terrace')}
-                    </button>
-
-                    <button className="menu-button ui-button ui-button-ghost" onClick={handlePowerOn}>
-                        {t('atelier.oldPc')}
-                    </button>
-
-                    <button
-                        className="menu-button ui-button ui-button-danger exit"
-                        onClick={handleBackToLounge}
-                    >
-                        {t('atelier.backToLounge')}
-                    </button>
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          img: ({ src, alt }) => (
+                            <ReaderIllustration
+                              sourceSlug={reader.edition.sourceSlug}
+                              src={typeof src === "string" ? src : undefined}
+                              alt={alt}
+                              onOpen={() => undefined}
+                            />
+                          ),
+                        }}
+                      >
+                        {chapter.markdown || copy.noChapter}
+                      </ReactMarkdown>
+                    </section>
+                  ))}
                 </div>
+                {readerPages.map((page, spreadPageIndex) => {
+                  return (
+                    <article
+                      className="library-paper-page"
+                      key={`${page.chapterIndex}-${page.pageInChapter}`}
+                      data-reader-page-index={
+                        reader.pageIndex + spreadPageIndex
+                      }
+                    >
+                      <header>
+                        <span>{page.chapterTitle}</span>
+                        <small>{reader.pageIndex + spreadPageIndex + 1}</small>
+                      </header>
+                      <div
+                        className="library-paper-content"
+                        dangerouslySetInnerHTML={{ __html: page.html }}
+                        onClick={(event) => {
+                          const image = (event.target as Element).closest("img");
+                          if (image instanceof HTMLImageElement) {
+                            setExpandedImage({ src: image.src, alt: image.alt });
+                          }
+                        }}
+                      />
+                    </article>
+                  );
+                })}
+              </div>
+              <nav className="library-spread-navigation" aria-label={copy.read}>
+                <button
+                  disabled={reader.pageIndex === 0}
+                  onClick={() => movePages(-1)}
+                  aria-label={copy.previous}
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <span>
+                  {reader.pageIndex + 1}–
+                  {Math.min(
+                    reader.pageIndex + readerStep,
+                    documentPages.length,
+                  )}{" "}
+                  / {documentPages.length}
+                </span>
+                <button
+                  disabled={
+                    reader.pageIndex + readerStep >= documentPages.length
+                  }
+                  onClick={() => movePages(1)}
+                  aria-label={copy.next}
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </nav>
+            </div>
+            {expandedImage && (
+              <ImageLightbox
+                src={expandedImage.src}
+                alt={expandedImage.alt}
+                onClose={() => setExpandedImage(null)}
+                closeLabel={copy.close}
+                closeOnImageClick
+              >
+                {expandedImage.alt && (
+                  <div className="library-lightbox-caption">{expandedImage.alt}</div>
+                )}
+              </ImageLightbox>
             )}
-
-            {mode === 'booting' && (
-                <div className="library-boot-screen">
-                    <div className="library-boot-title">{t('library.bootingTitle')}</div>
-                    <div className="library-boot-subtitle">{t('library.bootingSubtitle')}</div>
-                </div>
-            )}
-
-            {mode === 'shutdown' && (
-                <div className="win98-shutdown-screen">
-                    <div className="library-boot-screen">
-                        <div className="library-boot-title">{t('library.shuttingDownTitle')}</div>
-                        <div className="library-boot-subtitle">{t('library.shuttingDownSubtitle')}</div>
-                    </div>
-                </div>
-            )}
-
-            {mode === 'desktop' && (
-                <div className="win98-screen">
-                    <div className="win98-desktop" onClick={() => setIsStartMenuOpen(false)}>
-                        <button
-                            type="button"
-                            className="win98-icon"
-                            onClick={() => {
-                                setIsStartMenuOpen(false);
-                                setIeTarget('1997');
-                            }}
-                        >
-                            <div className="win98-icon-image" aria-hidden="true" />
-                            <div className="win98-icon-label">{t('library.folder1997')}</div>
-                        </button>
-
-                        <button
-                            type="button"
-                            className="win98-icon"
-                            onClick={() => {
-                                setIsStartMenuOpen(false);
-                                setIeTarget('1998');
-                            }}
-                        >
-                            <div className="win98-icon-image" aria-hidden="true" />
-                            <div className="win98-icon-label">{t('library.folder1998')}</div>
-                        </button>
-
-                        <button
-                            type="button"
-                            className="win98-icon is-disabled"
-                            onClick={handleMissing1999}
-                        >
-                            <div className="win98-icon-image" aria-hidden="true" />
-                            <div className="win98-icon-label">{t('library.folder1999Missing')}</div>
-                        </button>
-                    </div>
-
-                    <div className="win98-taskbar">
-                        <div className="win98-start-container">
-                            <button
-                                type="button"
-                                className="win98-start"
-                                onClick={() => setIsStartMenuOpen((prev) => !prev)}
-                            >
-                                {t('library.start')}
-                            </button>
-
-                            {isStartMenuOpen && (
-                                <div className="win98-start-menu" onClick={(e) => e.stopPropagation()}>
-                                    <button
-                                        type="button"
-                                        className="win98-start-menu-item"
-                                        onClick={handlePowerOff}
-                                    >
-                                        {t('library.powerOffPc')}
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-                        <div className="win98-taskbar-spacer" />
-                        <div className="win98-clock">{clock}</div>
-                    </div>
-
-                    {ieTarget && (
-                        <div className="ie-overlay" onClick={() => setIeTarget(null)}>
-                            <div className="ie-window" onClick={(e) => e.stopPropagation()}>
-                                <div className="ie-titlebar">
-                                    <div>{getIeTitle(ieTarget)}</div>
-                                    <div className="ie-controls">
-                                        <button
-                                            type="button"
-                                            className="ie-close"
-                                            aria-label={t('library.close')}
-                                            onClick={() => setIeTarget(null)}
-                                        >
-                                            X
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="ie-toolbar">
-                                    <button
-                                        type="button"
-                                        className="ie-nav-btn"
-                                        onClick={handleIeBack}
-                                        disabled={!canIeGoBack}
-                                    >
-                                        ◀ {t('library.ieBack')}
-                                    </button>
-                                    <div className="ie-address-label">Address</div>
-                                    <input
-                                        className="ie-address"
-                                        readOnly
-                                        value={ieAddress || getIeUrl(ieTarget)}
-                                    />
-                                </div>
-                                <div className="ie-content">
-                                    <ScaledLegacyFrame
-                                        src={getIeUrl(ieTarget)}
-                                        iframeRef={legacyIframeRef}
-                                        onLoad={handleIeLoad}
-                                        viewportWidth={ieViewport.width}
-                                        viewportHeight={ieViewport.height}
-                                        maxScale={ieMaxScale}
-                                        fitMode={ieFitMode}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            )}
-
-            {showIntro && (
-                <UnderConstruction
-                    onClose={() => setShowIntro(false)}
-                    message={greetingMessage}
-                    backgroundSrc={backgroundImage}
-                    illustrationSrc={backgroundImage}
-                    characterSrc="/characters/alpha/alpha-nice-talk.webp"
-                    closeLabel={t('atelier.explore')}
-                />
-            )}
-
-            {dialogue && (
-                <UnderConstruction
-                    onClose={() => setDialogue(null)}
-                    message={dialogue}
-                    backgroundSrc={backgroundImage}
-                    closeLabel={t('library.close')}
-                />
-            )}
+          </section>
         </div>
-    );
-};
+      )}
+    </main>
+  );
+}
 
-export default LibraryPage;
+function ExternalLinkButton({
+  href,
+  label,
+}: {
+  href: string | null;
+  label: string;
+}) {
+  return href ? (
+    <a href={href} target="_blank" rel="noreferrer">
+      {label}
+      <ExternalLink size={14} />
+    </a>
+  ) : (
+    <span>{label}</span>
+  );
+}
+
+function ReaderIllustration({
+  sourceSlug,
+  src,
+  alt,
+  onOpen,
+}: {
+  sourceSlug: string;
+  src?: string;
+  alt?: string;
+  onOpen: (image: { src: string; alt: string }) => void;
+}) {
+  if (!src) return null;
+  const source = src.startsWith("http")
+    ? src
+    : `/library-books/${sourceSlug}/${src.replace(/^(?:(?:\.\.)?\/)+/, "")}`;
+  return (
+    <span
+      className="library-illustration"
+      role="button"
+      tabIndex={0}
+      aria-label={alt ? `${alt} 크게 보기` : "이미지 크게 보기"}
+      onClick={() => onOpen({ src: source, alt: alt ?? "" })}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onOpen({ src: source, alt: alt ?? "" });
+        }
+      }}
+    >
+      <img
+        src={source}
+        alt={alt ?? ""}
+        loading="eager"
+        decoding="sync"
+      />
+      {alt && <span className="library-illustration-caption">{alt}</span>}
+    </span>
+  );
+}
