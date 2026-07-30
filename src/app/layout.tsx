@@ -3,7 +3,7 @@ import Script from 'next/script';
 import '../app/globals.css';
 import Providers from './providers';
 
-const GA_ID = 'G-EDLFFFY25M';
+const GA_ID = 'G-Y6Y0KRRKMS';
 const SITE_DESCRIPTION = '루크와 알파가 함께 운영하는 작은 가상 카페. 계절과 날씨에 따라 달라지는 공간에서 커피챗, 타로, 기록을 만납니다.';
 
 export const metadata: Metadata = {
