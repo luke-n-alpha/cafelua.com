@@ -103,8 +103,6 @@ AI를 활용한 정책개발은 정부와 공공기관에서도 큰 관심을 �
 
 #AIPOL #한국정책학회 #넥스테인 #독파모 #AI정책 #정책개발 #AI에이전트 #숙의민주주의 #연금개혁 #EXAONE #Solar #HyperCLOVAX #오픈소스
 
-※ 이 글은 AI의 도움을 받아 작성·교정했습니다. 내용에 문제가 있으면 [@luke-n-alpha](https://github.com/luke-n-alpha)에게 알려 주세요.
-
 ![AIPOL AI 연금개혁 실험 사전 공개](/desk/20260731-aipol-first-field-experiment/ko.webp)
 
 <!-- en -->
@@ -191,7 +189,5 @@ Personally, I believe AI may eventually be able to do some parts of politics bet
 ---
 
 #AIPOL #KAPS #Nextain #AIPolicy #PolicyDevelopment #AIAgent #DeliberativeDemocracy #PensionReform #EXAONE #Solar #HyperCLOVAX #OpenSource
-
-※ This post was written and edited with AI assistance. If you notice an issue, please contact [@luke-n-alpha](https://github.com/luke-n-alpha).
 
 ![AIPOL AI pension reform experiment preview](/desk/20260731-aipol-first-field-experiment/en.webp)
