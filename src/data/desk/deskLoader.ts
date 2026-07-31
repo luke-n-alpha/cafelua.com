@@ -62,6 +62,7 @@ function parseMdPost(filePath: string, slug: string): DeskPost | null {
         category: String(meta.category ?? 'it') as DeskCategory,
         tags: Array.isArray(meta.tags) ? meta.tags.map(String) : [],
         thumbnail: meta.thumbnail ? String(meta.thumbnail) : undefined,
+        thumbnailEn: meta.thumbnailEn ? String(meta.thumbnailEn) : undefined,
         images: Array.isArray(meta.images) ? meta.images.map(String) : [],
         sourceCategoryNo: meta.sourceCategoryNo ? String(meta.sourceCategoryNo) : undefined,
         sourceCategory: meta.sourceCategory ? String(meta.sourceCategory) : undefined,

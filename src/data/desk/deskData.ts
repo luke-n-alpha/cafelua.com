@@ -13,6 +13,7 @@ export interface DeskPost {
     sourceCategory?: string;
     tags?: string[];
     thumbnail?: string;
+    thumbnailEn?: string;
     images: string[];
     externalUrl?: string;
     canonicalUrl?: string;

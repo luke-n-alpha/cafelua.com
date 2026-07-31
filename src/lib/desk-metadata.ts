@@ -38,9 +38,15 @@ export function buildDeskPostMetadata(post: DeskPost, locale: string): Metadata 
     const sourceContent = locale === 'en' ? (post.contentEn || post.contentKo) : post.contentKo;
     const cleanTitle = cleanOgText(sourceTitle) || (locale === 'en' ? 'Post' : '포스팅');
     const description = buildOgDescription(sourceContent, locale);
-    const ogImage = post.thumbnail || post.images?.[0] || '/og-cafelua-entrance-v019.png';
+    const ogImage = (locale === 'en' ? post.thumbnailEn : post.thumbnail)
+        || post.thumbnail
+        || post.images?.[0]
+        || '/og-cafelua-entrance-v019.png';
     const encodedSlug = encodeURIComponent(post.slug);
     const postUrl = `/${locale}/desk/${encodedSlug}/`;
+    const canonicalUrl = post.canonicalUrl
+        ? post.canonicalUrl.replace('{locale}', locale)
+        : postUrl;
     const publishedAt = /^\d{4}-\d{2}-\d{2}$/.test(post.date)
         ? `${post.date}T00:00:00.000Z`
         : undefined;
@@ -50,7 +56,7 @@ export function buildDeskPostMetadata(post: DeskPost, locale: string): Metadata 
         description,
         authors: [{ name: 'Luke Yang', url: 'https://www.cafelua.com/ko/about/luke/' }],
         alternates: {
-            canonical: postUrl,
+            canonical: canonicalUrl,
             languages: {
                 ko: `/ko/desk/${encodedSlug}/`,
                 en: `/en/desk/${encodedSlug}/`,
