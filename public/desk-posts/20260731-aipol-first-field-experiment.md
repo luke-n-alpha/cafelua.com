@@ -47,6 +47,8 @@ canonicalUrl: "https://www.naia.land/{locale}/blog/20260731-aipol-first-field-ex
 
 보다 상세한 실험 배경과 공개 범위는 [AIPOL 연금개혁 사례 페이지](https://aipol.kaps.or.kr/cases/pension/)를 참고해 주세요.
 
+> **공개 데이터 바로 보기:** 검수 과정에서 포스팅에 상세 결과 링크가 누락됐습니다. 합성 시민 100명과 국내 AI 모델 3종을 이용한 사전 실험의 집계 결과, 회차별 응답, AI 교차검토 기록과 실행 근거는 [AIPOL 가상 실험 상세 결과](https://aipol.kaps.or.kr/cases/pension/report/results/)에서 확인할 수 있습니다.
+
 이는 합성 시민을 이용해 정책실험 엔진의 절차와 기록 방식을 점검한 결과이지, 실제 국민 여론이나 정책 선호도 또는 숙의 효과를 검증한 결과가 아닙니다. 제시할 정책대안과 실제 행사 진행 절차도 전문가회의를 통해 계속 검토하고 개선하고 있습니다.
 
 ## 이번 행사는 AIPOL의 첫 번째 현장 실험입니다
@@ -96,6 +98,7 @@ AI를 활용한 정책개발은 정부와 공공기관에서도 큰 관심을 �
 * [AIPOL](https://aipol.kaps.or.kr/)
 * [행사 안내](https://aipol.kaps.or.kr/events/)
 * [연금개혁 사례와 사전 검증 배경](https://aipol.kaps.or.kr/cases/pension/)
+* [합성 시민 100명 가상 실험 상세 결과](https://aipol.kaps.or.kr/cases/pension/report/results/)
 * [해외동향](https://aipol.kaps.or.kr/global/)
 * [공개 소스코드](https://github.com/nextain/aipol)
 
@@ -133,6 +136,8 @@ The models generated synthetic responses to pension reform alternatives created 
 However, the AI-generated alternative also changed assumptions that experts had fixed, introduced precise figures that had not been verified, and suggested a schedule inconsistent with the intended implementation period. The result reinforced two important points: a popular option is not necessarily an accurate or valid policy, and AI-generated proposals require expert review and explicit human approval.
 
 For more context and the current public scope, see the [AIPOL pension reform case page](https://aipol.kaps.or.kr/cases/pension/).
+
+> **View the public data:** The original post omitted the direct link during review. The aggregate results, round-by-round synthetic responses, AI cross-review records, and execution evidence from the pre-field run with 100 synthetic citizens and three Korean AI models are available in the [AIPOL detailed synthetic experiment results](https://aipol.kaps.or.kr/cases/pension/report/results/).
 
 This was a validation of the experiment engine's procedure and recordkeeping using synthetic participants. It is not evidence of public opinion, policy preference, or deliberative effects among real citizens. The policy alternatives and event procedure are still being reviewed and improved through expert meetings.
 
@@ -183,6 +188,7 @@ Personally, I believe AI may eventually be able to do some parts of politics bet
 * [AIPOL](https://aipol.kaps.or.kr/)
 * [Event information](https://aipol.kaps.or.kr/events/)
 * [Pension reform case and pre-field validation context](https://aipol.kaps.or.kr/cases/pension/)
+* [Detailed results from the 100-synthetic-citizen experiment](https://aipol.kaps.or.kr/cases/pension/report/results/)
 * [Global trends](https://aipol.kaps.or.kr/global/)
 * [Public source code](https://github.com/nextain/aipol)
 
