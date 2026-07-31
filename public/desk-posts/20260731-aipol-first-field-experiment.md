@@ -137,7 +137,7 @@ However, the AI-generated alternative also changed assumptions that experts had 
 
 For more context and the current public scope, see the [AIPOL pension reform case page](https://aipol.kaps.or.kr/cases/pension/).
 
-> **View the public data:** The original post omitted the direct link during review. The aggregate results, round-by-round synthetic responses, AI cross-review records, and execution evidence from the pre-field run with 100 synthetic citizens and three Korean AI models are available in the [AIPOL detailed synthetic experiment results](https://aipol.kaps.or.kr/cases/pension/report/results/).
+> **View the public data:** The original post omitted the direct link during review. The aggregate results, round-by-round synthetic responses, AI cross-review records, and execution evidence from the pre-field run with 100 synthetic citizens and three Korean AI models are available in the [AIPOL detailed synthetic experiment results](https://aipol.kaps.or.kr/en/cases/pension/report/results/).
 
 This was a validation of the experiment engine's procedure and recordkeeping using synthetic participants. It is not evidence of public opinion, policy preference, or deliberative effects among real citizens. The policy alternatives and event procedure are still being reviewed and improved through expert meetings.
 
@@ -188,7 +188,7 @@ Personally, I believe AI may eventually be able to do some parts of politics bet
 * [AIPOL](https://aipol.kaps.or.kr/)
 * [Event information](https://aipol.kaps.or.kr/events/)
 * [Pension reform case and pre-field validation context](https://aipol.kaps.or.kr/cases/pension/)
-* [Detailed results from the 100-synthetic-citizen experiment](https://aipol.kaps.or.kr/cases/pension/report/results/)
+* [Detailed results from the 100-synthetic-citizen experiment](https://aipol.kaps.or.kr/en/cases/pension/report/results/)
 * [Global trends](https://aipol.kaps.or.kr/global/)
 * [Public source code](https://github.com/nextain/aipol)
 
