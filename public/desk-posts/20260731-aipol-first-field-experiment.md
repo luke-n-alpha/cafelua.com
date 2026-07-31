@@ -119,7 +119,7 @@ South Korea's AI momentum in 2026 is stronger than ever. The semiconductor indus
 
 But can AI also help create policies that people can actually feel in their daily lives? Can it participate in defining policy problems, researching evidence, developing alternatives, listening to citizens, coordinating competing interests, and reviewing final decisions?
 
-To examine these questions, Nextain and the Korean Association for Policy Studies (KAPS) launched [AIPOL](https://aipol.kaps.or.kr/), an open-source AI policy research platform. AIPOL is an AI policy R&D project that tests these questions through real experiments and open-source tools.
+To examine these questions, Nextain and the Korean Association for Policy Studies (KAPS) launched [AIPOL](https://aipol.kaps.or.kr/en/), an open-source AI policy research platform. AIPOL is an AI policy R&D project that tests these questions through real experiments and open-source tools.
 
 Our first application is the “Pension Reform–AI Deliberative Democracy Policy Experiment.” The first field experiment will take place on August 12 at the Asia Culture Center in Gwangju. Ahead of the event, we are conducting expert meetings and pre-field validation. This post explains what we have prepared so far.
 
@@ -135,7 +135,7 @@ The models generated synthetic responses to pension reform alternatives created 
 
 However, the AI-generated alternative also changed assumptions that experts had fixed, introduced precise figures that had not been verified, and suggested a schedule inconsistent with the intended implementation period. The result reinforced two important points: a popular option is not necessarily an accurate or valid policy, and AI-generated proposals require expert review and explicit human approval.
 
-For more context and the current public scope, see the [AIPOL pension reform case page](https://aipol.kaps.or.kr/cases/pension/).
+For more context and the current public scope, see the [AIPOL pension reform case page](https://aipol.kaps.or.kr/en/cases/pension/).
 
 > **View the public data:** The original post omitted the direct link during review. The aggregate results, round-by-round synthetic responses, AI cross-review records, and execution evidence from the pre-field run with 100 synthetic citizens and three Korean AI models are available in the [AIPOL detailed synthetic experiment results](https://aipol.kaps.or.kr/en/cases/pension/report/results/).
 
@@ -173,7 +173,7 @@ AIPOL is more than an event website. **Researchers can create policy experiments
 
 We built it as a reusable platform rather than a one-off tool for this event. If you are interested in using it, please contact us.
 
-AIPOL also provides a [global trends page](https://aipol.kaps.or.kr/global/) and an [RSS feed](https://aipol.kaps.or.kr/global/rss.xml), summarizing official materials from governments and international organizations on AI-assisted policy development in Korean.
+AIPOL also provides a [global trends page](https://aipol.kaps.or.kr/en/global/) and an [RSS feed](https://aipol.kaps.or.kr/global/rss.xml), summarizing official materials from governments and international organizations on AI-assisted policy development in Korean.
 
 The AI drafting feature for the global trends page was implemented with Solar Open 2, an open-weight model made available through support we received by participating in an Upstage developer event. We validated its ability to turn official sources into structured Korean drafts. The site distinguishes material that is already public from automation that is still being prepared.
 
@@ -185,11 +185,12 @@ Personally, I believe AI may eventually be able to do some parts of politics bet
 
 ## Related Links
 
-* [AIPOL](https://aipol.kaps.or.kr/)
-* [Event information](https://aipol.kaps.or.kr/events/)
-* [Pension reform case and pre-field validation context](https://aipol.kaps.or.kr/cases/pension/)
+* [AIPOL](https://aipol.kaps.or.kr/en/)
+* [Event information](https://aipol.kaps.or.kr/en/events/)
+* [Pension reform case and pre-field validation context](https://aipol.kaps.or.kr/en/cases/pension/)
+* [Method and run process](https://aipol.kaps.or.kr/en/cases/pension/report/)
 * [Detailed results from the 100-synthetic-citizen experiment](https://aipol.kaps.or.kr/en/cases/pension/report/results/)
-* [Global trends](https://aipol.kaps.or.kr/global/)
+* [Global trends](https://aipol.kaps.or.kr/en/global/)
 * [Public source code](https://github.com/nextain/aipol)
 
 ---
