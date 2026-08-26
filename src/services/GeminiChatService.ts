@@ -1,7 +1,7 @@
 /**
  * GeminiChatService - 알파와의 커피챗을 위한 클라이언트 서비스
  *
- * 사용 모델: google/gemini-3.1-flash-lite (server default)
+ * 사용 모델: deepseek-v4-flash via Naia gateway (server default)
  * API: /api/chat (서버 사이드)
  */
 

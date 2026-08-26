@@ -14,7 +14,7 @@ interface TarotChatContext {
     environmentContext?: RuntimeEnvironmentContext;
 }
 
-const TAROT_CHAT_MODEL = process.env.CAFELUA_TAROT_CHAT_MODEL || 'google/gemini-3.1-flash-lite';
+const TAROT_CHAT_MODEL = process.env.CAFELUA_TAROT_CHAT_MODEL || 'deepseek-v4-flash';
 
 const getTarotChatPrompt = ({ language, memoryContext, deckSummary, isReadingMode, flippedCount, totalCards, environmentContext }: TarotChatContext) => `# 알파 (Alpha Yang) - 타로 상담 페르소나
 

@@ -1,16 +1,17 @@
-import { getVercelOidcToken } from '@vercel/oidc';
-
 export interface ChatMessage {
     role: 'user' | 'model';
     content: string;
 }
 
-// Vercel AI Gateway 모델 슬러그 (provider/model). 회사(nextain) 팀 크레딧으로 라우팅됨.
-export const DEFAULT_MODEL = 'google/gemini-3.1-flash-lite';
+export const DEFAULT_MODEL = 'deepseek-v4-flash';
 export const DEFAULT_MAX_TOKENS = 4096;
 
-// Vercel AI Gateway OpenAI 호환 엔드포인트
-const GATEWAY_URL = 'https://ai-gateway.vercel.sh/v1/chat/completions';
+const DEFAULT_NAIA_BASE_URL = 'https://api.nextain.io/v1';
+
+function naiaChatUrl(): string {
+    const baseUrl = (process.env.NAIA_BASE_URL || DEFAULT_NAIA_BASE_URL).replace(/\/+$/, '');
+    return `${baseUrl}/chat/completions`;
+}
 
 interface OpenAIMessage {
     role: string;
@@ -50,30 +51,20 @@ export async function callGemini(
     contents: GeminiContent[],
     options: CallGeminiOptions = {}
 ): Promise<CallGeminiResult> {
-    // Vercel AI Gateway 인증.
-    // - 프로덕션: OIDC 토큰은 요청 스코프 헤더(x-vercel-oidc-token)로 전달되므로
-    //   getVercelOidcToken()으로 읽어야 함 (process.env 에는 없음).
-    // - 로컬/CI: getVercelOidcToken()이 process.env.VERCEL_OIDC_TOKEN fallback,
-    //   또는 정적 AI_GATEWAY_API_KEY 우선 사용.
-    let apiKey = process.env.AI_GATEWAY_API_KEY;
+    const apiKey = process.env.NAIA_KEY;
     if (!apiKey) {
-        try {
-            apiKey = await getVercelOidcToken();
-        } catch (err) {
-            console.error('AI Gateway OIDC token error:', err);
-            throw new GeminiApiError('AI Gateway credentials are not configured', 500);
-        }
+        throw new GeminiApiError('Naia credentials are not configured', 500);
     }
 
-    const model = options.model || DEFAULT_MODEL;
+    const model = normalizeGeminiModel(options.model || DEFAULT_MODEL);
     const maxOutputTokens = options.maxOutputTokens || DEFAULT_MAX_TOKENS;
     const temperature = options.temperature ?? 0.8;
 
-    const response = await fetch(GATEWAY_URL, {
+    const response = await fetch(naiaChatUrl(), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${apiKey}`,
+            'X-AnyLLM-Key': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
             model,
@@ -85,19 +76,23 @@ export async function callGemini(
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error('AI Gateway error:', errorData);
+        console.error('Naia AI gateway error:', errorData);
         throw new GeminiApiError(`API request failed: ${response.status}`, response.status);
     }
 
     const data = await response.json();
     const finishReason = data.choices?.[0]?.finish_reason;
     if (finishReason === 'length') {
-        console.warn('[Gemini] Response truncated by max_tokens. finishReason:', finishReason);
+        console.warn('[Naia AI] Response truncated by max_tokens. finishReason:', finishReason);
     }
-    console.log('[Gemini] finishReason:', finishReason);
+    console.log('[Naia AI] finishReason:', finishReason);
 
     const text = data.choices?.[0]?.message?.content || '';
     return { text, finishReason };
+}
+
+export function normalizeGeminiModel(model: string): string {
+    return model.replace(/^google\//, '');
 }
 
 export class GeminiApiError extends Error {

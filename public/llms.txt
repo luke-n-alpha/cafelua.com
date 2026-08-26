@@ -60,7 +60,7 @@ She is named after Hatsuse No Alpha from the manga *Cafe Alpha*.
 - BGM: background music tracks used throughout the site
 
 ## Interactive Features
-- Coffee Chat: real-time conversation with Alpha (powered by Gemini Flash 3.1 Lite through Vercel AI Gateway)
+- Coffee Chat: real-time conversation with Alpha (powered by DeepSeek V4 Flash through the Naia AI gateway)
 - Runtime Context: Alpha receives the guest's season, time, weather, open/closed state, Christmas mode, and current Cafe Lua space in the system prompt
 - Tarot Reading: Celtic Cross (10-card) tarot session with AI interpretation
 - Old PC: fully interactive Windows 98 simulation with IE browser
@@ -68,7 +68,7 @@ She is named after Hatsuse No Alpha from the manga *Cafe Alpha*.
 
 ## Technical
 - Built with Next.js, React, TypeScript
-- Deployed on Vercel
+- Deployed on Naia-owned Azure infrastructure
 - AI: google/gemini-3.1-flash-lite for Cafe Lua chat/tarot routes by default
 - Total pages: 4356 (ko + en)
 - Sitemap: https://cafelua.com/sitemap.xml

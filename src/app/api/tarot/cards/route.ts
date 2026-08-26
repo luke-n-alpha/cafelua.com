@@ -15,7 +15,7 @@ const CARD_FOLDERS = [
 
 function getCardsBasePath(): string {
   const cwd = process.cwd();
-  // Vercel에서는 프로젝트 루트, 로컬에서는 public-home일 수 있음
+  // 배포 이미지에서는 프로젝트 루트, 로컬에서는 public-home일 수 있음
   if (cwd.endsWith('public-home')) {
     return path.join(cwd, '..', 'taro', 'cards');
   }
