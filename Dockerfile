@@ -5,15 +5,19 @@ RUN npm ci
 
 FROM node:22-alpine AS builder
 WORKDIR /app
-ENV NEXT_TELEMETRY_DISABLED=1
+ARG APP_REVISION=development
+ENV NEXT_TELEMETRY_DISABLED=1 \
+    APP_REVISION=${APP_REVISION}
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
 FROM node:22-alpine AS runtime
 WORKDIR /app
+ARG APP_REVISION=development
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
+    APP_REVISION=${APP_REVISION} \
     HOSTNAME=0.0.0.0 \
     PORT=3000
 RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
