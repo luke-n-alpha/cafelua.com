@@ -18,7 +18,17 @@ import {
 import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 
 type LibraryMode = 'menu' | 'booting' | 'desktop' | 'shutdown';
-type IeTarget = '1997' | '1998';
+type FstorySnapshot =
+    | '20010715123146'
+    | '20010723051951'
+    | '20010925220320'
+    | '20011202212712'
+    | '20020325014505'
+    | '20020924164928'
+    | '20021120053627'
+    | '20021128181318'
+    | '20030726202839';
+type IeTarget = '1997' | '1998' | FstorySnapshot;
 
 type IeHistoryContext = 'iframe' | 'frame2';
 
@@ -28,10 +38,24 @@ type IeHistoryEntry = {
 };
 
 const DEFAULT_IE_VIEWPORT = { width: 1024, height: 768 };
-const IE_VIEWPORTS: Record<IeTarget, { width: number; height: number }> = {
+const IE_VIEWPORTS: Partial<Record<IeTarget, { width: number; height: number }>> = {
     '1997': DEFAULT_IE_VIEWPORT,
     '1998': { width: 800, height: 600 }
 };
+
+const FSTORY_SNAPSHOTS: Array<{ id: FstorySnapshot; year: '2001' | '2002' | '2003'; date: string; version: string }> = [
+    { id: '20010715123146', year: '2001', date: '2001-07-15', version: 'hosting' },
+    { id: '20010723051951', year: '2001', date: '2001-07-23', version: 'v1' },
+    { id: '20010925220320', year: '2001', date: '2001-09-25', version: 'v2' },
+    { id: '20011202212712', year: '2001', date: '2001-12-02', version: 'v2' },
+    { id: '20020325014505', year: '2002', date: '2002-03-25', version: 'v2' },
+    { id: '20020924164928', year: '2002', date: '2002-09-24', version: 'v2' },
+    { id: '20021120053627', year: '2002', date: '2002-11-20', version: 'v2' },
+    { id: '20021128181318', year: '2002', date: '2002-11-28', version: 'v2' },
+    { id: '20030726202839', year: '2003', date: '2003-07-26', version: 'v3' },
+];
+
+const isFstorySnapshot = (target: IeTarget): target is FstorySnapshot => target.length === 14;
 
 const formatClock = (date: Date) => {
     const hours = String(date.getHours()).padStart(2, '0');
@@ -41,12 +65,15 @@ const formatClock = (date: Date) => {
 
 const getIeUrl = (target: IeTarget) => {
     if (target === '1997') return '/1997-homepage/index.html';
-    return '/1998-homepage/index.html';
+    if (target === '1998') return '/1998-homepage/index.html';
+    return `/fstory-homepage/${target}/index.html`;
 };
 
 const getIeTitle = (target: IeTarget) => {
     if (target === '1997') return 'Internet Explorer - 1997';
-    return 'Internet Explorer - 1998';
+    if (target === '1998') return 'Internet Explorer - 1998';
+    const snapshot = FSTORY_SNAPSHOTS.find(({ id }) => id === target);
+    return `Internet Explorer - fstory.net ${snapshot?.date ?? target}`;
 };
 
 const ScaledLegacyFrame = ({
@@ -188,7 +215,8 @@ const AtelierPage: React.FC = () => {
     const legacyMidiSrc = useMemo(() => {
         if (!ieTarget) return null;
         if (ieTarget === '1997') return '/1997-homepage/music/back1.mid';
-        return '/1998-homepage/music/Totoro%27.mid';
+        if (ieTarget === '1998') return '/1998-homepage/music/Totoro%27.mid';
+        return null;
     }, [ieTarget]);
 
     const ieViewport = useMemo(() => {
@@ -624,6 +652,28 @@ const AtelierPage: React.FC = () => {
                             <div className="win98-icon-image" aria-hidden="true" />
                             <div className="win98-icon-label">{t('library.folder1999Missing')}</div>
                         </button>
+
+                        {(['2001', '2002', '2003'] as const).map((year) => {
+                            const defaultSnapshot = year === '2001'
+                                ? '20010723051951'
+                                : year === '2002'
+                                    ? '20021128181318'
+                                    : '20030726202839';
+                            return (
+                                <button
+                                    type="button"
+                                    className="win98-icon"
+                                    key={year}
+                                    onClick={() => {
+                                        setIsStartMenuOpen(false);
+                                        setIeTarget(defaultSnapshot);
+                                    }}
+                                >
+                                    <div className="win98-icon-image" aria-hidden="true" />
+                                    <div className="win98-icon-label">{t(`library.folder${year}`)}</div>
+                                </button>
+                            );
+                        })}
                     </div>
 
                     <div className="win98-taskbar">
@@ -677,6 +727,22 @@ const AtelierPage: React.FC = () => {
                                     >
                                         ◀ {t('library.ieBack')}
                                     </button>
+                                    {isFstorySnapshot(ieTarget) && (
+                                        <label className="ie-snapshot-picker">
+                                            <span>{t('library.restorePoint')}</span>
+                                            <select
+                                                aria-label={t('library.restorePoint')}
+                                                value={ieTarget}
+                                                onChange={(event) => setIeTarget(event.target.value as FstorySnapshot)}
+                                            >
+                                                {FSTORY_SNAPSHOTS.map((snapshot) => (
+                                                    <option key={snapshot.id} value={snapshot.id}>
+                                                        {snapshot.date} · {snapshot.version}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </label>
+                                    )}
                                     <div className="ie-address-label">Address</div>
                                     <input
                                         className="ie-address"

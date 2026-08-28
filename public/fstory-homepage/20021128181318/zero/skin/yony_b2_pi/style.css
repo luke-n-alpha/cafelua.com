@@ -1,0 +1,22 @@
+A:link {color:#666666;text-decoration:none;} 
+A:visited {color:#666666;text-decoration:none;}
+A:active {color:#666666;text-decoration:none;} 
+A:hover {color:#666666;text-decoration:none;position:relative;top:1;left:1}
+
+img{border:0;}
+
+BODY,TD,input,DIV,form,TEXTAREA,center,pre,blockquote 
+{font-family:Verdana,굴림;font-size:9pt;color:#666666;
+scrollbar-face-color:#F7F7F7; scrollbar-shadow-color:#cccccc ;scrollbar-highlight-color: #FFFFFF;
+scrollbar-3dlight-color: #FFFFFF;scrollbar-darkshadow-color: #FFFFFF;
+scrollbar-track-color: #FFFFFF;scrollbar-arrow-color: #cccccc}
+
+select, option{font-family:Verdana,굴림;font-size:7pt}
+
+.input {border:0; background:url(dot.gif) repeat-x left bottom; line-height:100%;font-size:7pt}
+.input2 {border:0; background:url(dot.gif) repeat-x left bottom; line-height:100%}
+.search {border:0; background:url(i_bg.gif); line-height:90%}
+.submit {border:0; background-color:#ffffff; color:ff99aa; font-family:Verdana;font-size:7pt}
+textarea {border:solid 1 #EEC4C4; background-color:white;overflow-x:hidden; overflow-y:auto}
+.n2 {font-size:7pt;color:ff99aa}
+.n {font-size:7pt}

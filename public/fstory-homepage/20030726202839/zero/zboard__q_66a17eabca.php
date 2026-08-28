@@ -1,0 +1,1354 @@
+<!--
+ZeroBoard에 대한 라이센스 명시입니다.
+
+아래 라이센스에 동의하시는 분만 제로보드를 사용할수 있습니다.
+    
+프로그램명 : Zeroboard
+배포버젼 : 4.1 pl 1 (2002. 02. 25)
+개발자 : zero 
+Homepage : http://zeroboard.com
+
+1. 제로보드의 배포권은 ZEROBOARD.COM에서 허용한 곳에만 있습니다.
+   (허락 맡지 않은 재배포는 허용하지 않습니다.)
+
+2. 제로보드는 저작권을 아래 3번항목에 의해 표기하는 한도내에서
+   개인홈페이지 및 학교나 교회등의 비영리단체, 기업이나 기타 영리단체에서 사용할수 있습니다.
+   (반국가 단체나 불법 싸이트에서의 사용은 금지합니다)
+
+3. 제로보드 사용시 저작권 명시부분을 훼손하면 안됩니다.
+   프로그램 소스, html소스상의 라이센스 및 웹상 출력물 하단에 있는 카피라이트와 링크를 수정하지 마십시요.
+   (저작권 표시는 게시판 배포시 작성된 형식만을 허용합니다. 임의 수정은 금지합니다)
+
+4. 단, 정식 등록버젼은 저작권 표시를 삭제할수 있습니다.
+   정식 등록버젼에 대한 문의는 http://zeroboard.com 에서 문의 방법을 찾아주시기 바랍니다.
+
+5. 링크서비스등의 기본 용도에 맞지 않는 사용은 금지합니다.
+
+6. 제로보드의 사용으로 인한 데이타 손실 및 기타 손해등 어떠한 사고나 문제에 대해서 ZEROBOARD.COM은 절대 책임을 지지 않습니다.
+
+7. 제로보드에 대해 ZEROBOARD.COM은 유지/ 보수의 의무가 없습니다.
+
+8. 제로보드 소스는 개인적으로 사용시 수정하여 사용할수 있지만 수정된 프로그램의 재배포는 금지합니다.
+   (저작권 관련 부분은 수정금지입니다)
+
+9. 제로보드에 쓰인 스킨의 저작권은 스킨 제작자에게 있으며 제작자의 동의하에 수정배포가 가능합니다.
+
+10. 기타 의문사항은 http://zeroboard.com 에서 제로보드 채널을 이용해주십시요.
+    (질문등에 대한 내용은 메일로 받지 않습니다)
+
+-->
+<html> 
+<head>
+	<title></title>
+	<meta http-equiv=Content-Type content=text/html; charset=utf-8>
+	<link rel=StyleSheet HREF=skin/sseri_iconguest_orange_editbyTuckJa/style.css type=text/css title=style>
+	<script language='JavaScript'>
+	var select_obj;
+	function ZB_layerAction(name,status) { 
+		var obj=document.all[name];
+		var _tmpx,_tmpy, marginx, marginy;
+		_tmpx = event.clientX + parseInt(obj.offsetWidth);
+		_tmpy = event.clientY + parseInt(obj.offsetHeight);
+		_marginx = document.body.clientWidth - _tmpx;
+		_marginy = document.body.clientHeight - _tmpy ;
+		if(_marginx < 0)
+			_tmpx = event.clientX + document.body.scrollLeft + _marginx ;
+		else
+			_tmpx = event.clientX + document.body.scrollLeft ;
+		if(_marginy < 0)
+			_tmpy = event.clientY + document.body.scrollTop + _marginy +20;
+		else
+			_tmpy = event.clientY + document.body.scrollTop ;
+		obj.style.posLeft=_tmpx-13;
+		obj.style.posTop=_tmpy-12;
+		if(status=='visible') {
+			if(select_obj) {
+				select_obj.style.visibility='hidden';
+				select_obj=null;
+			}
+			select_obj=obj;
+		}else{
+			select_obj=null;
+		}
+		obj.style.visibility=status; 
+	}
+
+
+	function print_ZBlayer(name, homepage, mail, member_no, boardID, writer, traceID, traceType, isAdmin, isMember) {
+		var printHeight = 0;
+		var printMain="";
+	
+		if(homepage) {
+			printMain = "<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('"+homepage+"');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_homepage.gif border=0 align=absmiddle>&nbsp;&nbsp;홈페이지&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(mail) {
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('open_window.php?mode=m&str="+mail+"','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_mail.gif border=0 align=absmiddle>&nbsp;&nbsp;메일 보내기&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(member_no) {
+			if(isMember) {
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('view_info.php?member_no="+member_no+"','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_memo.gif border=0 align=absmiddle>&nbsp;&nbsp;쪽지 보내기&nbsp;&nbsp;</td></tr>";
+				printHeight = printHeight + 16;
+			}
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('view_info2.php?member_no="+member_no+"','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_information.gif border=0 align=absmiddle>&nbsp;&nbsp;회원정보 보기&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(writer) {
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=location.href='zboard.php?id="+boardID+"&sn1=on&sn=on&ss=off&sc=off&keyword="+writer+"';><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_search.gif border=0 align=absmiddle>&nbsp;&nbsp;이름으로 검색&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(isAdmin) {
+			if(member_no) {
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('open_window.php?mode=i&str="+member_no+"','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_modify.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>회원정보 변경&nbsp;&nbsp;</td></tr>";
+				printHeight = printHeight + 16;
+			}
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('open_window.php?mode="+traceType+"&str="+traceID+"','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_relationlist.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>관련글 추적</font>&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		
+		}
+		var printHeader = "<div id='"+name+"' style='position:absolute; left:10px; top:25px; width:127; height: "+printHeight+"; z-index:1; visibility: hidden' onMousedown=ZB_layerAction('"+name+"','hidden')><table border=0><tr><td colspan=3 onMouseover=ZB_layerAction('"+name+"','hidden') height=3></td></tr><tr><td width=5 onMouseover=ZB_layerAction('"+name+"','hidden') rowspan=2>&nbsp;</td><td height=5></td></tr><tr><td><table style=cursor:hand border='0' cellspacing='1' cellpadding='0' bgcolor='black' width=100% height=100%><tr><td valign=top bgcolor=white><table border=0 cellspacing=0 cellpadding=3 width=100% height=100%>";
+		var printFooter = "</table></td></tr></table></td><td width=5 rowspan=2 onMouseover=ZB_layerAction('"+name+"','hidden')>&nbsp;</td></tr><tr><td colspan=3 height=10 onMouseover=ZB_layerAction('"+name+"','hidden')></td></tr></table></div>";
+	
+		document.writeln(printHeader+printMain+printFooter);
+	}
+</script>
+	
+<script language="javascript">
+browserName = navigator.appName;
+browserVer = parseInt(navigator.appVersion);
+if(browserName == "Netscape" && browserVer >= 3){ init = "net"; }
+else { init = "ie"; }
+
+
+if(((init == "net")&&(browserVer >=3))||((init == "ie")&&(browserVer >= 4))){
+
+ sn_on=new Image;
+ sn_off=new Image;
+ sn_on.src= "skin/sseri_iconguest_orange_editbyTuckJa/name_on.gif";
+ sn_off.src= "skin/sseri_iconguest_orange_editbyTuckJa/name_off.gif";
+
+ ss_on=new Image;
+ ss_off=new Image;
+ ss_on.src= "skin/sseri_iconguest_orange_editbyTuckJa/subject_on.gif";
+ ss_off.src= "skin/sseri_iconguest_orange_editbyTuckJa/subject_off.gif";
+
+ sc_on=new Image;
+ sc_off=new Image;
+ sc_on.src= "skin/sseri_iconguest_orange_editbyTuckJa/content_on.gif";
+ sc_off.src= "skin/sseri_iconguest_orange_editbyTuckJa/content_off.gif";
+
+}
+
+function OnOff(name) {
+if(((init == "net")&&(browserVer >=3))||((init == "ie")&&(browserVer >= 4))) {
+  if(document.search[name].value=='on')
+  {
+   document.search[name].value='off';
+   ImgSrc=eval(name+"_off.src");
+   document[name].src=ImgSrc;
+  }
+  else
+  {
+   document.search[name].value='on';
+   ImgSrc=eval(name+"_on.src");
+   document[name].src=ImgSrc;
+  }
+ }
+}
+</script>
+
+<script language="javascript">
+  function reverse() {
+   var i, chked=0;
+   if(confirm('목록을 반전하시겠습니까?\n\n반전을 원하지 않는다면 취소를 누르시면 다음으로 넘어갑니다'))
+   {
+    for(i=0;i<document.list.length;i++)
+    {
+     if(document.list[i].type=='checkbox')
+     {
+      if(document.list[i].checked) { document.list[i].checked=false; }
+      else { document.list[i].checked=true; }
+     }
+    }
+   }
+   for(i=0;i<document.list.length;i++)
+   {
+    if(document.list[i].type=='checkbox')
+    {
+     if(document.list[i].checked) chked=1;
+    }
+   }
+   if(chked) {
+    if(confirm('선택된 항목을 보시겠습니까?'))
+     {
+      document.list.selected.value='';
+      document.list.exec.value='view_all';
+      for(i=0;i<document.list.length;i++)
+      {
+       if(document.list[i].type=='checkbox')
+       {
+        if(document.list[i].checked)
+        {
+         document.list.selected.value=document.list[i].value+';'+document.list.selected.value;
+        }
+       }
+      }
+      document.list.submit();
+      return true;
+     }
+    }
+   }
+
+ function delete_all() {
+  var i, chked=0;
+  for(i=0;i<document.list.length;i++)
+  {
+   if(document.list[i].type=='checkbox')
+   {
+    if(document.list[i].checked) chked=1;
+    }
+   }
+  if(chked)
+  {
+    document.list.selected.value='';
+    document.list.exec.value='delete_all';
+    for(i=0;i<document.list.length;i++)
+    {
+     if(document.list[i].type=='checkbox')
+     {
+      if(document.list[i].checked)
+      {
+       document.list.selected.value=document.list[i].value+';'+document.list.selected.value;
+      }
+     }
+    }
+    window.open("select_list_all.php?id=guest_book&selected="+document.list.selected.value,"게시물정리","width=260,height=180,toolbars=no,resize=no,scrollbars=no");
+  }
+  else {alert('정리할 게시물을 선택하여 주십시요');}
+ }
+
+ function category_change() {
+  var myindex=list.category.selectedIndex;
+  document.search.category.value=list.category.options[myindex].value;
+  document.search.submit();
+  return true;
+ }
+
+//-->
+</script>
+</head>
+<body topmargin='0'  leftmargin='0' marginwidth='0' marginheight='0'  bgcolor=white ><div align=center><table border=0 cellspacing=0 cellpadding=0 width=95%>
+<tr>
+<td>
+<table border=0 cellspacing=0 cellpadding=3 width=100%>
+<tr>
+<td valign=bottom class=small>
+  </td>
+  <td valign=bottom align=right class=small>
+    <a onfocus="blur()" href='login.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&s_url=%2Fzero%2Fzboard.php%3Fid%3Dguest_book&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'>Login</a>
+    <Zeroboard : Join</a>
+    <Zeroboard myinfo :</a>
+    <Zeroboard memo :</a>
+    <Zeroboard logout :</a>
+    <Zeroboard setup</a>
+</td>
+</tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100% height=1 background=skin/sseri_iconguest_orange_editbyTuckJa/dot.gif>
+<tr><td></td></tr></table>
+
+<div align=center>
+<table border=0 cellspacing=0 cellpadding=0 class=writewidth>
+ <tr>
+  <td width=1>
+   <!-- 폼태그 부분;; 수정하지 않는 것이 좋습니다 -->
+   <form method="post" name="write" action="write_ok.php" enctype="multipart/form-data"><input type="hidden" name="PHPSESSID" value="e539b3b5d6f13880fb2c5beb02b895e3" />
+   <input type="hidden" name="page" value="1">
+   <input type="hidden" name="id" value="guest_book">
+   <input type="hidden" name="no" value=>
+   <input type=hidden name=select_arrange value=headnum>
+   <input type="hidden" name="desc" value="asc">
+   <input type="hidden" name="page_num" value="10">
+   <input type="hidden" name="keyword" value="">
+   <input type="hidden" name="category" value="">
+   <input type="hidden" name="sn" value="off">
+   <input type="hidden" name="ss" value="on">
+   <input type="hidden" name="sc" value="on">
+   <input type="hidden" name="mode" value="">
+   <!----------------------------------------------->
+  </td></tr>
+ <tr>
+  <td align=center colspan=2>  </td></tr>
+    <tr>
+     <td valign=top>
+      <table border=0 cellsapcing=0 cellpadding=0 width=100% height=100% align=center>
+      <tr><td><input type="hidden" name="subject" value="Guest"  size="20.4"  maxlength="200" class="input"></td></tr>
+             <tr><td class=small>Name&nbsp;<input type="text" name="name" value=""  size="6"  maxlength="20" class="input">
+&nbsp;&nbsp;E-mail&nbsp;&nbsp;<input type="text" name="email" value=""  size="15"  maxlength="200" class="input">
+       </td></tr>
+       <tr><td class=small>Pass&nbsp;&nbsp;<input type="password" name="password"  size="6"  maxlength="20" class="input">
+&nbsp;&nbsp;Home&nbsp;&nbsp;<input type="text" name="homepage" value=""  size="15"  maxlength="200" class="input">
+       </td></tr>
+              <tr>
+        <td>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr><td width=200 class=small>
+<!--<input type="checkbox" name="notice"  value="1">Notice --><input type="checkbox" name="use_html"  value="1">HTML <input type="checkbox" name="reply_mail"  value="1">R.Mail
+</td><td align=right>
+<script language="javascript">
+function back_c(){
+if (document.write.sitelink1.value=="01"){
+  document.face.src="skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_01.gif";
+}else{
+  document.face.src="skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_"+document.write.sitelink1.value+".gif";
+}
+}
+
+function clearField(field){
+if (field.value == field.defaultValue) {
+field.value = "";
+}
+}
+function checkField(field){
+if (field.value == "") {
+field.value = field.defaultValue;
+}
+}
+</script>
+          <!-- icon -->
+          <select name=sitelink1 onchange='back_c();' style='font-size:9pt;'>
+          <option value=01>No Icon</option>
+          <option value=31>하트반지</option>
+          <option value=02>초록벤치</option>
+          <option value=03>커피잔</option>
+          <option value=04>파란별</option>
+          <option value=05>졸린고양이</option>
+          <option value=06>딸기케익</option>
+          <option value=07>은빛열쇠</option>
+          <option value=08>마호로상</option>
+          <option value=09>체리(사쿠라)</option>
+          <option value=10>소랑</option>
+          <option value=11>켄신</option>
+          <option value=12>멀티</option>
+          <option value=13>치요</option>
+          <option value=14>오사카</option>
+          <option value=15>데지코</option>
+          <option value=16>손오공</option>
+          <option value=17>구우</option>
+          <option value=18>마시마로</option>
+          <option value=19>백구</option>
+          <option value=20>케로</option>
+          <option value=21>피카츄</option>
+          <option value=22>둘리</option>
+          <option value=23>레인</option>
+          <option value=24>아발론</option>
+          <option value=25>아수라백작</option>
+          <option value=26>???</option>
+          <option value=27>마징가</option>
+          <option value=28>태권V</option>
+          <option value=29>벡터맨</option>
+          <option value=30>야부키죠</option>
+
+
+         </select>
+         <!-- icon end -->
+</td></tr></table>
+        </td></tr>
+       <tr><td>
+<table border=0 cellspacing=0 cellpadding=1 width=100%>
+<tr><td>
+<textarea name=memo  cols=28.2  rows=13 class=textarea></textarea>
+</td><td align=right class=icon>
+<script language="JavaScript">
+function openNewWindow(window) {
+open (window,"iconpreview","left=0, top=0, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, width=375, height=315");
+}
+</script>
+<a href="javascript:openNewWindow(""skin/sseri_iconguest_orange_editbyTuckJa/icon.php3") onfocus='this.blur()' title='아이콘 전체보기'><img name='face' src='skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_01.gif' border=0></a>
+</td></tr></table>
+</td></tr>
+       <tr>
+        <td align=right height=18 valign=bottom>
+         <input type="submit" value=" Submit " class="submit">
+         <input type="button" value=" Back " class="submit" onclick="history.back()">
+       </td>
+       </tr>
+      </table>
+  </td>
+ </tr>
+</form>
+</table>
+</div>
+<form method="post" name="list" action="list_all.php"><input type="hidden" name="PHPSESSID" value="e539b3b5d6f13880fb2c5beb02b895e3" />
+<input type="hidden" name="page" value="1">
+<input type="hidden" name="id" value="guest_book">
+<input type="hidden" name="select_arrange" value="headnum">
+<input type="hidden" name="desc" value="asc">
+<input type="hidden" name="page_num" value="10">
+<input type="hidden" name="selected">
+<input type="hidden" name="exec">
+<input type="hidden" name="keyword" value="">
+<input type="hidden" name="sn" value="off">
+<input type="hidden" name="ss" value="on">
+<input type="hidden" name="sc" value="on">
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100% height=11 background=skin/sseri_iconguest_orange_editbyTuckJa/line.gif>
+<tr><td><img src=skin/sseri_iconguest_orange_editbyTuckJa/line_head.gif></td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+<tr><td>
+<!--<input type="checkbox" name="cart" value="131">--><span class=small>No.66</span>&nbsp;&nbsp;오사카</TD>
+<TD align=right width=80>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=131&mode=reply&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/reply.gif border=0></a>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=131&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+</td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+      <TR>
+<TD valign=top class=icon>
+<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_14.gif" border=0></td>
+<td valign=top>
+  저... 소설을... 책으로 내려면... 몇살이 되어야 하나요?? 그리고... 어디에 올려아 하나요..?? 가르쳐 주세요... 부탁드립니닷~~<!--"<--></td>
+</tr>
+<tr>
+<td></td>
+<td align=right class=small><span title='2003년 04월 14일 20시 09분 53초'>2003/04/14</span>&nbsp;</td></tr></TABLE>
+
+<!-- 답글 -->
+<!-- 답글 위쪽 공백 테이블 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=90% height=5>
+	<tr> <td></td> </tr>
+</table>
+
+
+<!-- 답글 전체 테이블1 -->
+<table border=0 cellpadding=5 cellspacing=0 width="100%">
+<tr>
+	<td>
+<div align=right>	
+<!-- 답글 전체 테이블2 -->
+<TABLE border=0 cellPadding=3 cellSpacing=0 width=80% class=reply>
+	<tr>
+		<td colspan=2>
+
+<!-- 이름 및 버튼 출력 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100%>
+	<TR>
+		<td class=reply>
+			<a href="javascript:void(window.open("'view_info.php?to=fstory97@nate.com&id=guest_book&member_no=0','mailform','width=400,height=500,statusbar=no,scrollbars=yes,toolbar=no'))>숲속얘기</a>			
+				<a href="mailto:fstory97@nate.com" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/email.gif border=0>
+				</a>
+										<a href="../index.html" target="_blank" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0>
+				</a>
+					</td>
+		<td align=right width=100>
+			<a href="write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=132&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+			<a href="delete.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=132&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+		</td>
+	</tr>
+</table>
+<!-- 이름 및 버튼출력 끝 -->
+
+		</td>
+	</tr>
+	<tr>
+		<td valign=top>
+			<!-- 답글 내용 출력 -->
+		<table border=0 width=100% cellpadding=0 cellspacing=6>
+			<tr> <td>   책 내는거 나이는 관계 없을겁니다. ^^<br />
+저도 출판을 해본게 아닌데 그런걸 물으시면..<br />
+저같은 경우는 출판사 기자가 제 글을 보고 맘에 든다고 연락이 그냥 왔습니다만..<br />
+<br />
+ 예전에는 나우누리나 하이텔 등지에서 인기작가들이 주로 출판대상에 올랐지만, 요즘에는 인터넷상으로 옮긴듯 하네요. 제 링크란에 보면 창작 환타지 소설사이트가 있는데 그런데서도 발탁을 하는듯합니다.<br />
+ 하지만 출판에 목적을 두기보다는 작품에 목적을 두는게 작가의 본질이 아닐까요 ?&nbsp;&nbsp;너무 이상론이가요 ? </td> </tr>
+		</table>
+
+		</td>
+		<td class=icon valign=top>
+			<!-- reply icon -->
+			<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/03" border=0>
+		</td>
+	</tr>
+</table>
+</div>
+<!-- 답글 전체 테이블2 끝-->
+</td>
+</tr>
+</table>
+<!-- 답글 전체 테이블1 끝-->
+
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100% height=11 background=skin/sseri_iconguest_orange_editbyTuckJa/line.gif>
+<tr><td><img src=skin/sseri_iconguest_orange_editbyTuckJa/line_head.gif></td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+<tr><td>
+<!--<input type="checkbox" name="cart" value="129">--><span class=small>No.65</span>&nbsp;&nbsp;유명</TD>
+<TD align=right width=80>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=129&mode=reply&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/reply.gif border=0></a>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=129&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+</td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+      <TR>
+<TD valign=top class=icon>
+<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_26.gif" border=0></td>
+<td valign=top>
+  현재 진행중인 가장 급한 프로젝트는 잘 진행되고 있나? 잘되면 한턱 싸~~<!--"<--></td>
+</tr>
+<tr>
+<td></td>
+<td align=right class=small><span title='2003년 04월 14일 13시 40분 59초'>2003/04/14</span>&nbsp;IP Address : 218.37.35.22&nbsp;</td></tr></TABLE>
+
+<!-- 답글 -->
+<!-- 답글 위쪽 공백 테이블 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=90% height=5>
+	<tr> <td></td> </tr>
+</table>
+
+
+<!-- 답글 전체 테이블1 -->
+<table border=0 cellpadding=5 cellspacing=0 width="100%">
+<tr>
+	<td>
+<div align=right>	
+<!-- 답글 전체 테이블2 -->
+<TABLE border=0 cellPadding=3 cellSpacing=0 width=80% class=reply>
+	<tr>
+		<td colspan=2>
+
+<!-- 이름 및 버튼 출력 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100%>
+	<TR>
+		<td class=reply>
+			<a href="javascript:void(window.open("'view_info.php?to=숲속얘기&id=guest_book&member_no=0','mailform','width=400,height=500,statusbar=no,scrollbars=yes,toolbar=no'))>숲속얘기</a>			
+				<a href="mailto:숲속얘기" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/email.gif border=0>
+				</a>
+										<a href="../index.html" target="_blank" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0>
+				</a>
+					</td>
+		<td align=right width=100>
+			<a href="write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=130&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+			<a href="delete.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=130&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+		</td>
+	</tr>
+</table>
+<!-- 이름 및 버튼출력 끝 -->
+
+		</td>
+	</tr>
+	<tr>
+		<td valign=top>
+			<!-- 답글 내용 출력 -->
+		<table border=0 width=100% cellpadding=0 cellspacing=6>
+			<tr> <td>   그것때문에 괴로와 죽겠다. </td> </tr>
+		</table>
+
+		</td>
+		<td class=icon valign=top>
+			<!-- reply icon -->
+			<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/01" border=0>
+		</td>
+	</tr>
+</table>
+</div>
+<!-- 답글 전체 테이블2 끝-->
+</td>
+</tr>
+</table>
+<!-- 답글 전체 테이블1 끝-->
+
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100% height=11 background=skin/sseri_iconguest_orange_editbyTuckJa/line.gif>
+<tr><td><img src=skin/sseri_iconguest_orange_editbyTuckJa/line_head.gif></td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+<tr><td>
+<!--<input type="checkbox" name="cart" value="128">--><span class=small>No.64</span>&nbsp;&nbsp;무명</TD>
+<TD align=right width=80>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=128&mode=reply&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/reply.gif border=0></a>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=128&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+<a href='delete.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=128&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+</td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+      <TR>
+<TD valign=top class=icon>
+<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_25.gif" border=0></td>
+<td valign=top>
+  메롱<br />
+양택조<br />
+ㅋ<br />
+<!--"<--></td>
+</tr>
+<tr>
+<td></td>
+<td align=right class=small><span title='2003년 04월 14일 13시 38분 42초'>2003/04/14</span>&nbsp;IP Address : 61.111.89.97&nbsp;</td></tr></TABLE>
+
+
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100% height=11 background=skin/sseri_iconguest_orange_editbyTuckJa/line.gif>
+<tr><td><img src=skin/sseri_iconguest_orange_editbyTuckJa/line_head.gif></td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+<tr><td>
+<!--<input type="checkbox" name="cart" value="126">--><span class=small>No.63</span>&nbsp;&nbsp;상상녀</TD>
+<TD align=right width=80>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=126&mode=reply&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/reply.gif border=0></a>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=126&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+</td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+      <TR>
+<TD valign=top class=icon>
+<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_04.gif" border=0></td>
+<td valign=top>
+  안녕하세요<br />
+상상녀입니다.<br />
+사상을 수집하다 님에 글을 읽게 되었습니다.후[ 별을줍는소녀] 가슴이 따뜻해지는군요!^^<br />
+소설 속 순자가 부러워요.<br />
+님은 참 순수한 사람일거라고 <br />
+상상하며 이만갑니다. <br />
+좋은 글 많이 쓰세요.<br />
+또 수집병이 도지면 흔적 남기러 오지요.흐흐<br />
+애니매이션을 좋아하시나봐요.<br />
+아주익숙한음악이......<br />
+상상녀떠나다......<!--"<--></td>
+</tr>
+<tr>
+<td></td>
+<td align=right class=small><span title='2003년 04월 12일 16시 33분 39초'>2003/04/12</span>&nbsp;IP Address : 61.111.89.97&nbsp;</td></tr></TABLE>
+
+<!-- 답글 -->
+<!-- 답글 위쪽 공백 테이블 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=90% height=5>
+	<tr> <td></td> </tr>
+</table>
+
+
+<!-- 답글 전체 테이블1 -->
+<table border=0 cellpadding=5 cellspacing=0 width="100%">
+<tr>
+	<td>
+<div align=right>	
+<!-- 답글 전체 테이블2 -->
+<TABLE border=0 cellPadding=3 cellSpacing=0 width=80% class=reply>
+	<tr>
+		<td colspan=2>
+
+<!-- 이름 및 버튼 출력 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100%>
+	<TR>
+		<td class=reply>
+			<a href="javascript:void(window.open("'view_info.php?to=fstory97@nate.com&id=guest_book&member_no=0','mailform','width=400,height=500,statusbar=no,scrollbars=yes,toolbar=no'))>숲속얘기</a>			
+				<a href="mailto:fstory97@nate.com" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/email.gif border=0>
+				</a>
+										<a href="../index.html" target="_blank" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0>
+				</a>
+					</td>
+		<td align=right width=100>
+			<a href="write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=127&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+			<a href="delete.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=127&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+		</td>
+	</tr>
+</table>
+<!-- 이름 및 버튼출력 끝 -->
+
+		</td>
+	</tr>
+	<tr>
+		<td valign=top>
+			<!-- 답글 내용 출력 -->
+		<table border=0 width=100% cellpadding=0 cellspacing=6>
+			<tr> <td>   에니.. 좋아하죠 ^^<br />
+취미중 하나인지라.<br />
+재미있게 읽어주셨다니 고맙습니다.<br />
+요즘들어 제 글을 보러 오시는 분들이 부쩍 늘은듯하네요.<br />
+요즘엔 글을 전혀 못쓰고 있는데.. </td> </tr>
+		</table>
+
+		</td>
+		<td class=icon valign=top>
+			<!-- reply icon -->
+			<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/02" border=0>
+		</td>
+	</tr>
+</table>
+</div>
+<!-- 답글 전체 테이블2 끝-->
+</td>
+</tr>
+</table>
+<!-- 답글 전체 테이블1 끝-->
+
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100% height=11 background=skin/sseri_iconguest_orange_editbyTuckJa/line.gif>
+<tr><td><img src=skin/sseri_iconguest_orange_editbyTuckJa/line_head.gif></td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+<tr><td>
+<!--<input type="checkbox" name="cart" value="121">--><span class=small>No.62</span>&nbsp;&nbsp;심현정</TD>
+<TD align=right width=80>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=121&mode=reply&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/reply.gif border=0></a>
+<a href="http://hj0831@hihome.com" target="_blank" onfocus='this.blur()'><img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0></a>&nbsp;<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=121&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+</td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+      <TR>
+<TD valign=top class=icon>
+<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_07.gif" border=0></td>
+<td valign=top>
+  안녕하세요? <br />
+저는 동구여자상업고등학교에 <br />
+재학중인 영자신문기자 심현정입니다. <br />
+이번에 저희 써클에서<br />
+[인터넷작가]를 주제로 <br />
+설문조사와 인터뷰를 <br />
+바탕으로 기사를 쓰는데요.<br />
+작가님께 인터뷰를 하고 싶은데요. <br />
+바쁘시겠지만 조금의 시간이라도 내주신다면<br />
+감사하겠습니다.<br />
+작가님께 연락할 방법이 없어서<br />
+여기다가 글을 남깁니다.<br />
+<br />
+저희 연락처는 H.P 011-9188-0831 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(영자신문기자-심현정) <br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 018-260-4077 <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(문예편집반기자-신혜경) <br />
+<br />
+E-MAIL <a href="mailto:shkmine@hanmail.net">shkmine@hanmail.net</a> <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;adearlady@hanmail.net입니다.<br />
+<br />
+꼭 연락 주시기바랍니다. 감사합니다.<!--"<--></td>
+</tr>
+<tr>
+<td></td>
+<td align=right class=small><span title='2003년 04월 12일 05시 07분 55초'>2003/04/12</span>&nbsp;IP Address : 61.111.89.97&nbsp;</td></tr></TABLE>
+
+<!-- 답글 -->
+<!-- 답글 위쪽 공백 테이블 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=90% height=5>
+	<tr> <td></td> </tr>
+</table>
+
+
+<!-- 답글 전체 테이블1 -->
+<table border=0 cellpadding=5 cellspacing=0 width="100%">
+<tr>
+	<td>
+<div align=right>	
+<!-- 답글 전체 테이블2 -->
+<TABLE border=0 cellPadding=3 cellSpacing=0 width=80% class=reply>
+	<tr>
+		<td colspan=2>
+
+<!-- 이름 및 버튼 출력 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100%>
+	<TR>
+		<td class=reply>
+			<b><a href="javascript:void(window.open("'view_info.php?to=fstory97@nate.com&id=guest_book&member_no=1','mailform','width=400,height=500,statusbar=no,scrollbars=yes,toolbar=no'))>숲속얘기</a>			
+				<a href="mailto:fstory97@nate.com" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/email.gif border=0>
+				</a>
+										<a href="../index.html" target="_blank" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0>
+				</a>
+					</td>
+		<td align=right width=100>
+			<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+			<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+		</td>
+	</tr>
+</table>
+<!-- 이름 및 버튼출력 끝 -->
+
+		</td>
+	</tr>
+	<tr>
+		<td valign=top>
+			<!-- 답글 내용 출력 -->
+		<table border=0 width=100% cellpadding=0 cellspacing=6>
+			<tr> <td>   헉.. 저보고 인터넷 작가시라니..<br />
+제가 그런걸로 불릴 자격이나 있을까나. </td> </tr>
+		</table>
+
+		</td>
+		<td class=icon valign=top>
+			<!-- reply icon -->
+			<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/22" border=0>
+		</td>
+	</tr>
+</table>
+</div>
+<!-- 답글 전체 테이블2 끝-->
+</td>
+</tr>
+</table>
+<!-- 답글 전체 테이블1 끝-->
+
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100% height=11 background=skin/sseri_iconguest_orange_editbyTuckJa/line.gif>
+<tr><td><img src=skin/sseri_iconguest_orange_editbyTuckJa/line_head.gif></td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+<tr><td>
+<!--<input type="checkbox" name="cart" value="120">--><span class=small>No.61</span>&nbsp;&nbsp;rlarkdtks</TD>
+<TD align=right width=80>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=120&mode=reply&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/reply.gif border=0></a>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=120&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+</td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+      <TR>
+<TD valign=top class=icon>
+<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_02.gif" border=0></td>
+<td valign=top>
+  저 생각나실지 모르지만 참 오랜만에 들어오네요.... 근데 어떻게 이렇게 변함이 없는지.....^^&nbsp;&nbsp;한동안 컴퓨터를못해서여 이제는 좀 활발하게 제 자취를 남길&#44704;요....아 그리고&nbsp;&nbsp; 다시 저 드라고니아의 전설 진짜로 책으로 펴면 좋을것 같네요............그리고 계속&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;좋은 홈페이지 만드세요<!--"<--></td>
+</tr>
+<tr>
+<td></td>
+<td align=right class=small><span title='2003년 04월 10일 21시 59분 27초'>2003/04/10</span>&nbsp;IP Address : 61.111.89.97&nbsp;</td></tr></TABLE>
+
+<!-- 답글 -->
+<!-- 답글 위쪽 공백 테이블 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=90% height=5>
+	<tr> <td></td> </tr>
+</table>
+
+
+<!-- 답글 전체 테이블1 -->
+<table border=0 cellpadding=5 cellspacing=0 width="100%">
+<tr>
+	<td>
+<div align=right>	
+<!-- 답글 전체 테이블2 -->
+<TABLE border=0 cellPadding=3 cellSpacing=0 width=80% class=reply>
+	<tr>
+		<td colspan=2>
+
+<!-- 이름 및 버튼 출력 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100%>
+	<TR>
+		<td class=reply>
+			<a href="javascript:void(window.open("'view_info.php?to=fstory97@nate.com&id=guest_book&member_no=0','mailform','width=400,height=500,statusbar=no,scrollbars=yes,toolbar=no'))>숲속얘기</a>			
+				<a href="mailto:fstory97@nate.com" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/email.gif border=0>
+				</a>
+										<a href="../index.html" target="_blank" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0>
+				</a>
+					</td>
+		<td align=right width=100>
+			<a href="write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=122&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+			<a href="delete.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=122&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+		</td>
+	</tr>
+</table>
+<!-- 이름 및 버튼출력 끝 -->
+
+		</td>
+	</tr>
+	<tr>
+		<td valign=top>
+			<!-- 답글 내용 출력 -->
+		<table border=0 width=100% cellpadding=0 cellspacing=6>
+			<tr> <td>   요즘 조금 바빠서 홈페이지도 손못보고 있고<br />
+소설을 손 놓은지 정말 오래&#46124;는데..<br />
+2부도 정말 쓰다가 까맣게 잊고 있었네요.<br />
+<br />
+에구.. 님을 보면 자꾸 쓰고싶어지긴 하는데..<br />
+조금씩 이제 시간을 내봐야겠네요. </td> </tr>
+		</table>
+
+		</td>
+		<td class=icon valign=top>
+			<!-- reply icon -->
+			<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/04" border=0>
+		</td>
+	</tr>
+</table>
+</div>
+<!-- 답글 전체 테이블2 끝-->
+</td>
+</tr>
+</table>
+<!-- 답글 전체 테이블1 끝-->
+
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100% height=11 background=skin/sseri_iconguest_orange_editbyTuckJa/line.gif>
+<tr><td><img src=skin/sseri_iconguest_orange_editbyTuckJa/line_head.gif></td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+<tr><td>
+<!--<input type="checkbox" name="cart" value="119">--><span class=small>No.60</span>&nbsp;&nbsp;레테의 강</TD>
+<TD align=right width=80>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=119&mode=reply&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/reply.gif border=0></a>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=119&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+</td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+      <TR>
+<TD valign=top class=icon>
+<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_02.gif" border=0></td>
+<td valign=top>
+  언제나처럼 초록벤치는<br />
+그대로 있네요~<br />
+3월이 정신없이 지나가서요<br />
+거의 못들르다가.. 이제야<br />
+왔네요~ ^^<br />
+<br />
+개강하고 정신없는 요즘입니다...<br />
+좋은 주말 보내시길... ^^<br />
+<!--"<--></td>
+</tr>
+<tr>
+<td></td>
+<td align=right class=small><span title='2003년 03월 29일 14시 53분 33초'>2003/03/29</span>&nbsp;IP Address : 61.111.89.97&nbsp;</td></tr></TABLE>
+
+<!-- 답글 -->
+<!-- 답글 위쪽 공백 테이블 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=90% height=5>
+	<tr> <td></td> </tr>
+</table>
+
+
+<!-- 답글 전체 테이블1 -->
+<table border=0 cellpadding=5 cellspacing=0 width="100%">
+<tr>
+	<td>
+<div align=right>	
+<!-- 답글 전체 테이블2 -->
+<TABLE border=0 cellPadding=3 cellSpacing=0 width=80% class=reply>
+	<tr>
+		<td colspan=2>
+
+<!-- 이름 및 버튼 출력 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100%>
+	<TR>
+		<td class=reply>
+			<b><a href="javascript:void(window.open("'view_info.php?to=fstory97@nate.com&id=guest_book&member_no=1','mailform','width=400,height=500,statusbar=no,scrollbars=yes,toolbar=no'))>숲속얘기</a>			
+				<a href="mailto:fstory97@nate.com" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/email.gif border=0>
+				</a>
+										<a href="../index.html" target="_blank" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0>
+				</a>
+					</td>
+		<td align=right width=100>
+			<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+			<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+		</td>
+	</tr>
+</table>
+<!-- 이름 및 버튼출력 끝 -->
+
+		</td>
+	</tr>
+	<tr>
+		<td valign=top>
+			<!-- 답글 내용 출력 -->
+		<table border=0 width=100% cellpadding=0 cellspacing=6>
+			<tr> <td>   언제라도 오시는것은 늘 환영입니다. ^^ </td> </tr>
+		</table>
+
+		</td>
+		<td class=icon valign=top>
+			<!-- reply icon -->
+			<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/05" border=0>
+		</td>
+	</tr>
+</table>
+</div>
+<!-- 답글 전체 테이블2 끝-->
+</td>
+</tr>
+</table>
+<!-- 답글 전체 테이블1 끝-->
+
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100% height=11 background=skin/sseri_iconguest_orange_editbyTuckJa/line.gif>
+<tr><td><img src=skin/sseri_iconguest_orange_editbyTuckJa/line_head.gif></td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+<tr><td>
+<!--<input type="checkbox" name="cart" value="118">--><span class=small>No.59</span>&nbsp;&nbsp;바람의나그네</TD>
+<TD align=right width=80>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=118&mode=reply&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/reply.gif border=0></a>
+<a href="http://www.rni21.wo.to" target="_blank" onfocus='this.blur()'><img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0></a>&nbsp;<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=118&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+</td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+      <TR>
+<TD valign=top class=icon>
+<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_05.gif" border=0></td>
+<td valign=top>
+   여기홈 정말 좋네요 처음와보는데 그럼 즐거운하루 되세요 ^^<!--"<--></td>
+</tr>
+<tr>
+<td></td>
+<td align=right class=small><span title='2003년 03월 29일 08시 32분 15초'>2003/03/29</span>&nbsp;IP Address : 61.111.89.97&nbsp;</td></tr></TABLE>
+
+<!-- 답글 -->
+<!-- 답글 위쪽 공백 테이블 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=90% height=5>
+	<tr> <td></td> </tr>
+</table>
+
+
+<!-- 답글 전체 테이블1 -->
+<table border=0 cellpadding=5 cellspacing=0 width="100%">
+<tr>
+	<td>
+<div align=right>	
+<!-- 답글 전체 테이블2 -->
+<TABLE border=0 cellPadding=3 cellSpacing=0 width=80% class=reply>
+	<tr>
+		<td colspan=2>
+
+<!-- 이름 및 버튼 출력 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100%>
+	<TR>
+		<td class=reply>
+			<b><a href="javascript:void(window.open("'view_info.php?to=fstory97@nate.com&id=guest_book&member_no=1','mailform','width=400,height=500,statusbar=no,scrollbars=yes,toolbar=no'))>숲속얘기</a>			
+				<a href="mailto:fstory97@nate.com" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/email.gif border=0>
+				</a>
+										<a href="../index.html" target="_blank" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0>
+				</a>
+					</td>
+		<td align=right width=100>
+			<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+			<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+		</td>
+	</tr>
+</table>
+<!-- 이름 및 버튼출력 끝 -->
+
+		</td>
+	</tr>
+	<tr>
+		<td valign=top>
+			<!-- 답글 내용 출력 -->
+		<table border=0 width=100% cellpadding=0 cellspacing=6>
+			<tr> <td>   들려주신것 고마워요. ^^<br />
+요즘 너무 정신이 없어서 업데이트도 못하고 있는데.. </td> </tr>
+		</table>
+
+		</td>
+		<td class=icon valign=top>
+			<!-- reply icon -->
+			<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/02" border=0>
+		</td>
+	</tr>
+</table>
+</div>
+<!-- 답글 전체 테이블2 끝-->
+</td>
+</tr>
+</table>
+<!-- 답글 전체 테이블1 끝-->
+
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100% height=11 background=skin/sseri_iconguest_orange_editbyTuckJa/line.gif>
+<tr><td><img src=skin/sseri_iconguest_orange_editbyTuckJa/line_head.gif></td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+<tr><td>
+<!--<input type="checkbox" name="cart" value="116">--><span class=small>No.58</span>&nbsp;&nbsp;sachiel</TD>
+<TD align=right width=80>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=116&mode=reply&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/reply.gif border=0></a>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=116&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+</td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+      <TR>
+<TD valign=top class=icon>
+<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_03.gif" border=0></td>
+<td valign=top>
+  나무심는데이때 형학교에서 행사가 있답니다..ㅎㅎㅎ<br />
+드때 한번 뵙죠...<br />
+카메라 가지고 오셈~<!--"<--></td>
+</tr>
+<tr>
+<td></td>
+<td align=right class=small><span title='2003년 03월 19일 07시 10분 28초'>2003/03/19</span>&nbsp;IP Address : 61.111.89.97&nbsp;</td></tr></TABLE>
+
+<!-- 답글 -->
+<!-- 답글 위쪽 공백 테이블 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=90% height=5>
+	<tr> <td></td> </tr>
+</table>
+
+
+<!-- 답글 전체 테이블1 -->
+<table border=0 cellpadding=5 cellspacing=0 width="100%">
+<tr>
+	<td>
+<div align=right>	
+<!-- 답글 전체 테이블2 -->
+<TABLE border=0 cellPadding=3 cellSpacing=0 width=80% class=reply>
+	<tr>
+		<td colspan=2>
+
+<!-- 이름 및 버튼 출력 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100%>
+	<TR>
+		<td class=reply>
+			<a href="javascript:void(window.open("'view_info.php?to=fstory@mail.co.kr&id=guest_book&member_no=0','mailform','width=400,height=500,statusbar=no,scrollbars=yes,toolbar=no'))>숲속얘기</a>			
+				<a href="mailto:fstory@mail.co.kr" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/email.gif border=0>
+				</a>
+										<a href="../index.html" target="_blank" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0>
+				</a>
+					</td>
+		<td align=right width=100>
+			<a href="write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=117&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+			<a href="delete.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=117&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+		</td>
+	</tr>
+</table>
+<!-- 이름 및 버튼출력 끝 -->
+
+		</td>
+	</tr>
+	<tr>
+		<td valign=top>
+			<!-- 답글 내용 출력 -->
+		<table border=0 width=100% cellpadding=0 cellspacing=6>
+			<tr> <td>   카메라 하면 끔찍한 기억이.. ㅠㅠ<br />
+빌려서 A/S받게 생겼다. 16만 5천원..  </td> </tr>
+		</table>
+
+		</td>
+		<td class=icon valign=top>
+			<!-- reply icon -->
+			<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/02" border=0>
+		</td>
+	</tr>
+</table>
+</div>
+<!-- 답글 전체 테이블2 끝-->
+</td>
+</tr>
+</table>
+<!-- 답글 전체 테이블1 끝-->
+
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100% height=11 background=skin/sseri_iconguest_orange_editbyTuckJa/line.gif>
+<tr><td><img src=skin/sseri_iconguest_orange_editbyTuckJa/line_head.gif></td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+<tr><td>
+<!--<input type="checkbox" name="cart" value="113">--><span class=small>No.57</span>&nbsp;&nbsp;sachiel</TD>
+<TD align=right width=80>
+<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=113&mode=reply&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/reply.gif border=0></a>
+<a href="http://www.teamclover.net/sachiel" target="_blank" onfocus='this.blur()'><img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0></a>&nbsp;<a href='write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=113&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+<Zeroboard<img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+</td></tr></table>
+<TABLE border=0 cellPadding=5 cellSpacing=0 width=100%>
+      <TR>
+<TD valign=top class=icon>
+<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/icon_29.gif" border=0></td>
+<td valign=top>
+  곈 애인 있는몸이랍니다^^<br />
+<br />
+잘못 짚으셨어요^^<br />
+<br />
+그냥 친한 동생이라죠~<!--"<--></td>
+</tr>
+<tr>
+<td></td>
+<td align=right class=small><span title='2003년 03월 13일 19시 23분 04초'>2003/03/13</span>&nbsp;IP Address : 61.111.88.71&nbsp;</td></tr></TABLE>
+
+<!-- 답글 -->
+<!-- 답글 위쪽 공백 테이블 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=90% height=5>
+	<tr> <td></td> </tr>
+</table>
+
+
+<!-- 답글 전체 테이블1 -->
+<table border=0 cellpadding=5 cellspacing=0 width="100%">
+<tr>
+	<td>
+<div align=right>	
+<!-- 답글 전체 테이블2 -->
+<TABLE border=0 cellPadding=3 cellSpacing=0 width=80% class=reply>
+	<tr>
+		<td colspan=2>
+
+<!-- 이름 및 버튼 출력 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100%>
+	<TR>
+		<td class=reply>
+			<a href="javascript:void(window.open("'view_info.php?to=sachiel&id=guest_book&member_no=0','mailform','width=400,height=500,statusbar=no,scrollbars=yes,toolbar=no'))>sachiel</a>			
+				<a href="mailto:sachiel" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/email.gif border=0>
+				</a>
+										<a href="http://www.teamclover.net/sachiel" target="_blank" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0>
+				</a>
+					</td>
+		<td align=right width=100>
+			<a href="write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=115&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+			<a href="delete.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=115&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+		</td>
+	</tr>
+</table>
+<!-- 이름 및 버튼출력 끝 -->
+
+		</td>
+	</tr>
+	<tr>
+		<td valign=top>
+			<!-- 답글 내용 출력 -->
+		<table border=0 width=100% cellpadding=0 cellspacing=6>
+			<tr> <td>   세상엔...해서 돼는일과 안돼는일 두가지가 있다죠...후~<br />
+ </td> </tr>
+		</table>
+
+		</td>
+		<td class=icon valign=top>
+			<!-- reply icon -->
+			<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/05" border=0>
+		</td>
+	</tr>
+</table>
+</div>
+<!-- 답글 전체 테이블2 끝-->
+</td>
+</tr>
+</table>
+<!-- 답글 전체 테이블1 끝-->
+<!-- 답글 -->
+<!-- 답글 위쪽 공백 테이블 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=90% height=5>
+	<tr> <td></td> </tr>
+</table>
+
+
+<!-- 답글 전체 테이블1 -->
+<table border=0 cellpadding=5 cellspacing=0 width="100%">
+<tr>
+	<td>
+<div align=right>	
+<!-- 답글 전체 테이블2 -->
+<TABLE border=0 cellPadding=3 cellSpacing=0 width=80% class=reply>
+	<tr>
+		<td colspan=2>
+
+<!-- 이름 및 버튼 출력 -->
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100%>
+	<TR>
+		<td class=reply>
+			<a href="javascript:void(window.open("'view_info.php?to=fstory@mail.co.kr&id=guest_book&member_no=0','mailform','width=400,height=500,statusbar=no,scrollbars=yes,toolbar=no'))>숲속얘기</a>			
+				<a href="mailto:fstory@mail.co.kr" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/email.gif border=0>
+				</a>
+										<a href="../index.html" target="_blank" onfocus='this.blur()'>
+					<img src=skin/sseri_iconguest_orange_editbyTuckJa/home.gif border=0>
+				</a>
+					</td>
+		<td align=right width=100>
+			<a href="write.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=114&mode=modify&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/edit.gif border=0></a>
+			<a href="delete.php?id=guest_book&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=114&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3"><img src=skin/sseri_iconguest_orange_editbyTuckJa/delete.gif border=0></a>
+		</td>
+	</tr>
+</table>
+<!-- 이름 및 버튼출력 끝 -->
+
+		</td>
+	</tr>
+	<tr>
+		<td valign=top>
+			<!-- 답글 내용 출력 -->
+		<table border=0 width=100% cellpadding=0 cellspacing=6>
+			<tr> <td>   그렇다면 뺏어라. ㅋㅋ<br />
+쟁취하는 사랑이 아름답다. ^^ </td> </tr>
+		</table>
+
+		</td>
+		<td class=icon valign=top>
+			<!-- reply icon -->
+			<img src="skin/sseri_iconguest_orange_editbyTuckJa/icon/31" border=0>
+		</td>
+	</tr>
+</table>
+</div>
+<!-- 답글 전체 테이블2 끝-->
+</td>
+</tr>
+</table>
+<!-- 답글 전체 테이블1 끝-->
+
+<TABLE border=0 cellPadding=0 cellSpacing=0 width=100% height=1 background=skin/sseri_iconguest_orange_editbyTuckJa/dot.gif>
+<tr><td></td></tr></table>
+<table border=0 cellspacing=1 cellpadding=2 width=100%>
+<tr>
+ <td width=50 class=small>
+ </td>
+ <td align=center nowrap class=small>
+ <Zeroboard [Pre]</a>  <font style=font-size:8pt><b>1</b> <a onfocus="blur()" href='/zero/zboard.php?id=guest_book&page=2&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><font style=font-size:8pt>[2]</a><a onfocus="blur()" href='/zero/zboard.php?id=guest_book&page=3&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><font style=font-size:8pt>[3]</a><a onfocus="blur()" href='/zero/zboard.php?id=guest_book&page=4&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><font style=font-size:8pt>[4]</a><a onfocus="blur()" href='/zero/zboard.php?id=guest_book&page=5&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><font style=font-size:8pt>[5]</a><a onfocus="blur()" href='/zero/zboard.php?id=guest_book&page=6&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><font style=font-size:8pt>[6]</a><a onfocus="blur()" href='/zero/zboard.php?id=guest_book&page=7&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'><font style=font-size:8pt>[7]</a> <Zeroboard [Next]</a>
+ </td>
+ <td width=50 align=right class=small>
+  <Zeroboard Delete</a>
+ </td>
+</form>
+</tr>
+</table>
+
+<!-- 검색폼 부분 ---------------------->
+<table border=0 cellspacing=1 cellpadding=1 width=100%>
+ <td>
+<!-- 폼태그 부분;; 수정하지 않는 것이 좋습니다 -->
+<form method="post" name="search" action="/zero/zboard.php"><input type="hidden" name="PHPSESSID" value="e539b3b5d6f13880fb2c5beb02b895e3" />
+<input type="hidden" name="page" value="1">
+<input type="hidden" name="id" value="guest_book">
+<input type="hidden" name="select_arrange" value="headnum">
+<input type="hidden" name="desc" value="asc">
+<input type="hidden" name="page_num" value="10">
+<input type="hidden" name="selected">
+<input type="hidden" name="exec">
+<input type="hidden" name="sn" value="off">
+<input type="hidden" name="ss" value="on">
+<input type="hidden" name="sc" value="on">
+<input type="hidden" name="category" value="">
+<!----------------------------------------------->
+ </td>
+ <td>
+
+<table border=0 width=100% cellspcing=0 cellpadding=0>
+<tr>
+ <td colspan=2 align=right class=small>
+    <a href="javascript:OnOff('sn')" onfocus="blur()"><img src=skin/sseri_iconguest_orange_editbyTuckJa/name_off.gif border=0 name=sn> name</a>
+    <a href="javascript:OnOff('sc')" onfocus="blur()"><img src=skin/sseri_iconguest_orange_editbyTuckJa/content_on.gif border=0 name=sc> content</a>
+   <input type="text" name="keyword" value=""  size="6"  class="input">
+   <input type="submit" value='search' class="submit"><a onfocus="blur()" href='/zero/zboard.php?id=guest_book&PHPSESSID=e539b3b5d6f13880fb2c5beb02b895e3'> cancel</a>
+ </td>
+</form>
+</tr>
+</table>
+
+</td></tr></table>
+</td></tr></table>
+
+<script>
+print_ZBlayer('zbLayer1', '', 'ZGFkYWpoc2htQGhhbm1haWwubmV0', '', 'guest_book', '오사카', '', '', '', '');
+print_ZBlayer('zbLayer2', '', '', '', 'guest_book', '유명', '', '', '', '');
+print_ZBlayer('zbLayer3', '', '', '', 'guest_book', '무명', '', '', '', '');
+print_ZBlayer('zbLayer4', '', '', '', 'guest_book', '상상녀', '', '', '', '');
+print_ZBlayer('zbLayer5', 'http://hj0831@hihome.com', 'YWRlYXJsYWR5QGhhbm1haWwubmV0', '', 'guest_book', '심현정', '', '', '', '');
+print_ZBlayer('zbLayer6', '', '', '', 'guest_book', 'rlarkdtks', '', '', '', '');
+print_ZBlayer('zbLayer7', '', '', '', 'guest_book', '레테의강', '', '', '', '');
+print_ZBlayer('zbLayer8', 'http://www.rni21.wo.to', 'cm5pMjFAaGFubWFpbC5uZXQ=', '', 'guest_book', '바람의나그네', '', '', '', '');
+print_ZBlayer('zbLayer9', '', '', '', 'guest_book', 'sachiel', '', '', '', '');
+print_ZBlayer('zbLayer10', 'http://www.teamclover.net/sachiel', '', '', 'guest_book', 'sachiel', '', '', '', '');
+</script>			<table border=0 cellpadding=0 cellspacing=0 height=20 width=95%>
+			<tr>
+				<td align=right style=font-family:tahoma,굴림;font-size:8pt;line-height:150%;letter-spacing:0px>
+					<font style=font-size:7pt>Copyright 1999-2003</font> <a href="http://www.zeroboard.com" target="_blank" onfocus="blur()"><font tyle=font-family:tahoma,굴림;font-size:5pt;>Zeroboard</a> / skin by <font style=font-family:verdana;font-size:7pt;><a href="http://sseri.pe.kr" target="_blank">SSERI</a></font>
+				</td>   
+			</tr>
+			</table>
+			</div>			</body>
+			</html>
+			
+
+<!--
+ Session Excuted  : 0.0005
+ Connect Checked  : 0.0010
+ Query Excuted  : 0.054
+ PHP Excuted  : 0.035
+ Check Lists : 0.018
+ Skins Excuted  : 0.699
+ Total Excuted Time : 0.790
+-->

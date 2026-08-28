@@ -1,0 +1,78 @@
+{
+  "source": "Internet Archive Wayback Machine captures of fstory.net",
+  "generatedFrom": "../data/fstory-net-wayback/versions/reconstructed",
+  "snapshots": [
+    {
+      "timestamp": "20010715123146",
+      "date": "2001-07-15",
+      "description": "도메인 호스팅 초기 화면",
+      "entry": "/fstory-homepage/20010715123146/index.html",
+      "fileCount": 16,
+      "restoredFileCount": 22
+    },
+    {
+      "timestamp": "20010723051951",
+      "date": "2001-07-23",
+      "description": "Fstory 홈페이지 v1",
+      "entry": "/fstory-homepage/20010723051951/index.html",
+      "fileCount": 38,
+      "restoredFileCount": 6
+    },
+    {
+      "timestamp": "20010925220320",
+      "date": "2001-09-25",
+      "description": "Fstory 홈페이지 v2 최초 확인",
+      "entry": "/fstory-homepage/20010925220320/index.html",
+      "fileCount": 72,
+      "restoredFileCount": 132
+    },
+    {
+      "timestamp": "20011202212712",
+      "date": "2001-12-02",
+      "description": "Fstory 홈페이지 v2 중간 갱신",
+      "entry": "/fstory-homepage/20011202212712/index.html",
+      "fileCount": 179,
+      "restoredFileCount": 124
+    },
+    {
+      "timestamp": "20020325014505",
+      "date": "2002-03-25",
+      "description": "Fstory 홈페이지 v2 중간 갱신",
+      "entry": "/fstory-homepage/20020325014505/index.html",
+      "fileCount": 380,
+      "restoredFileCount": 54
+    },
+    {
+      "timestamp": "20020924164928",
+      "date": "2002-09-24",
+      "description": "Fstory 홈페이지 v2 중간 갱신",
+      "entry": "/fstory-homepage/20020924164928/index.html",
+      "fileCount": 396,
+      "restoredFileCount": 46
+    },
+    {
+      "timestamp": "20021120053627",
+      "date": "2002-11-20",
+      "description": "Fstory 홈페이지 v2 중간 갱신",
+      "entry": "/fstory-homepage/20021120053627/index.html",
+      "fileCount": 396,
+      "restoredFileCount": 46
+    },
+    {
+      "timestamp": "20021128181318",
+      "date": "2002-11-28",
+      "description": "Fstory 홈페이지 v2 대표 상태",
+      "entry": "/fstory-homepage/20021128181318/index.html",
+      "fileCount": 654,
+      "restoredFileCount": 8
+    },
+    {
+      "timestamp": "20030726202839",
+      "date": "2003-07-26",
+      "description": "Fstory 홈페이지 v3",
+      "entry": "/fstory-homepage/20030726202839/index.html",
+      "fileCount": 671,
+      "restoredFileCount": 0
+    }
+  ]
+}

@@ -1,0 +1,328 @@
+<!--
+ZeroBoard에 대한 라이센스 명시입니다.
+
+아래 라이센스에 동의하시는 분만 제로보드를 사용할수 있습니다.
+    
+프로그램명 : Zeroboard
+배포버젼 : 4.1 pl 1 (2002. 02. 25)
+개발자 : zero 
+Homepage : http://zeroboard.com
+
+1. 제로보드의 배포권은 ZEROBOARD.COM에서 허용한 곳에만 있습니다.
+   (허락 맡지 않은 재배포는 허용하지 않습니다.)
+
+2. 제로보드는 저작권을 아래 3번항목에 의해 표기하는 한도내에서
+   개인홈페이지 및 학교나 교회등의 비영리단체, 기업이나 기타 영리단체에서 사용할수 있습니다.
+   (반국가 단체나 불법 싸이트에서의 사용은 금지합니다)
+
+3. 제로보드 사용시 저작권 명시부분을 훼손하면 안됩니다.
+   프로그램 소스, html소스상의 라이센스 및 웹상 출력물 하단에 있는 카피라이트와 링크를 수정하지 마십시요.
+   (저작권 표시는 게시판 배포시 작성된 형식만을 허용합니다. 임의 수정은 금지합니다)
+
+4. 단, 정식 등록버젼은 저작권 표시를 삭제할수 있습니다.
+   정식 등록버젼에 대한 문의는 http://zeroboard.com 에서 문의 방법을 찾아주시기 바랍니다.
+
+5. 링크서비스등의 기본 용도에 맞지 않는 사용은 금지합니다.
+
+6. 제로보드의 사용으로 인한 데이타 손실 및 기타 손해등 어떠한 사고나 문제에 대해서 ZEROBOARD.COM은 절대 책임을 지지 않습니다.
+
+7. 제로보드에 대해 ZEROBOARD.COM은 유지/ 보수의 의무가 없습니다.
+
+8. 제로보드 소스는 개인적으로 사용시 수정하여 사용할수 있지만 수정된 프로그램의 재배포는 금지합니다.
+   (저작권 관련 부분은 수정금지입니다)
+
+9. 제로보드에 쓰인 스킨의 저작권은 스킨 제작자에게 있으며 제작자의 동의하에 수정배포가 가능합니다.
+
+10. 기타 의문사항은 http://zeroboard.com 에서 제로보드 채널을 이용해주십시요.
+    (질문등에 대한 내용은 메일로 받지 않습니다)
+
+-->
+<html> 
+<head>
+	<title></title>
+	<meta http-equiv=Content-Type content=text/html; charset=utf-8>
+	<link rel=StyleSheet HREF=skin/zipulragi_dairy2/style.css type=text/css title=style>
+	<script language='JavaScript'>
+	var select_obj;
+	function ZB_layerAction(name,status) { 
+		var obj=document.all[name];
+		var _tmpx,_tmpy, marginx, marginy;
+		_tmpx = event.clientX + parseInt(obj.offsetWidth);
+		_tmpy = event.clientY + parseInt(obj.offsetHeight);
+		_marginx = document.body.clientWidth - _tmpx;
+		_marginy = document.body.clientHeight - _tmpy ;
+		if(_marginx < 0)
+			_tmpx = event.clientX + document.body.scrollLeft + _marginx ;
+		else
+			_tmpx = event.clientX + document.body.scrollLeft ;
+		if(_marginy < 0)
+			_tmpy = event.clientY + document.body.scrollTop + _marginy +20;
+		else
+			_tmpy = event.clientY + document.body.scrollTop ;
+		obj.style.posLeft=_tmpx-13;
+		obj.style.posTop=_tmpy-12;
+		if(status=='visible') {
+			if(select_obj) {
+				select_obj.style.visibility='hidden';
+				select_obj=null;
+			}
+			select_obj=obj;
+		}else{
+			select_obj=null;
+		}
+		obj.style.visibility=status; 
+	}
+
+
+	function print_ZBlayer(name, homepage, mail, member_no, boardID, writer, traceID, traceType, isAdmin, isMember) {
+		var printHeight = 0;
+		var printMain="";
+	
+		if(homepage) {
+			printMain = "<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('"+homepage+"');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_homepage.gif border=0 align=absmiddle>&nbsp;&nbsp;홈페이지&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(mail) {
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('open_window.php?mode=m&str="+mail+"','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_mail.gif border=0 align=absmiddle>&nbsp;&nbsp;메일 보내기&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(member_no) {
+			if(isMember) {
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('view_info.php?member_no="+member_no+"','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_memo.gif border=0 align=absmiddle>&nbsp;&nbsp;쪽지 보내기&nbsp;&nbsp;</td></tr>";
+				printHeight = printHeight + 16;
+			}
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('view_info2.php?member_no="+member_no+"','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_information.gif border=0 align=absmiddle>&nbsp;&nbsp;회원정보 보기&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(writer) {
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=location.href='zboard.php?id="+boardID+"&sn1=on&sn=on&ss=off&sc=off&keyword="+writer+"';><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_search.gif border=0 align=absmiddle>&nbsp;&nbsp;이름으로 검색&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(isAdmin) {
+			if(member_no) {
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('open_window.php?mode=i&str="+member_no+"','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_modify.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>회원정보 변경&nbsp;&nbsp;</td></tr>";
+				printHeight = printHeight + 16;
+			}
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('open_window.php?mode="+traceType+"&str="+traceID+"','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_relationlist.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>관련글 추적</font>&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		
+		}
+		var printHeader = "<div id='"+name+"' style='position:absolute; left:10px; top:25px; width:127; height: "+printHeight+"; z-index:1; visibility: hidden' onMousedown=ZB_layerAction('"+name+"','hidden')><table border=0><tr><td colspan=3 onMouseover=ZB_layerAction('"+name+"','hidden') height=3></td></tr><tr><td width=5 onMouseover=ZB_layerAction('"+name+"','hidden') rowspan=2>&nbsp;</td><td height=5></td></tr><tr><td><table style=cursor:hand border='0' cellspacing='1' cellpadding='0' bgcolor='black' width=100% height=100%><tr><td valign=top bgcolor=white><table border=0 cellspacing=0 cellpadding=3 width=100% height=100%>";
+		var printFooter = "</table></td></tr></table></td><td width=5 rowspan=2 onMouseover=ZB_layerAction('"+name+"','hidden')>&nbsp;</td></tr><tr><td colspan=3 height=10 onMouseover=ZB_layerAction('"+name+"','hidden')></td></tr></table></div>";
+	
+		document.writeln(printHeader+printMain+printFooter);
+	}
+</script>
+	</head>
+<body topmargin='0'  leftmargin='0' marginwidth='0' marginheight='0'  bgcolor=white ><div align=center>
+<script language=JavaScript>
+function findObj(n, d) { //v4.0
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=findObj(n,d.layers[i].document);
+  if(!x && document.getElementById) x=document.getElementById(n); return x;
+}
+function swapImage() {
+  var i,j=0,x,a=swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+
+<!-- HTML 시작 -->
+<table border=0 cellspacing=0 cellpadding=0 width=95%>
+<tr>
+  <td valign=bottom class=kissofgod-tahoma7 nowrap><a href="javascript:void(window.open("'member_memo3.php','member_memo','width=450,height=500,status=no,toolbar=no,resizable=yes,scrollbars=yes')) onfocus='this.blur()'><img src=skin/zipulragi_dairy2/member_logged.gif border=0 align=absmiddle alt='접속된 회원 및 총회원 목록보기&#10;&#13;현재 1분께서 회원으로 접속해 있습니다.'><span onfocus='this.blur()'> 1</span></td>
+  <td valign=bottom rowspan=2 align=right width=100%>
+    <Zeroboard <img src=skin/zipulragi_dairy2/member_join.gif border=0 alt='회원가입'></a>
+    <Zeroboard <img src=skin/zipulragi_dairy2/member_modify.gif border=0 alt='회원정보 수정'></a>
+    <Zeroboard <span onClick="swapImage('memozzz','','skin/zipulragi_dairy2/member_memo_off.gif',0)" title='쪽지관리'></span></a>
+    <a onfocus="blur()" href='login.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&s_url=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D55&PHPSESSID=811a7340e1ebb4258e4942bcd9ce46e8'><img src=skin/zipulragi_dairy2/member_login.gif border=0 alt='회원로그인'></a>
+    <Zeroboard <img src=skin/zipulragi_dairy2/member_logout.gif border=0 alt='로그아웃'></a>
+    <Zeroboard <img src=skin/zipulragi_dairy2/member_setup.gif border=0 alt='게시판환경바꾸기'></a></td>
+</tr>
+<tr>
+  <td valign=bottom class=kissofgod-tahoma7 nowrap>
+    <img src=skin/zipulragi_dairy2/setup_total.gif> 41 <img src=skin/zipulragi_dairy2/setup_articles.gif >　1/6 <img src=skin/zipulragi_dairy2/setup_pages_nowpage.gif></td>
+</tr>
+</table>
+
+<table border=0 cellspacing=0 cellpadding=0 width=95%>
+<tr>
+  <td class=kissofgod-head-td><img src=images/t.gif width=1 height=1></td>
+</tr>
+</table>
+
+<table border=0 cellspacing=0 cellpadding=0 width=95%>
+
+<tr>
+  <td height=23 nowrap style='padding:10 0 15 10'><B>2003년 04월14일</b>  <b><span onMousedown="ZB_layerAction('zbLayer3','visible')" style=cursor:hand>숲속얘기</span><font style='font-weight:normal'>의 일기
+  &nbsp;<br>[날씨:<img src=skin/zipulragi_dairy2/weather0.gif>]&nbsp;
+  &nbsp;[제목: <b>Pure Snow</b>]</font>
+  </td>
+  <td align=right style='padding:10 5 10 0'>
+    <Zeroboard <img src=skin/zipulragi_dairy2/i_modify.gif border=0 align=absmiddle></a>
+    <Zeroboard <img src=skin/zipulragi_dairy2/i_delete.gif border=0 align=absmiddle></a>
+  </td>
+</tr>
+</table>
+
+<table border=0 cellspacing=0 cellpadding=0 width=95%>
+<col width=50></col><col></col>
+
+<tr>
+ <td height=23 style='padding:0 0 0 30'>화일 1 :</td>
+ <td><font class=kissofgod-tahoma8><a href='download.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=55&filenum=1&PHPSESSID=811a7340e1ebb4258e4942bcd9ce46e8'>yuko_sasaki___pure_snow.mp3 (5.11 MB)</a> &nbsp; Download : <b>2</b></font></td>
+</tr>
+
+<tr><td height=1 colspan=3><img src=images/t.gif width=1 height=1></td></tr>
+
+
+<!--<tr>
+ <td height=23 style='padding:0 0 0 30'>화일 2 :</td>
+ <td><font class=kissofgod-tahoma8><Zeroboard (0)</a> &nbsp; Download : <b>0</b></font></td>
+</tr>
+<tr><td height=1 colspan=3><img src=images/t.gif width=1 height=1></td></tr>
+-->
+<tr><td colspan=3 height=1 class='kissofgod-line1'><img src=images/t.gif border=0 width=1 height=1></td></tr>
+
+</table>
+
+<table border=0 cellspacing=0 cellpadding=0 width=95%>
+<tr>
+ <td style='word-break:break-all;' height=100 valign=top style='padding:10 5 10 10'>
+     <span style=line-height:160%>
+     <center>     </center>
+     <p align=justify>	   <embed src="http://www.fstory.net/zero/data/diary/yuko_sasaki___pure_snow.mp3"><br />
+<br />
+こなゆきが まい おりてきた まちで<br />
+싸락눈이 춤추며 내려온 거리에<br />
+といきが しろく そらに ほどけてゆく<br />
+한숨이 하얗게 하늘로 녹아가고 있어요<br />
+あなたの こと おもえば どうして<br />
+당신만 생각하면 어째서<br />
+こんなに むねが あつく なる<br />
+이렇게 가슴이 뜨거워 질까요<br />
+<br />
+きが つくと いつも ひとごみのなか<br />
+정신이 들면 언제나 인파속<br />
+ようふく うりば ウィンドウ のぞくと<br />
+양복 매장 창을 들여다보며<br />
+かわないのに えらんだり してる<br />
+사지도 않을거면서 고르거나 하고있어요<br />
+あなたに にあいそうだなんて<br />
+당신에게 어울릴 것 같다며...<br />
+<br />
+バカみたいだよね いまは はやらないね<br />
+바보같지요 요즘은 유행하지도 않잖아요<br />
+ともだちの こいびとと わかってて すきに なって<br />
+친구의 연인이라는걸 알면서도 좋아하게 되는거...<br />
+しょうが ない わらわれても いい たいせつな きもち<br />
+어쩔 수 없어요 웃음거리가 되어도 좋아요 소중한 감정...<br />
+<br />
+Pure Snow Pure Heart ふたり<br />
+Pure Snow Pure Heart 우리가<br />
+であった ひも ゆきが ふっていた<br />
+처음 만났던 날에도 눈이 내렸었죠<br />
+こいよりも せつなくて あいよりも うそのない<br />
+사랑보다 애절하고, 사랑보다 거짓없는<br />
+うんめいを かんじたの<br />
+운명을 느꼈어요<br />
+<br />
+かのじょが はなす じまんばなしを<br />
+그녀가 말하는 당신 자랑을<br />
+おどけながら きいたりも するけど<br />
+마지못해 듣기도 해보지만<br />
+やっぱり ひとりに なると つらいの<br />
+역시 혼자라는건 괴로워요<br />
+ともだちの かめんは おもたい<br />
+친구라는 가면은 무겁네요...<br />
+<br />
+なんで あなたしか ためなんだろうね<br />
+어째서 당신밖에는 안되는걸까요<br />
+おもうとき めちゃくちゃに じぶんを こわしたく なる<br />
+생각만 하면 엉망진창으로 나를 부수고싶어져요<br />
+そんな とき ささえて くれるの いちまいの しゃしん<br />
+그럴때 기댈 수 있었던건 한장의 사진...<br />
+<br />
+Pure Snow Pure Heart あのひ<br />
+Pure Snow Pure Heart 그 날<br />
+もう すこしの ゆうきが あれば<br />
+조금만 더 용기가 있었다면<br />
+さむい きせつの せいと とびこんで いけたはず<br />
+날씨가 춥다면서 뛰어들어 안길 수 있었을텐데<br />
+でも なぜか できなかった<br />
+하지만 왠지 그럴 수 없었어요...<br />
+<br />
+Pure Snow Pure Heart きっと<br />
+Pure Snow Pure Heart 분명<br />
+ないたりした ことも くやまない<br />
+울었던 것도 후회하지 않아요<br />
+わかりきった つよがり きづいてくれる ことを<br />
+뻔한 허세를 눈치채주기를<br />
+いつまでも まってる<br />
+언제까지고 기다리고 있을께요<br />
+<br />
+Pure Snow Pure Heart ふたり<br />
+Pure Snow Pure Heart 우리가<br />
+であった ひも ゆきが ふっていた<br />
+처음 만났던 날에도 눈이 내렸었죠<br />
+こいよりも せつなくて あいよりも うそのない<br />
+사랑보다 애절하고, 사랑보다 거짓없는<br />
+うんめいを かんじたの<br />
+운명을 느꼈어요...<br />
+<br />
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ<br />
+정말로 아프다.. <br />
+<!--"<--></p>
+     <br>
+     <div align=right style=font-family:Tahoma;font-size:7pt;></div>
+     </span>
+  </td>
+</tr>
+</table>
+
+<!-- 간단한 답글 시작하는 부분 -->
+<!-- 
+<table border=0 cellspacing=0 cellpadding=3 width=95%>
+-->
+<table border=0 cellpadding cellspacing=0 width=95%>
+<tr><td colspan=10 height=1 class='kissofgod-line2'><img src=images/t.gif width=1 height=1></td></tr>
+</table>
+
+<table border=0 cellspacing=0 cellpadding=0 width=95%>
+<tr>
+ <td style='padding-top:10'>
+    <a onfocus="blur()" href='zboard.php?id=diary&page=1&page_num=8&category=&sn=off&ss=on&sc=on&keyword=&prev_no=55&sn1=&divpage=1&select_arrange=headnum&desc=asc&PHPSESSID=811a7340e1ebb4258e4942bcd9ce46e8'><img src=skin/zipulragi_dairy2/i_list.gif border=0 align=absmiddle></a><img src=images/t.gif border=0 width=5 height=1>
+    <Zeroboard <img src=skin/zipulragi_dairy2/i_write.gif border=0 align=absmiddle></a>
+ </td>
+ <td align=right style='padding-top:10'>
+    <Zeroboard <img src=skin/zipulragi_dairy2/i_reply.gif border=0 align=absmiddle></a>
+ </td>
+</tr>
+</table>
+<br><br>
+
+<script>
+print_ZBlayer('zbLayer1', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'diary', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer2', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'diary', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer3', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'diary', '숲속얘기', '', '', '', '');
+</script>			<table border=0 cellpadding=0 cellspacing=0 height=20 width=95%>
+			<tr>
+				<td align=right style=font-family:tahoma,굴림;font-size:8pt;line-height:150%;letter-spacing:0px>
+					<font style=font-size:7pt>Copyright 1999-2003</font> <a href="http://www.zeroboard.com" target="_blank" onfocus="blur()"><font tyle=font-family:tahoma,굴림;font-size:5pt;>Zeroboard</a> / skin by <font style="font-family:돋움; font-size:8pt; color:navy"><a href="http://kissofgod.net" target="_blank">신의키스</a></font> / edit by <A href="http://yukihome.com" target="_blank">YuKi</a>				</td>   
+			</tr>
+			</table>
+			</div>			</body>
+			</html>
+			
+
+<!--
+ Session Excuted  : 0.0006
+ Connect Checked  : 0.0009
+ Query Excuted  : 0.008
+ PHP Excuted  : 0.022
+ Check Lists : 0.006
+ Skins Excuted  : 0.346
+ Total Excuted Time : 0.378
+-->

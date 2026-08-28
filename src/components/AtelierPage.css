@@ -319,6 +319,24 @@
     cursor: not-allowed;
 }
 
+.ie-snapshot-picker {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.ie-snapshot-picker select {
+    max-width: 190px;
+    border: 2px inset #f8f8f8;
+    background: #ffffff;
+    padding: 5px 6px;
+    font: inherit;
+}
+
 .ie-address-label {
     font-size: 0.85rem;
     font-weight: 600;
@@ -405,6 +423,15 @@
 
     .ie-address-label {
         min-width: unset;
+    }
+
+    .ie-snapshot-picker {
+        justify-content: space-between;
+    }
+
+    .ie-snapshot-picker select {
+        flex: 1;
+        max-width: none;
     }
 
     .ie-nav-btn {

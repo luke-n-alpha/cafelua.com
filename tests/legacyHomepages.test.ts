@@ -68,4 +68,16 @@ describe('Legacy homepage bundles', () => {
             }
         }
     });
+
+    test('publishes all nine recovered fstory.net restore points', () => {
+        const archiveRoot = path.join(legacyRoot, 'fstory-homepage');
+        const manifest = JSON.parse(fs.readFileSync(path.join(archiveRoot, 'snapshots.json'), 'utf8'));
+
+        expect(manifest.snapshots).toHaveLength(9);
+        for (const snapshot of manifest.snapshots) {
+            const entryPath = path.join(archiveRoot, snapshot.timestamp, 'index.html');
+            expect(fs.existsSync(entryPath)).toBe(true);
+            expect(fs.readFileSync(entryPath, 'utf8')).toMatch(/charset\s*=\s*["']?utf-8/i);
+        }
+    });
 });

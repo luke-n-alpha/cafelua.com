@@ -1,0 +1,563 @@
+<!--
+ZeroBoard에 대한 라이센스 명시입니다.
+
+아래 라이센스에 동의하시는 분만 제로보드를 사용할수 있습니다.
+    
+프로그램명 : Zeroboard
+배포버젼 : 4.1 pl 1 (2002. 02. 25)
+개발자 : zero 
+Homepage : http://zeroboard.com
+
+1. 제로보드의 배포권은 ZEROBOARD.COM에서 허용한 곳에만 있습니다.
+   (허락 맡지 않은 재배포는 허용하지 않습니다.)
+
+2. 제로보드는 저작권을 아래 3번항목에 의해 표기하는 한도내에서
+   개인홈페이지 및 학교나 교회등의 비영리단체, 기업이나 기타 영리단체에서 사용할수 있습니다.
+   (반국가 단체나 불법 싸이트에서의 사용은 금지합니다)
+
+3. 제로보드 사용시 저작권 명시부분을 훼손하면 안됩니다.
+   프로그램 소스, html소스상의 라이센스 및 웹상 출력물 하단에 있는 카피라이트와 링크를 수정하지 마십시요.
+   (저작권 표시는 게시판 배포시 작성된 형식만을 허용합니다. 임의 수정은 금지합니다)
+
+4. 단, 정식 등록버젼은 저작권 표시를 삭제할수 있습니다.
+   정식 등록버젼에 대한 문의는 http://zeroboard.com 에서 문의 방법을 찾아주시기 바랍니다.
+
+5. 링크서비스등의 기본 용도에 맞지 않는 사용은 금지합니다.
+
+6. 제로보드의 사용으로 인한 데이타 손실 및 기타 손해등 어떠한 사고나 문제에 대해서 ZEROBOARD.COM은 절대 책임을 지지 않습니다.
+
+7. 제로보드에 대해 ZEROBOARD.COM은 유지/ 보수의 의무가 없습니다.
+
+8. 제로보드 소스는 개인적으로 사용시 수정하여 사용할수 있지만 수정된 프로그램의 재배포는 금지합니다.
+   (저작권 관련 부분은 수정금지입니다)
+
+9. 제로보드에 쓰인 스킨의 저작권은 스킨 제작자에게 있으며 제작자의 동의하에 수정배포가 가능합니다.
+
+10. 기타 의문사항은 http://zeroboard.com 에서 제로보드 채널을 이용해주십시요.
+    (질문등에 대한 내용은 메일로 받지 않습니다)
+
+-->
+<html> 
+<head>
+	<title></title>
+	<meta http-equiv=Content-Type content=text/html; charset=utf-8>
+	<link rel=StyleSheet HREF=skin/kissofgod_green/style.css type=text/css title=style>
+	<script language='JavaScript'>
+	var select_obj;
+	function ZB_layerAction(name,status) { 
+		var obj=document.all[name];
+		var _tmpx,_tmpy, marginx, marginy;
+		_tmpx = event.clientX + parseInt(obj.offsetWidth);
+		_tmpy = event.clientY + parseInt(obj.offsetHeight);
+		_marginx = document.body.clientWidth - _tmpx;
+		_marginy = document.body.clientHeight - _tmpy ;
+		if(_marginx < 0)
+			_tmpx = event.clientX + document.body.scrollLeft + _marginx ;
+		else
+			_tmpx = event.clientX + document.body.scrollLeft ;
+		if(_marginy < 0)
+			_tmpy = event.clientY + document.body.scrollTop + _marginy +20;
+		else
+			_tmpy = event.clientY + document.body.scrollTop ;
+		obj.style.posLeft=_tmpx-13;
+		obj.style.posTop=_tmpy-12;
+		if(status=='visible') {
+			if(select_obj) {
+				select_obj.style.visibility='hidden';
+				select_obj=null;
+			}
+			select_obj=obj;
+		}else{
+			select_obj=null;
+		}
+		obj.style.visibility=status; 
+	}
+
+
+	function print_ZBlayer(name, homepage, mail, member_no, boardID, writer, traceID, traceType, isAdmin, isMember) {
+		var printHeight = 0;
+		var printMain="";
+	
+		if(homepage) {
+			printMain = "<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('"+homepage+"');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_homepage.gif border=0 align=absmiddle>&nbsp;&nbsp;홈페이지&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(mail) {
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('open_window.php?mode=m&str="+mail+"','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_mail.gif border=0 align=absmiddle>&nbsp;&nbsp;메일 보내기&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(member_no) {
+			if(isMember) {
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('view_info.php?member_no="+member_no+"','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_memo.gif border=0 align=absmiddle>&nbsp;&nbsp;쪽지 보내기&nbsp;&nbsp;</td></tr>";
+				printHeight = printHeight + 16;
+			}
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('view_info2.php?member_no="+member_no+"','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_information.gif border=0 align=absmiddle>&nbsp;&nbsp;회원정보 보기&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(writer) {
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=location.href='zboard.php?id="+boardID+"&sn1=on&sn=on&ss=off&sc=off&keyword="+writer+"';><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_search.gif border=0 align=absmiddle>&nbsp;&nbsp;이름으로 검색&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(isAdmin) {
+			if(member_no) {
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('open_window.php?mode=i&str="+member_no+"','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_modify.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>회원정보 변경&nbsp;&nbsp;</td></tr>";
+				printHeight = printHeight + 16;
+			}
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('open_window.php?mode="+traceType+"&str="+traceID+"','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_relationlist.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>관련글 추적</font>&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		
+		}
+		var printHeader = "<div id='"+name+"' style='position:absolute; left:10px; top:25px; width:127; height: "+printHeight+"; z-index:1; visibility: hidden' onMousedown=ZB_layerAction('"+name+"','hidden')><table border=0><tr><td colspan=3 onMouseover=ZB_layerAction('"+name+"','hidden') height=3></td></tr><tr><td width=5 onMouseover=ZB_layerAction('"+name+"','hidden') rowspan=2>&nbsp;</td><td height=5></td></tr><tr><td><table style=cursor:hand border='0' cellspacing='1' cellpadding='0' bgcolor='black' width=100% height=100%><tr><td valign=top bgcolor=white><table border=0 cellspacing=0 cellpadding=3 width=100% height=100%>";
+		var printFooter = "</table></td></tr></table></td><td width=5 rowspan=2 onMouseover=ZB_layerAction('"+name+"','hidden')>&nbsp;</td></tr><tr><td colspan=3 height=10 onMouseover=ZB_layerAction('"+name+"','hidden')></td></tr></table></div>";
+	
+		document.writeln(printHeader+printMain+printFooter);
+	}
+</script>
+	
+<script language="javascript">
+browserName = navigator.appName;
+browserVer = parseInt(navigator.appVersion);
+if(browserName == "Netscape" && browserVer >= 3){ init = "net"; }
+else { init = "ie"; }
+
+
+if(((init == "net")&&(browserVer >=3))||((init == "ie")&&(browserVer >= 4))){
+
+ sn_on=new Image;
+ sn_off=new Image;
+ sn_on.src= "skin/kissofgod_green/name_on.gif";
+ sn_off.src= "skin/kissofgod_green/name_off.gif";
+
+ ss_on=new Image;
+ ss_off=new Image;
+ ss_on.src= "skin/kissofgod_green/subject_on.gif";
+ ss_off.src= "skin/kissofgod_green/subject_off.gif";
+
+ sc_on=new Image;
+ sc_off=new Image;
+ sc_on.src= "skin/kissofgod_green/content_on.gif";
+ sc_off.src= "skin/kissofgod_green/content_off.gif";
+
+}
+
+function OnOff(name) {
+if(((init == "net")&&(browserVer >=3))||((init == "ie")&&(browserVer >= 4))) {
+  if(document.search[name].value=='on')
+  {
+   document.search[name].value='off';
+   ImgSrc=eval(name+"_off.src");
+   document[name].src=ImgSrc;
+  }
+  else
+  {
+   document.search[name].value='on';
+   ImgSrc=eval(name+"_on.src");
+   document[name].src=ImgSrc;
+  }
+ }
+}
+</script>
+
+<script language="javascript">
+  function reverse() {
+   var i, chked=0;
+   if(confirm('목록을 반전하시겠습니까?\n\n반전을 원하지 않는다면 취소를 누르시면 다음으로 넘어갑니다'))
+   {
+    for(i=0;i<document.list.length;i++)
+    {
+     if(document.list[i].type=='checkbox')
+     {
+      if(document.list[i].checked) { document.list[i].checked=false; }
+      else { document.list[i].checked=true; }
+     }
+    }
+   }
+   for(i=0;i<document.list.length;i++)
+   {
+    if(document.list[i].type=='checkbox')
+    {
+     if(document.list[i].checked) chked=1;
+    }
+   }
+   if(chked) {
+    if(confirm('선택된 항목을 보시겠습니까?'))
+     {
+      document.list.selected.value='';
+      document.list.exec.value='view_all';
+      for(i=0;i<document.list.length;i++)
+      {
+       if(document.list[i].type=='checkbox')
+       {
+        if(document.list[i].checked)
+        {
+         document.list.selected.value=document.list[i].value+';'+document.list.selected.value;
+        }
+       }
+      }
+      document.list.submit();
+      return true;
+     }
+    }
+   }
+
+ function delete_all() {
+  var i, chked=0;
+  for(i=0;i<document.list.length;i++)
+  {
+   if(document.list[i].type=='checkbox')
+   {
+    if(document.list[i].checked) chked=1;
+    }
+   }
+  if(chked)
+  {
+    document.list.selected.value='';
+    document.list.exec.value='delete_all';
+    for(i=0;i<document.list.length;i++)
+    {
+     if(document.list[i].type=='checkbox')
+     {
+      if(document.list[i].checked)
+      {
+       document.list.selected.value=document.list[i].value+';'+document.list.selected.value;
+      }
+     }
+    }
+    window.open("select_list_all.php?id=Mybbs&selected="+document.list.selected.value,"게시물정리","width=260,height=180,toolbars=no,resize=no,scrollbars=no");
+  }
+  else {alert('정리할 게시물을 선택하여 주십시요');}
+ }
+
+ function category_change() {
+  var myindex=list.category.selectedIndex;
+  document.search.category.value=list.category.options[myindex].value;
+  document.search.submit();
+  return true;
+ }
+
+//-->
+</script>
+</head>
+<body topmargin='0'  leftmargin='0' marginwidth='0' marginheight='0'  bgcolor=white ><div align=center>
+이곳에는 제가 웹서핑하다 재미있는것들과 볼만한것들을 모은곳입니다.
+<p><table border=0 cellspacing=0 cellpadding=0 width=96%>
+<tr>
+  <td align=right style='font-family:Tahoma; font-size:8pt'>
+    <a onfocus="blur()" href='login.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&s_url=%2Fzero%2Fzboard.php%3Fid%3DMybbs&PHPSESSID=79572b17ac9b354986b3a173a233068c'>&nbsp;Login&nbsp;</a>
+    <Zeroboard &nbsp;Join&nbsp;</a>
+    <Zeroboard &nbsp;modifyINFO&nbsp;</a>
+    	<Zeroboard &nbsp;memobox&nbsp;</a>
+    <Zeroboard &nbsp;logout&nbsp;</a>
+    <Zeroboard &nbsp;setup&nbsp;</a>
+    &nbsp;
+  </td>
+</tr>
+</table>
+  
+
+
+<table border=0 cellspacing=0 cellpadding=0 width=96%>
+
+<col width=1></col><!--<col width=20></col>--><col width=50></col>
+<col width=></col><col width=90></col><col width=70></col><col width=40></col>
+<col width=1></col>
+
+<tr align=center>
+   <td width=1 class=kissofgod-list-head-td></td>
+   <!--   <td width=20 class=kissofgod-list-head-td><span class=kissofgod-list-head-title>v</span></a></td>
+   -->   <td width=50 class=kissofgod-list-head-td><a onfocus="blur()" href='/zero/zboard.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=desc&PHPSESSID=79572b17ac9b354986b3a173a233068c'><span class=kissofgod-list-head-title>no</span></a></td>
+   <td class=kissofgod-list-head-td><a onfocus="blur()" href='/zero/zboard.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=subject&desc=desc&PHPSESSID=79572b17ac9b354986b3a173a233068c'><span class=kissofgod-list-head-title>subject</span></a></td>
+   <td width=90 class=kissofgod-list-head-td><a onfocus="blur()" href='/zero/zboard.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=name&desc=desc&PHPSESSID=79572b17ac9b354986b3a173a233068c'><span class=kissofgod-list-head-title>name</span></a></td>
+   <td width=70 class=kissofgod-list-head-td><a onfocus="blur()" href='/zero/zboard.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=reg_date&desc=desc&PHPSESSID=79572b17ac9b354986b3a173a233068c'><span class=kissofgod-list-head-title>date</span></a></td>
+   <td width=40 class=kissofgod-list-head-td><a onfocus="blur()" href='/zero/zboard.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=hit&desc=desc&PHPSESSID=79572b17ac9b354986b3a173a233068c'><span class=kissofgod-list-head-title>read</span></a></td>
+   <td width=1 class=kissofgod-list-head-td></td>
+</tr>
+
+<tr><td colspan=10 class=kissofgod-base-listline></td></tr>
+
+<form method="post" name="list" action="list_all.php"><input type="hidden" name="PHPSESSID" value="79572b17ac9b354986b3a173a233068c" /><input type="hidden" name="page" value="1"><input type="hidden" name="id" value="Mybbs"><input type="hidden" name="select_arrange" value="headnum"><input type="hidden" name="desc" value="asc"><input type="hidden" name="page_num" value="13"><input type="hidden" name="selected"><input type="hidden" name="exec"><input type="hidden" name="keyword" value=""><input type="hidden" name="sn" value="off"><input type="hidden" name="ss" value="on"><input type="hidden" name="sc" value="on">
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="59"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>53</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=59&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >[문서] UFO의 정체</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer1','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 06월 13일 10시 29분 31초'>2002/06/13</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>34</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="58"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>52</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=58&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >[재미있는 사진] 여름용 몸보신 음료</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer2','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 06월 08일 15시 26분 47초'>2002/06/08</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>38</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="57"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>51</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=57&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >[재미있는 그림] 더울때 보세요.</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer3','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 06월 06일 17시 25분 08초'>2002/06/06</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>39</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="56"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>50</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=56&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >[재미] 폼페이 최후의 날</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer4','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 05월 30일 21시 10분 01초'>2002/05/30</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>33</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="55"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>49</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=55&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >[멋짐] 여태까지 본 플래쉬 중 최고 입니다.</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer5','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 05월 29일 09시 42분 55초'>2002/05/29</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>46</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="54"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>48</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=54&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >[재미] 재밌는 전자 피아노</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer6','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 05월 28일 20시 31분 54초'>2002/05/28</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>23</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="53"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>47</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=53&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >[재미] 마징가 핸드폰 만들기</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer7','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 05월 28일 00시 12분 15초'>2002/05/28</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>25</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="52"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>46</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=52&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >[생각] 어린아이들이 생각하는 사랑이란...</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer8','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 05월 27일 23시 49분 47초'>2002/05/27</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>22</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="51"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>45</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=51&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >[웃음] 당신이 죠지 부시임을 증명하라.</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer9','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 05월 27일 20시 33분 07초'>2002/05/27</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>18</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="50"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>44</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=50&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >[만화] 나만의 마우스를 만들어보자.</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer10','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 04월 28일 01시 38분 00초'>2002/04/28</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>44</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="49"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>43</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=49&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >[웃음] 울 동아리에서 노는 방법..</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer11','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 04월 25일 19시 10분 08초'>2002/04/25</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>29</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="48"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>42</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=48&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >히딩크의 고향은 어디 ??</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer12','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 04월 21일 15시 37분 41초'>2002/04/21</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>34</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+  <!--<td><input type="checkbox" name="cart" value="47"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>41</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_green/old_head.gif border=0 align=absmiddle>&nbsp;<a href="view.php?id=Mybbs&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=47&PHPSESSID=79572b17ac9b354986b3a173a233068c"  >[생각] 퓰리처수상사진</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer13','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 04월 19일 00시 23분 19초'>2002/04/19</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>39</td>
+  <td><img src=skin/kissofgod_green/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+</table>
+
+<table border=0 width=96% cellspacing=0 cellpadding=0>
+<tr><td colspan=10 class=kissofgod-base-listline></td></tr>
+</table>
+
+
+<table border=0 cellpadding=0 cellspacing=0 width=96%>
+<tr>
+  <td width=1><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td class=kissofgod-button-font>
+    <a onfocus="blur()" href='/zero/zboard.php?id=Mybbs&page=1&category=&sn=off&ss=on&sc=on&keyword=&prev_no=&sn1=&divpage=1&PHPSESSID=79572b17ac9b354986b3a173a233068c'>&nbsp;List&nbsp;</a>
+    <Zeroboard &nbsp;Order&nbsp;</a>
+    <img src=skin/kissofgod_green/t.gif border=0 width=1 height=1>
+  </td>
+  <td align=right class=kissofgod-button-font>
+    <Zeroboard &nbsp;Write&nbsp;</a>
+    <img src=skin/kissofgod_green/t.gif border=0 width=1 height=1>
+  </td>
+  <td width=1><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr>
+  <td width=1><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+  <td align=center colspan=2>
+    <Zeroboard [PREV]</a>  <font style=font-size:8pt><b>1</b> <a onfocus="blur()" href='/zero/zboard.php?id=Mybbs&page=2&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=79572b17ac9b354986b3a173a233068c'><font style=font-size:8pt>[2]</a><a onfocus="blur()" href='/zero/zboard.php?id=Mybbs&page=3&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=79572b17ac9b354986b3a173a233068c'><font style=font-size:8pt>[3]</a><a onfocus="blur()" href='/zero/zboard.php?id=Mybbs&page=4&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=79572b17ac9b354986b3a173a233068c'><font style=font-size:8pt>[4]</a><a onfocus="blur()" href='/zero/zboard.php?id=Mybbs&page=5&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=79572b17ac9b354986b3a173a233068c'><font style=font-size:8pt>[5]</a> <Zeroboard [NEXT]</a>  
+  </td>
+  <td width=1><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+</form>
+</table>
+
+<img src=skin/kissofgod_green/t.gif border=0 height=10><br>
+
+<table border=0 cellpadding=0 cellspacing=0 width=96%>
+
+<form method="post" name="search" action="/zero/zboard.php"><input type="hidden" name="PHPSESSID" value="79572b17ac9b354986b3a173a233068c" /><input type="hidden" name="page" value="1"><input type="hidden" name="id" value="Mybbs"><input type="hidden" name="select_arrange" value="headnum"><input type="hidden" name="desc" value="asc"><input type="hidden" name="page_num" value="13"><input type="hidden" name="selected"><input type="hidden" name="exec"><input type="hidden" name="sn" value="off"><input type="hidden" name="ss" value="on"><input type="hidden" name="sc" value="on"><input type="hidden" name="category" value="">
+
+<tr>
+  <td align=center>
+  <table border=0 cellspacing=0 cellpadding=0>
+  <tr>
+     <td valign=bottom>
+       <a href="javascript:OnOff('sn')" onfocus="blur()"><img src=skin/kissofgod_green/name_off.gif border=0 name=sn></a><a href="javascript:OnOff('ss')" onfocus="blur()"><img src=skin/kissofgod_green/subject_on.gif border=0 name=ss></a><a href="javascript:OnOff('sc')" onfocus="blur()"><img src=skin/kissofgod_green/content_on.gif border=0 name=sc></a></td>
+     <td><input type="text" name="keyword" value="" class="input-search" size="15"></td>
+     <td valign=bottom><input type="image" src="skin/kissofgod_green/search.gif?PHPSESSID=79572b17ac9b354986b3a173a233068c" border="0" width="56" height="11" onfocus="blur()"></td>
+  </tr>
+  </table>
+
+  </td>
+</tr>
+<tr>
+  <td height=15><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+</form>
+</table>
+
+
+<script>
+print_ZBlayer('zbLayer1', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer2', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer3', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer4', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer5', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer6', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer7', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer8', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer9', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer10', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer11', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer12', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer13', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'Mybbs', '숲속얘기', '', '', '', '');
+</script>			<table border=0 cellpadding=0 cellspacing=0 height=20 width=96%>
+			<tr>
+				<td align=right style=font-family:tahoma,굴림;font-size:8pt;line-height:150%;letter-spacing:0px>
+					<font style=font-size:7pt>Copyright 1999-2002</font> <a href="http://www.zeroboard.com" target="_blank" onfocus="blur()"><font tyle=font-family:tahoma,굴림;font-size:5pt;>Zeroboard</a> / skin by <font style="font-family:돋움; font-size:8pt; color:navy"><a href="http://kissofgod.net" target="_blank">신의키스</a></font>				</td>   
+			</tr>
+			</table>
+			</div>			</body>
+			</html>
+			
+
+<!--
+ Session Excuted  : 0.0240
+ Connect Checked  : 0.0144
+ Query Excuted  : 0.073
+ PHP Excuted  : 0.096
+ Check Lists : 0.030
+ Skins Excuted  : 0.883
+ Total Excuted Time : 1.090
+-->

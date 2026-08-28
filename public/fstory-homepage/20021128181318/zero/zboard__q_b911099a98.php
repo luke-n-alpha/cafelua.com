@@ -1,0 +1,505 @@
+<!--
+ZeroBoard에 대한 라이센스 명시입니다.
+
+아래 라이센스에 동의하시는 분만 제로보드를 사용할수 있습니다.
+    
+프로그램명 : Zeroboard
+배포버젼 : 4.1 pl 1 (2002. 02. 25)
+개발자 : zero 
+Homepage : http://zeroboard.com
+
+1. 제로보드의 배포권은 ZEROBOARD.COM에서 허용한 곳에만 있습니다.
+   (허락 맡지 않은 재배포는 허용하지 않습니다.)
+
+2. 제로보드는 저작권을 아래 3번항목에 의해 표기하는 한도내에서
+   개인홈페이지 및 학교나 교회등의 비영리단체, 기업이나 기타 영리단체에서 사용할수 있습니다.
+   (반국가 단체나 불법 싸이트에서의 사용은 금지합니다)
+
+3. 제로보드 사용시 저작권 명시부분을 훼손하면 안됩니다.
+   프로그램 소스, html소스상의 라이센스 및 웹상 출력물 하단에 있는 카피라이트와 링크를 수정하지 마십시요.
+   (저작권 표시는 게시판 배포시 작성된 형식만을 허용합니다. 임의 수정은 금지합니다)
+
+4. 단, 정식 등록버젼은 저작권 표시를 삭제할수 있습니다.
+   정식 등록버젼에 대한 문의는 http://zeroboard.com 에서 문의 방법을 찾아주시기 바랍니다.
+
+5. 링크서비스등의 기본 용도에 맞지 않는 사용은 금지합니다.
+
+6. 제로보드의 사용으로 인한 데이타 손실 및 기타 손해등 어떠한 사고나 문제에 대해서 ZEROBOARD.COM은 절대 책임을 지지 않습니다.
+
+7. 제로보드에 대해 ZEROBOARD.COM은 유지/ 보수의 의무가 없습니다.
+
+8. 제로보드 소스는 개인적으로 사용시 수정하여 사용할수 있지만 수정된 프로그램의 재배포는 금지합니다.
+   (저작권 관련 부분은 수정금지입니다)
+
+9. 제로보드에 쓰인 스킨의 저작권은 스킨 제작자에게 있으며 제작자의 동의하에 수정배포가 가능합니다.
+
+10. 기타 의문사항은 http://zeroboard.com 에서 제로보드 채널을 이용해주십시요.
+    (질문등에 대한 내용은 메일로 받지 않습니다)
+
+-->
+<html> 
+<head>
+	<title></title>
+	<meta http-equiv=Content-Type content=text/html; charset=utf-8>
+	<link rel=StyleSheet HREF=skin/heybuba_memo_green/style.css type=text/css title=style>
+	<script language='JavaScript'>
+	var select_obj;
+	function ZB_layerAction(name,status) { 
+		var obj=document.all[name];
+		var _tmpx,_tmpy, marginx, marginy;
+		_tmpx = event.clientX + parseInt(obj.offsetWidth);
+		_tmpy = event.clientY + parseInt(obj.offsetHeight);
+		_marginx = document.body.clientWidth - _tmpx;
+		_marginy = document.body.clientHeight - _tmpy ;
+		if(_marginx < 0)
+			_tmpx = event.clientX + document.body.scrollLeft + _marginx ;
+		else
+			_tmpx = event.clientX + document.body.scrollLeft ;
+		if(_marginy < 0)
+			_tmpy = event.clientY + document.body.scrollTop + _marginy +20;
+		else
+			_tmpy = event.clientY + document.body.scrollTop ;
+		obj.style.posLeft=_tmpx-13;
+		obj.style.posTop=_tmpy-12;
+		if(status=='visible') {
+			if(select_obj) {
+				select_obj.style.visibility='hidden';
+				select_obj=null;
+			}
+			select_obj=obj;
+		}else{
+			select_obj=null;
+		}
+		obj.style.visibility=status; 
+	}
+
+
+	function print_ZBlayer(name, homepage, mail, member_no, boardID, writer, traceID, traceType, isAdmin, isMember) {
+		var printHeight = 0;
+		var printMain="";
+	
+		if(homepage) {
+			printMain = "<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('"+homepage+"');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_homepage.gif border=0 align=absmiddle>&nbsp;&nbsp;홈페이지&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(mail) {
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('open_window.php?mode=m&str="+mail+"','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_mail.gif border=0 align=absmiddle>&nbsp;&nbsp;메일 보내기&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(member_no) {
+			if(isMember) {
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('view_info.php?member_no="+member_no+"','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_memo.gif border=0 align=absmiddle>&nbsp;&nbsp;쪽지 보내기&nbsp;&nbsp;</td></tr>";
+				printHeight = printHeight + 16;
+			}
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('view_info2.php?member_no="+member_no+"','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_information.gif border=0 align=absmiddle>&nbsp;&nbsp;회원정보 보기&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(writer) {
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=location.href='zboard.php?id="+boardID+"&sn1=on&sn=on&ss=off&sc=off&keyword="+writer+"';><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_search.gif border=0 align=absmiddle>&nbsp;&nbsp;이름으로 검색&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(isAdmin) {
+			if(member_no) {
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('open_window.php?mode=i&str="+member_no+"','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_modify.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>회원정보 변경&nbsp;&nbsp;</td></tr>";
+				printHeight = printHeight + 16;
+			}
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('open_window.php?mode="+traceType+"&str="+traceID+"','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_relationlist.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>관련글 추적</font>&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		
+		}
+		var printHeader = "<div id='"+name+"' style='position:absolute; left:10px; top:25px; width:127; height: "+printHeight+"; z-index:1; visibility: hidden' onMousedown=ZB_layerAction('"+name+"','hidden')><table border=0><tr><td colspan=3 onMouseover=ZB_layerAction('"+name+"','hidden') height=3></td></tr><tr><td width=5 onMouseover=ZB_layerAction('"+name+"','hidden') rowspan=2>&nbsp;</td><td height=5></td></tr><tr><td><table style=cursor:hand border='0' cellspacing='1' cellpadding='0' bgcolor='black' width=100% height=100%><tr><td valign=top bgcolor=white><table border=0 cellspacing=0 cellpadding=3 width=100% height=100%>";
+		var printFooter = "</table></td></tr></table></td><td width=5 rowspan=2 onMouseover=ZB_layerAction('"+name+"','hidden')>&nbsp;</td></tr><tr><td colspan=3 height=10 onMouseover=ZB_layerAction('"+name+"','hidden')></td></tr></table></div>";
+	
+		document.writeln(printHeader+printMain+printFooter);
+	}
+</script>
+	
+<script language="javascript">
+browserName = navigator.appName;
+browserVer = parseInt(navigator.appVersion);
+if(browserName == "Netscape" && browserVer >= 3){ init = "net"; }
+else { init = "ie"; }
+
+
+if(((init == "net")&&(browserVer >=3))||((init == "ie")&&(browserVer >= 4))){
+
+ sn_on=new Image;
+ sn_off=new Image;
+ sn_on.src= "skin/heybuba_memo_green/name_on.gif";
+ sn_off.src= "skin/heybuba_memo_green/name_off.gif";
+
+ ss_on=new Image;
+ ss_off=new Image;
+ ss_on.src= "skin/heybuba_memo_green/subject_on.gif";
+ ss_off.src= "skin/heybuba_memo_green/subject_off.gif";
+
+ sc_on=new Image;
+ sc_off=new Image;
+ sc_on.src= "skin/heybuba_memo_green/content_on.gif";
+ sc_off.src= "skin/heybuba_memo_green/content_off.gif";
+
+}
+
+function OnOff(name) {
+if(((init == "net")&&(browserVer >=3))||((init == "ie")&&(browserVer >= 4))) {
+  if(document.search[name].value=='on')
+  {
+   document.search[name].value='off';
+   ImgSrc=eval(name+"_off.src");
+   document[name].src=ImgSrc;
+  }
+  else
+  {
+   document.search[name].value='on';
+   ImgSrc=eval(name+"_on.src");
+   document[name].src=ImgSrc;
+  }
+ }
+}
+</script>
+
+<script language="javascript">
+  function reverse() {
+   var i, chked=0;
+   if(confirm('목록을 반전하시겠습니까?\n\n반전을 원하지 않는다면 취소를 누르시면 다음으로 넘어갑니다'))
+   {
+    for(i=0;i<document.list.length;i++)
+    {
+     if(document.list[i].type=='checkbox')
+     {
+      if(document.list[i].checked) { document.list[i].checked=false; }
+      else { document.list[i].checked=true; }
+     }
+    }
+   }
+   for(i=0;i<document.list.length;i++)
+   {
+    if(document.list[i].type=='checkbox')
+    {
+     if(document.list[i].checked) chked=1;
+    }
+   }
+   if(chked) {
+    if(confirm('선택된 항목을 보시겠습니까?'))
+     {
+      document.list.selected.value='';
+      document.list.exec.value='view_all';
+      for(i=0;i<document.list.length;i++)
+      {
+       if(document.list[i].type=='checkbox')
+       {
+        if(document.list[i].checked)
+        {
+         document.list.selected.value=document.list[i].value+';'+document.list.selected.value;
+        }
+       }
+      }
+      document.list.submit();
+      return true;
+     }
+    }
+   }
+
+ function delete_all() {
+  var i, chked=0;
+  for(i=0;i<document.list.length;i++)
+  {
+   if(document.list[i].type=='checkbox')
+   {
+    if(document.list[i].checked) chked=1;
+    }
+   }
+  if(chked)
+  {
+    document.list.selected.value='';
+    document.list.exec.value='delete_all';
+    for(i=0;i<document.list.length;i++)
+    {
+     if(document.list[i].type=='checkbox')
+     {
+      if(document.list[i].checked)
+      {
+       document.list.selected.value=document.list[i].value+';'+document.list.selected.value;
+      }
+     }
+    }
+    window.open("select_list_all.php?id=juno2&selected="+document.list.selected.value,"게시물정리","width=260,height=180,toolbars=no,resize=no,scrollbars=no");
+  }
+  else {alert('정리할 게시물을 선택하여 주십시요');}
+ }
+
+ function category_change() {
+  var myindex=list.category.selectedIndex;
+  document.search.category.value=list.category.options[myindex].value;
+  document.search.submit();
+  return true;
+ }
+
+//-->
+</script>
+</head>
+<body topmargin='0'  leftmargin='0' marginwidth='0' marginheight='0'  bgcolor=white ><div align=center><script language=JavaScript>
+function findObj(n, d) { //v4.0
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=findObj(n,d.layers[i].document);
+  if(!x && document.getElementById) x=document.getElementById(n); return x;
+}
+function swapImage() {
+  var i,j=0,x,a=swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+<!-- HTML 시작 -->
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+function formresize(mode) {
+        if (mode == 0) {
+                document.write.memo.cols  = 80;
+                document.write.memo.rows  = 20; }
+        if (mode == 1) {
+                document.write.memo.cols += 5; }
+        if (mode == 2) {
+                document.write.memo.rows += 3; }
+}
+// -->
+</SCRIPT>
+
+<script language="javascript">
+function Change (target,classname,type)
+	{
+	if ( target.value == target.defaultValue && type==0)	target.value = '';
+	if ( !target.value && type==1)	target.value = target.defaultValue;
+	target.className=classname;
+	}
+</script>
+
+
+<table border=0 cellspacing=0 cellpadding=0 width=95% nowrap>
+
+<tr>
+<td width=0>
+<!-- 폼태그 부분;; 수정하지 않는 것이 좋습니다 -->
+<form method="post" name="write" action="write_ok.php" onsubmit="return check_submit();" enctype="multipart/form-data"><input type="hidden" name="PHPSESSID" value="3f0b83fc1a8ae86fa8ec8b2b1c4616b7" />
+<input type="hidden" name="page" value="1">
+<input type="hidden" name="id" value="juno2">
+<input type="hidden" name="no" value=>
+<input type=hidden name=select_arrange value=headnum>
+<input type="hidden" name="desc" value="asc">
+<input type="hidden" name="page_num" value="20">
+<input type="hidden" name="keyword" value="">
+<input type="hidden" name="category" value="">
+<input type="hidden" name="sn" value="off">
+<input type="hidden" name="ss" value="on">
+<input type="hidden" name="sc" value="on">
+<input type="hidden" name="mode" value="">
+<input type="hidden" name="subject" value="M">
+<input type="hidden" name="password" value="Knucles">
+<!----------------------------------------------->
+</td>
+
+
+<td>
+
+<table border=0 cellspacing=0 cellpadding=0 width=95% height=20 nowrap>
+<tr>
+ <td width=100% colspan=2 class=line1></td>
+</tr>
+
+<tr class=bg1>
+ <td width=100% align=left>
+  <table border=0 cellspacing=0 cellpadding=0 height=20 nowrap>
+   <tr>
+    <td class=t width=20 nowrap>Name :</td>
+    <td width=1></td>
+    <td class=p><input class="input2" type="text" name="name" value=""  size="4.8"  maxlength="6"></td>
+    <td width=1></td>
+    <td></td>
+    <td width=20 nowrap class=p width=5 nowrap><font class=t>Memo :</font></td>
+    <td width=1></td>
+    <td class=p><input class="input2" type="text" name="memo" value="한마디씩 끄적이세여.."  size="25.8"  maxlength="65" onFocus="Change(this,'input',0)" onBlur="Change(this,'input',1)"></td>
+   </tr>
+  </table>
+ </td>
+ <td>
+  <input onfocus='this.blur()' type="submit" value="write" style="background-color:ffffff; border:solid 1 #6B9431; font-family:tahoma,Verdana; font-size:8pt; width=70; height=16px">
+ </td>
+</tr>
+
+<tr>
+ <td width=100% colspan=2 class=line1></td>
+</tr>
+</table>
+
+	<script language="javascript">
+	document.write.name.focus();
+	</script>
+
+<form method="post" name="list" action="list_all.php"><input type="hidden" name="PHPSESSID" value="3f0b83fc1a8ae86fa8ec8b2b1c4616b7" />
+<input type="hidden" name="page" value="1">
+<input type="hidden" name="id" value="juno2">
+<input type="hidden" name="select_arrange" value="headnum">
+<input type="hidden" name="desc" value="asc">
+<input type="hidden" name="page_num" value="20">
+<input type="hidden" name="selected">
+<input type="hidden" name="exec">
+<input type="hidden" name="keyword" value="">
+<input type="hidden" name="sn" value="off">
+<input type="hidden" name="ss" value="on">
+<input type="hidden" name="sc" value="on">
+
+<!-- 로그인하지 않았을때 링크 걸리지 않게 했당 (modified by heybuba)-->
+
+
+<table border=0 cellspacing=0 cellpadding=0 width=95% nowrap>
+ <tr>
+  <td width=1 nowrap class=bg2></td>
+  <td nowrap>
+   <table border=0 cellspacing=0 cellpadding=0 width=100%>
+
+    <tr class=bg2 onMouseOver=this.style.backgroundColor="#F8FCF3" onMouseOut=this.style.backgroundColor="">
+     <td width=15><a href="#"><img src=skin/heybuba_memo_green/img/del.gif border=0></a>&nbsp;</td>
+     <td width=500>.empas :: 한마디씩 끄적이세여..</td>
+     <td align=right class=d nowrap> [<span title='2002년 09월 05일 00시 29분 16초'>2002/09/05</span>]</td>
+    </tr>
+
+    <tr>
+     <td height=1 nowrap colspan=3 class=line2></td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+</table>
+<!-- 로그인하지 않았을때 링크 걸리지 않게 했당 (modified by heybuba)-->
+
+
+<table border=0 cellspacing=0 cellpadding=0 width=95% nowrap>
+ <tr>
+  <td width=1 nowrap class=bg2></td>
+  <td nowrap>
+   <table border=0 cellspacing=0 cellpadding=0 width=100%>
+
+    <tr class=bg2 onMouseOver=this.style.backgroundColor="#F8FCF3" onMouseOut=this.style.backgroundColor="">
+     <td width=15><a href="#"><img src=skin/heybuba_memo_green/img/del.gif border=0></a>&nbsp;</td>
+     <td width=500>숲속얘기 :: 원래 홈피 고치는건 노가다여..</td>
+     <td align=right class=d nowrap> [<span title='2002년 08월 13일 13시 02분 10초'>2002/08/13</span>]</td>
+    </tr>
+
+    <tr>
+     <td height=1 nowrap colspan=3 class=line2></td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+</table>
+<!-- 로그인하지 않았을때 링크 걸리지 않게 했당 (modified by heybuba)-->
+
+
+<table border=0 cellspacing=0 cellpadding=0 width=95% nowrap>
+ <tr>
+  <td width=1 nowrap class=bg2></td>
+  <td nowrap>
+   <table border=0 cellspacing=0 cellpadding=0 width=100%>
+
+    <tr class=bg2 onMouseOver=this.style.backgroundColor="#F8FCF3" onMouseOut=this.style.backgroundColor="">
+     <td width=15><a href="#"><img src=skin/heybuba_memo_green/img/del.gif border=0></a>&nbsp;</td>
+     <td width=500>JUNO :: 홈피고치는건 너무어렵다--;;노가다다</td>
+     <td align=right class=d nowrap> [<span title='2002년 06월 28일 01시 12분 15초'>2002/06/28</span>]</td>
+    </tr>
+
+    <tr>
+     <td height=1 nowrap colspan=3 class=line2></td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+</table>
+<!-- 로그인하지 않았을때 링크 걸리지 않게 했당 (modified by heybuba)-->
+
+
+<table border=0 cellspacing=0 cellpadding=0 width=95% nowrap>
+ <tr>
+  <td width=1 nowrap class=bg2></td>
+  <td nowrap>
+   <table border=0 cellspacing=0 cellpadding=0 width=100%>
+
+    <tr class=bg2 onMouseOver=this.style.backgroundColor="#F8FCF3" onMouseOut=this.style.backgroundColor="">
+     <td width=15><a href="#"><img src=skin/heybuba_memo_green/img/del.gif border=0></a>&nbsp;</td>
+     <td width=500>JUNO :: 하하 메모판 생겼숨다. 머 올사람은 없지만서두 한마디씩~~</td>
+     <td align=right class=d nowrap> [<span title='2002년 06월 27일 02시 24분 44초'>2002/06/27</span>]</td>
+    </tr>
+
+    <tr>
+     <td height=1 nowrap colspan=3 class=line2></td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+</table>
+<!-- 마무리 부분입니다 -->
+
+<table border=0 cellpadding=0 cellspacing=0 width=95%>
+ <tr class=bg2>
+  <td valign=top nowrap></td>
+  <td width=100% align=left>
+
+   <table border=0 height=21 cellpadding=0 cellspacing=0 nowrap><tr>
+
+    <td class=t valign=bottom nowrap>
+     <Zeroboard ◀</a>
+    </td>
+
+    <td>
+
+     <table border=0 height=18 cellpadding=2 cellspacing=0 nowrap>
+      <tr>
+       <td class=d valign=bottom nowrap height=18>
+         <font style=font-size:8pt><b>1</b> </td></tr></table>
+       </td>
+       <td class=t valign=bottom nowrap>
+        <Zeroboard ▶</a>
+       </td>
+      </tr>
+     </table>
+    </td>
+
+    <td nowrap class=t>
+     <a onfocus="blur()" href='login.php?id=juno2&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&s_url=%2Fzero%2Fzboard.php%3Fid%3Djuno2&PHPSESSID=3f0b83fc1a8ae86fa8ec8b2b1c4616b7'><img src="skin/heybuba_memo_green/img/login.gif" border=0></a>
+     <Zeroboard <img src="skin/heybuba_memo_green/img/setup.gif" border=0></a>
+     <Zeroboard <img src="skin/heybuba_memo_green/img/logout.gif" border=0></a></td>
+
+   </tr>
+
+   <tr>
+    <td colspan=3 class=line1 height=1></td>
+   </tr>
+  </table>
+</form>
+
+
+<script>
+print_ZBlayer('zbLayer1', '', '', '', 'juno2', '.empas', '', '', '', '');
+print_ZBlayer('zbLayer2', 'http://www.fstory.net', 'ZnN0b3J5QG1haWwuY28ua3I=', '1', 'juno2', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer3', '', '', '', 'juno2', 'JUNO', '', '', '', '');
+print_ZBlayer('zbLayer4', '', '', '', 'juno2', 'JUNO', '', '', '', '');
+</script>			<table border=0 cellpadding=0 cellspacing=0 height=20 width=95%>
+			<tr>
+				<td align=right style=font-family:tahoma,굴림;font-size:8pt;line-height:150%;letter-spacing:0px>
+					<font style=font-size:7pt>Copyright 1999-2002</font> <a href="http://www.zeroboard.com" target="_blank" onfocus="blur()"><font tyle=font-family:tahoma,굴림;font-size:5pt;>Zeroboard</a> / skin by <a onfocus='this.blur()' href="http://heybuba.id.ro" target="_blank">Heybuba</a>
+				</td>   
+			</tr>
+			</table>
+			</div>			</body>
+			</html>
+			
+
+<!--
+ Session Excuted  : 0.0290
+ Connect Checked  : 0.0239
+ Query Excuted  : 0.063
+ PHP Excuted  : 0.079
+ Check Lists : 0.013
+ Skins Excuted  : 0.387
+ Total Excuted Time : 0.582
+-->

@@ -1,0 +1,145 @@
+<!--
+
+ZeroBoard에 대한 라이센스 명시입니다.
+
+아래 라이센스에 동의하시는 분만 제로보드를 사용할수 있습니다.
+    
+프로그램명 : Zeroboard
+배포버젼 : 4.0.0 pl5 (2001. 12. 15)
+개발자 : zero 
+Homepage : http://zeroboard.com
+
+1. 제로보드의 배포권은 ZEROBOARD.COM에서 허용한 곳에만 있습니다.
+   (허락 맡지 않은 재배포는 허용하지 않습니다.)
+
+2. 제로보드는 저작권을 아래 3번항목에 의해 표기하는 한도내에서
+   개인홈페이지 및 학교나 교회등의 비영리단체, 기업이나 기타 영리단체에서 사용할수 있습니다.
+   (반국가 단체나 불법 싸이트에서의 사용은 금지합니다)
+
+3. 제로보드 사용시 저작권 명시부분을 훼손하면 안됩니다.
+   프로그램 소스, html소스상의 라이센스 및 웹상 출력물 하단에 있는 카피라이트와 링크를 수정하지 마십시요.
+   (저작권 표시는 게시판 배포시 작성된 형식만을 허용합니다. 임의 수정은 금지합니다)
+
+4. 단, 정식 등록버젼은 저작권 표시를 삭제할수 있습니다.
+   정식 등록버젼에 대한 문의는 register@nzeo.com 으로 문의하여 주십시요.
+
+5. 링크서비스등의 기본 용도에 맞지 않는 사용은 금지합니다.
+
+6. 제로보드의 사용으로 인한 데이타 손실 및 기타 손해등 어떠한 사고나 문제에 대해서 ZEROBOARD.COM은 절대 책임을 지지 않습니다.
+
+7. 제로보드에 대해 ZEROBOARD.COM은 유지/ 보수의 의무가 없습니다.
+
+8. 제로보드 소스는 개인적으로 사용시 수정하여 사용할수 있지만 수정된 프로그램의 재배포는 금지합니다.
+   (저작권 관련 부분은 수정금지입니다)
+
+9. 제로보드에 쓰인 스킨의 저작권은 스킨 제작자에게 있으며 제작자의 동의하에 수정배포가 가능합니다.
+
+10. 기타 의문사항은 http://nzeo.com 에서 제로보드 채널을 이용해주십시요.
+    (질문등에 대한 내용은 메일로 받지 않습니다)
+-->
+
+
+
+<html> 
+<head>
+  <title></title>
+  <meta http-equiv=Content-Type content=text/html; charset=utf-8>
+  <link rel=StyleSheet HREF=skin/kissofgod_green/style.css type=text/css title=style>
+</head>
+<body topmargin='0'  leftmargin='0' marginwidth='0' marginheight='0' bgcolor=white ><div align=center>
+이곳에는 제가 웹서핑하다 재미있는것들과 볼만한것들을 모은곳입니다.
+<p>
+<script>
+ function check_submit()
+ {
+  if(!login.user_id.value)
+  {
+   alert("아이디를 입력하여 주세요");
+   login.user_id.focus();
+   return false;
+  }
+  if(!login.password.value)
+  {
+   alert("비밀번호를 입력하여 주세요");
+   login.password.focus();
+   return false;
+  }
+    check=confirm("자동 로그인 기능을 사용하시겠습니까?\n\n자동 로그인 사용시 다음 접속부터는 로그인을 하실필요가 없습니다.\n\n단, 게임방, 학교등 공공장소에서 이용시 개인정보가 유출될수 있으니 조심하여 주십시요");
+    if(check) {login.auto_login.value=1;}
+  return true;
+ }
+</script>
+
+<form method=post action=login_check.php onsubmit="return check_submit();" name=login>
+<input type=hidden name=auto_login value=0>
+<input type=hidden name=page value=1>
+<input type=hidden name=id value=Mybbs>
+<input type=hidden name=no value=>
+<input type=hidden name=select_arrange value=headnum>
+<input type=hidden name=desc value=asc>
+<input type=hidden name=page_num value=>
+<input type=hidden name=keyword value="">
+<input type=hidden name=category value="">
+<input type=hidden name=sn value="off">
+<input type=hidden name=ss value="on">
+<input type=hidden name=sc value="on">
+<input type=hidden name=mode value="">
+<input type=hidden name=s_url value="/zero/zboard.php?id=Mybbs">
+<input type=hidden name=referer value="">
+
+<div align=center>
+<br><br><br>
+<table border=0 width=250>
+<tr>
+  <td colspan=2 align=center><span class=kissofgod-bold-font>MEMBER LOGIN</span></td>
+</tr>
+<tr>
+ <td colspan=2 class=kissofgod-base-line></td>
+</tr>
+<tr>
+  <td colspan=2 height=10><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr>
+  <td align=right>ID　</td>
+  <td><input type=text name=user_id size=10 maxlength=20 class=input></td>
+</tr>
+<tr>
+  <td align=right>Password　</td>
+  <td><input type=password name=password size=10 maxlength=20 class=input></td>
+</tr>
+<tr height=30>
+  <td align=center align=center colspan=2 >
+      <br>
+     <input type=submit value="Ok~!" class=kissofgod-submit>　
+     <input type=button value="Back" onclick=history.go(-1) class=kissofgod-submit>
+  </td>
+</tr>
+<tr>
+ <td colspan=2 class=kissofgod-base-line></td>
+</tr>
+</table>
+
+</form>
+
+<table border=0 cellpadding=0 cellspacing=0 height=20 width=>
+        <tr>
+           <td align=right style=font-family:tahoma,굴림;font-size:8pt;line-height:150%;letter-spacing:0px>
+           <font style=font-size:7pt>Copyright 1999-2001</font> <a href=http://www.zeroboard.com target=_blank onfocus=blur()><font tyle=font-family:tahoma,굴림;font-size:5pt;>Zeroboard</a> 
+           / skin by <font style="font-family:돋움; font-size:8pt; color:navy"><a href=http://kissofgod.net target=_blank>신의키스</a></font>
+           </td>   
+        </tr>
+        </table></div></body>
+</html>
+      <!--
+      -------------------------------------------------------------------
+      Zero Board Executed Time
+      -------------------------------------------------------------------
+      All StartTime : 1014611189.39
+      End DB Excute Time : 
+      EndTime : 1014611189.4452
+      -------------------------------------------------------------------
+      DB Excute Time : -1601466116189.390
+      PHP Excute Time : 16601646661166189.445 
+      Total Excuted Time : 0.055
+      -------------------------------------------------------------------
+      -->

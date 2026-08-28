@@ -1,0 +1,3143 @@
+{
+  "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp; no filename-only guesses.",
+  "generatedAt": "2026-08-28T15:33:43.994Z",
+  "snapshots": [
+    {
+      "timestamp": "20010715123146",
+      "originalFiles": 16,
+      "restoredFiles": 22,
+      "rewrittenReferences": 42,
+      "restored": [
+        {
+          "url": "http://www.fstory.net/bbs/bbs_tab.html",
+          "path": "bbs/bbs_tab.html",
+          "capturedAt": "20010823143531",
+          "mimetype": "text/html",
+          "sha256": "17b3a14b65ce6fc420755b918696fe02e3f6d15eb7bc0ee0036d245431f3a682"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/gallery3.html",
+          "path": "gallery/gallery3/gallery3.html",
+          "capturedAt": "20010816191622",
+          "mimetype": "text/html",
+          "sha256": "61bd985b702b362d4fbc5ecbae89c21634343ec37341c67f29fc7aebc1add9d5"
+        },
+        {
+          "url": "http://www.fstory.net/mydoc/novel/short/fly.html",
+          "path": "mydoc/novel/short/fly.html",
+          "capturedAt": "20010731074000",
+          "mimetype": "text/html",
+          "sha256": "0eaa1cb31c830aa7a96b37769e4732c98f80997e5bc428b1ded401b72d6c2aad"
+        },
+        {
+          "url": "http://www.fstory.net/mydoc/novel/short/dong1.html",
+          "path": "mydoc/novel/short/dong1.html",
+          "capturedAt": "20010730054659",
+          "mimetype": "text/html",
+          "sha256": "559552eb8a60ae4fab61e4c52582014f4e903730bfbe231676d714ce38194d8b"
+        },
+        {
+          "url": "http://www.fstory.net/mydoc/novel/short/22cen1.html",
+          "path": "mydoc/novel/short/22cen1.html",
+          "capturedAt": "20010723052802",
+          "mimetype": "text/html",
+          "sha256": "5e6250160db5fa72a38ea03fa41dfbe11b995f1538c0dbe096db71d702ac5015"
+        },
+        {
+          "url": "http://www.fstory.net/mydoc/novel/short/22cen2.html",
+          "path": "mydoc/novel/short/22cen2.html",
+          "capturedAt": "20010723052915",
+          "mimetype": "text/html",
+          "sha256": "26c8f2e086c64e7c6b4a1e83fa1152aa27241bed36931996a600fb2e1102a8a3"
+        },
+        {
+          "url": "http://www.fstory.net/notice/not_dat3.html",
+          "path": "notice/not_dat3.html",
+          "capturedAt": "20010818202017",
+          "mimetype": "text/html",
+          "sha256": "2fcf658ee756a0b3b51e42c13fac57fcf244926cc834edd55c326dc04ccd2a24"
+        },
+        {
+          "url": "http://www.fstory.net/profile/profile.html",
+          "path": "profile/profile.html",
+          "capturedAt": "20010816185731",
+          "mimetype": "text/html",
+          "sha256": "02982e5ea8fdd4d230104546b4ef8b7a554a8a9a89da28f42904f5ca2a932c46"
+        },
+        {
+          "url": "http://www.fstory.net/mydoc/novel/novel.html",
+          "path": "mydoc/novel/novel.html",
+          "capturedAt": "20010723052610",
+          "mimetype": "text/html",
+          "sha256": "e0cfad41d47060f68a7148a9d25d687ab95099ed033d7ee112dc35898804d91c"
+        },
+        {
+          "url": "http://www.fstory.net/mydoc/poem/poem.html",
+          "path": "mydoc/poem/poem.html",
+          "capturedAt": "20010910042047",
+          "mimetype": "text/html",
+          "sha256": "87287918e684deb9aed65c940ff73ce75330ef42017396b710c19461ae226c86"
+        },
+        {
+          "url": "http://www.fstory.net/study/study.html",
+          "path": "study/study.html",
+          "capturedAt": "20010910043021",
+          "mimetype": "text/html",
+          "sha256": "a7582e699dc71e318d3ed4a6d7623d780b79100b1861c84b25d4173d7b66ecdd"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/98Card/Xmas.html",
+          "path": "gallery/gallery3/98Card/Xmas.html",
+          "capturedAt": "20020815151314",
+          "mimetype": "text/html",
+          "sha256": "ffb877d06ad6e00300dc4bcba652fbbc556df9ea799fd9f3d41753670378329c"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/98Card_th.jpg",
+          "path": "gallery/gallery3/98Card_th.jpg",
+          "capturedAt": "20020615162929",
+          "mimetype": "image/jpeg",
+          "sha256": "75c5677ddff175dc3be7feae6dbf55b3b64f14186b42bf415ffdb0cc72574b06"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/festival_th.jpg",
+          "path": "gallery/gallery3/festival_th.jpg",
+          "capturedAt": "20020615170725",
+          "mimetype": "image/jpeg",
+          "sha256": "04df6ff251ccebbd3cd760699fb5fc579a91699cc77a8d51b3b3c022d42c6909"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/Pic3.html",
+          "path": "gallery/gallery3/Pic3.html",
+          "capturedAt": "20010823143415",
+          "mimetype": "text/html",
+          "sha256": "f222d0c2bb397a699866e20f61819baaeaf3e91c487907baf3d3abbca34f4df6"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/Pic4.html",
+          "path": "gallery/gallery3/Pic4.html",
+          "capturedAt": "20010823142703",
+          "mimetype": "text/html",
+          "sha256": "a152ce0fdb8dd43bb0794206847a4623bf7136081445ff31aa77f46eee18dcfe"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/EndW02_th.jpg",
+          "path": "gallery/gallery3/EndW02_th.jpg",
+          "capturedAt": "20020615164836",
+          "mimetype": "image/jpeg",
+          "sha256": "2054eabd3753d1b1e6db77e25093e27c1544d6378d53d57aa6355f54dfe15344"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/WNotice_th.jpg",
+          "path": "gallery/gallery3/WNotice_th.jpg",
+          "capturedAt": "20020615170040",
+          "mimetype": "image/jpeg",
+          "sha256": "ff532482aff3e5c318f87598b6a9609771c25392ad5edd498bda08c02145b805"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/Picgirl_th.jpg",
+          "path": "gallery/gallery3/Picgirl_th.jpg",
+          "capturedAt": "20020615165126",
+          "mimetype": "image/jpeg",
+          "sha256": "90a55ff56b10f992d4924b59ed455171dfe32ac990a29372c2f109ca40abb569"
+        },
+        {
+          "url": "http://www.fstory.net/profile/pro_tab.html",
+          "path": "profile/pro_tab.html",
+          "capturedAt": "20010816190633",
+          "mimetype": "text/html",
+          "sha256": "b359a1a9b9a80bcbf8ebb5581094265e372e36be2eb62acc33895ffebe3b900e"
+        },
+        {
+          "url": "http://www.fstory.net/profile/mine/mine.html",
+          "path": "profile/mine/mine.html",
+          "capturedAt": "20010816183835",
+          "mimetype": "text/html",
+          "sha256": "d906226c6a8f04f474feae05279c13276720234d6af04f0d00f4817b89e907d4"
+        },
+        {
+          "url": "http://www.fstory.net/profile/family/family.html",
+          "path": "profile/family/family.html",
+          "capturedAt": "20010910043934",
+          "mimetype": "text/html",
+          "sha256": "d97241dd2e539377e85bf816d8786947bd69046dadcecd767bed2352666acbf6"
+        }
+      ]
+    },
+    {
+      "timestamp": "20010723051951",
+      "originalFiles": 38,
+      "restoredFiles": 6,
+      "rewrittenReferences": 48,
+      "restored": [
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/98Card/Xmas.html",
+          "path": "gallery/gallery3/98Card/Xmas.html",
+          "capturedAt": "20020815151314",
+          "mimetype": "text/html",
+          "sha256": "ffb877d06ad6e00300dc4bcba652fbbc556df9ea799fd9f3d41753670378329c"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/98Card_th.jpg",
+          "path": "gallery/gallery3/98Card_th.jpg",
+          "capturedAt": "20020615162929",
+          "mimetype": "image/jpeg",
+          "sha256": "75c5677ddff175dc3be7feae6dbf55b3b64f14186b42bf415ffdb0cc72574b06"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/festival_th.jpg",
+          "path": "gallery/gallery3/festival_th.jpg",
+          "capturedAt": "20020615170725",
+          "mimetype": "image/jpeg",
+          "sha256": "04df6ff251ccebbd3cd760699fb5fc579a91699cc77a8d51b3b3c022d42c6909"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/EndW02_th.jpg",
+          "path": "gallery/gallery3/EndW02_th.jpg",
+          "capturedAt": "20020615164836",
+          "mimetype": "image/jpeg",
+          "sha256": "2054eabd3753d1b1e6db77e25093e27c1544d6378d53d57aa6355f54dfe15344"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/WNotice_th.jpg",
+          "path": "gallery/gallery3/WNotice_th.jpg",
+          "capturedAt": "20020615170040",
+          "mimetype": "image/jpeg",
+          "sha256": "ff532482aff3e5c318f87598b6a9609771c25392ad5edd498bda08c02145b805"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/Picgirl_th.jpg",
+          "path": "gallery/gallery3/Picgirl_th.jpg",
+          "capturedAt": "20020615165126",
+          "mimetype": "image/jpeg",
+          "sha256": "90a55ff56b10f992d4924b59ed455171dfe32ac990a29372c2f109ca40abb569"
+        }
+      ]
+    },
+    {
+      "timestamp": "20010925220320",
+      "originalFiles": 72,
+      "restoredFiles": 132,
+      "rewrittenReferences": 226,
+      "restored": [
+        {
+          "url": "http://www.fstory.net/ai/tech/frobo.html",
+          "path": "ai/tech/frobo.html",
+          "capturedAt": "20020224022146",
+          "mimetype": "text/html",
+          "sha256": "c8aaafaad4acb3ffb03a690becbda1d696ba7e201dd311a560e7eec589ce5d15"
+        },
+        {
+          "url": "http://www.fstory.net/ai/tech/aihistory.html",
+          "path": "ai/tech/aihistory.html",
+          "capturedAt": "20020224022711",
+          "mimetype": "text/html",
+          "sha256": "2edd18fc6b2d27cf41ac1189bda4b8808febeea2d856b62aa7c23c8977aa5aaa"
+        },
+        {
+          "url": "http://www.fstory.net/ai/tech/robot.html",
+          "path": "ai/tech/robot.html",
+          "capturedAt": "20020224022624",
+          "mimetype": "text/html",
+          "sha256": "dd97ccde349ae88a31be0648eb27b4a7c46e3e8e5d3cc929f4bd3aa0ceb8d8ab"
+        },
+        {
+          "url": "http://www.fstory.net/img/banner.jpg",
+          "path": "img/banner.jpg",
+          "capturedAt": "20031209131016",
+          "mimetype": "image/jpeg",
+          "sha256": "67a0869505e3ad133cc239b806418fd229247653800521df69559012597922c0"
+        },
+        {
+          "url": "http://www.fstory.net/content.html",
+          "path": "content.html",
+          "capturedAt": "20020107013547",
+          "mimetype": "text/html",
+          "sha256": "c96f3b83f0cc7cb8ff19e24cfc1750c1dec45915521987b126e8f46cc4f4fe50"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs1_th.jpg",
+          "path": "gallery/gallery1/Ybs1_th.jpg",
+          "capturedAt": "20020617133229",
+          "mimetype": "image/jpeg",
+          "sha256": "d753abf0f89446da9c4bce29b4d72f4fde055675046a2bcb94378b4404462ceb"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs3_th.jpg",
+          "path": "gallery/gallery1/Ybs3_th.jpg",
+          "capturedAt": "20021212081645",
+          "mimetype": "image/jpeg",
+          "sha256": "e03b7153be15d3013d41348f46e0afdad8de57a21c0f7559bd9e0b4fe71230e6"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs4_th.jpg",
+          "path": "gallery/gallery1/Ybs4_th.jpg",
+          "capturedAt": "20020617135540",
+          "mimetype": "image/jpeg",
+          "sha256": "22ff680838848ec2e4b41825bbbe090a932d2a9b2f91d31f9fbf48f66ef46a68"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs5_th.jpg",
+          "path": "gallery/gallery1/Ybs5_th.jpg",
+          "capturedAt": "20020617135959",
+          "mimetype": "image/jpeg",
+          "sha256": "69ffc621c031df18c9b65e05587cc615194fe46ca90bd04ccb483df818c3cc42"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs6_th.jpg",
+          "path": "gallery/gallery1/Ybs6_th.jpg",
+          "capturedAt": "20020617141039",
+          "mimetype": "image/jpeg",
+          "sha256": "8d1808a86912636b3709b55dcc638ad54de7e4a0f53f5cb63a9c6babaf7a04fe"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs7_th.jpg",
+          "path": "gallery/gallery1/Ybs7_th.jpg",
+          "capturedAt": "20020617141436",
+          "mimetype": "image/jpeg",
+          "sha256": "6fccaf6b0cc2a8ee6751da490286aae4738e938b53a1ee05ff72b81a8aa64260"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs9_th.jpg",
+          "path": "gallery/gallery1/Ybs9_th.jpg",
+          "capturedAt": "20020617141847",
+          "mimetype": "image/jpeg",
+          "sha256": "b3caa213d2f3064fd918b5b98f54d7f282c07cd500a13c538c7c81d13c7c458d"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/97Card/xmascard.html",
+          "path": "gallery/gallery1/97Card/xmascard.html",
+          "capturedAt": "20011227040554",
+          "mimetype": "text/html",
+          "sha256": "b4ec2bb8749e6f2cc3f0298423350a40e78711d65654b67dd67cacf721e18076"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/cardm_th.jpg",
+          "path": "gallery/gallery1/cardm_th.jpg",
+          "capturedAt": "20020617142534",
+          "mimetype": "image/jpeg",
+          "sha256": "755e3205e8926ba5131ff1104e5e86c2b9c69b7a4cc07816c1e6c9d9856fa9ae"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/imfy_th.jpg",
+          "path": "gallery/gallery1/imfy_th.jpg",
+          "capturedAt": "20020617144023",
+          "mimetype": "image/jpeg",
+          "sha256": "e8b27e73db1fa86f28db16446e1e393ed67a37f5ef812cfbb2222b5148032c0f"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/dragon_th.jpg",
+          "path": "gallery/gallery1/dragon_th.jpg",
+          "capturedAt": "20021212110027",
+          "mimetype": "image/jpeg",
+          "sha256": "c867a26a6884e4630213ea514ab3068280946314f2188509a300d90e16166480"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery2/gallery2.html",
+          "path": "gallery/gallery2/gallery2.html",
+          "capturedAt": "20020108194535",
+          "mimetype": "text/html",
+          "sha256": "32a1b39e7890694dd6888345f3e4bd7440c169d71b3d16927507047327b35584"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery4/gallery4.html",
+          "path": "gallery/gallery4/gallery4.html",
+          "capturedAt": "20020108182919",
+          "mimetype": "text/html",
+          "sha256": "aae004e0705b3ad67eb76b3cee99acff39989cac70ab89567fd6fd23eb325f20"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/98Card/Xmas.html",
+          "path": "gallery/gallery3/98Card/Xmas.html",
+          "capturedAt": "20020815151314",
+          "mimetype": "text/html",
+          "sha256": "ffb877d06ad6e00300dc4bcba652fbbc556df9ea799fd9f3d41753670378329c"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/98Card_th.jpg",
+          "path": "gallery/gallery3/98Card_th.jpg",
+          "capturedAt": "20020615162929",
+          "mimetype": "image/jpeg",
+          "sha256": "75c5677ddff175dc3be7feae6dbf55b3b64f14186b42bf415ffdb0cc72574b06"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/festival_th.jpg",
+          "path": "gallery/gallery3/festival_th.jpg",
+          "capturedAt": "20020615170725",
+          "mimetype": "image/jpeg",
+          "sha256": "04df6ff251ccebbd3cd760699fb5fc579a91699cc77a8d51b3b3c022d42c6909"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/EndW02_th.jpg",
+          "path": "gallery/gallery3/EndW02_th.jpg",
+          "capturedAt": "20020615164836",
+          "mimetype": "image/jpeg",
+          "sha256": "2054eabd3753d1b1e6db77e25093e27c1544d6378d53d57aa6355f54dfe15344"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/WNotice_th.jpg",
+          "path": "gallery/gallery3/WNotice_th.jpg",
+          "capturedAt": "20020615170040",
+          "mimetype": "image/jpeg",
+          "sha256": "ff532482aff3e5c318f87598b6a9609771c25392ad5edd498bda08c02145b805"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/DCrime_th.jpg",
+          "path": "gallery/gallery3/DCrime_th.jpg",
+          "capturedAt": "20020615163712",
+          "mimetype": "image/jpeg",
+          "sha256": "6d422eb4c0e826e7b734183488246e0e248dbc54d5df8ba71f341dc938fee0b2"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/Picgirl_th.jpg",
+          "path": "gallery/gallery3/Picgirl_th.jpg",
+          "capturedAt": "20020615165126",
+          "mimetype": "image/jpeg",
+          "sha256": "90a55ff56b10f992d4924b59ed455171dfe32ac990a29372c2f109ca40abb569"
+        },
+        {
+          "url": "http://www.fstory.net/link/linkcontent.html",
+          "path": "link/linkcontent.html",
+          "capturedAt": "20030225124933",
+          "mimetype": "text/html",
+          "sha256": "1f1217a6fdc430259bc83bb3f91ad2fb06a7c56a841daee6d991bb91aca3ec2a"
+        },
+        {
+          "url": "http://www.fstory.net/frame1.html",
+          "path": "frame1.html",
+          "capturedAt": "20011229141148",
+          "mimetype": "text/html",
+          "sha256": "80f041f5f029f50690f2f40bbae3b48119c6de27a5d01e1bf784a04b5abf82da"
+        },
+        {
+          "url": "http://www.fstory.net/diary/frame.html",
+          "path": "diary/frame.html",
+          "capturedAt": "20020107012817",
+          "mimetype": "text/html",
+          "sha256": "2a6a04666a2c805ca1b0e3bc74a92493150c7d3dfab1245da5b717f2731e547c"
+        },
+        {
+          "url": "http://www.fstory.net/img/dia_n.gif",
+          "path": "img/dia_n.gif",
+          "capturedAt": "20020616195248",
+          "mimetype": "image/gif",
+          "sha256": "2ec19a41d741d9e818e44d7c733dc868c3ba2795bf67e79bf160eb0e7e872d45"
+        },
+        {
+          "url": "http://www.fstory.net/img/gal_n.gif",
+          "path": "img/gal_n.gif",
+          "capturedAt": "20020616195553",
+          "mimetype": "image/gif",
+          "sha256": "2dc849819e897d616c87d5a26d4d26c0399afeaab039a79fc32c14298de4ebaa"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/myletter.html",
+          "path": "myletter/myletter.html",
+          "capturedAt": "20020611035305",
+          "mimetype": "text/html",
+          "sha256": "1a36a67d5fe45936ec9d93db65873c391eb5936c4f16560721d4cd4bd2846f7e"
+        },
+        {
+          "url": "http://www.fstory.net/img/charic.gif",
+          "path": "img/charic.gif",
+          "capturedAt": "20020616193814",
+          "mimetype": "image/gif",
+          "sha256": "624cc03c902d836048c9dc18cbd6c700f83e6f205a3866774a338a6f247b1f77"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/poem/96/p95_10_6.html",
+          "path": "myletter/poem/96/p95_10_6.html",
+          "capturedAt": "20020324000425",
+          "mimetype": "text/html",
+          "sha256": "97bb34ccff0a5df2edc0a6dec03e6b67910e38195e60f25be0dd60c93a6b8b65"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/poem/96/p95_10_9.html",
+          "path": "myletter/poem/96/p95_10_9.html",
+          "capturedAt": "20020324001007",
+          "mimetype": "text/html",
+          "sha256": "a3ea6dd7cb86808da1752636386b02ac84aa82b9d02669a565b0841b6f12d92b"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/poem/98/p97_9_14.html",
+          "path": "myletter/poem/98/p97_9_14.html",
+          "capturedAt": "20021221131008",
+          "mimetype": "text/html",
+          "sha256": "d2687aabfc9fc95bd70625274cf531eff7a4b180f7a8d039f3b2f7665803fcb1"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/poem/98/pIllusion2.html",
+          "path": "myletter/poem/98/pIllusion2.html",
+          "capturedAt": "20020327134414",
+          "mimetype": "text/html",
+          "sha256": "92a7fecb12b7dc3a9618d438b6e74046890d235d127a2e1dc3fa5e3957801d1e"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/poem/98/pIllusion1.html",
+          "path": "myletter/poem/98/pIllusion1.html",
+          "capturedAt": "20020327134331",
+          "mimetype": "text/html",
+          "sha256": "01bb8d7f802a84fad4bece07a95398b49fb95479e0e47c253ce1de009e5d04aa"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/poem/another/pD-7.html",
+          "path": "myletter/poem/another/pD-7.html",
+          "capturedAt": "20021225155119",
+          "mimetype": "text/html",
+          "sha256": "c7a2e96e274b4b531bab52a2ef798e0cc2c9bae62c1f11090c4088fdbd4bbb22"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/story.html",
+          "path": "myletter/short/story.html",
+          "capturedAt": "20020822081246",
+          "mimetype": "text/html",
+          "sha256": "f5a9430b9d5892108f02235a3a863b501e68c8d8aa8d225256e11583df078349"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/space.html",
+          "path": "myletter/short/space.html",
+          "capturedAt": "20020621064719",
+          "mimetype": "text/html",
+          "sha256": "1fdcdefd7b4318c03478f96451828045b4a201879e686d009b6713c83b2a63e4"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/fly.html",
+          "path": "myletter/short/fly.html",
+          "capturedAt": "20020621055124",
+          "mimetype": "text/html",
+          "sha256": "cf7727d2b4012593747a2d0f39385e8ab473579c977d49f8beb281de57041cb5"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/blue.html",
+          "path": "myletter/short/blue.html",
+          "capturedAt": "20020619120927",
+          "mimetype": "text/html",
+          "sha256": "dbe59a7e2f04b475e1529f314a71cd1fb90f2d58aceec8e2acb2a8023b8b7428"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/war.html",
+          "path": "myletter/short/war.html",
+          "capturedAt": "20020621053615",
+          "mimetype": "text/html",
+          "sha256": "76ce266192490c00e46cdecdd3a68989e4a5ae4fccd12cb68a2d090293281c85"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/gusl.html",
+          "path": "myletter/short/gusl.html",
+          "capturedAt": "20020822080656",
+          "mimetype": "text/html",
+          "sha256": "dfe07118915d0d9fb1ca674dcd196b6603abb327603711589cf58c30894c7e96"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/song1.html",
+          "path": "myletter/short/song1.html",
+          "capturedAt": "20020621053125",
+          "mimetype": "text/html",
+          "sha256": "452a4c37518cefb36ab15bd6c865e7cdddada14ea060781aa1e72e1c67e5f33a"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/song2.html",
+          "path": "myletter/short/song2.html",
+          "capturedAt": "20021225162223",
+          "mimetype": "text/html",
+          "sha256": "df7c749c28936823812f595522585e1cb82e5f5d78949efc9fbe771689da91bf"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/cult.html",
+          "path": "myletter/short/cult.html",
+          "capturedAt": "20020619121144",
+          "mimetype": "text/html",
+          "sha256": "93440777d326f1cdf233bcffbc5de5856fc2284ebf62f2241a68b75131cd6a45"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/dong1.html",
+          "path": "myletter/short/dong1.html",
+          "capturedAt": "20020822083323",
+          "mimetype": "text/html",
+          "sha256": "6b754f6f2e4119222a20dfae1293cafae15192c13c0959f1954fd119d92524e2"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/memory.html",
+          "path": "myletter/short/memory.html",
+          "capturedAt": "20021225154757",
+          "mimetype": "text/html",
+          "sha256": "d8dd5e41513d54beefa01929809ca12dd7a41862ec0f77cbaaae243044f06d00"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/illus_11.html",
+          "path": "myletter/short/illus_11.html",
+          "capturedAt": "20020621055306",
+          "mimetype": "text/html",
+          "sha256": "6ad938dbd6606e3664addab5114cac8b6824bf76431d6758dfb911888711251b"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/illus_12.html",
+          "path": "myletter/short/illus_12.html",
+          "capturedAt": "20020621055428",
+          "mimetype": "text/html",
+          "sha256": "70cbd3fe4956b2be24c4dd771c029850b8882e4efb16a78ac9ae9cd5df2555a4"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/b612_1.html",
+          "path": "myletter/short/b612_1.html",
+          "capturedAt": "20020822082102",
+          "mimetype": "text/html",
+          "sha256": "2bec48d9e52d76422287c2b23e4046c669114b3ceb9c919df023b46cb723681b"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/b612_2.html",
+          "path": "myletter/short/b612_2.html",
+          "capturedAt": "20020619120501",
+          "mimetype": "text/html",
+          "sha256": "c49bd80607656f8a27da9b26fc051d2db1a8c4efd8cef820809d159d36f9ab41"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/22cen1.html",
+          "path": "myletter/short/22cen1.html",
+          "capturedAt": "20020822081418",
+          "mimetype": "text/html",
+          "sha256": "cbcfd0675a56818dc2365fda9e6a3808806d7048cfe3ceebdcd5e7e41b7b7f41"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/22cen2.html",
+          "path": "myletter/short/22cen2.html",
+          "capturedAt": "20020619121043",
+          "mimetype": "text/html",
+          "sha256": "685f3b834315ebeb69f7c8152f5d6c31cf237a573c0eb967b4b4c245cc6f1e53"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/wlove1.html",
+          "path": "myletter/short/wlove1.html",
+          "capturedAt": "20020621054455",
+          "mimetype": "text/html",
+          "sha256": "27268eddf341aa1dbc5f0f45c198941b2c281dbb400660fa3b8d2f88cc78c0e4"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/wlove2.html",
+          "path": "myletter/short/wlove2.html",
+          "capturedAt": "20020621054537",
+          "mimetype": "text/html",
+          "sha256": "84590936d38a49593b0c62aebc1f2517274641b2d034ae84939c82c37995bdd4"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery2/girl_by_th.jpg",
+          "path": "gallery/gallery2/girl_by_th.jpg",
+          "capturedAt": "20030417225435",
+          "mimetype": "image/jpeg",
+          "sha256": "9d65e2d75acfdc0af0357b679acbb1c9c3b8a594952a26bcfb65a5fecb0c7b20"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/sadgirl_th.jpg",
+          "path": "gallery/gallery4/sadgirl_th.jpg",
+          "capturedAt": "20020614093107",
+          "mimetype": "image/jpeg",
+          "sha256": "f0c92ea47657c76e42c43c0fa8d7a75b7df6865b8246d093bc37661132948eeb"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/space_th.jpg",
+          "path": "gallery/gallery4/space_th.jpg",
+          "capturedAt": "20020614095239",
+          "mimetype": "image/jpeg",
+          "sha256": "c8fd824da8ad9b4488b64db09a013e40fbf280784a60411584ccafea99c37e8d"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/snowg_th.jpg",
+          "path": "gallery/gallery4/snowg_th.jpg",
+          "capturedAt": "20020614094117",
+          "mimetype": "image/jpeg",
+          "sha256": "e0afa90a24dc42d9a1263c7a87c7e3fd9ced28ccba2094a8bb51ec36576c77fc"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/sword_th.jpg",
+          "path": "gallery/gallery4/sword_th.jpg",
+          "capturedAt": "20020614101120",
+          "mimetype": "image/jpeg",
+          "sha256": "ec09a316baaa823e6d18fb2ed4ee73e59bd1a00ec0c5c3a9c854923ea2f3386e"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/witch_th.jpg",
+          "path": "gallery/gallery4/witch_th.jpg",
+          "capturedAt": "20020614101702",
+          "mimetype": "image/jpeg",
+          "sha256": "ac0d0d6c0c59bed5a387ded3d13210da5ddb854e86a9cadcbf3cd54bb3c512b3"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/spbear_th.jpg",
+          "path": "gallery/gallery4/spbear_th.jpg",
+          "capturedAt": "20020614100119",
+          "mimetype": "image/jpeg",
+          "sha256": "ba10c1c07b838828a06056bb896c44252811d4a58988fcbe3479589a64560526"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/santag_th.jpg",
+          "path": "gallery/gallery4/santag_th.jpg",
+          "capturedAt": "20020614093427",
+          "mimetype": "image/jpeg",
+          "sha256": "8cf640ba8f00bdf564e3f15fa862a92b486a06d1a0d676354c9881450c8bec78"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/ricopr_th.jpg",
+          "path": "gallery/gallery4/ricopr_th.jpg",
+          "capturedAt": "20020614092356",
+          "mimetype": "image/jpeg",
+          "sha256": "a84c7d1e66c60480959be81323cb4317fd04d875afb6823aac0ba0de736b0d64"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/game_th.jpg",
+          "path": "gallery/gallery4/game_th.jpg",
+          "capturedAt": "20020617144421",
+          "mimetype": "image/jpeg",
+          "sha256": "56aced6d3ac4efde9f6a108c83d656f7770c9bf1a3f95ecdd01768dc222cddc9"
+        },
+        {
+          "url": "http://www.fstory.net/link/nobanner.jpg",
+          "path": "link/nobanner.jpg",
+          "capturedAt": "20020224120419",
+          "mimetype": "image/jpeg",
+          "sha256": "deefce77d9bcf150f2d8c02d25c84b462153c4b2526f31684b009ad236e615b9"
+        },
+        {
+          "url": "http://fstory.net/diary/memo.html",
+          "path": "diary/memo.html",
+          "capturedAt": "20020108192953",
+          "mimetype": "text/html",
+          "sha256": "0cfadc1eb25440ed271b10faaa76cab2d8f3583bf084f66ee7898294542eda49"
+        },
+        {
+          "url": "http://fstory.net/myletter/long.html",
+          "path": "myletter/long.html",
+          "capturedAt": "20020612221537",
+          "mimetype": "text/html",
+          "sha256": "de626bcd7170b5ec59b3c5ed21914e93061dafa88cefb5a4b0403e594f9e2249"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND1.htm",
+          "path": "myletter/dland/DLAND1.htm",
+          "capturedAt": "20020227100925",
+          "mimetype": "text/html",
+          "sha256": "95134e7e55e6950ef7f55ca37f87c31062db7b399a2ca787ef9306adca07f3d8"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND2.htm",
+          "path": "myletter/dland/DLAND2.htm",
+          "capturedAt": "20020613205941",
+          "mimetype": "text/html",
+          "sha256": "8383484b0f14c99ae9987e9fa82bb808cf28b01b1caae7626997643df665d4c0"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND3.htm",
+          "path": "myletter/dland/DLAND3.htm",
+          "capturedAt": "20020301074709",
+          "mimetype": "text/html",
+          "sha256": "4997271902576878b0f70aec240ea586a7d9419dc1acaed25eba4e4a352933ee"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND4.htm",
+          "path": "myletter/dland/DLAND4.htm",
+          "capturedAt": "20020815154228",
+          "mimetype": "text/html",
+          "sha256": "97116749395205a17d5972b57b562f7c29a1f52c12ca46ec03b9be28969845d3"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND5.htm",
+          "path": "myletter/dland/DLAND5.htm",
+          "capturedAt": "20020302055250",
+          "mimetype": "text/html",
+          "sha256": "11dc7e708b2099fff8b581c2276044b8b8f1dc714ad962b8a3eb07e8ad4f2e29"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND6.htm",
+          "path": "myletter/dland/DLAND6.htm",
+          "capturedAt": "20020302203424",
+          "mimetype": "text/html",
+          "sha256": "196593cdf7ec5151980e13fe15d4e0a99c2029c00ad4b4d13afe05b7e3b1a4ee"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND7.htm",
+          "path": "myletter/dland/DLAND7.htm",
+          "capturedAt": "20020302203849",
+          "mimetype": "text/html",
+          "sha256": "26a581519bbc3675c2971cfef850f5b998c21553e164070791609f4681aed6b7"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND8.htm",
+          "path": "myletter/dland/DLAND8.htm",
+          "capturedAt": "20020302204017",
+          "mimetype": "text/html",
+          "sha256": "746c92e07231a1cacfd0c97714cb67bf28a52ac70172c7c43c6c914254ec2fc7"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND9.htm",
+          "path": "myletter/dland/DLAND9.htm",
+          "capturedAt": "20020613205538",
+          "mimetype": "text/html",
+          "sha256": "1c6a759edfcb6d4b17fa5a3bc2cfd485815250f3c3fe8ffb3dbc31328597f9da"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND10.htm",
+          "path": "myletter/dland/DLAND10.htm",
+          "capturedAt": "20030220175804",
+          "mimetype": "text/html",
+          "sha256": "aec46e241900bd37125bf49cec3d7d8f2f88ae9aabbc697dfd9ac78be1dbd1b9"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND21.htm",
+          "path": "myletter/dland/DLAND21.htm",
+          "capturedAt": "20020228153230",
+          "mimetype": "text/html",
+          "sha256": "0c1c8cef0a62a6733110d856ce13dd44c0cfab47abd9cc9fb089e66502d07fd4"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND22.htm",
+          "path": "myletter/dland/DLAND22.htm",
+          "capturedAt": "20020613210445",
+          "mimetype": "text/html",
+          "sha256": "775e466fb27fd16a4221979d29ef5ed74ce500692402c214f24ce44c6b176b39"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND23.htm",
+          "path": "myletter/dland/DLAND23.htm",
+          "capturedAt": "20021212022915",
+          "mimetype": "text/html",
+          "sha256": "3d3353a004692c11b67d12dfd6e9eec8cd68525426c52e2e988d50f8f326f173"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND24.htm",
+          "path": "myletter/dland/DLAND24.htm",
+          "capturedAt": "20020613210912",
+          "mimetype": "text/html",
+          "sha256": "67bc9d3d40a74d554636a6b57bc1c7bc1def667345ba955a5fa5ca0a2eef6380"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND25.htm",
+          "path": "myletter/dland/DLAND25.htm",
+          "capturedAt": "20020613210909",
+          "mimetype": "text/html",
+          "sha256": "03cebbec967cf5c55771adf3ed30666380dc2353570d3fe632024cc5daad1c3b"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND26.htm",
+          "path": "myletter/dland/DLAND26.htm",
+          "capturedAt": "20020301000400",
+          "mimetype": "text/html",
+          "sha256": "1cfa52702f89337270c061d08da789ea7f1759549320e6ced272e6b29f272f38"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND28.htm",
+          "path": "myletter/dland/DLAND28.htm",
+          "capturedAt": "20020126214603",
+          "mimetype": "text/html",
+          "sha256": "4e4e860f4ee19a191678bc90289efd742aa6196b686cabb7cf645abc98c1f673"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND29.htm",
+          "path": "myletter/dland/DLAND29.htm",
+          "capturedAt": "20020301074653",
+          "mimetype": "text/html",
+          "sha256": "71c349da871caac2a831f42407f6fac56770833048f542505908db8652f1efa9"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND30.htm",
+          "path": "myletter/dland/DLAND30.htm",
+          "capturedAt": "20020301074724",
+          "mimetype": "text/html",
+          "sha256": "18131235528f6da04f2b8ffb1e951de4375993a559b674e6fcff359a6ff337b5"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND11.htm",
+          "path": "myletter/dland/DLAND11.htm",
+          "capturedAt": "20020613213723",
+          "mimetype": "text/html",
+          "sha256": "fc8f829e4d96b822bcf45be87f867b699a08e6ec925d41f137c847a3f5d6c118"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND12.htm",
+          "path": "myletter/dland/DLAND12.htm",
+          "capturedAt": "20021212022828",
+          "mimetype": "text/html",
+          "sha256": "61ed5df1e57d13fd0f46392cf839b4ff3dfad11d768a06b788d87ed7439ca8fb"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND13.htm",
+          "path": "myletter/dland/DLAND13.htm",
+          "capturedAt": "20020815152352",
+          "mimetype": "text/html",
+          "sha256": "7f99a41b082b9d4bf7da27f3d2407ef76d7efb636dd79a0798b804d1914511df"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND15.htm",
+          "path": "myletter/dland/DLAND15.htm",
+          "capturedAt": "20020228071514",
+          "mimetype": "text/html",
+          "sha256": "57035a878f83f198012b607def59bb4e1d8bd19bb84c3e9aa3a28682ac24f9fe"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND16.htm",
+          "path": "myletter/dland/DLAND16.htm",
+          "capturedAt": "20020228071534",
+          "mimetype": "text/html",
+          "sha256": "3e213ac1c79266175f3d6462a9eddb52c569d2ee40e6ce51b6d63398970eb528"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND17.htm",
+          "path": "myletter/dland/DLAND17.htm",
+          "capturedAt": "20020815152720",
+          "mimetype": "text/html",
+          "sha256": "db3150d4006bcf2496ca17a260e5f6de63bf170cc4380a154105614a45fc4a98"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND18.htm",
+          "path": "myletter/dland/DLAND18.htm",
+          "capturedAt": "20020511134726",
+          "mimetype": "text/html",
+          "sha256": "858769b372a8bca9d68e9358592b03a862c6c10adb2215157e5c7d15cd7c63d3"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND19.htm",
+          "path": "myletter/dland/DLAND19.htm",
+          "capturedAt": "20020228152654",
+          "mimetype": "text/html",
+          "sha256": "6cb952540981a1c5c9f0eec95535ae1cd8e77b0e1f43433a4ac435a2a863a68d"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND20.htm",
+          "path": "myletter/dland/DLAND20.htm",
+          "capturedAt": "20020228152837",
+          "mimetype": "text/html",
+          "sha256": "ff8652f22352d11c8db9ad10ab8612349f08414772d9ea0c181cd5b3a83b3402"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND31.htm",
+          "path": "myletter/dland/DLAND31.htm",
+          "capturedAt": "20020301074701",
+          "mimetype": "text/html",
+          "sha256": "8413a11da123d71e2602839abe6d652a3c3d3e3373e97f9a93dbf88bd137d3a5"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND32.htm",
+          "path": "myletter/dland/DLAND32.htm",
+          "capturedAt": "20020301171330",
+          "mimetype": "text/html",
+          "sha256": "4261dad514fa92c57bfa5faa6a33338cc61fecf14542f4fe3977d2563dd1fce7"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND33.htm",
+          "path": "myletter/dland/DLAND33.htm",
+          "capturedAt": "20020613212900",
+          "mimetype": "text/html",
+          "sha256": "77ffe4095b2f45c0d81eb579f7c8153cd12cb80091e058bf13bf9682fd89005b"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND35.htm",
+          "path": "myletter/dland/DLAND35.htm",
+          "capturedAt": "20020301172021",
+          "mimetype": "text/html",
+          "sha256": "cf3d717f221d3624768e4644d97c16dfbaadbda2b92df9647b1416a2c8cc70d5"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND36.htm",
+          "path": "myletter/dland/DLAND36.htm",
+          "capturedAt": "20020225042017",
+          "mimetype": "text/html",
+          "sha256": "3740e387f4dedb8f7513c6511fef61776fd01032826f1190fd224cadf455d524"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND37.htm",
+          "path": "myletter/dland/DLAND37.htm",
+          "capturedAt": "20020613213152",
+          "mimetype": "text/html",
+          "sha256": "1ef70ef787c8ec4c85f007937dfc7938f0206d924e65efdbfa8e31b38e67baaa"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND38.htm",
+          "path": "myletter/dland/DLAND38.htm",
+          "capturedAt": "20020301171915",
+          "mimetype": "text/html",
+          "sha256": "c87adf1ad331c067657360511e7a279c2d94244c4e725b59a3bf671ec0c86891"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND39.htm",
+          "path": "myletter/dland/DLAND39.htm",
+          "capturedAt": "20020613213748",
+          "mimetype": "text/html",
+          "sha256": "9db16d8f5a48428263424c58b0d9c7511fb64f95d1f8db6336a82fe6a9cb4eaa"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND40.htm",
+          "path": "myletter/dland/DLAND40.htm",
+          "capturedAt": "20020302082831",
+          "mimetype": "text/html",
+          "sha256": "c63ba73f816f3b2ad102e4b441c8058b5cb2ea06ae0317dee11544ac4004a7b6"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND41.htm",
+          "path": "myletter/dland/DLAND41.htm",
+          "capturedAt": "20020302054908",
+          "mimetype": "text/html",
+          "sha256": "7de43fc7df26330ebc1646928a6f48c28ec9ac952e6f6f7c0204c72c1e24591d"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DWORLD.htm",
+          "path": "myletter/dland/DWORLD.htm",
+          "capturedAt": "20020302204642",
+          "mimetype": "text/html",
+          "sha256": "ebf4aec859b462599e38f6dfaa670ec6a9f0d6ab246e5f3f7bbb8e870f700e3c"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch1.html",
+          "path": "myletter/windy/witch1.html",
+          "capturedAt": "20020621054244",
+          "mimetype": "text/html",
+          "sha256": "57d5094e653a4d9fa1ea36e271f7ca2bae1b9b08fc4c85f874b5e69f23a1221c"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch2.html",
+          "path": "myletter/windy/witch2.html",
+          "capturedAt": "20021225164415",
+          "mimetype": "text/html",
+          "sha256": "4792e6b1a0befc7a6eeb8b5bc61954326da57893ab9225a8a9b36d5ecc9c2c49"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch3.html",
+          "path": "myletter/windy/witch3.html",
+          "capturedAt": "20020621054320",
+          "mimetype": "text/html",
+          "sha256": "59fa259759b07609d99de1368249a763b38bb0afdc2bfac0c4d6335a7a8a1b63"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch4.html",
+          "path": "myletter/windy/witch4.html",
+          "capturedAt": "20020621054815",
+          "mimetype": "text/html",
+          "sha256": "25ba00f163d139bc6fc92d050513c2d29269259e059cf5dbffc97c59892bf616"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch5.html",
+          "path": "myletter/windy/witch5.html",
+          "capturedAt": "20020822082756",
+          "mimetype": "text/html",
+          "sha256": "38431d821b016ce261e1a4ec44d0f3f27839020b5a13a0473a8181742f39ec75"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch6.html",
+          "path": "myletter/windy/witch6.html",
+          "capturedAt": "20020621054713",
+          "mimetype": "text/html",
+          "sha256": "20759ada62614c3cca2e9ae252116401875677eb72b18ca5050febba709985c7"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch7.html",
+          "path": "myletter/windy/witch7.html",
+          "capturedAt": "20020621055129",
+          "mimetype": "text/html",
+          "sha256": "a75c659a451c829a97627021e56e11fffa3afa87cfdf0e8abd4f0b525b82207f"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch8.html",
+          "path": "myletter/windy/witch8.html",
+          "capturedAt": "20020518145829",
+          "mimetype": "text/html",
+          "sha256": "886b289d551524de18e6248b1a972f5f885fcc734b418346dd0f5061fd706cb9"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch9.html",
+          "path": "myletter/windy/witch9.html",
+          "capturedAt": "20020824204103",
+          "mimetype": "text/html",
+          "sha256": "e7005d006af2a2aaab2a4fdb74432a09d9b0c727f83cebc7546326e0947a2b34"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch10.html",
+          "path": "myletter/windy/witch10.html",
+          "capturedAt": "20020822082753",
+          "mimetype": "text/html",
+          "sha256": "f91ca25104d99ada444bbb3948b7a67d28328df188f1c39dce226fa62cad9708"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch11.html",
+          "path": "myletter/windy/witch11.html",
+          "capturedAt": "20020621054943",
+          "mimetype": "text/html",
+          "sha256": "ff08cce1ae18dd0ee21218990123cc03b6b21e375f133d8b7a65aabd2de8c263"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch12.html",
+          "path": "myletter/windy/witch12.html",
+          "capturedAt": "20020621054618",
+          "mimetype": "text/html",
+          "sha256": "fc9c10091230e06c16c61dd7caba5be74769fb5056b1cd82ec289708b7f1ccde"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch13.html",
+          "path": "myletter/windy/witch13.html",
+          "capturedAt": "20020621055051",
+          "mimetype": "text/html",
+          "sha256": "5598d1a978b63955130d694ae96248933a79f39f6e91e6d318d213172f7a10b4"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch14.html",
+          "path": "myletter/windy/witch14.html",
+          "capturedAt": "20021225161625",
+          "mimetype": "text/html",
+          "sha256": "397080df60bb6d688148c2fb18448d3ddaae5794594c7a8f75546d0f18a5c4a4"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch15.html",
+          "path": "myletter/windy/witch15.html",
+          "capturedAt": "20020621054932",
+          "mimetype": "text/html",
+          "sha256": "e1448e98e79341c0589e633d9e560977f410658f33796bd10ebcc03c364f5d19"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch16.html",
+          "path": "myletter/windy/witch16.html",
+          "capturedAt": "20020822100322",
+          "mimetype": "text/html",
+          "sha256": "46ecbf10273596257b332e83b98ab7ef61e7e1d3d0041f2e339d71038fb7c44f"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch17.html",
+          "path": "myletter/windy/witch17.html",
+          "capturedAt": "20020621060056",
+          "mimetype": "text/html",
+          "sha256": "d8185e667c31bcc3497cd3f8618bac8cd1d26514ed0b17d06e93e6d66a50036a"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch18.html",
+          "path": "myletter/windy/witch18.html",
+          "capturedAt": "20020822100531",
+          "mimetype": "text/html",
+          "sha256": "32adb45100355783b089cf0f7dc512fc53aa56d2606f7fe760a2de51271938e5"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch19.html",
+          "path": "myletter/windy/witch19.html",
+          "capturedAt": "20020621052833",
+          "mimetype": "text/html",
+          "sha256": "96f8b3693c96a515e51ba4ff1a0cc7d86ed646fe2f7bd879d0e7daaa3c32c0bb"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch20.html",
+          "path": "myletter/windy/witch20.html",
+          "capturedAt": "20020822100442",
+          "mimetype": "text/html",
+          "sha256": "d5c9fb34b5971eddd07b7ad994b29bb9b6db227caefcaa04c6f7632a4c4f69dd"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch21.html",
+          "path": "myletter/windy/witch21.html",
+          "capturedAt": "20020822103927",
+          "mimetype": "text/html",
+          "sha256": "2e2269ac6a77ece7762d2b046bb2f16a09379686c2c92b2592cd6880ef3c353c"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch22.html",
+          "path": "myletter/windy/witch22.html",
+          "capturedAt": "20020621053535",
+          "mimetype": "text/html",
+          "sha256": "2250690068ac1a8aaf8a0e2a6c576b9716aedf5f0159ecfbe78758bf59dc1d2a"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch23.html",
+          "path": "myletter/windy/witch23.html",
+          "capturedAt": "20020621053810",
+          "mimetype": "text/html",
+          "sha256": "56060d9d634f67fd7bbd883371013d9019f78c258896c9e23cb6de376b771be1"
+        }
+      ]
+    },
+    {
+      "timestamp": "20011202212712",
+      "originalFiles": 179,
+      "restoredFiles": 124,
+      "rewrittenReferences": 525,
+      "restored": [
+        {
+          "url": "http://fstory.net/img/banner.jpg",
+          "path": "img/banner.jpg",
+          "capturedAt": "20031209131016",
+          "mimetype": "image/jpeg",
+          "sha256": "67a0869505e3ad133cc239b806418fd229247653800521df69559012597922c0"
+        },
+        {
+          "url": "http://fstory.net/gallery/present/present.html",
+          "path": "gallery/present/present.html",
+          "capturedAt": "20020612220909",
+          "mimetype": "text/html",
+          "sha256": "c23e7b9717400bd2d71540592305563b5ac41be61a5897359ea35e5ecbd82f79"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs1_th.jpg",
+          "path": "gallery/gallery1/Ybs1_th.jpg",
+          "capturedAt": "20020617133229",
+          "mimetype": "image/jpeg",
+          "sha256": "d753abf0f89446da9c4bce29b4d72f4fde055675046a2bcb94378b4404462ceb"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs3_th.jpg",
+          "path": "gallery/gallery1/Ybs3_th.jpg",
+          "capturedAt": "20021212081645",
+          "mimetype": "image/jpeg",
+          "sha256": "e03b7153be15d3013d41348f46e0afdad8de57a21c0f7559bd9e0b4fe71230e6"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs4_th.jpg",
+          "path": "gallery/gallery1/Ybs4_th.jpg",
+          "capturedAt": "20020617135540",
+          "mimetype": "image/jpeg",
+          "sha256": "22ff680838848ec2e4b41825bbbe090a932d2a9b2f91d31f9fbf48f66ef46a68"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs5_th.jpg",
+          "path": "gallery/gallery1/Ybs5_th.jpg",
+          "capturedAt": "20020617135959",
+          "mimetype": "image/jpeg",
+          "sha256": "69ffc621c031df18c9b65e05587cc615194fe46ca90bd04ccb483df818c3cc42"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs6_th.jpg",
+          "path": "gallery/gallery1/Ybs6_th.jpg",
+          "capturedAt": "20020617141039",
+          "mimetype": "image/jpeg",
+          "sha256": "8d1808a86912636b3709b55dcc638ad54de7e4a0f53f5cb63a9c6babaf7a04fe"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs7_th.jpg",
+          "path": "gallery/gallery1/Ybs7_th.jpg",
+          "capturedAt": "20020617141436",
+          "mimetype": "image/jpeg",
+          "sha256": "6fccaf6b0cc2a8ee6751da490286aae4738e938b53a1ee05ff72b81a8aa64260"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/Ybs9_th.jpg",
+          "path": "gallery/gallery1/Ybs9_th.jpg",
+          "capturedAt": "20020617141847",
+          "mimetype": "image/jpeg",
+          "sha256": "b3caa213d2f3064fd918b5b98f54d7f282c07cd500a13c538c7c81d13c7c458d"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/cardm_th.jpg",
+          "path": "gallery/gallery1/cardm_th.jpg",
+          "capturedAt": "20020617142534",
+          "mimetype": "image/jpeg",
+          "sha256": "755e3205e8926ba5131ff1104e5e86c2b9c69b7a4cc07816c1e6c9d9856fa9ae"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/imfy_th.jpg",
+          "path": "gallery/gallery1/imfy_th.jpg",
+          "capturedAt": "20020617144023",
+          "mimetype": "image/jpeg",
+          "sha256": "e8b27e73db1fa86f28db16446e1e393ed67a37f5ef812cfbb2222b5148032c0f"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery1/dragon_th.jpg",
+          "path": "gallery/gallery1/dragon_th.jpg",
+          "capturedAt": "20021212110027",
+          "mimetype": "image/jpeg",
+          "sha256": "c867a26a6884e4630213ea514ab3068280946314f2188509a300d90e16166480"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery2/girl_by_th.jpg",
+          "path": "gallery/gallery2/girl_by_th.jpg",
+          "capturedAt": "20030417225435",
+          "mimetype": "image/jpeg",
+          "sha256": "9d65e2d75acfdc0af0357b679acbb1c9c3b8a594952a26bcfb65a5fecb0c7b20"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/98Card/Xmas.html",
+          "path": "gallery/gallery3/98Card/Xmas.html",
+          "capturedAt": "20020815151314",
+          "mimetype": "text/html",
+          "sha256": "ffb877d06ad6e00300dc4bcba652fbbc556df9ea799fd9f3d41753670378329c"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/98Card_th.jpg",
+          "path": "gallery/gallery3/98Card_th.jpg",
+          "capturedAt": "20020615162929",
+          "mimetype": "image/jpeg",
+          "sha256": "75c5677ddff175dc3be7feae6dbf55b3b64f14186b42bf415ffdb0cc72574b06"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/festival_th.jpg",
+          "path": "gallery/gallery3/festival_th.jpg",
+          "capturedAt": "20020615170725",
+          "mimetype": "image/jpeg",
+          "sha256": "04df6ff251ccebbd3cd760699fb5fc579a91699cc77a8d51b3b3c022d42c6909"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/EndW02_th.jpg",
+          "path": "gallery/gallery3/EndW02_th.jpg",
+          "capturedAt": "20020615164836",
+          "mimetype": "image/jpeg",
+          "sha256": "2054eabd3753d1b1e6db77e25093e27c1544d6378d53d57aa6355f54dfe15344"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/WNotice_th.jpg",
+          "path": "gallery/gallery3/WNotice_th.jpg",
+          "capturedAt": "20020615170040",
+          "mimetype": "image/jpeg",
+          "sha256": "ff532482aff3e5c318f87598b6a9609771c25392ad5edd498bda08c02145b805"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/DCrime_th.jpg",
+          "path": "gallery/gallery3/DCrime_th.jpg",
+          "capturedAt": "20020615163712",
+          "mimetype": "image/jpeg",
+          "sha256": "6d422eb4c0e826e7b734183488246e0e248dbc54d5df8ba71f341dc938fee0b2"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery3/Picgirl_th.jpg",
+          "path": "gallery/gallery3/Picgirl_th.jpg",
+          "capturedAt": "20020615165126",
+          "mimetype": "image/jpeg",
+          "sha256": "90a55ff56b10f992d4924b59ed455171dfe32ac990a29372c2f109ca40abb569"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/sadgirl_th.jpg",
+          "path": "gallery/gallery4/sadgirl_th.jpg",
+          "capturedAt": "20020614093107",
+          "mimetype": "image/jpeg",
+          "sha256": "f0c92ea47657c76e42c43c0fa8d7a75b7df6865b8246d093bc37661132948eeb"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/space_th.jpg",
+          "path": "gallery/gallery4/space_th.jpg",
+          "capturedAt": "20020614095239",
+          "mimetype": "image/jpeg",
+          "sha256": "c8fd824da8ad9b4488b64db09a013e40fbf280784a60411584ccafea99c37e8d"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/snowg_th.jpg",
+          "path": "gallery/gallery4/snowg_th.jpg",
+          "capturedAt": "20020614094117",
+          "mimetype": "image/jpeg",
+          "sha256": "e0afa90a24dc42d9a1263c7a87c7e3fd9ced28ccba2094a8bb51ec36576c77fc"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/sword_th.jpg",
+          "path": "gallery/gallery4/sword_th.jpg",
+          "capturedAt": "20020614101120",
+          "mimetype": "image/jpeg",
+          "sha256": "ec09a316baaa823e6d18fb2ed4ee73e59bd1a00ec0c5c3a9c854923ea2f3386e"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/witch_th.jpg",
+          "path": "gallery/gallery4/witch_th.jpg",
+          "capturedAt": "20020614101702",
+          "mimetype": "image/jpeg",
+          "sha256": "ac0d0d6c0c59bed5a387ded3d13210da5ddb854e86a9cadcbf3cd54bb3c512b3"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/spbear_th.jpg",
+          "path": "gallery/gallery4/spbear_th.jpg",
+          "capturedAt": "20020614100119",
+          "mimetype": "image/jpeg",
+          "sha256": "ba10c1c07b838828a06056bb896c44252811d4a58988fcbe3479589a64560526"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/santag_th.jpg",
+          "path": "gallery/gallery4/santag_th.jpg",
+          "capturedAt": "20020614093427",
+          "mimetype": "image/jpeg",
+          "sha256": "8cf640ba8f00bdf564e3f15fa862a92b486a06d1a0d676354c9881450c8bec78"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/ricopr_th.jpg",
+          "path": "gallery/gallery4/ricopr_th.jpg",
+          "capturedAt": "20020614092356",
+          "mimetype": "image/jpeg",
+          "sha256": "a84c7d1e66c60480959be81323cb4317fd04d875afb6823aac0ba0de736b0d64"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery4/game_th.jpg",
+          "path": "gallery/gallery4/game_th.jpg",
+          "capturedAt": "20020617144421",
+          "mimetype": "image/jpeg",
+          "sha256": "56aced6d3ac4efde9f6a108c83d656f7770c9bf1a3f95ecdd01768dc222cddc9"
+        },
+        {
+          "url": "http://fstory.net/kani/special/cherry/cherry.html",
+          "path": "kani/special/cherry/cherry.html",
+          "capturedAt": "20020606184346",
+          "mimetype": "text/html",
+          "sha256": "10ca910e34fc06474135897638d2b256b3b3d5980e3a0b22312503a06786dbaf"
+        },
+        {
+          "url": "http://fstory.net/kani/special/kare/kare.html",
+          "path": "kani/special/kare/kare.html",
+          "capturedAt": "20020409094355",
+          "mimetype": "text/html",
+          "sha256": "78cff64129364cff73b18bce1cfc1a2a805c1a79136ef49179b8b40f7c5a163e"
+        },
+        {
+          "url": "http://fstory.net/kani/special/baekgu/main_img.gif",
+          "path": "kani/special/baekgu/main_img.gif",
+          "capturedAt": "20020512165418",
+          "mimetype": "image/gif",
+          "sha256": "ba72452b142015dc9acaf5765ac4cabc447d517309fee92f126c014b5f5d338d"
+        },
+        {
+          "url": "http://fstory.net/kani/piano.gif",
+          "path": "kani/piano.gif",
+          "capturedAt": "20020512130631",
+          "mimetype": "image/gif",
+          "sha256": "9147b0f38e24adb91e3a0e3d14581f3ac61f6f7a9de209db2aae1e6f240a5aa5"
+        },
+        {
+          "url": "http://fstory.net/kani/special/baekgu/character_img_1.gif",
+          "path": "kani/special/baekgu/character_img_1.gif",
+          "capturedAt": "20020512133840",
+          "mimetype": "image/gif",
+          "sha256": "2694442c8e4055f669408f5dd9bb4bf86f3126130d3374eb7a6661579dc4d043"
+        },
+        {
+          "url": "http://fstory.net/kani/special/baekgu/character_img_2.gif",
+          "path": "kani/special/baekgu/character_img_2.gif",
+          "capturedAt": "20021110102234",
+          "mimetype": "image/gif",
+          "sha256": "28909823f1189b83bfdd3b3f311355e2d45caa6222a5b9f3db4639d0861f5a43"
+        },
+        {
+          "url": "http://fstory.net/kani/special/baekgu/character_img_5.gif",
+          "path": "kani/special/baekgu/character_img_5.gif",
+          "capturedAt": "20021110103415",
+          "mimetype": "image/gif",
+          "sha256": "85b9d934edf2eac317027b5ffe448ef1f4599db2a43cfa262af17de3569faabc"
+        },
+        {
+          "url": "http://fstory.net/kani/special/baekgu/character_img_6.gif",
+          "path": "kani/special/baekgu/character_img_6.gif",
+          "capturedAt": "20021110103845",
+          "mimetype": "image/gif",
+          "sha256": "422bb1f2427636dbedb28a37ea2308267d9fd4d928f4fb0fb6283bd3d356a635"
+        },
+        {
+          "url": "http://fstory.net/kani/special/bono/09.jpg",
+          "path": "kani/special/bono/09.jpg",
+          "capturedAt": "20021110094025",
+          "mimetype": "image/jpeg",
+          "sha256": "1c3d40cc85486f379c080f5e2c88b88e72c51294d80a4ab0258861a49eab0702"
+        },
+        {
+          "url": "http://fstory.net/kani/special/bono/bono.jpg",
+          "path": "kani/special/bono/bono.jpg",
+          "capturedAt": "20021110095746",
+          "mimetype": "image/jpeg",
+          "sha256": "dec23467d8ba1b3c290d4c20cb85efc2a4fbc72604fd7f7b3737fec966bf14f7"
+        },
+        {
+          "url": "http://fstory.net/kani/special/bono/porori.jpg",
+          "path": "kani/special/bono/porori.jpg",
+          "capturedAt": "20021217235121",
+          "mimetype": "image/jpeg",
+          "sha256": "cf7f5b4b7bcd3895a6319e358f565d3b439a589f9fbd1c8cca7f122d13cc9ada"
+        },
+        {
+          "url": "http://fstory.net/kani/special/bono/nuburi.jpg",
+          "path": "kani/special/bono/nuburi.jpg",
+          "capturedAt": "20020607080540",
+          "mimetype": "image/jpeg",
+          "sha256": "f1a7cb29ef92e4510c5fa253da22b6a2ad7e95f2aa3d22f8ad3f22945f54fcea"
+        },
+        {
+          "url": "http://fstory.net/kani/special/bono/yaong.gif",
+          "path": "kani/special/bono/yaong.gif",
+          "capturedAt": "20020607081532",
+          "mimetype": "image/gif",
+          "sha256": "2e1a68fc4185f750443f1b6b5a5dcec6cb0001715965a2a75bc1d38f5982a4cc"
+        },
+        {
+          "url": "http://fstory.net/kani/special/doly/com-m-4.gif",
+          "path": "kani/special/doly/com-m-4.gif",
+          "capturedAt": "20021218230829",
+          "mimetype": "image/gif",
+          "sha256": "ebeef91565edb28e362755af505cbac0fcb6dc1e93c68a63be4e0ff8a9df2fa6"
+        },
+        {
+          "url": "http://fstory.net/link/linkcontent.html",
+          "path": "link/linkcontent.html",
+          "capturedAt": "20030225124933",
+          "mimetype": "text/html",
+          "sha256": "1f1217a6fdc430259bc83bb3f91ad2fb06a7c56a841daee6d991bb91aca3ec2a"
+        },
+        {
+          "url": "http://www.fstory.net/img/dia_n.gif",
+          "path": "img/dia_n.gif",
+          "capturedAt": "20020616195248",
+          "mimetype": "image/gif",
+          "sha256": "2ec19a41d741d9e818e44d7c733dc868c3ba2795bf67e79bf160eb0e7e872d45"
+        },
+        {
+          "url": "http://www.fstory.net/img/gal_n.gif",
+          "path": "img/gal_n.gif",
+          "capturedAt": "20020616195553",
+          "mimetype": "image/gif",
+          "sha256": "2dc849819e897d616c87d5a26d4d26c0399afeaab039a79fc32c14298de4ebaa"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/myletter.html",
+          "path": "myletter/myletter.html",
+          "capturedAt": "20020611035305",
+          "mimetype": "text/html",
+          "sha256": "1a36a67d5fe45936ec9d93db65873c391eb5936c4f16560721d4cd4bd2846f7e"
+        },
+        {
+          "url": "http://www.fstory.net/img/charic.gif",
+          "path": "img/charic.gif",
+          "capturedAt": "20020616193814",
+          "mimetype": "image/gif",
+          "sha256": "624cc03c902d836048c9dc18cbd6c700f83e6f205a3866774a338a6f247b1f77"
+        },
+        {
+          "url": "http://fstory.net/myletter/poem/98/p97_9_14.html",
+          "path": "myletter/poem/98/p97_9_14.html",
+          "capturedAt": "20021221131008",
+          "mimetype": "text/html",
+          "sha256": "d2687aabfc9fc95bd70625274cf531eff7a4b180f7a8d039f3b2f7665803fcb1"
+        },
+        {
+          "url": "http://fstory.net/myletter/poem/98/pIllusion2.html",
+          "path": "myletter/poem/98/pIllusion2.html",
+          "capturedAt": "20020327134414",
+          "mimetype": "text/html",
+          "sha256": "92a7fecb12b7dc3a9618d438b6e74046890d235d127a2e1dc3fa5e3957801d1e"
+        },
+        {
+          "url": "http://fstory.net/myletter/poem/98/pIllusion1.html",
+          "path": "myletter/poem/98/pIllusion1.html",
+          "capturedAt": "20020327134331",
+          "mimetype": "text/html",
+          "sha256": "01bb8d7f802a84fad4bece07a95398b49fb95479e0e47c253ce1de009e5d04aa"
+        },
+        {
+          "url": "http://fstory.net/myletter/poem/another/pD-7.html",
+          "path": "myletter/poem/another/pD-7.html",
+          "capturedAt": "20021225155119",
+          "mimetype": "text/html",
+          "sha256": "c7a2e96e274b4b531bab52a2ef798e0cc2c9bae62c1f11090c4088fdbd4bbb22"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/story.html",
+          "path": "myletter/short/story.html",
+          "capturedAt": "20020822081246",
+          "mimetype": "text/html",
+          "sha256": "f5a9430b9d5892108f02235a3a863b501e68c8d8aa8d225256e11583df078349"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/space.html",
+          "path": "myletter/short/space.html",
+          "capturedAt": "20020621064719",
+          "mimetype": "text/html",
+          "sha256": "1fdcdefd7b4318c03478f96451828045b4a201879e686d009b6713c83b2a63e4"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/fly.html",
+          "path": "myletter/short/fly.html",
+          "capturedAt": "20020621055124",
+          "mimetype": "text/html",
+          "sha256": "cf7727d2b4012593747a2d0f39385e8ab473579c977d49f8beb281de57041cb5"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/blue.html",
+          "path": "myletter/short/blue.html",
+          "capturedAt": "20020619120927",
+          "mimetype": "text/html",
+          "sha256": "dbe59a7e2f04b475e1529f314a71cd1fb90f2d58aceec8e2acb2a8023b8b7428"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/war.html",
+          "path": "myletter/short/war.html",
+          "capturedAt": "20020621053615",
+          "mimetype": "text/html",
+          "sha256": "76ce266192490c00e46cdecdd3a68989e4a5ae4fccd12cb68a2d090293281c85"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/gusl.html",
+          "path": "myletter/short/gusl.html",
+          "capturedAt": "20020822080656",
+          "mimetype": "text/html",
+          "sha256": "dfe07118915d0d9fb1ca674dcd196b6603abb327603711589cf58c30894c7e96"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/song1.html",
+          "path": "myletter/short/song1.html",
+          "capturedAt": "20020621053125",
+          "mimetype": "text/html",
+          "sha256": "452a4c37518cefb36ab15bd6c865e7cdddada14ea060781aa1e72e1c67e5f33a"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/song2.html",
+          "path": "myletter/short/song2.html",
+          "capturedAt": "20021225162223",
+          "mimetype": "text/html",
+          "sha256": "df7c749c28936823812f595522585e1cb82e5f5d78949efc9fbe771689da91bf"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/cult.html",
+          "path": "myletter/short/cult.html",
+          "capturedAt": "20020619121144",
+          "mimetype": "text/html",
+          "sha256": "93440777d326f1cdf233bcffbc5de5856fc2284ebf62f2241a68b75131cd6a45"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/dong1.html",
+          "path": "myletter/short/dong1.html",
+          "capturedAt": "20020822083323",
+          "mimetype": "text/html",
+          "sha256": "6b754f6f2e4119222a20dfae1293cafae15192c13c0959f1954fd119d92524e2"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/memory.html",
+          "path": "myletter/short/memory.html",
+          "capturedAt": "20021225154757",
+          "mimetype": "text/html",
+          "sha256": "d8dd5e41513d54beefa01929809ca12dd7a41862ec0f77cbaaae243044f06d00"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/illus_11.html",
+          "path": "myletter/short/illus_11.html",
+          "capturedAt": "20020621055306",
+          "mimetype": "text/html",
+          "sha256": "6ad938dbd6606e3664addab5114cac8b6824bf76431d6758dfb911888711251b"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/illus_12.html",
+          "path": "myletter/short/illus_12.html",
+          "capturedAt": "20020621055428",
+          "mimetype": "text/html",
+          "sha256": "70cbd3fe4956b2be24c4dd771c029850b8882e4efb16a78ac9ae9cd5df2555a4"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/b612_1.html",
+          "path": "myletter/short/b612_1.html",
+          "capturedAt": "20020822082102",
+          "mimetype": "text/html",
+          "sha256": "2bec48d9e52d76422287c2b23e4046c669114b3ceb9c919df023b46cb723681b"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/b612_2.html",
+          "path": "myletter/short/b612_2.html",
+          "capturedAt": "20020619120501",
+          "mimetype": "text/html",
+          "sha256": "c49bd80607656f8a27da9b26fc051d2db1a8c4efd8cef820809d159d36f9ab41"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/22cen1.html",
+          "path": "myletter/short/22cen1.html",
+          "capturedAt": "20020822081418",
+          "mimetype": "text/html",
+          "sha256": "cbcfd0675a56818dc2365fda9e6a3808806d7048cfe3ceebdcd5e7e41b7b7f41"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/22cen2.html",
+          "path": "myletter/short/22cen2.html",
+          "capturedAt": "20020619121043",
+          "mimetype": "text/html",
+          "sha256": "685f3b834315ebeb69f7c8152f5d6c31cf237a573c0eb967b4b4c245cc6f1e53"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/wlove1.html",
+          "path": "myletter/short/wlove1.html",
+          "capturedAt": "20020621054455",
+          "mimetype": "text/html",
+          "sha256": "27268eddf341aa1dbc5f0f45c198941b2c281dbb400660fa3b8d2f88cc78c0e4"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/wlove2.html",
+          "path": "myletter/short/wlove2.html",
+          "capturedAt": "20020621054537",
+          "mimetype": "text/html",
+          "sha256": "84590936d38a49593b0c62aebc1f2517274641b2d034ae84939c82c37995bdd4"
+        },
+        {
+          "url": "http://fstory.net/study/php/index.html",
+          "path": "study/php/index.html",
+          "capturedAt": "20020612222442",
+          "mimetype": "text/html",
+          "sha256": "41dfdf82e485fbab5cb1d0f103577529a463f1b7d421d31b6c8a24140f04523f"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/kissofgod_green/style.css",
+          "path": "zero/skin/kissofgod_green/style.css",
+          "capturedAt": "20020612223010",
+          "mimetype": "text/css",
+          "sha256": "0d966ea689624edc7dbc551878f11e86dd984d66915b5b49da1ac04ed765216f"
+        },
+        {
+          "url": "http://fstory.net/zero/images/t.gif",
+          "path": "zero/images/t.gif",
+          "capturedAt": "20020616155821",
+          "mimetype": "image/gif",
+          "sha256": "02d2855c8a5417cd637df1e81f781e42ff2b12ad6dffb923a3822f16b5bfa82a"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/kissofgod_gray/style.css",
+          "path": "zero/skin/kissofgod_gray/style.css",
+          "capturedAt": "20020621053431",
+          "mimetype": "text/css",
+          "sha256": "0d966ea689624edc7dbc551878f11e86dd984d66915b5b49da1ac04ed765216f"
+        },
+        {
+          "url": "http://fstory.net/gallery/present/sungdo.jpg",
+          "path": "gallery/present/sungdo.jpg",
+          "capturedAt": "20020614104521",
+          "mimetype": "image/jpeg",
+          "sha256": "80a9207e337a3fdd55b25c33125de31196513e14e3e9810de4c6b87c082c76b9"
+        },
+        {
+          "url": "http://fstory.net/gallery/present/happy2002.jpg",
+          "path": "gallery/present/happy2002.jpg",
+          "capturedAt": "20020614134833",
+          "mimetype": "image/jpeg",
+          "sha256": "94078ce93f83821f339b56457c4b9cc556f942a50ac691347cd0f588735119c7"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/yukino.gif",
+          "path": "kani/special/kare/yukino.gif",
+          "capturedAt": "20020513075834",
+          "mimetype": "image/gif",
+          "sha256": "a05590d7f96bf80a46386b20a1a610c62ff8926686d2ce4a95be403d22b35fd6"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/arima.gif",
+          "path": "kani/special/kare/arima.gif",
+          "capturedAt": "20021110113130",
+          "mimetype": "image/gif",
+          "sha256": "e1046ef6dbb8deddce95595ddbf966181bc591b66447103a3a3d6816aff977ee"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/asava.gif",
+          "path": "kani/special/kare/asava.gif",
+          "capturedAt": "20021110113606",
+          "mimetype": "image/gif",
+          "sha256": "1fd61e6ade7d817006d943f89349144720796cf73e2137eed7d145608412bac3"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/parent.gif",
+          "path": "kani/special/kare/parent.gif",
+          "capturedAt": "20021218003352",
+          "mimetype": "image/gif",
+          "sha256": "b66298fdad3b0d15e7ea86a8c5bb56a5c1508f97398871d38e1283dfca5e73e9"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/sister.gif",
+          "path": "kani/special/kare/sister.gif",
+          "capturedAt": "20021110120350",
+          "mimetype": "image/gif",
+          "sha256": "8347649a6b94c541e169633756a45b86e95bbc3e552c34713b751c17d4d46cb1"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/maho.gif",
+          "path": "kani/special/kare/maho.gif",
+          "capturedAt": "20021218003132",
+          "mimetype": "image/gif",
+          "sha256": "18eb191a6d9a6f94489c69933ea2a9913aa8c80a603000dbc7f378ee7befdf19"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/chbasa.gif",
+          "path": "kani/special/kare/chbasa.gif",
+          "capturedAt": "20021110114839",
+          "mimetype": "image/gif",
+          "sha256": "c953ab07f507434a919d0ee2401acdd3b19ca055507c3aae57e48d44c522ada4"
+        },
+        {
+          "url": "http://fstory.net/myletter/long.html",
+          "path": "myletter/long.html",
+          "capturedAt": "20020612221537",
+          "mimetype": "text/html",
+          "sha256": "de626bcd7170b5ec59b3c5ed21914e93061dafa88cefb5a4b0403e594f9e2249"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND2.htm",
+          "path": "myletter/dland/DLAND2.htm",
+          "capturedAt": "20020613205941",
+          "mimetype": "text/html",
+          "sha256": "8383484b0f14c99ae9987e9fa82bb808cf28b01b1caae7626997643df665d4c0"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND4.htm",
+          "path": "myletter/dland/DLAND4.htm",
+          "capturedAt": "20020815154228",
+          "mimetype": "text/html",
+          "sha256": "97116749395205a17d5972b57b562f7c29a1f52c12ca46ec03b9be28969845d3"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND9.htm",
+          "path": "myletter/dland/DLAND9.htm",
+          "capturedAt": "20020613205538",
+          "mimetype": "text/html",
+          "sha256": "1c6a759edfcb6d4b17fa5a3bc2cfd485815250f3c3fe8ffb3dbc31328597f9da"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND10.htm",
+          "path": "myletter/dland/DLAND10.htm",
+          "capturedAt": "20030220175804",
+          "mimetype": "text/html",
+          "sha256": "aec46e241900bd37125bf49cec3d7d8f2f88ae9aabbc697dfd9ac78be1dbd1b9"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND22.htm",
+          "path": "myletter/dland/DLAND22.htm",
+          "capturedAt": "20020613210445",
+          "mimetype": "text/html",
+          "sha256": "775e466fb27fd16a4221979d29ef5ed74ce500692402c214f24ce44c6b176b39"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND23.htm",
+          "path": "myletter/dland/DLAND23.htm",
+          "capturedAt": "20021212022915",
+          "mimetype": "text/html",
+          "sha256": "3d3353a004692c11b67d12dfd6e9eec8cd68525426c52e2e988d50f8f326f173"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND24.htm",
+          "path": "myletter/dland/DLAND24.htm",
+          "capturedAt": "20020613210912",
+          "mimetype": "text/html",
+          "sha256": "67bc9d3d40a74d554636a6b57bc1c7bc1def667345ba955a5fa5ca0a2eef6380"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND25.htm",
+          "path": "myletter/dland/DLAND25.htm",
+          "capturedAt": "20020613210909",
+          "mimetype": "text/html",
+          "sha256": "03cebbec967cf5c55771adf3ed30666380dc2353570d3fe632024cc5daad1c3b"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND11.htm",
+          "path": "myletter/dland/DLAND11.htm",
+          "capturedAt": "20020613213723",
+          "mimetype": "text/html",
+          "sha256": "fc8f829e4d96b822bcf45be87f867b699a08e6ec925d41f137c847a3f5d6c118"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND12.htm",
+          "path": "myletter/dland/DLAND12.htm",
+          "capturedAt": "20021212022828",
+          "mimetype": "text/html",
+          "sha256": "61ed5df1e57d13fd0f46392cf839b4ff3dfad11d768a06b788d87ed7439ca8fb"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND13.htm",
+          "path": "myletter/dland/DLAND13.htm",
+          "capturedAt": "20020815152352",
+          "mimetype": "text/html",
+          "sha256": "7f99a41b082b9d4bf7da27f3d2407ef76d7efb636dd79a0798b804d1914511df"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND17.htm",
+          "path": "myletter/dland/DLAND17.htm",
+          "capturedAt": "20020815152720",
+          "mimetype": "text/html",
+          "sha256": "db3150d4006bcf2496ca17a260e5f6de63bf170cc4380a154105614a45fc4a98"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND18.htm",
+          "path": "myletter/dland/DLAND18.htm",
+          "capturedAt": "20020511134726",
+          "mimetype": "text/html",
+          "sha256": "858769b372a8bca9d68e9358592b03a862c6c10adb2215157e5c7d15cd7c63d3"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND33.htm",
+          "path": "myletter/dland/DLAND33.htm",
+          "capturedAt": "20020613212900",
+          "mimetype": "text/html",
+          "sha256": "77ffe4095b2f45c0d81eb579f7c8153cd12cb80091e058bf13bf9682fd89005b"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND37.htm",
+          "path": "myletter/dland/DLAND37.htm",
+          "capturedAt": "20020613213152",
+          "mimetype": "text/html",
+          "sha256": "1ef70ef787c8ec4c85f007937dfc7938f0206d924e65efdbfa8e31b38e67baaa"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND39.htm",
+          "path": "myletter/dland/DLAND39.htm",
+          "capturedAt": "20020613213748",
+          "mimetype": "text/html",
+          "sha256": "9db16d8f5a48428263424c58b0d9c7511fb64f95d1f8db6336a82fe6a9cb4eaa"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch1.html",
+          "path": "myletter/windy/witch1.html",
+          "capturedAt": "20020621054244",
+          "mimetype": "text/html",
+          "sha256": "57d5094e653a4d9fa1ea36e271f7ca2bae1b9b08fc4c85f874b5e69f23a1221c"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch2.html",
+          "path": "myletter/windy/witch2.html",
+          "capturedAt": "20021225164415",
+          "mimetype": "text/html",
+          "sha256": "4792e6b1a0befc7a6eeb8b5bc61954326da57893ab9225a8a9b36d5ecc9c2c49"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch3.html",
+          "path": "myletter/windy/witch3.html",
+          "capturedAt": "20020621054320",
+          "mimetype": "text/html",
+          "sha256": "59fa259759b07609d99de1368249a763b38bb0afdc2bfac0c4d6335a7a8a1b63"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch4.html",
+          "path": "myletter/windy/witch4.html",
+          "capturedAt": "20020621054815",
+          "mimetype": "text/html",
+          "sha256": "25ba00f163d139bc6fc92d050513c2d29269259e059cf5dbffc97c59892bf616"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch5.html",
+          "path": "myletter/windy/witch5.html",
+          "capturedAt": "20020822082756",
+          "mimetype": "text/html",
+          "sha256": "38431d821b016ce261e1a4ec44d0f3f27839020b5a13a0473a8181742f39ec75"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch6.html",
+          "path": "myletter/windy/witch6.html",
+          "capturedAt": "20020621054713",
+          "mimetype": "text/html",
+          "sha256": "20759ada62614c3cca2e9ae252116401875677eb72b18ca5050febba709985c7"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch7.html",
+          "path": "myletter/windy/witch7.html",
+          "capturedAt": "20020621055129",
+          "mimetype": "text/html",
+          "sha256": "a75c659a451c829a97627021e56e11fffa3afa87cfdf0e8abd4f0b525b82207f"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch8.html",
+          "path": "myletter/windy/witch8.html",
+          "capturedAt": "20020518145829",
+          "mimetype": "text/html",
+          "sha256": "886b289d551524de18e6248b1a972f5f885fcc734b418346dd0f5061fd706cb9"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch9.html",
+          "path": "myletter/windy/witch9.html",
+          "capturedAt": "20020824204103",
+          "mimetype": "text/html",
+          "sha256": "e7005d006af2a2aaab2a4fdb74432a09d9b0c727f83cebc7546326e0947a2b34"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch10.html",
+          "path": "myletter/windy/witch10.html",
+          "capturedAt": "20020822082753",
+          "mimetype": "text/html",
+          "sha256": "f91ca25104d99ada444bbb3948b7a67d28328df188f1c39dce226fa62cad9708"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch11.html",
+          "path": "myletter/windy/witch11.html",
+          "capturedAt": "20020621054943",
+          "mimetype": "text/html",
+          "sha256": "ff08cce1ae18dd0ee21218990123cc03b6b21e375f133d8b7a65aabd2de8c263"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch12.html",
+          "path": "myletter/windy/witch12.html",
+          "capturedAt": "20020621054618",
+          "mimetype": "text/html",
+          "sha256": "fc9c10091230e06c16c61dd7caba5be74769fb5056b1cd82ec289708b7f1ccde"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch13.html",
+          "path": "myletter/windy/witch13.html",
+          "capturedAt": "20020621055051",
+          "mimetype": "text/html",
+          "sha256": "5598d1a978b63955130d694ae96248933a79f39f6e91e6d318d213172f7a10b4"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch14.html",
+          "path": "myletter/windy/witch14.html",
+          "capturedAt": "20021225161625",
+          "mimetype": "text/html",
+          "sha256": "397080df60bb6d688148c2fb18448d3ddaae5794594c7a8f75546d0f18a5c4a4"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch15.html",
+          "path": "myletter/windy/witch15.html",
+          "capturedAt": "20020621054932",
+          "mimetype": "text/html",
+          "sha256": "e1448e98e79341c0589e633d9e560977f410658f33796bd10ebcc03c364f5d19"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch16.html",
+          "path": "myletter/windy/witch16.html",
+          "capturedAt": "20020822100322",
+          "mimetype": "text/html",
+          "sha256": "46ecbf10273596257b332e83b98ab7ef61e7e1d3d0041f2e339d71038fb7c44f"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch17.html",
+          "path": "myletter/windy/witch17.html",
+          "capturedAt": "20020621060056",
+          "mimetype": "text/html",
+          "sha256": "d8185e667c31bcc3497cd3f8618bac8cd1d26514ed0b17d06e93e6d66a50036a"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch18.html",
+          "path": "myletter/windy/witch18.html",
+          "capturedAt": "20020822100531",
+          "mimetype": "text/html",
+          "sha256": "32adb45100355783b089cf0f7dc512fc53aa56d2606f7fe760a2de51271938e5"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch19.html",
+          "path": "myletter/windy/witch19.html",
+          "capturedAt": "20020621052833",
+          "mimetype": "text/html",
+          "sha256": "96f8b3693c96a515e51ba4ff1a0cc7d86ed646fe2f7bd879d0e7daaa3c32c0bb"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch20.html",
+          "path": "myletter/windy/witch20.html",
+          "capturedAt": "20020822100442",
+          "mimetype": "text/html",
+          "sha256": "d5c9fb34b5971eddd07b7ad994b29bb9b6db227caefcaa04c6f7632a4c4f69dd"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch21.html",
+          "path": "myletter/windy/witch21.html",
+          "capturedAt": "20020822103927",
+          "mimetype": "text/html",
+          "sha256": "2e2269ac6a77ece7762d2b046bb2f16a09379686c2c92b2592cd6880ef3c353c"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch22.html",
+          "path": "myletter/windy/witch22.html",
+          "capturedAt": "20020621053535",
+          "mimetype": "text/html",
+          "sha256": "2250690068ac1a8aaf8a0e2a6c576b9716aedf5f0159ecfbe78758bf59dc1d2a"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch23.html",
+          "path": "myletter/windy/witch23.html",
+          "capturedAt": "20020621053810",
+          "mimetype": "text/html",
+          "sha256": "56060d9d634f67fd7bbd883371013d9019f78c258896c9e23cb6de376b771be1"
+        }
+      ]
+    },
+    {
+      "timestamp": "20020325014505",
+      "originalFiles": 380,
+      "restoredFiles": 54,
+      "rewrittenReferences": 625,
+      "restored": [
+        {
+          "url": "http://fstory.net/img/banner.jpg",
+          "path": "img/banner.jpg",
+          "capturedAt": "20031209131016",
+          "mimetype": "image/jpeg",
+          "sha256": "67a0869505e3ad133cc239b806418fd229247653800521df69559012597922c0"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery1/Ybs3_th.jpg",
+          "path": "gallery/gallery1/Ybs3_th.jpg",
+          "capturedAt": "20021212081645",
+          "mimetype": "image/jpeg",
+          "sha256": "e03b7153be15d3013d41348f46e0afdad8de57a21c0f7559bd9e0b4fe71230e6"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery1/dragon_th.jpg",
+          "path": "gallery/gallery1/dragon_th.jpg",
+          "capturedAt": "20021212110027",
+          "mimetype": "image/jpeg",
+          "sha256": "c867a26a6884e4630213ea514ab3068280946314f2188509a300d90e16166480"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery2/girl_by_th.jpg",
+          "path": "gallery/gallery2/girl_by_th.jpg",
+          "capturedAt": "20030417225435",
+          "mimetype": "image/jpeg",
+          "sha256": "9d65e2d75acfdc0af0357b679acbb1c9c3b8a594952a26bcfb65a5fecb0c7b20"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/mannerism_th.jpg",
+          "path": "gallery/gallery5/mannerism_th.jpg",
+          "capturedAt": "20031020165757",
+          "mimetype": "image/jpeg",
+          "sha256": "487e71afd11928db9e9204cded1fda5667c196d00e37364e44c5b7825ac819a2"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/charic_th.jpg",
+          "path": "gallery/gallery5/charic_th.jpg",
+          "capturedAt": "20030417082855",
+          "mimetype": "image/jpeg",
+          "sha256": "c8071df32e910c86a7b06b7675253ccee637df6c48023273447b6cbb407215a4"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/opera_th.jpg",
+          "path": "gallery/gallery5/opera_th.jpg",
+          "capturedAt": "20031020185424",
+          "mimetype": "image/jpeg",
+          "sha256": "a883743062a9a11ce9cb38d2f6af657f41895975cdacc2f93ed371a33235889f"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/cityend_th.jpg",
+          "path": "gallery/gallery5/cityend_th.jpg",
+          "capturedAt": "20030417105927",
+          "mimetype": "image/jpeg",
+          "sha256": "8f94580b2c235eb936732096dc27510f8bbbfeed20afa697251740ed84716f1d"
+        },
+        {
+          "url": "http://fstory.net/kani/special/baekgu/character_img_2.gif",
+          "path": "kani/special/baekgu/character_img_2.gif",
+          "capturedAt": "20021110102234",
+          "mimetype": "image/gif",
+          "sha256": "28909823f1189b83bfdd3b3f311355e2d45caa6222a5b9f3db4639d0861f5a43"
+        },
+        {
+          "url": "http://fstory.net/kani/special/baekgu/character_img_5.gif",
+          "path": "kani/special/baekgu/character_img_5.gif",
+          "capturedAt": "20021110103415",
+          "mimetype": "image/gif",
+          "sha256": "85b9d934edf2eac317027b5ffe448ef1f4599db2a43cfa262af17de3569faabc"
+        },
+        {
+          "url": "http://fstory.net/kani/special/baekgu/character_img_6.gif",
+          "path": "kani/special/baekgu/character_img_6.gif",
+          "capturedAt": "20021110103845",
+          "mimetype": "image/gif",
+          "sha256": "422bb1f2427636dbedb28a37ea2308267d9fd4d928f4fb0fb6283bd3d356a635"
+        },
+        {
+          "url": "http://fstory.net/kani/special/bono/09.jpg",
+          "path": "kani/special/bono/09.jpg",
+          "capturedAt": "20021110094025",
+          "mimetype": "image/jpeg",
+          "sha256": "1c3d40cc85486f379c080f5e2c88b88e72c51294d80a4ab0258861a49eab0702"
+        },
+        {
+          "url": "http://fstory.net/kani/special/bono/bono.jpg",
+          "path": "kani/special/bono/bono.jpg",
+          "capturedAt": "20021110095746",
+          "mimetype": "image/jpeg",
+          "sha256": "dec23467d8ba1b3c290d4c20cb85efc2a4fbc72604fd7f7b3737fec966bf14f7"
+        },
+        {
+          "url": "http://fstory.net/kani/special/bono/porori.jpg",
+          "path": "kani/special/bono/porori.jpg",
+          "capturedAt": "20021217235121",
+          "mimetype": "image/jpeg",
+          "sha256": "cf7f5b4b7bcd3895a6319e358f565d3b439a589f9fbd1c8cca7f122d13cc9ada"
+        },
+        {
+          "url": "http://fstory.net/kani/special/doly/com-m-4.gif",
+          "path": "kani/special/doly/com-m-4.gif",
+          "capturedAt": "20021218230829",
+          "mimetype": "image/gif",
+          "sha256": "ebeef91565edb28e362755af505cbac0fcb6dc1e93c68a63be4e0ff8a9df2fa6"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/arima.gif",
+          "path": "kani/special/kare/arima.gif",
+          "capturedAt": "20021110113130",
+          "mimetype": "image/gif",
+          "sha256": "e1046ef6dbb8deddce95595ddbf966181bc591b66447103a3a3d6816aff977ee"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/asava.gif",
+          "path": "kani/special/kare/asava.gif",
+          "capturedAt": "20021110113606",
+          "mimetype": "image/gif",
+          "sha256": "1fd61e6ade7d817006d943f89349144720796cf73e2137eed7d145608412bac3"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/parent.gif",
+          "path": "kani/special/kare/parent.gif",
+          "capturedAt": "20021218003352",
+          "mimetype": "image/gif",
+          "sha256": "b66298fdad3b0d15e7ea86a8c5bb56a5c1508f97398871d38e1283dfca5e73e9"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/sister.gif",
+          "path": "kani/special/kare/sister.gif",
+          "capturedAt": "20021110120350",
+          "mimetype": "image/gif",
+          "sha256": "8347649a6b94c541e169633756a45b86e95bbc3e552c34713b751c17d4d46cb1"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/maho.gif",
+          "path": "kani/special/kare/maho.gif",
+          "capturedAt": "20021218003132",
+          "mimetype": "image/gif",
+          "sha256": "18eb191a6d9a6f94489c69933ea2a9913aa8c80a603000dbc7f378ee7befdf19"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/chbasa.gif",
+          "path": "kani/special/kare/chbasa.gif",
+          "capturedAt": "20021110114839",
+          "mimetype": "image/gif",
+          "sha256": "c953ab07f507434a919d0ee2401acdd3b19ca055507c3aae57e48d44c522ada4"
+        },
+        {
+          "url": "http://fstory.net/link/linkcontent.html",
+          "path": "link/linkcontent.html",
+          "capturedAt": "20030225124933",
+          "mimetype": "text/html",
+          "sha256": "1f1217a6fdc430259bc83bb3f91ad2fb06a7c56a841daee6d991bb91aca3ec2a"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND10.htm",
+          "path": "myletter/dland/DLAND10.htm",
+          "capturedAt": "20030220175804",
+          "mimetype": "text/html",
+          "sha256": "aec46e241900bd37125bf49cec3d7d8f2f88ae9aabbc697dfd9ac78be1dbd1b9"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND23.htm",
+          "path": "myletter/dland/DLAND23.htm",
+          "capturedAt": "20021212022915",
+          "mimetype": "text/html",
+          "sha256": "3d3353a004692c11b67d12dfd6e9eec8cd68525426c52e2e988d50f8f326f173"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND12.htm",
+          "path": "myletter/dland/DLAND12.htm",
+          "capturedAt": "20021212022828",
+          "mimetype": "text/html",
+          "sha256": "61ed5df1e57d13fd0f46392cf839b4ff3dfad11d768a06b788d87ed7439ca8fb"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch2.html",
+          "path": "myletter/windy/witch2.html",
+          "capturedAt": "20021225164415",
+          "mimetype": "text/html",
+          "sha256": "4792e6b1a0befc7a6eeb8b5bc61954326da57893ab9225a8a9b36d5ecc9c2c49"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch14.html",
+          "path": "myletter/windy/witch14.html",
+          "capturedAt": "20021225161625",
+          "mimetype": "text/html",
+          "sha256": "397080df60bb6d688148c2fb18448d3ddaae5794594c7a8f75546d0f18a5c4a4"
+        },
+        {
+          "url": "http://fstory.net/myletter/poem/98/p97_9_14.html",
+          "path": "myletter/poem/98/p97_9_14.html",
+          "capturedAt": "20021221131008",
+          "mimetype": "text/html",
+          "sha256": "d2687aabfc9fc95bd70625274cf531eff7a4b180f7a8d039f3b2f7665803fcb1"
+        },
+        {
+          "url": "http://fstory.net/myletter/poem/another/pD-7.html",
+          "path": "myletter/poem/another/pD-7.html",
+          "capturedAt": "20021225155119",
+          "mimetype": "text/html",
+          "sha256": "c7a2e96e274b4b531bab52a2ef798e0cc2c9bae62c1f11090c4088fdbd4bbb22"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/song2.html",
+          "path": "myletter/short/song2.html",
+          "capturedAt": "20021225162223",
+          "mimetype": "text/html",
+          "sha256": "df7c749c28936823812f595522585e1cb82e5f5d78949efc9fbe771689da91bf"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/memory.html",
+          "path": "myletter/short/memory.html",
+          "capturedAt": "20021225154757",
+          "mimetype": "text/html",
+          "sha256": "d8dd5e41513d54beefa01929809ca12dd7a41862ec0f77cbaaae243044f06d00"
+        },
+        {
+          "url": "http://fstory.net/tech/aitech/aiapp.html",
+          "path": "tech/aitech/aiapp.html",
+          "capturedAt": "20021225160156",
+          "mimetype": "text/html",
+          "sha256": "340918e82f2d34594bd890e99dd7514182d0138c398c0c1ee95a4c323c04ea1a"
+        },
+        {
+          "url": "http://fstory.net/tech/aitech/aihistory.html",
+          "path": "tech/aitech/aihistory.html",
+          "capturedAt": "20021225154908",
+          "mimetype": "text/html",
+          "sha256": "25d75f81f4c8ce057a0a51512c325ff9aa3da330c0022baa3c4c0b97df4da03e"
+        },
+        {
+          "url": "http://fstory.net/tech/aitech/robot.html",
+          "path": "tech/aitech/robot.html",
+          "capturedAt": "20030417060139",
+          "mimetype": "text/html",
+          "sha256": "d6007c9ae9d63a65c6b06439e4a7860340b841fe5e2c937eebd8ff02cf088252"
+        },
+        {
+          "url": "http://fstory.net/tech/movie/ai/ai.html",
+          "path": "tech/movie/ai/ai.html",
+          "capturedAt": "20030328102518",
+          "mimetype": "text/html",
+          "sha256": "c53185053eced1c7bf5a0f4d48f2ba57e06d3b38dbe72754d35682a756f2f067"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/kissofgod_pink/style.css",
+          "path": "zero/skin/kissofgod_pink/style.css",
+          "capturedAt": "20030102195613",
+          "mimetype": "text/css",
+          "sha256": "7b2cd253295370c1465faaf41b19b11aa80fd15a563abe13418b91ca42ce2c90"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/kissofgod_pink/content_off.gif",
+          "path": "zero/skin/kissofgod_pink/content_off.gif",
+          "capturedAt": "20030506120649",
+          "mimetype": "image/gif",
+          "sha256": "ddee8e375dd3f9d6211d382dfbf8b460ff2eae6c2cc20f73e8efad2b588e8534"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/content_on.gif",
+          "path": "zero/skin/zipulragi_dairy2/content_on.gif",
+          "capturedAt": "20021212090312",
+          "mimetype": "image/gif",
+          "sha256": "cd1038262da5dbb2e82faff283d1b07cec92136df123b29f6b7b5d77ab326962"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/member_modify.gif",
+          "path": "zero/skin/zipulragi_dairy2/member_modify.gif",
+          "capturedAt": "20030304000927",
+          "mimetype": "image/gif",
+          "sha256": "23e6a386f1ed50b56d81b128c6fa7d4f60b4e954203bcfe71509385cec9a6fe7"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/member_login.gif",
+          "path": "zero/skin/zipulragi_dairy2/member_login.gif",
+          "capturedAt": "20030304000219",
+          "mimetype": "image/gif",
+          "sha256": "ddbbdbe864a8ffff2db438d83198099dc62b51fc7b154c16d8867df754201c3e"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/member_logout.gif",
+          "path": "zero/skin/zipulragi_dairy2/member_logout.gif",
+          "capturedAt": "20030304000441",
+          "mimetype": "image/gif",
+          "sha256": "8c165f6b962e2ed223f4bac6387183e5b2f13948fbee4de263ecfd3a07c63053"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/member_setup.gif",
+          "path": "zero/skin/zipulragi_dairy2/member_setup.gif",
+          "capturedAt": "20030304001031",
+          "mimetype": "image/gif",
+          "sha256": "48f6413c45196265b812b90742f66d6eec4dcc265721d59fdd135a7b7ff2eaad"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/setup_total.gif",
+          "path": "zero/skin/zipulragi_dairy2/setup_total.gif",
+          "capturedAt": "20030304001916",
+          "mimetype": "image/gif",
+          "sha256": "74c152faf4a6998eeb43203ca7dc274f489017c96424e1208c4026a6b6170ad8"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/setup_articles.gif",
+          "path": "zero/skin/zipulragi_dairy2/setup_articles.gif",
+          "capturedAt": "20030304001457",
+          "mimetype": "image/gif",
+          "sha256": "8e243b61e0090e146522ea4b95ca61d116ca3e04aa55ccea52569a4ed6e97aeb"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/setup_pages_nowpage.gif",
+          "path": "zero/skin/zipulragi_dairy2/setup_pages_nowpage.gif",
+          "capturedAt": "20030304001751",
+          "mimetype": "image/gif",
+          "sha256": "ca0154f3bbe83523344bbb2830045a9fa2f88702aee5fcdc52f71191b8343b4c"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_no.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_no.gif",
+          "capturedAt": "20021212093356",
+          "mimetype": "image/gif",
+          "sha256": "de573611f5b57c7abdaa4b07ebcbbf6cffcadc140a87e5d5f149e089602f8296"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_weather.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_weather.gif",
+          "capturedAt": "20021212094433",
+          "mimetype": "image/gif",
+          "sha256": "e575450a3a337093644bdb169ca21f3fbd4e53dbcff8042dec547c1453ea6343"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_subject.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_subject.gif",
+          "capturedAt": "20021212093914",
+          "mimetype": "image/gif",
+          "sha256": "a253d337a6524327dae6ad61f6b23921436a555151ba4e921f68ae39a9e0deec"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_name.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_name.gif",
+          "capturedAt": "20021212092955",
+          "mimetype": "image/gif",
+          "sha256": "b61290cbe6811ee9d0b0de8ffee058cd3e8104a9a327b2bf74294bcf03120e1d"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_hit.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_hit.gif",
+          "capturedAt": "20021212092556",
+          "mimetype": "image/gif",
+          "sha256": "873e610d5d1da3994933156bb52d6236b7ea49975ecd982ed5621e8d86fbfb73"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/weather0.gif",
+          "path": "zero/skin/zipulragi_dairy2/weather0.gif",
+          "capturedAt": "20030304002147",
+          "mimetype": "image/gif",
+          "sha256": "c343d7b62ccd442b9507c45f8552d1c148c95c61da092a1f49dbc814c2a0f2c3"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/i_list.gif",
+          "path": "zero/skin/zipulragi_dairy2/i_list.gif",
+          "capturedAt": "20021212095433",
+          "mimetype": "image/gif",
+          "sha256": "9dbe61c834f8ce757fb1d1fe2944def72687e1a9d1e8e03570310e6c92b1e36c"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/i_admin.gif",
+          "path": "zero/skin/zipulragi_dairy2/i_admin.gif",
+          "capturedAt": "20021212094621",
+          "mimetype": "image/gif",
+          "sha256": "6edec1eebc5b30f8ff5a2b263a722f2c5c8bceda9c26f76d20c62ceb1e05174f"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/i_write.gif",
+          "path": "zero/skin/zipulragi_dairy2/i_write.gif",
+          "capturedAt": "20021212095959",
+          "mimetype": "image/gif",
+          "sha256": "a447c64739a4d40a2ecd37e9bcbe58335968c16ab6ccf86b73ee749cdf5d60b2"
+        }
+      ]
+    },
+    {
+      "timestamp": "20020924164928",
+      "originalFiles": 396,
+      "restoredFiles": 46,
+      "rewrittenReferences": 629,
+      "restored": [
+        {
+          "url": "http://fstory.net/img/banner.jpg",
+          "path": "img/banner.jpg",
+          "capturedAt": "20031209131016",
+          "mimetype": "image/jpeg",
+          "sha256": "67a0869505e3ad133cc239b806418fd229247653800521df69559012597922c0"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery1/Ybs3_th.jpg",
+          "path": "gallery/gallery1/Ybs3_th.jpg",
+          "capturedAt": "20021212081645",
+          "mimetype": "image/jpeg",
+          "sha256": "e03b7153be15d3013d41348f46e0afdad8de57a21c0f7559bd9e0b4fe71230e6"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery1/dragon_th.jpg",
+          "path": "gallery/gallery1/dragon_th.jpg",
+          "capturedAt": "20021212110027",
+          "mimetype": "image/jpeg",
+          "sha256": "c867a26a6884e4630213ea514ab3068280946314f2188509a300d90e16166480"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery2/girl_by_th.jpg",
+          "path": "gallery/gallery2/girl_by_th.jpg",
+          "capturedAt": "20030417225435",
+          "mimetype": "image/jpeg",
+          "sha256": "9d65e2d75acfdc0af0357b679acbb1c9c3b8a594952a26bcfb65a5fecb0c7b20"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/mannerism_th.jpg",
+          "path": "gallery/gallery5/mannerism_th.jpg",
+          "capturedAt": "20031020165757",
+          "mimetype": "image/jpeg",
+          "sha256": "487e71afd11928db9e9204cded1fda5667c196d00e37364e44c5b7825ac819a2"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/charic_th.jpg",
+          "path": "gallery/gallery5/charic_th.jpg",
+          "capturedAt": "20030417082855",
+          "mimetype": "image/jpeg",
+          "sha256": "c8071df32e910c86a7b06b7675253ccee637df6c48023273447b6cbb407215a4"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/opera_th.jpg",
+          "path": "gallery/gallery5/opera_th.jpg",
+          "capturedAt": "20031020185424",
+          "mimetype": "image/jpeg",
+          "sha256": "a883743062a9a11ce9cb38d2f6af657f41895975cdacc2f93ed371a33235889f"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/cityend_th.jpg",
+          "path": "gallery/gallery5/cityend_th.jpg",
+          "capturedAt": "20030417105927",
+          "mimetype": "image/jpeg",
+          "sha256": "8f94580b2c235eb936732096dc27510f8bbbfeed20afa697251740ed84716f1d"
+        },
+        {
+          "url": "http://fstory.net/kani/special/bono/porori.jpg",
+          "path": "kani/special/bono/porori.jpg",
+          "capturedAt": "20021217235121",
+          "mimetype": "image/jpeg",
+          "sha256": "cf7f5b4b7bcd3895a6319e358f565d3b439a589f9fbd1c8cca7f122d13cc9ada"
+        },
+        {
+          "url": "http://fstory.net/kani/special/doly/com-m-4.gif",
+          "path": "kani/special/doly/com-m-4.gif",
+          "capturedAt": "20021218230829",
+          "mimetype": "image/gif",
+          "sha256": "ebeef91565edb28e362755af505cbac0fcb6dc1e93c68a63be4e0ff8a9df2fa6"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/parent.gif",
+          "path": "kani/special/kare/parent.gif",
+          "capturedAt": "20021218003352",
+          "mimetype": "image/gif",
+          "sha256": "b66298fdad3b0d15e7ea86a8c5bb56a5c1508f97398871d38e1283dfca5e73e9"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/maho.gif",
+          "path": "kani/special/kare/maho.gif",
+          "capturedAt": "20021218003132",
+          "mimetype": "image/gif",
+          "sha256": "18eb191a6d9a6f94489c69933ea2a9913aa8c80a603000dbc7f378ee7befdf19"
+        },
+        {
+          "url": "http://fstory.net/link/linkcontent.html",
+          "path": "link/linkcontent.html",
+          "capturedAt": "20030225124933",
+          "mimetype": "text/html",
+          "sha256": "1f1217a6fdc430259bc83bb3f91ad2fb06a7c56a841daee6d991bb91aca3ec2a"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND10.htm",
+          "path": "myletter/dland/DLAND10.htm",
+          "capturedAt": "20030220175804",
+          "mimetype": "text/html",
+          "sha256": "aec46e241900bd37125bf49cec3d7d8f2f88ae9aabbc697dfd9ac78be1dbd1b9"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND23.htm",
+          "path": "myletter/dland/DLAND23.htm",
+          "capturedAt": "20021212022915",
+          "mimetype": "text/html",
+          "sha256": "3d3353a004692c11b67d12dfd6e9eec8cd68525426c52e2e988d50f8f326f173"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND12.htm",
+          "path": "myletter/dland/DLAND12.htm",
+          "capturedAt": "20021212022828",
+          "mimetype": "text/html",
+          "sha256": "61ed5df1e57d13fd0f46392cf839b4ff3dfad11d768a06b788d87ed7439ca8fb"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch2.html",
+          "path": "myletter/windy/witch2.html",
+          "capturedAt": "20021225164415",
+          "mimetype": "text/html",
+          "sha256": "4792e6b1a0befc7a6eeb8b5bc61954326da57893ab9225a8a9b36d5ecc9c2c49"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch14.html",
+          "path": "myletter/windy/witch14.html",
+          "capturedAt": "20021225161625",
+          "mimetype": "text/html",
+          "sha256": "397080df60bb6d688148c2fb18448d3ddaae5794594c7a8f75546d0f18a5c4a4"
+        },
+        {
+          "url": "http://fstory.net/myletter/poem/98/p97_9_14.html",
+          "path": "myletter/poem/98/p97_9_14.html",
+          "capturedAt": "20021221131008",
+          "mimetype": "text/html",
+          "sha256": "d2687aabfc9fc95bd70625274cf531eff7a4b180f7a8d039f3b2f7665803fcb1"
+        },
+        {
+          "url": "http://fstory.net/myletter/poem/another/pD-7.html",
+          "path": "myletter/poem/another/pD-7.html",
+          "capturedAt": "20021225155119",
+          "mimetype": "text/html",
+          "sha256": "c7a2e96e274b4b531bab52a2ef798e0cc2c9bae62c1f11090c4088fdbd4bbb22"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/song2.html",
+          "path": "myletter/short/song2.html",
+          "capturedAt": "20021225162223",
+          "mimetype": "text/html",
+          "sha256": "df7c749c28936823812f595522585e1cb82e5f5d78949efc9fbe771689da91bf"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/memory.html",
+          "path": "myletter/short/memory.html",
+          "capturedAt": "20021225154757",
+          "mimetype": "text/html",
+          "sha256": "d8dd5e41513d54beefa01929809ca12dd7a41862ec0f77cbaaae243044f06d00"
+        },
+        {
+          "url": "http://fstory.net/tech/aitech/aiapp.html",
+          "path": "tech/aitech/aiapp.html",
+          "capturedAt": "20021225160156",
+          "mimetype": "text/html",
+          "sha256": "340918e82f2d34594bd890e99dd7514182d0138c398c0c1ee95a4c323c04ea1a"
+        },
+        {
+          "url": "http://fstory.net/tech/aitech/aihistory.html",
+          "path": "tech/aitech/aihistory.html",
+          "capturedAt": "20021225154908",
+          "mimetype": "text/html",
+          "sha256": "25d75f81f4c8ce057a0a51512c325ff9aa3da330c0022baa3c4c0b97df4da03e"
+        },
+        {
+          "url": "http://fstory.net/tech/aitech/robot.html",
+          "path": "tech/aitech/robot.html",
+          "capturedAt": "20030417060139",
+          "mimetype": "text/html",
+          "sha256": "d6007c9ae9d63a65c6b06439e4a7860340b841fe5e2c937eebd8ff02cf088252"
+        },
+        {
+          "url": "http://fstory.net/tech/movie/ai/ai.html",
+          "path": "tech/movie/ai/ai.html",
+          "capturedAt": "20030328102518",
+          "mimetype": "text/html",
+          "sha256": "c53185053eced1c7bf5a0f4d48f2ba57e06d3b38dbe72754d35682a756f2f067"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/kissofgod_pink/style.css",
+          "path": "zero/skin/kissofgod_pink/style.css",
+          "capturedAt": "20030102195613",
+          "mimetype": "text/css",
+          "sha256": "7b2cd253295370c1465faaf41b19b11aa80fd15a563abe13418b91ca42ce2c90"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/kissofgod_pink/content_off.gif",
+          "path": "zero/skin/kissofgod_pink/content_off.gif",
+          "capturedAt": "20030506120649",
+          "mimetype": "image/gif",
+          "sha256": "ddee8e375dd3f9d6211d382dfbf8b460ff2eae6c2cc20f73e8efad2b588e8534"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/content_on.gif",
+          "path": "zero/skin/zipulragi_dairy2/content_on.gif",
+          "capturedAt": "20021212090312",
+          "mimetype": "image/gif",
+          "sha256": "cd1038262da5dbb2e82faff283d1b07cec92136df123b29f6b7b5d77ab326962"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/member_modify.gif",
+          "path": "zero/skin/zipulragi_dairy2/member_modify.gif",
+          "capturedAt": "20030304000927",
+          "mimetype": "image/gif",
+          "sha256": "23e6a386f1ed50b56d81b128c6fa7d4f60b4e954203bcfe71509385cec9a6fe7"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/member_login.gif",
+          "path": "zero/skin/zipulragi_dairy2/member_login.gif",
+          "capturedAt": "20030304000219",
+          "mimetype": "image/gif",
+          "sha256": "ddbbdbe864a8ffff2db438d83198099dc62b51fc7b154c16d8867df754201c3e"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/member_logout.gif",
+          "path": "zero/skin/zipulragi_dairy2/member_logout.gif",
+          "capturedAt": "20030304000441",
+          "mimetype": "image/gif",
+          "sha256": "8c165f6b962e2ed223f4bac6387183e5b2f13948fbee4de263ecfd3a07c63053"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/member_setup.gif",
+          "path": "zero/skin/zipulragi_dairy2/member_setup.gif",
+          "capturedAt": "20030304001031",
+          "mimetype": "image/gif",
+          "sha256": "48f6413c45196265b812b90742f66d6eec4dcc265721d59fdd135a7b7ff2eaad"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/setup_total.gif",
+          "path": "zero/skin/zipulragi_dairy2/setup_total.gif",
+          "capturedAt": "20030304001916",
+          "mimetype": "image/gif",
+          "sha256": "74c152faf4a6998eeb43203ca7dc274f489017c96424e1208c4026a6b6170ad8"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/setup_articles.gif",
+          "path": "zero/skin/zipulragi_dairy2/setup_articles.gif",
+          "capturedAt": "20030304001457",
+          "mimetype": "image/gif",
+          "sha256": "8e243b61e0090e146522ea4b95ca61d116ca3e04aa55ccea52569a4ed6e97aeb"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/setup_pages_nowpage.gif",
+          "path": "zero/skin/zipulragi_dairy2/setup_pages_nowpage.gif",
+          "capturedAt": "20030304001751",
+          "mimetype": "image/gif",
+          "sha256": "ca0154f3bbe83523344bbb2830045a9fa2f88702aee5fcdc52f71191b8343b4c"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_no.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_no.gif",
+          "capturedAt": "20021212093356",
+          "mimetype": "image/gif",
+          "sha256": "de573611f5b57c7abdaa4b07ebcbbf6cffcadc140a87e5d5f149e089602f8296"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_weather.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_weather.gif",
+          "capturedAt": "20021212094433",
+          "mimetype": "image/gif",
+          "sha256": "e575450a3a337093644bdb169ca21f3fbd4e53dbcff8042dec547c1453ea6343"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_subject.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_subject.gif",
+          "capturedAt": "20021212093914",
+          "mimetype": "image/gif",
+          "sha256": "a253d337a6524327dae6ad61f6b23921436a555151ba4e921f68ae39a9e0deec"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_name.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_name.gif",
+          "capturedAt": "20021212092955",
+          "mimetype": "image/gif",
+          "sha256": "b61290cbe6811ee9d0b0de8ffee058cd3e8104a9a327b2bf74294bcf03120e1d"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_hit.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_hit.gif",
+          "capturedAt": "20021212092556",
+          "mimetype": "image/gif",
+          "sha256": "873e610d5d1da3994933156bb52d6236b7ea49975ecd982ed5621e8d86fbfb73"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/weather0.gif",
+          "path": "zero/skin/zipulragi_dairy2/weather0.gif",
+          "capturedAt": "20030304002147",
+          "mimetype": "image/gif",
+          "sha256": "c343d7b62ccd442b9507c45f8552d1c148c95c61da092a1f49dbc814c2a0f2c3"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/i_list.gif",
+          "path": "zero/skin/zipulragi_dairy2/i_list.gif",
+          "capturedAt": "20021212095433",
+          "mimetype": "image/gif",
+          "sha256": "9dbe61c834f8ce757fb1d1fe2944def72687e1a9d1e8e03570310e6c92b1e36c"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/i_admin.gif",
+          "path": "zero/skin/zipulragi_dairy2/i_admin.gif",
+          "capturedAt": "20021212094621",
+          "mimetype": "image/gif",
+          "sha256": "6edec1eebc5b30f8ff5a2b263a722f2c5c8bceda9c26f76d20c62ceb1e05174f"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/i_write.gif",
+          "path": "zero/skin/zipulragi_dairy2/i_write.gif",
+          "capturedAt": "20021212095959",
+          "mimetype": "image/gif",
+          "sha256": "a447c64739a4d40a2ecd37e9bcbe58335968c16ab6ccf86b73ee749cdf5d60b2"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/yony_b2_pi/style.css",
+          "path": "zero/skin/yony_b2_pi/style.css",
+          "capturedAt": "20021211125238",
+          "mimetype": "text/css",
+          "sha256": "5359c56c7813f0b4331f1b43a2bda0d282008e734230598a962fec0833a3b51f"
+        }
+      ]
+    },
+    {
+      "timestamp": "20021120053627",
+      "originalFiles": 396,
+      "restoredFiles": 46,
+      "rewrittenReferences": 629,
+      "restored": [
+        {
+          "url": "http://fstory.net/img/banner.jpg",
+          "path": "img/banner.jpg",
+          "capturedAt": "20031209131016",
+          "mimetype": "image/jpeg",
+          "sha256": "67a0869505e3ad133cc239b806418fd229247653800521df69559012597922c0"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery1/Ybs3_th.jpg",
+          "path": "gallery/gallery1/Ybs3_th.jpg",
+          "capturedAt": "20021212081645",
+          "mimetype": "image/jpeg",
+          "sha256": "e03b7153be15d3013d41348f46e0afdad8de57a21c0f7559bd9e0b4fe71230e6"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery1/dragon_th.jpg",
+          "path": "gallery/gallery1/dragon_th.jpg",
+          "capturedAt": "20021212110027",
+          "mimetype": "image/jpeg",
+          "sha256": "c867a26a6884e4630213ea514ab3068280946314f2188509a300d90e16166480"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery2/girl_by_th.jpg",
+          "path": "gallery/gallery2/girl_by_th.jpg",
+          "capturedAt": "20030417225435",
+          "mimetype": "image/jpeg",
+          "sha256": "9d65e2d75acfdc0af0357b679acbb1c9c3b8a594952a26bcfb65a5fecb0c7b20"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/mannerism_th.jpg",
+          "path": "gallery/gallery5/mannerism_th.jpg",
+          "capturedAt": "20031020165757",
+          "mimetype": "image/jpeg",
+          "sha256": "487e71afd11928db9e9204cded1fda5667c196d00e37364e44c5b7825ac819a2"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/charic_th.jpg",
+          "path": "gallery/gallery5/charic_th.jpg",
+          "capturedAt": "20030417082855",
+          "mimetype": "image/jpeg",
+          "sha256": "c8071df32e910c86a7b06b7675253ccee637df6c48023273447b6cbb407215a4"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/opera_th.jpg",
+          "path": "gallery/gallery5/opera_th.jpg",
+          "capturedAt": "20031020185424",
+          "mimetype": "image/jpeg",
+          "sha256": "a883743062a9a11ce9cb38d2f6af657f41895975cdacc2f93ed371a33235889f"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/cityend_th.jpg",
+          "path": "gallery/gallery5/cityend_th.jpg",
+          "capturedAt": "20030417105927",
+          "mimetype": "image/jpeg",
+          "sha256": "8f94580b2c235eb936732096dc27510f8bbbfeed20afa697251740ed84716f1d"
+        },
+        {
+          "url": "http://fstory.net/kani/special/bono/porori.jpg",
+          "path": "kani/special/bono/porori.jpg",
+          "capturedAt": "20021217235121",
+          "mimetype": "image/jpeg",
+          "sha256": "cf7f5b4b7bcd3895a6319e358f565d3b439a589f9fbd1c8cca7f122d13cc9ada"
+        },
+        {
+          "url": "http://fstory.net/kani/special/doly/com-m-4.gif",
+          "path": "kani/special/doly/com-m-4.gif",
+          "capturedAt": "20021218230829",
+          "mimetype": "image/gif",
+          "sha256": "ebeef91565edb28e362755af505cbac0fcb6dc1e93c68a63be4e0ff8a9df2fa6"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/parent.gif",
+          "path": "kani/special/kare/parent.gif",
+          "capturedAt": "20021218003352",
+          "mimetype": "image/gif",
+          "sha256": "b66298fdad3b0d15e7ea86a8c5bb56a5c1508f97398871d38e1283dfca5e73e9"
+        },
+        {
+          "url": "http://www.fstory.net/kani/special/kare/maho.gif",
+          "path": "kani/special/kare/maho.gif",
+          "capturedAt": "20021218003132",
+          "mimetype": "image/gif",
+          "sha256": "18eb191a6d9a6f94489c69933ea2a9913aa8c80a603000dbc7f378ee7befdf19"
+        },
+        {
+          "url": "http://fstory.net/link/linkcontent.html",
+          "path": "link/linkcontent.html",
+          "capturedAt": "20030225124933",
+          "mimetype": "text/html",
+          "sha256": "1f1217a6fdc430259bc83bb3f91ad2fb06a7c56a841daee6d991bb91aca3ec2a"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND10.htm",
+          "path": "myletter/dland/DLAND10.htm",
+          "capturedAt": "20030220175804",
+          "mimetype": "text/html",
+          "sha256": "aec46e241900bd37125bf49cec3d7d8f2f88ae9aabbc697dfd9ac78be1dbd1b9"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND23.htm",
+          "path": "myletter/dland/DLAND23.htm",
+          "capturedAt": "20021212022915",
+          "mimetype": "text/html",
+          "sha256": "3d3353a004692c11b67d12dfd6e9eec8cd68525426c52e2e988d50f8f326f173"
+        },
+        {
+          "url": "http://fstory.net/myletter/dland/DLAND12.htm",
+          "path": "myletter/dland/DLAND12.htm",
+          "capturedAt": "20021212022828",
+          "mimetype": "text/html",
+          "sha256": "61ed5df1e57d13fd0f46392cf839b4ff3dfad11d768a06b788d87ed7439ca8fb"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch2.html",
+          "path": "myletter/windy/witch2.html",
+          "capturedAt": "20021225164415",
+          "mimetype": "text/html",
+          "sha256": "4792e6b1a0befc7a6eeb8b5bc61954326da57893ab9225a8a9b36d5ecc9c2c49"
+        },
+        {
+          "url": "http://fstory.net/myletter/windy/witch14.html",
+          "path": "myletter/windy/witch14.html",
+          "capturedAt": "20021225161625",
+          "mimetype": "text/html",
+          "sha256": "397080df60bb6d688148c2fb18448d3ddaae5794594c7a8f75546d0f18a5c4a4"
+        },
+        {
+          "url": "http://fstory.net/myletter/poem/98/p97_9_14.html",
+          "path": "myletter/poem/98/p97_9_14.html",
+          "capturedAt": "20021221131008",
+          "mimetype": "text/html",
+          "sha256": "d2687aabfc9fc95bd70625274cf531eff7a4b180f7a8d039f3b2f7665803fcb1"
+        },
+        {
+          "url": "http://fstory.net/myletter/poem/another/pD-7.html",
+          "path": "myletter/poem/another/pD-7.html",
+          "capturedAt": "20021225155119",
+          "mimetype": "text/html",
+          "sha256": "c7a2e96e274b4b531bab52a2ef798e0cc2c9bae62c1f11090c4088fdbd4bbb22"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/song2.html",
+          "path": "myletter/short/song2.html",
+          "capturedAt": "20021225162223",
+          "mimetype": "text/html",
+          "sha256": "df7c749c28936823812f595522585e1cb82e5f5d78949efc9fbe771689da91bf"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/memory.html",
+          "path": "myletter/short/memory.html",
+          "capturedAt": "20021225154757",
+          "mimetype": "text/html",
+          "sha256": "d8dd5e41513d54beefa01929809ca12dd7a41862ec0f77cbaaae243044f06d00"
+        },
+        {
+          "url": "http://fstory.net/tech/aitech/aiapp.html",
+          "path": "tech/aitech/aiapp.html",
+          "capturedAt": "20021225160156",
+          "mimetype": "text/html",
+          "sha256": "340918e82f2d34594bd890e99dd7514182d0138c398c0c1ee95a4c323c04ea1a"
+        },
+        {
+          "url": "http://fstory.net/tech/aitech/aihistory.html",
+          "path": "tech/aitech/aihistory.html",
+          "capturedAt": "20021225154908",
+          "mimetype": "text/html",
+          "sha256": "25d75f81f4c8ce057a0a51512c325ff9aa3da330c0022baa3c4c0b97df4da03e"
+        },
+        {
+          "url": "http://fstory.net/tech/aitech/robot.html",
+          "path": "tech/aitech/robot.html",
+          "capturedAt": "20030417060139",
+          "mimetype": "text/html",
+          "sha256": "d6007c9ae9d63a65c6b06439e4a7860340b841fe5e2c937eebd8ff02cf088252"
+        },
+        {
+          "url": "http://fstory.net/tech/movie/ai/ai.html",
+          "path": "tech/movie/ai/ai.html",
+          "capturedAt": "20030328102518",
+          "mimetype": "text/html",
+          "sha256": "c53185053eced1c7bf5a0f4d48f2ba57e06d3b38dbe72754d35682a756f2f067"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/kissofgod_pink/style.css",
+          "path": "zero/skin/kissofgod_pink/style.css",
+          "capturedAt": "20030102195613",
+          "mimetype": "text/css",
+          "sha256": "7b2cd253295370c1465faaf41b19b11aa80fd15a563abe13418b91ca42ce2c90"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/kissofgod_pink/content_off.gif",
+          "path": "zero/skin/kissofgod_pink/content_off.gif",
+          "capturedAt": "20030506120649",
+          "mimetype": "image/gif",
+          "sha256": "ddee8e375dd3f9d6211d382dfbf8b460ff2eae6c2cc20f73e8efad2b588e8534"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/content_on.gif",
+          "path": "zero/skin/zipulragi_dairy2/content_on.gif",
+          "capturedAt": "20021212090312",
+          "mimetype": "image/gif",
+          "sha256": "cd1038262da5dbb2e82faff283d1b07cec92136df123b29f6b7b5d77ab326962"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/member_modify.gif",
+          "path": "zero/skin/zipulragi_dairy2/member_modify.gif",
+          "capturedAt": "20030304000927",
+          "mimetype": "image/gif",
+          "sha256": "23e6a386f1ed50b56d81b128c6fa7d4f60b4e954203bcfe71509385cec9a6fe7"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/member_login.gif",
+          "path": "zero/skin/zipulragi_dairy2/member_login.gif",
+          "capturedAt": "20030304000219",
+          "mimetype": "image/gif",
+          "sha256": "ddbbdbe864a8ffff2db438d83198099dc62b51fc7b154c16d8867df754201c3e"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/member_logout.gif",
+          "path": "zero/skin/zipulragi_dairy2/member_logout.gif",
+          "capturedAt": "20030304000441",
+          "mimetype": "image/gif",
+          "sha256": "8c165f6b962e2ed223f4bac6387183e5b2f13948fbee4de263ecfd3a07c63053"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/member_setup.gif",
+          "path": "zero/skin/zipulragi_dairy2/member_setup.gif",
+          "capturedAt": "20030304001031",
+          "mimetype": "image/gif",
+          "sha256": "48f6413c45196265b812b90742f66d6eec4dcc265721d59fdd135a7b7ff2eaad"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/setup_total.gif",
+          "path": "zero/skin/zipulragi_dairy2/setup_total.gif",
+          "capturedAt": "20030304001916",
+          "mimetype": "image/gif",
+          "sha256": "74c152faf4a6998eeb43203ca7dc274f489017c96424e1208c4026a6b6170ad8"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/setup_articles.gif",
+          "path": "zero/skin/zipulragi_dairy2/setup_articles.gif",
+          "capturedAt": "20030304001457",
+          "mimetype": "image/gif",
+          "sha256": "8e243b61e0090e146522ea4b95ca61d116ca3e04aa55ccea52569a4ed6e97aeb"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/setup_pages_nowpage.gif",
+          "path": "zero/skin/zipulragi_dairy2/setup_pages_nowpage.gif",
+          "capturedAt": "20030304001751",
+          "mimetype": "image/gif",
+          "sha256": "ca0154f3bbe83523344bbb2830045a9fa2f88702aee5fcdc52f71191b8343b4c"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_no.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_no.gif",
+          "capturedAt": "20021212093356",
+          "mimetype": "image/gif",
+          "sha256": "de573611f5b57c7abdaa4b07ebcbbf6cffcadc140a87e5d5f149e089602f8296"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_weather.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_weather.gif",
+          "capturedAt": "20021212094433",
+          "mimetype": "image/gif",
+          "sha256": "e575450a3a337093644bdb169ca21f3fbd4e53dbcff8042dec547c1453ea6343"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_subject.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_subject.gif",
+          "capturedAt": "20021212093914",
+          "mimetype": "image/gif",
+          "sha256": "a253d337a6524327dae6ad61f6b23921436a555151ba4e921f68ae39a9e0deec"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_name.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_name.gif",
+          "capturedAt": "20021212092955",
+          "mimetype": "image/gif",
+          "sha256": "b61290cbe6811ee9d0b0de8ffee058cd3e8104a9a327b2bf74294bcf03120e1d"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/head_hit.gif",
+          "path": "zero/skin/zipulragi_dairy2/head_hit.gif",
+          "capturedAt": "20021212092556",
+          "mimetype": "image/gif",
+          "sha256": "873e610d5d1da3994933156bb52d6236b7ea49975ecd982ed5621e8d86fbfb73"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/weather0.gif",
+          "path": "zero/skin/zipulragi_dairy2/weather0.gif",
+          "capturedAt": "20030304002147",
+          "mimetype": "image/gif",
+          "sha256": "c343d7b62ccd442b9507c45f8552d1c148c95c61da092a1f49dbc814c2a0f2c3"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/i_list.gif",
+          "path": "zero/skin/zipulragi_dairy2/i_list.gif",
+          "capturedAt": "20021212095433",
+          "mimetype": "image/gif",
+          "sha256": "9dbe61c834f8ce757fb1d1fe2944def72687e1a9d1e8e03570310e6c92b1e36c"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/i_admin.gif",
+          "path": "zero/skin/zipulragi_dairy2/i_admin.gif",
+          "capturedAt": "20021212094621",
+          "mimetype": "image/gif",
+          "sha256": "6edec1eebc5b30f8ff5a2b263a722f2c5c8bceda9c26f76d20c62ceb1e05174f"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/zipulragi_dairy2/i_write.gif",
+          "path": "zero/skin/zipulragi_dairy2/i_write.gif",
+          "capturedAt": "20021212095959",
+          "mimetype": "image/gif",
+          "sha256": "a447c64739a4d40a2ecd37e9bcbe58335968c16ab6ccf86b73ee749cdf5d60b2"
+        },
+        {
+          "url": "http://fstory.net/zero/skin/yony_b2_pi/style.css",
+          "path": "zero/skin/yony_b2_pi/style.css",
+          "capturedAt": "20021211125238",
+          "mimetype": "text/css",
+          "sha256": "5359c56c7813f0b4331f1b43a2bda0d282008e734230598a962fec0833a3b51f"
+        }
+      ]
+    },
+    {
+      "timestamp": "20021128181318",
+      "originalFiles": 654,
+      "restoredFiles": 8,
+      "rewrittenReferences": 2045,
+      "restored": [
+        {
+          "url": "http://fstory.net/img/banner.jpg",
+          "path": "img/banner.jpg",
+          "capturedAt": "20031209131016",
+          "mimetype": "image/jpeg",
+          "sha256": "67a0869505e3ad133cc239b806418fd229247653800521df69559012597922c0"
+        },
+        {
+          "url": "http://fstory.net/gallery/gallery7/gallery7.html",
+          "path": "gallery/gallery7/gallery7.html",
+          "capturedAt": "20031017143511",
+          "mimetype": "text/html",
+          "sha256": "812a09d709220d8f8b124e18d75612d7a6d9c88323bb8f9dfcb244d7f54fe864"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/mannerism_th.jpg",
+          "path": "gallery/gallery5/mannerism_th.jpg",
+          "capturedAt": "20031020165757",
+          "mimetype": "image/jpeg",
+          "sha256": "487e71afd11928db9e9204cded1fda5667c196d00e37364e44c5b7825ac819a2"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/opera_th.jpg",
+          "path": "gallery/gallery5/opera_th.jpg",
+          "capturedAt": "20031020185424",
+          "mimetype": "image/jpeg",
+          "sha256": "a883743062a9a11ce9cb38d2f6af657f41895975cdacc2f93ed371a33235889f"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery5/dragon_th.jpg",
+          "path": "gallery/gallery5/dragon_th.jpg",
+          "capturedAt": "20031020152002",
+          "mimetype": "image/jpeg",
+          "sha256": "cf301897ed5178e94e017701183f8333aa88d3e2cf5cebcd2c27254c6450c837"
+        },
+        {
+          "url": "http://www.fstory.net/myletter/short/happylion.html",
+          "path": "myletter/short/happylion.html",
+          "capturedAt": "20031124231041",
+          "mimetype": "text/html",
+          "sha256": "157552b085b3d1284d40cbbc5e27edb590d7d97db8783d0bed183adf46b6fbf8"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery7/skyangel_th.jpg",
+          "path": "gallery/gallery7/skyangel_th.jpg",
+          "capturedAt": "20031017220632",
+          "mimetype": "image/jpeg",
+          "sha256": "f6514c6836b73f977b2ecc16924d9469701e0c0f6f163a18af75bafb188d619f"
+        },
+        {
+          "url": "http://www.fstory.net/gallery/gallery7/violin_th.jpg",
+          "path": "gallery/gallery7/violin_th.jpg",
+          "capturedAt": "20031017224955",
+          "mimetype": "image/jpeg",
+          "sha256": "d69eb77732cae5f130cc299d9b11496efbcfa52fa04b2b017c112cc9aa504d20"
+        }
+      ]
+    },
+    {
+      "timestamp": "20030726202839",
+      "originalFiles": 671,
+      "restoredFiles": 0,
+      "rewrittenReferences": 2042,
+      "restored": []
+    }
+  ]
+}

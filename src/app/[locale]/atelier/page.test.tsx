@@ -1,14 +1,16 @@
 import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Library from './page';
-import '../../i18n';
+import '../../../i18n';
 
 jest.mock('next/navigation', () => ({
     useRouter: () => ({ push: jest.fn() }),
     useSearchParams: () => ({
         get: () => null,
         toString: () => ''
-    })
+    }),
+    usePathname: () => '/ko/atelier/',
+    useParams: () => ({ locale: 'ko' }),
 }));
 
 describe('AtelierPage', () => {

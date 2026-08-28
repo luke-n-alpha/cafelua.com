@@ -1,0 +1,188 @@
+<meta charset="utf-8">
+<html> 
+</head>
+<style type="text/css">
+A:link {color:#225577; font-weight: bold;font-family: 돋움; font-size:9pt; text-decoration: none}
+A:visited {color:#225577;font-weight: bold;font-family: 돋움; font-size:9pt; text-decoration: none}
+A:active {color:#225577; font-family: 돋움; font-size:9pt; text-decoration: none}
+A:hover {color: #ee4411; font-weight: bold; text-decoration: none}
+body {
+FONT-FAMILY: 돋움, 굴림, 굴림체, verdana, arial, helvetica, sans-serif; FONT-SIZE: 9pt; font-color: #901850}
+TABLE {FONT-FAMILY: 돋움, 굴림, 굴림체, verdana, arial, helvetica, sans-serif; FONT-SIZE: 9pt}
+TR {FONT-FAMILY: 돋움, 굴림, 굴림체, verdana, arial, helvetica, sans-serif; FONT-SIZE: 9pt}
+TD {FONT-FAMILY: 돋움, 굴림, 굴림체, verdana, arial, helvetica, sans-serif; FONT-SIZE: 9pt}
+HTML {FONT-SIZE: 9pt}
+
+
+	BODY 
+	{scrollbar-face-color: #FFFFFF; scrollbar-shadow-color: #99CCFF; 
+	scrollbar-highlight-color: #99CCFF; scrollbar-3dlight-color: #FFFFFF; 
+	scrollbar-darkshadow-color: #FFFFFF; scrollbar-track-color: #FFFFFF;
+	scrollbar-arrow-color: #FFFFFF}
+</style>
+
+
+
+<script language=javascript> 
+<!-- 
+function person_info2()
+{
+	
+		var left_pos = (top.document.body.clientWidth-932) / 2;
+		var top_pos = (top.document.body.clientHeight-538) / 2 + 50;
+		window.open('http://www.cyworld.com/pims/main/pims_main.asp?tid=16159007','person_info','height=538,width=932,left='+left_pos+', top='+top_pos+', scrollbars=no,resizable=yes');
+		
+	
+}
+
+
+function openNewWindow(window) {
+open (window,"NewWindow","left=0, top=0, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, width=350, height=320");
+}
+
+
+window.onload = person_info2;
+
+
+
+// 필터 적용 함수
+function trans(id,after) 
+{ 
+eval(id+'.filters.blendTrans.stop();'); 
+eval(id+'.filters.blendTrans.Apply();'); 
+eval(id+'.src="'+after+'";'); 
+eval(id+'.filters.blendTrans.Play();'); 
+} 
+function Find_Obj(n, d) { 
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=Find_Obj(n,d.layers[i].document);
+  if(!x && document.getElementById) x=document.getElementById(n); return x;
+}
+// 부메뉴 레이어 숨김/보이기 함수
+function Show_Hide() { 
+  var i,p,v,obj,args=Show_Hide.arguments;
+  for (i=0; i<(args.length-2); i+=3) if ((obj=Find_Obj(args[i]))!=null) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+
+//-->
+</script>
+</head>
+
+
+<body bgcolor="#000000" text="#000000" topmargin="0" leftmargin="0" onLoad="Show_Hide('Layer1','','hide','Layer2','','hide','Layer3','','hide','Layer4','','hide','Layer5','','hide','Layer6','','hide')">
+
+<!-- 첫번째 부메뉴 -->
+<div id="Layer1" style="position:absolute; left:8px; top:26px;;; z-index:2; visibility: hidden; background-color:lightgreen"> 
+  <table><tr>
+	<td><a href="diary/diary.html" target="content">일기장</a> 
+         | <a href="profile/profile.html" target="content">프로필</a> 
+         | <a href="album/album.html" target="content">앨범</a>
+         | <a href="javascript:person_info2()">미니홈피</a>
+         | <a href="album/history.html" target="content">여행기/관람기</a>
+         | <a href="zero/zboard__q_3d83a35d8c.php" target="content">개인자료실</a>
+        </td>
+	</tr></table>
+</div>
+
+<!-- 두번째 부메뉴 -->
+<div id="Layer2" style="position:absolute; left:31px; top:26px;;; z-index:4; visibility: hidden; background-color:ffee55"> 
+  <table><tr>
+	<td><a href="gallery/gallery.html" target="content">CG작품</a> 
+           | <a href="http://www.cyworld.com/pims/board/sketch/sktbrd_list.asp?domain=yes&tid=16159007&board_no=5" target="content">그림일기</a> 
+           | <a href="gallery/present/present.html" target="content">축전</a>
+           | <a href="./cartoon/cartoon.html" target="content">카툰</a></td>
+	</tr></table>
+</div>
+
+<!-- 세번째 부메뉴 -->
+<div id="Layer3" style="position:absolute; left:111px; top:26px;;; z-index:5; visibility: visible; background-color:ffaa55"> 
+  <table>
+    <tr> 
+      <td><a href="myletter/short/short.html" target="content">자작단편소설</a> 
+      | <a href="myletter/long.html" target="content">자작장편소설</a>
+      | <a href="myletter/poem.html" target="content">자작시</a> </td>
+    </tr>
+  </table>
+</div>
+<!-- 네번째 부메뉴 -->
+<div id="Layer4" style="position:absolute; left:7px; top:26px;;; z-index:6; visibility: hidden; background-color:lightblue"> 
+  <table><tr>
+	<td><a href="insidece/wince.html" target="content">WinCE</a> |
+	<a href="zero/zboard__q_fe750282f5.php" target="content">컴퓨터</a> 
+       | <a href="http://mulmi.cyworld.com/pims/board/general/board_list.asp?domain=&tid=16159007&board_no=16" target="content">신기술 및 아이디어상품</a> 
+       | <a href="tech/aitech/tech1.html" target="content">인공지능</a> 
+       | <a href="http://cyworld.com/pims/board/general/board_list.asp?domain=&tid=16159007&board_no=17" target="content">나의아이템과 생각</a> </td>
+	</tr></table>
+</div>
+
+<!-- 다섯번째 부메뉴 -->
+<div id="Layer5" style="position:absolute; left:101px; top:26px;;; z-index:7; visibility: hidden; background-color:eeffaa"> 
+  <table><tr>
+	<td><a href="http://cyworld.com/pims/board/general/board_list.asp?domain=&tid=16159007&board_no=12" target="content">영화,에니 감상록</a> 
+        | <a href="media/media.html" target="content">최신에니감상록</a> 
+        | <a href="kani/kani2.html" target="content">한국에니음악</a></td>
+	</tr></table>
+</div>
+
+<!-- 여섯번째 부메뉴 -->
+<div id="Layer6" style="position:absolute; left:269px; top:26px;;; z-index:8; visibility: hidden; background-color:ffaadd"> 
+  <table><tr>
+	<td><a href="http://fstory.com.ne.kr/christian/christian.html" target="content">About God</a> 
+         | <a href="http://fstory.com.ne.kr/christian/veritas/index.html" target="content">베리타스</a> 
+        </td>
+	</tr></table>
+</div>
+
+
+<!-- 일곱번째 부메뉴 -->
+<div id="Layer7" style="position:absolute; left:303px; top:26px;;; z-index:9; visibility: hidden; background-color:aaffcc"> 
+  <table><tr>
+  <td><a href="zero/zboard__q_849a934bbb.php" target="content"> MYBBS</a> 
+      | <a href="zero/zboard__q_66a17eabca.php" target="content">방명록</a> 
+      | <a href="./link/index.html" target=_blank>링크</a> 
+	</tr></table>
+</div>
+
+<table bgcolor=black bordercolor=gray border=0><td valign=top rowspan=2>
+  <td valign=top>
+  <!---- 메인메뉴 설정 영역입니다
+  이미지의 아이디 (id)와 이미지에 마우스를 대었을대 보일레이어(show)와 숨겨둘레이어(hide) 설정을 주의깊게 본 뒤 수정 하세요
+  --->
+  <img src="menu1.gif" id=aa style="filter:blendTrans(duration=0.5)" onMouseOver="Show_Hide('Layer2','','hide','Layer3','','hide','Layer4','','hide','Layer5','','hide','Layer6','','hide','Layer7','','hide','Layer1','','show');trans('aa','menu1-1.gif');" onMouseOut="trans('aa','menu1.gif');" border=0></td>
+
+  <td valign=top>
+
+  <img src="menu2.gif" id=bb style="filter:blendTrans(duration=0.5)" onMouseOver="Show_Hide('Layer1','','hide','Layer3','','hide','Layer4','','hide','Layer5','','hide','Layer6','','hide','Layer7','','hide','Layer2','','show');trans('bb','menu2-1.gif');" onMouseOut="trans('bb','menu2.gif');" border=0></td>
+
+  <td valign=top>
+
+  <img src="menu3.gif" id=cc style="filter:blendTrans(duration=0.5)" onMouseOver="Show_Hide('Layer1','','hide','Layer2','','hide','Layer4','','hide','Layer5','','hide','Layer6','','hide','Layer7','','hide','Layer3','','show');trans('cc','menu3-1.gif');" onMouseOut="trans('cc','menu3.gif');"  border=0></td>
+
+  <td valign=top>
+
+  <img src="menu4.gif" id=dd style="filter:blendTrans(duration=0.5)" onMouseOver="Show_Hide('Layer1','','hide','Layer2','','hide','Layer3','','hide','Layer5','','hide','Layer6','','hide','Layer7','','hide','Layer4','','show');trans('dd','menu4-1.gif');" onMouseOut="trans('dd','menu4.gif');"  border=0></td>
+
+  <td valign=top>
+
+  <img src="menu5.gif" id=ee style="filter:blendTrans(duration=0.5)" onMouseOver="Show_Hide('Layer1','','hide','Layer2','','hide','Layer3','','hide','Layer4','','hide','Layer6','','hide','Layer7','','hide','Layer5','','show');trans('ee','menu5-1.gif');" onMouseOut="trans('ee','menu5.gif');"  border=0></td>
+
+  <td valign=top>
+
+  <img src="menu6.gif" id=ff style="filter:blendTrans(duration=0.5)" onMouseOver="Show_Hide('Layer1','','hide','Layer2','','hide','Layer3','','hide','Layer4','','hide','Layer5','','hide','Layer7','','hide','Layer6','','show');trans('ff','menu6-1.gif');" onMouseOut="trans('ff','menu6.gif');"  border=0></td>
+
+  <td valign=top>
+
+  <img src="menu7.gif" id=gg style="filter:blendTrans(duration=0.5)" onMouseOver="Show_Hide('Layer1','','hide','Layer2','','hide','Layer3','','hide','Layer4','','hide','Layer5','','hide','Layer6','','hide','Layer7','','show');trans('gg','menu7-1.gif');" onMouseOut="trans('gg','menu7.gif');"  border=0></td>
+
+  <td rowspan=2 align=right width=180><br><iframe
+ frameborder="0" width="150" height="15" leftmargin="0" marginheight="0" marginwidth="0"
+ scrolling="no" src="count2/count.cgi" topmargin="0" width="100"></iframe><a href=javascript:openNewWindow("http://www.fstory.net/mail/mail.html")><img src="mail.gif" border=0></a> 
+
+
+</table>
+
+</html>
