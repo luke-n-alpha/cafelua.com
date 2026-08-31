@@ -1709,6 +1709,30 @@ const mergedMenuNotes = [];
   }
   if (bgmPages.length) mergedMenuNotes.push(`BGM 플레이어 ${bgmPages.length}곳에 ${BGM_TRACKS.length}곡을 걸었다`);
 
+  // The diary sat above a memo pane that called a Zeroboard the server drew on
+  // request. What is left of memo.html is a stylesheet and nothing else, so the
+  // pane renders as a white slab under the writing. Drop it and let the diary
+  // have the height.
+  const diaryFrame = path.join(merged, 'diary/frame.html');
+  if (existsSync(diaryFrame)) {
+    const text = await readFile(diaryFrame, 'utf8');
+    const next = text
+      .replace(/rows\s*=\s*"280,\s*\*"/i, 'rows="*"')
+      .replace(/<frame[^>]*name\s*=\s*"?memo"?[^>]*>\s*/i, '');
+    if (next !== text) {
+      await writeFile(diaryFrame, next, 'utf8');
+      mergedMenuNotes.push('일기 아래 빈 메모 칸을 걷어냈다');
+    }
+    // The rule under the copyright line divided the diary from the memo pane.
+    // With the pane gone it divides the writing from nothing.
+    const diaryPage = path.join(merged, 'diary/recent.html');
+    if (existsSync(diaryPage)) {
+      const page = await readFile(diaryPage, 'utf8');
+      const trimmed = page.replace(/<hr[^>]*>\s*(?=<\/body>)/i, '');
+      if (trimmed !== page) await writeFile(diaryPage, trimmed, 'utf8');
+    }
+  }
+
   // The strip along the bottom held a Java applet clock and the words
   // "<-현재시간" beside it, plus a welcome graphic the archive never kept. No
   // browser has run a Java applet in years, so all that reaches a visitor now
