@@ -283,11 +283,12 @@ const cyworldNoticeDocument = (heading, withImage) => `<!doctype html>
 <title>숲속얘기의 싸이월드 미니홈피</title>
 <style>
 html, body { min-height: 100%; }
-body { margin: 0; background: #fff; color: #44515b; font: 12px/1.7 돋움, Dotum, 굴림, sans-serif; }
-.frame { width: min(570px, calc(100% - 28px)); margin: 24px auto; border: 1px solid #9ab6c4; background: #f7fbfd; box-shadow: 3px 3px 0 #dce8ed; }
+/* This sits inside a 640x450 pane, so it has to fit without scrolling. */
+body { margin: 0; background: #f0f9fb; color: #44515b; font: 12px/1.55 돋움, Dotum, 굴림, sans-serif; }
+.frame { width: min(520px, calc(100% - 20px)); margin: 10px auto; border: 1px solid #9ab6c4; background: #f7fbfd; box-shadow: 3px 3px 0 #dce8ed; }
 .title { padding: 7px 12px; border-bottom: 1px solid #9ab6c4; background: #d9edf5; color: #225577; font-weight: bold; }
-.content { padding: 18px; text-align: center; }
-.content img { display: block; width: 400px; max-width: 100%; height: auto; margin: 0 auto 18px; border: 1px solid #b7c6cc; }
+.content { padding: 10px 14px 12px; text-align: center; }
+.content img { display: block; width: 300px; max-width: 100%; height: auto; margin: 0 auto 10px; border: 1px solid #b7c6cc; }
 h1 { margin: 0 0 8px; color: #ee6b32; font-size: 16px; }
 .address { display: inline-block; margin: 3px 0 14px; padding: 2px 8px; background: #fff; border: 1px solid #cbd9df; color: #225577; font-family: Verdana, sans-serif; }
 p { margin: 5px 0; }
@@ -1124,38 +1125,47 @@ const publishEdition = async ({ lineage, captures }) => {
   };
   await clearPlaceholders(destination);
 
-  // A gallery is a grid of thumbnails, so a cell whose picture is gone leaves a
-  // hole and the ones after it stay where they were. Drop the cell instead and
-  // let the grid close up, which is what the page would have looked like if the
-  // picture had never been listed. Only cells that held nothing but the missing
-  // picture are removed; anything with words in it stays.
-  const closeGalleryGaps = async (directory) => {
+  // A gallery is a grid of thumbnails and the archive lost a lot of them, so the
+  // grid ends up with holes — and because these tables are drawn on black, a
+  // hole is a black rectangle. Removing the cell alone does not fix it: the row
+  // gets shorter while the table keeps its width, so the gap moves to the end
+  // of the row.
+  //
+  // Rebuild the grid instead. Take the cells that still hold a picture, in the
+  // order they were listed, and lay them out four to a row, so the gallery
+  // reads as it would if the missing pictures had never been listed.
+  const PER_ROW = 4;
+  const rebuildGalleryGrid = async (directory) => {
     for (const entry of await readdir(directory, { withFileTypes: true })) {
       const file = path.join(directory, entry.name);
-      if (entry.isDirectory()) { await closeGalleryGaps(file); continue; }
+      if (entry.isDirectory()) { await rebuildGalleryGrid(file); continue; }
       if (!htmlExtensions.has(path.extname(entry.name).toLowerCase())) continue;
       const relative = path.relative(destination, file).replaceAll('\\', '/');
       if (!/(^|\/)gallery/i.test(relative)) continue;
       const text = decode(await readFile(file));
-      if (!text.includes('data-unrestored-src')) continue;
-      let count = 0;
-      const output = text.replace(/<td\b[^>]*>([\s\S]*?)(?=<td\b|<\/tr>|<tr\b|<\/table>)/gi, (cell, inner) => {
-        if (!inner.includes('data-unrestored-src')) return cell;
-        const words = inner
-          .replace(/<[^>]+>/g, ' ')
-          .replace(/&nbsp;/gi, ' ')
-          .trim();
-        if (words.length > 2) return cell;
-        count += 1;
-        return '';
+      let changed = 0;
+      const output = text.replace(/<table\b([^>]*)>([\s\S]*?)<\/table>/gi, (whole, attributes, inner) => {
+        const cells = [...inner.matchAll(/<td\b[^>]*>([\s\S]*?)(?=<td\b|<\/tr>|<tr\b|$)/gi)];
+        if (cells.length < 4) return whole;
+        const kept = cells.map((cell) => cell[1]).filter((body) => /<img\b/i.test(body));
+        const lost = cells.length - kept.length;
+        if (!lost || !kept.length) return whole;
+        const rows = [];
+        for (let at = 0; at < kept.length; at += PER_ROW) {
+          rows.push(`<tr>${kept.slice(at, at + PER_ROW)
+            .map((body) => `<td align="center" valign="middle">${body.trim()}</td>`)
+            .join('')}</tr>`);
+        }
+        changed += lost;
+        return `<table${attributes}>${rows.join('')}</table>`;
       });
-      if (count) {
+      if (changed) {
         await writeFile(file, output, 'utf8');
-        stats.closedGalleryCells += count;
+        stats.closedGalleryCells += changed;
       }
     }
   };
-  await closeGalleryGaps(destination);
+  await rebuildGalleryGrid(destination);
 
   // Zeroboard opened its member-info card in a popup window. Rewritten, that
   // became a popup carrying the "not restored" notice — a window opening just
@@ -1584,6 +1594,20 @@ const mergedMenuNotes = [];
     }
   }
 
+  // The two panes inside the AI corner are previews, 300px wide. A link clicked
+  // in one used to open its page inside that same 300px box. Send it to the
+  // frame the visitor is actually looking at.
+  for (const page of ['tech/movie/movie.html', 'ai/tech/tech1.html']) {
+    const target = path.join(merged, page);
+    if (!existsSync(target)) continue;
+    const text = await readFile(target, 'utf8');
+    const next = text.replace(/<a\s+href=("[^"]+"|'[^']+')(?![^>]*\btarget=)/gi, '<a href=$1 target="screen"');
+    if (next !== text) {
+      await writeFile(target, next, 'utf8');
+      mergedMenuNotes.push(`${page} 의 링크를 액자 전체에서 열게 했다`);
+    }
+  }
+
   // The Cyworld notice carries the picture wherever the picture exists. Only
   // the 2003 edition shipped it originally, but the merged edition holds that
   // file too, and the notice is the one place a visitor is told where the
@@ -1730,6 +1754,34 @@ const mergedMenuNotes = [];
       const page = await readFile(diaryPage, 'utf8');
       const trimmed = page.replace(/<hr[^>]*>\s*(?=<\/body>)/i, '');
       if (trimmed !== page) await writeFile(diaryPage, trimmed, 'utf8');
+    }
+  }
+
+  // The diary's arrows walk from entry to entry, and the newest entry is filed
+  // as recent.html rather than under its own date — so 2002-02-10's ▶, which
+  // points at 20020216.html, had nowhere to go. It is the same page.
+  {
+    const diaryDir = path.join(merged, 'diary');
+    const newest = path.join(diaryDir, 'recent.html');
+    if (existsSync(newest)) {
+      const dated = /(\d{4})_(\d{2})_(\d{2})/.exec(await readFile(newest, 'utf8'));
+      if (dated) {
+        const alias = `${dated[1]}${dated[2]}${dated[3]}.html`;
+        for (const entry of await readdir(diaryDir, { withFileTypes: true })) {
+          if (!entry.isFile() || !htmlExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+          const file = path.join(diaryDir, entry.name);
+          const text = await readFile(file, 'utf8');
+          if (!text.includes(alias)) continue;
+          const next = text.replace(
+            new RegExp(`<a href="#" onclick="alert\\([^"]*\\);return false;" data-unrestored-target="([^"]*${alias})"`, 'gi'),
+            '<a href="recent.html" data-restored-alias="$1"',
+          );
+          if (next !== text) {
+            await writeFile(file, next, 'utf8');
+            mergedMenuNotes.push(`${entry.name} 의 다음 일기를 recent.html 로 이었다`);
+          }
+        }
+      }
     }
   }
 
