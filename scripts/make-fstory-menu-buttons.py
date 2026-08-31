@@ -41,7 +41,8 @@ BUTTONS = {
     'pro_n.gif': ('Profile', '프로필'),
     'let_n.gif': ('Letter', '내 글'),
     'stu_n.gif': ('Study', '공부'),
-    'kor_n.gif': ('Korea', '한국 에니메이션 음악'),
+    # Luke's own wording for this one; the menu goes to the kani/ folder.
+    'kor_n.gif': ('KaniMusic', '한국 에니메이션 음악'),
     'tech_n.gif': ('Tech', '신기술'),
     'chr_n.gif': ('Christian', '크리스챤'),
     'mybbs_n.gif': ('MyBBS', '내 게시판'),
