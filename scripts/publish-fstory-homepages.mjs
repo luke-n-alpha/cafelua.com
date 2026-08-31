@@ -492,7 +492,7 @@ const publishEdition = async ({ lineage, captures }) => {
     placeholderImages: 0, droppedBackgrounds: 0, disabledDownloads: 0, disabledMedia: 0,
     disabledForms: 0, noticeLinks: 0, unresolvedKept: 0, extensionsAdded: 0,
     staticised: 0, guestbookMerged: 0, curatedRestored: 0, reconstructedAssets: 0, thumbnailsMade: 0,
-    unpinnedBlocks: 0, curatedPages: 0, quietPanes: 0,
+    unpinnedBlocks: 0, curatedPages: 0, quietPanes: 0, groundedBodies: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
   };
 
@@ -1068,6 +1068,36 @@ const publishEdition = async ({ lineage, captures }) => {
     await writeFile(output, withCharset(rewritten, extension), 'utf8');
   }
 
+  // Pages that hard-code a white body sit inside a frame tiled with the site's
+  // own strip — #bce2eb blue and #8e7fb0 violet — so plain white reads as a
+  // hole punched in the middle of it. Luke set the inner pages against that
+  // frame deliberately; where a page names white outright, give it the pale
+  // tone from the same palette instead. Table cells keep whatever they say,
+  // since white there is usually a panel drawn on purpose.
+  const GROUND = '#f0f9fb';
+  const groundBodies = async (directory) => {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) { await groundBodies(file); continue; }
+      if (!htmlExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+      const text = decode(await readFile(file));
+      let touched = 0;
+      const output = text.replace(/<body([^>]*)>/gi, (whole, attributes) => {
+        if (/background\s*=/i.test(attributes)) return whole;
+        const next = attributes.replace(/bgcolor\s*=\s*["']?(?:white|#?ffffff)["']?/i, () => {
+          touched += 1;
+          return `bgcolor="${GROUND}"`;
+        });
+        return touched ? `<body${next}>` : whole;
+      });
+      if (touched) {
+        await writeFile(file, output, 'utf8');
+        stats.groundedBodies += touched;
+      }
+    }
+  };
+  await groundBodies(destination);
+
   // A block positioned at a fixed offset was placed against a picture that sat
   // beside it. Where that picture is gone, the offset points at nothing and the
   // block lands on top of the rest of the page — on the AI corner, Multi's
@@ -1240,21 +1270,27 @@ const mergedMenuNotes = [];
     ['dia', '일기', 'diary/frame.html'],
     ['pro', '프로필', 'profile/profile.html'],
     ['gal', '겔러리', 'gallery/gallery.html'],
-    ['album', '앨범', 'album/album.html'],
+    // 앨범 and 여행기·관람기 are dropped: both open a page whose own links were
+    // all handed to Zeroboard or Cyworld, so they arrive somewhere with nothing
+    // left to read. The pages stay published.
     ['present', '축전', 'gallery/present/present.html'],
-    ['trip', '여행기·관람기', 'album/history.html'],
     ['let', '내 글', 'myletter/myletter.html'],
     ['stu', '공부', 'study/study.html'],
+    // 신기술 is gone from the list. Three of its five entries — 영화속의AI,
+    // AI Techknowledge, My AI Study — are already reached through 인공지능, and
+    // the other two were handed to Cyworld, so the button mostly led to a
+    // service that closed. The pages themselves stay published.
     ['ai', '인공지능', 'ai/ai.html'],
-    ['tech', '신기술', 'tech/menu.html'],
     ['wince', 'WinCE', 'insidece/wince.html'],
     ['kor', '한국 에니메이션 음악', 'kani/kani.html'],
     ['media', '최신 애니 감상록', 'media/media.html'],
     ['tea', '숲속얘기의 찻집', 'teatime/teatime.html'],
     ['gue', '방명록', 'chollian/cgi/pury/purybbs.html'],
     ['lin', '링크', 'link/index.html'],
-    ['chr', '크리스챤', null, 'http://fstory.com.ne.kr/christian/christian.html'],
-    ['mybbs', '내 게시판', null, '/zero/zboard.php?id=Mybbs'],
+    // 크리스챤 and 내 게시판 are dropped too. The first lived at
+    // fstory.com.ne.kr, of which the archive holds not one file; the second was
+    // a Zeroboard the server drew on request. Neither can be reached, so the
+    // menu no longer offers a button that only ever says no.
   ];
 
   const rows = [];
@@ -1358,7 +1394,7 @@ ${characterArt}
     disabledDownloads: 0, disabledMedia: 0, disabledForms: 0, noticeLinks: 0,
     unresolvedKept: 0, extensionsAdded: 0, staticised: 0, guestbookMerged: 0,
     curatedRestored: 0, curatedPages: 0, reconstructedAssets: 0, thumbnailsMade: 0, unpinnedBlocks: 0,
-    quietPanes: 0,
+    quietPanes: 0, groundedBodies: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
     cyworldRewrites: 0, unresolvedUniquePaths: 0, unresolved: [], restored: [],
   });
@@ -1677,6 +1713,7 @@ await writeFile(path.join(destinationRoot, 'restoration-report.json'), `${JSON.s
     curatedRestored: totals('curatedRestored'),
     curatedPages: totals('curatedPages'),
     quietPanes: totals('quietPanes'),
+    groundedBodies: totals('groundedBodies'),
     reconstructedAssets: totals('reconstructedAssets'),
     thumbnailsMade: totals('thumbnailsMade'),
     unpinnedBlocks: totals('unpinnedBlocks'),
@@ -1866,6 +1903,7 @@ console.log(JSON.stringify({
   curatedRestored: totals('curatedRestored'),
   curatedPages: totals('curatedPages'),
   quietPanes: totals('quietPanes'),
+  groundedBodies: totals('groundedBodies'),
   reconstructedAssets: totals('reconstructedAssets'),
   thumbnailsMade: totals('thumbnailsMade'),
   unpinnedBlocks: totals('unpinnedBlocks'),

@@ -46,6 +46,7 @@ THEMES = {
     'grey': (0x99, 0x99, 0x99),
 }
 NEUTRAL = (0x99, 0x99, 0x99)
+PALETTE: tuple[int, int, int] | None = None
 
 # The BGM player's buttons are named by their first letter. Play, stop, pause,
 # forward, back — the五 transport controls a 2001 web player carried.
@@ -56,6 +57,31 @@ PAGE_BACKGROUND = re.compile(r'^back\d?\.(gif|jpg)$', re.I)
 TRANSPORT = re.compile(r'^button_([a-z])\.gif$', re.I)
 ICON_70 = re.compile(r'/icon/[^/]+\.(gif|jpg)$', re.I)
 HEADER = re.compile(r'head', re.I)
+
+
+def site_palette() -> tuple[int, int, int] | None:
+    """The colour the site itself used for its page furniture.
+
+    Luke set the inner pages against the outer frame deliberately: the frame
+    tiles back1.gif, a one-pixel-tall strip of #bce2eb and #8e7fb0, and the
+    pages inside sit on a light ground that belongs to the same palette. So a
+    rebuilt page background is not invented — it is taken from whichever of
+    those strips survived, lightened to the tone an inner page carried.
+    """
+    from collections import Counter
+    for candidate in sorted(PUBLISHED.glob('*/img/back*.gif')) + sorted(PUBLISHED.glob('*/back*.gif')):
+        try:
+            with Image.open(candidate) as opened:
+                pixels = opened.convert('RGB')
+                if pixels.width < 200:      # a tile, not the frame strip
+                    continue
+                counts = Counter(pixels.getdata())
+        except Exception:
+            continue
+        for (r, g, b), _ in counts.most_common(4):
+            if b > r + 30 and b > 150:      # the blue of the strip, not the violet
+                return (r, g, b)
+    return None
 
 
 def theme_for(path: str) -> tuple[int, int, int]:
@@ -88,10 +114,16 @@ def header(colour, size: tuple[int, int]) -> Image.Image:
     return image
 
 
+def wash(colour, amount: float = 0.78):
+    """Toward white. Multiplying a colour that is already light just clips it to
+    white and loses the hue; mixing keeps it."""
+    return tuple(round(channel + (255 - channel) * amount) for channel in colour)
+
+
 def tile(colour, size: tuple[int, int]) -> Image.Image:
     """A cell background repeats, so it must be flat and quiet — anything with a
     figure in it turns into wallpaper of that figure."""
-    return Image.new('RGB', size, tint(colour, 1.62))
+    return Image.new('RGB', size, wash(colour))
 
 
 def pictogram(name: str, colour, size: tuple[int, int]) -> Image.Image:
@@ -183,6 +215,8 @@ def row_icon(name: str, size: tuple[int, int]) -> Image.Image:
 
 
 def main() -> int:
+    global PALETTE
+    PALETTE = site_palette()
     check = '--check' in sys.argv
     needs_file = Path(__file__).resolve().parent / 'fstory-board-skin-needs.json'
     if not needs_file.exists():
@@ -203,7 +237,8 @@ def main() -> int:
         if SPACER.match(name) or (requested and min(requested) < 4):
             image = spacer(requested if requested and all(requested) else (1, 1))
         elif PAGE_BACKGROUND.match(name):
-            image = tile(theme_for(site_path), size or (24, 24))
+            ground = PALETTE or theme_for(site_path)
+            image = tile(ground, size or (24, 24))
         elif TRANSPORT.match(name):
             image = pictogram(TRANSPORT_WORDS.get(TRANSPORT.match(name).group(1).lower(), 'button'),
                               theme_for(site_path), size or (18, 18))
