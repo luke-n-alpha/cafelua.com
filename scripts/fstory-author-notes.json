@@ -1,0 +1,60 @@
+{
+ "note": "작품이 아니라 작가가 앞뒤에 덧붙인 후기와 블로그가 붙인 것. 루크 지시로 책에서는 뺀다. 아카이브 원문과 2002년 통합본에는 그대로 남는다. 각 항목은 [잘라낼 원문, 이유] 이고 원문에 정확히 한 번 나타나야 한다.",
+ "cuts": {
+  "어느쪽 사랑을 고르시겠습니까 ?": [
+   [
+    "프롤로그\n사랑 이야기. 얼마만에 쓰는건가. 휴~ 생각해보면, 나의 첫 단편소설은 94년\n [아이들의 작은 이야기]였다. 중학생 소년소녀의 사랑이야기. 그 후로 많은\n 것들을 끄적였다. [드라고니아의 전설], [작은마녀 윈디] 장편을 비롯해 여\n러편의 단편들 대부분 소설들이 사랑이야기를 포함하고 있지만, 전적으로 사\n랑이야기만 한 것은 95년 [유리구슬]밖에 없는 것 같다. 내 소설 사랑 이야기\n의 주인공들은 대부분 죽었다. 이걸 지적해준 친구도 있었고, 사실 나두 알고\n 있다. 모든 주인공들은 대부분 비극적 종말을 맞구.. (물론, 예외도 있었지만\n 압도적으로 비극이 많다) 처음 쓴[아이들의~] 는 해피엔딩이었던것에 반해\n대부분은..\n 슬픈사랑이 아름답다거나, 죽음의미학 ? ... --; 뭐.. 아닐거다.\n 아니, 그보다 진짜 사랑한번 못해본 나의 시샘일지두..\n 그래서 그걸 좀 깨볼련다. [윈디]처럼 가볍지는 않고, 슬프지않은...\n 또 하나의 Fstory를 하련다. Fine Story인지, Funny일지..\n Fatal이 될지도..\n ",
+    "앞에 붙은 창작 후기. 자기 소설 이력과 집필 의도"
+   ],
+   [
+    "\n 에필로그\n 결국 다 썼습니다. 여자친구도 없는 제가 연애소설을 다 쓰고..\n사랑의 정의에 관해 논한 것 자체가 우습지만..\n상상만으로도 재미는 있으니까..\n 가치관 뒤바꾸기를 목표로 억지로 구성하다보니.. 약간의 억지성도..\n타이핑을 도움주신 사촌누나에게도 감사를.. ^^\n 육군대구병원에서 썼습니다.\n",
+    "뒤에 붙은 창작 후기. 집필 사정과 감사 인사"
+   ]
+  ],
+  "아이들의 작은 이야기": [
+   [
+    "\n\nps. 중3. 93년작.. 최고의 골동품 처녀작품..\n지금보니 평이한 내용이군요. 이때부터 소설이란걸 쓰기 시작했습니다.",
+    "뒤에 붙은 회고. 언제 썼고 지금 보니 어떤지"
+   ]
+  ],
+  "Illusion (part I)": [
+   [
+    "​\n\n#인공지능",
+    "블로그 해시태그"
+   ]
+  ]
+ },
+ "cutsEnglish": {
+  "아이들의 작은 이야기": [
+   [
+    "\n\nps. 9th grade. Written in '93... My best antique, my debut work... Looking at it now, the content is quite ordinary. This is when I started writing novels.",
+    "뒤에 붙은 회고"
+   ]
+  ],
+  "Illusion (part I)": [
+   [
+    "**Author's Note 2021** - Please be aware that this short story was written in 1998, and some of its content may not align with today's sensibilities regarding gender sensitivity. - The reason for not making revisions is that, despite its flaws, it's a piece from my youth, and I can't bring myself to touch it. I ask for your understanding.\n\n--",
+    "2021년에 붙인 작가의 말. 한국어 쪽은 이미 지웠다"
+   ],
+   [
+    "\n#Artificial Intelligence",
+    "블로그 해시태그"
+   ]
+  ],
+  "안녕하세요. 22세기입니다.": [
+   [
+    "I wrote this when I was in the military, at Changdong Hospital... I had some time back then. I think I had a good time, seeing Java for the first time and reading the entire New Testament. These days, I don't have time to touch novels at all.\n\nLooking back at my love stories... most of them are tragedies, except for fantasy novels... I had planned a second part for that one too... and it was also set to end in a devastating tragedy.\n\nSometimes, I also feel like this, like a cyborg. A complete outsider, detached from the group... Something must be wrong...\n\nToday, I feel disconnected again... I hated it so much that I just curled up in a corner of my room and slept.\n\nMy mother came home and asked why my room was so cold... I didn't even realize the boiler was set incorrectly.\n\nSometimes, why do I hate reality so much? If I could cut all the ties of bondage... if I could cut everything and fly wherever I want, meet whoever I want...\n\nThe drawing is from a long time ago when I was on vacation, so it looks terrible now. I just retouched the face outline a bit because it was off. And... I wanted to draw eyes that conveyed emotion... but I couldn't...\n\n***\n\nHello, this is the 22nd century.\n\n",
+    "2006년 블로그 머리말. 한국어 쪽은 이미 걷어냈다"
+   ]
+  ]
+ },
+ "fixesEnglish": {
+  "검은 공간으로": [
+   [
+    "찰칵.. The lighter",
+    "Click.. The lighter",
+    "번역기가 의성어 하나를 그대로 두었다"
+   ]
+  ]
+ }
+}

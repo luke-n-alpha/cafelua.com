@@ -1,6 +1,6 @@
 {
  "reviewed": "2026-08-31",
- "typicalGrowth": 1.85,
+ "typicalGrowth": 1.84,
  "note": "통과한 것만 서재의 영어 판본에 실린다. 불합격분은 다시 번역해야 한다.",
  "stories": [
   {
@@ -179,11 +179,11 @@
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 18128,
-   "englishLetters": 38365,
-   "growth": 2.12,
+   "englishLetters": 36799,
+   "growth": 2.03,
    "leftInKorean": 0,
    "koreanLines": 647,
-   "englishLines": 664
+   "englishLines": 643
   },
   {
    "title": "별을 줍는 소녀",

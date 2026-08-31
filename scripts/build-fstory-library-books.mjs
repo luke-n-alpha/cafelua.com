@@ -303,6 +303,45 @@ const SET_ASIDE = new Map([
  * neighbour" link, and a mail-subscription box from a feed service that closed
  * years ago. None of it is the story.
  */
+/**
+ * The notes Luke wrote around his own stories — a prologue about how long it
+ * had been since he wrote a love story, a postscript saying this was his first
+ * piece and it reads plainly now, a hashtag the blog added. They are his, and
+ * they stay in the archive; the book holds the work.
+ *
+ * Each one is written out in full in scripts/fstory-author-notes.json with the
+ * reason it goes, and must appear in the story exactly once, so a note that has
+ * moved is an error rather than a silent no-op.
+ */
+const AUTHOR_NOTES = path.join(appRoot, 'scripts/fstory-author-notes.json');
+const authorNoteFile = existsSync(AUTHOR_NOTES)
+  ? JSON.parse(await readFile(AUTHOR_NOTES, 'utf8'))
+  : { cuts: {}, cutsEnglish: {} };
+const authorNotes = authorNoteFile.cuts ?? {};
+const authorNotesEnglish = authorNoteFile.cutsEnglish ?? {};
+// 번역기가 남긴 한 두 낱말. 잘라내는 것이 아니라 바꾸는 것이라 따로 둔다.
+const englishFixes = authorNoteFile.fixesEnglish ?? {};
+const withEnglishFixes = (text, title) => {
+  let out = text;
+  for (const [from, to] of englishFixes[title] ?? []) {
+    if (out.includes(from)) out = out.replace(from, to);
+    else if (!out.includes(to)) throw new Error(`[${title}] 영문 교정 대상을 찾지 못했다: ${JSON.stringify(from)}`);
+  }
+  return out;
+};
+
+const withoutAuthorNotes = (text, title, list = authorNotes) => {
+  let out = text;
+  for (const [cut] of list[title] ?? []) {
+    const count = out.split(cut).length - 1;
+    if (count !== 1) {
+      throw new Error(`[${title}] 잘라낼 후기가 원문에 ${count}번 나타난다: ${JSON.stringify(cut.slice(0, 40))}`);
+    }
+    out = out.replace(cut, '');
+  }
+  return out.trim();
+};
+
 const withoutBlogFurniture = (text) => text
   .replace(/\{\{IMG:\d+\}\}/g, '')
   // The blog's bold markers. Only one story carries them, and escaped for a
@@ -358,11 +397,19 @@ const TRANSLATION_REVIEW = path.join(appRoot, 'scripts/fstory-translation-review
  * book both read the same text and a retranslation shows up as a plain diff.
  */
 const HAND_TRANSLATED = path.join(appRoot, 'scripts/translations');
+
+// 직접 번역한 편의 영어 제목. 파이프라인 번역에는 titleEn 이 딸려 오지만
+// 손번역에는 본문만 있어서, 없으면 목차에 한국어 제목이 그대로 남는다.
+const HAND_TITLES = new Map([
+  ['Illusion (partII)', 'Illusion (Part II)'],
+  ['소행성 B612', 'Asteroid B612'],
+  ['어느쪽 사랑을 고르시겠습니까 ?', 'Which Love Would You Choose?'],
+]);
 const handTranslation = async (title) => {
   const file = path.join(HAND_TRANSLATED, `${title}.en.txt`);
   if (!existsSync(file)) return null;
   const text = (await readFile(file, 'utf8')).trim();
-  return text ? { title: null, text, by: 'hand' } : null;
+  return text ? { title: HAND_TITLES.get(title) ?? null, text, by: 'hand' } : null;
 };
 
 
@@ -394,14 +441,23 @@ const buildShortStoriesEn = async () => {
     // The pipeline kept the Korean title's parenthetical year in the English
     // one too, and repeated the blog's category words after it. The year is
     // already the chapter's, so the title is trimmed back to the story's name.
+    // 파이프라인이 한국어 제목의 괄호 연도와 블로그 분류어를 영어 제목에도
+    // 옮겨 붙였고, 더러는 "(19" 처럼 잘린 채로 남겼다. 연도는 장 제목이 따로
+    // 들고 있으니 이름만 남긴다.
     const named = (story.english.title ?? story.title)
+      .replace(/\s*\((?:19|20)\d{0,2}[^)]*\)?\s*$/g, ' ')
       .replace(/\s*\((?:19|20)\d{2}[^)]*\)\s*/g, ' ')
       .replace(/\s*(?:Short Story|Creative Work|Creative Writing)\s*\/?\s*/gi, ' ')
+      .replace(/\s*[-–—]\s*A\s*$/i, '')
       .replace(/\s{2,}/g, ' ')
-      .replace(/[\s/·-]+$/, '')
+      .replace(/[\s/·:-]+$/, '')
       .trim() || story.title;
     const heading = story.year ? `${named} (${story.year})` : named;
-    chapters.push(chapterOf(heading, withoutBlogFurniture(story.english.text), `${story.slug}-en`));
+    const body = withEnglishFixes(
+      withoutBlogFurniture(withoutAuthorNotes(story.english.text, story.title, authorNotesEnglish)),
+      story.title,
+    );
+    chapters.push(chapterOf(heading, body, `${story.slug}-en`));
   }
 
   // Say what is not here, rather than let a reader wonder why the Korean
@@ -473,7 +529,10 @@ const buildShortStories = async () => {
     if (SET_ASIDE.has(story.title)) continue;
     const where = story.note ? ` · ${story.note}` : '';
     const heading = story.year ? `${story.title} (${story.year}${where})` : story.title;
-    chapters.push(chapterOf(heading, withoutBlogFurniture(withoutBlogNote(story.text, story.title)), story.slug));
+    // 후기를 먼저 잘라낸다. 블로그 살림살이를 먼저 걷으면 굵게 표시가 사라져
+    // 목록의 문자열과 어긋난다.
+    const body = withoutBlogFurniture(withoutAuthorNotes(withoutBlogNote(story.text, story.title), story.title));
+    chapters.push(chapterOf(heading, body, story.slug));
   }
 
   // Then anything the website has that the blog does not.
