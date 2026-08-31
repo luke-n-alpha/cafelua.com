@@ -289,6 +289,39 @@ const buildWindy = async () => {
  */
 const SHORT_STORY_FILE = path.join(appRoot, 'scripts/fstory-short-stories.json');
 
+// Luke's call: the pieces written as a joke or as an experiment do not go in the
+// book. They stay in the archive, where they were, and where they belong to the
+// record rather than to the collection.
+const SET_ASIDE = new Map([
+  ['컬트 판타지', '장난으로 쓴 글이라 루크가 뺐다'],
+]);
+
+/**
+ * When Luke posted these to his blog in 2006 he wrote a few lines above each
+ * one about where he had been when he wrote it and how he felt looking back.
+ * The scrape kept that and the story as one block, so the book opened with a
+ * man in his thirties talking about the army and then walked into a story
+ * without a break. The note is his, but it is not the story, and Luke asked for
+ * it out. Where the export marks the seam — a run of zero-width spaces the
+ * editor left between the two — everything before it goes.
+ */
+const withoutBlogNote = (text, title) => {
+  const seam = /\u200b{3,}/.exec(text);
+  if (!seam) return text;
+  const head = text.slice(0, seam.index);
+  // Only a note written years later reads like this: first person, present
+  // tense, addressed to a reader. A story's own opening does not.
+  const soundsLikeANote = /(썼던|썼습니다|씁니다|그렸던|올립니다|하고 있습니다|같습니다)/.test(head)
+    && head.length < text.length * 0.4;
+  if (!soundsLikeANote) return text;
+  let body = text.slice(seam.index + seam[0].length);
+  // The story's own title usually follows the seam; the chapter carries it.
+  const words = title.replace(/[.?!\s]+$/, '').split(/\s+/)
+    .map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  body = body.replace(new RegExp(`^[\\s\\u200b]*${words.join('[\\s\\u200b]*')}[\\s\\u200b.]*`), '');
+  return body.trim();
+};
+
 // Matching the two sources by title, allowing for the punctuation and spacing
 // that drifted between a 1996 web page and a 2006 blog post.
 const looseTitle = (title) => title
@@ -335,6 +368,7 @@ const buildShortStoriesEn = async () => {
   const chapters = [];
   const held = [];
   for (const story of recovered) {
+    if (SET_ASIDE.has(story.title)) continue;
     const hand = await handTranslation(story.title);
     if (hand) story.english = hand;
     if (!story.english?.text?.trim()) continue;
@@ -418,14 +452,15 @@ const buildShortStories = async () => {
   // The recovered stories first, in the order they were written.
   for (const story of recovered) {
     used.add(looseTitle(story.title));
+    if (SET_ASIDE.has(story.title)) continue;
     const where = story.note ? ` · ${story.note}` : '';
     const heading = story.year ? `${story.title} (${story.year}${where})` : story.title;
-    chapters.push(chapterOf(heading, story.text, story.slug));
+    chapters.push(chapterOf(heading, withoutBlogNote(story.text, story.title), story.slug));
   }
 
   // Then anything the website has that the blog does not.
   for (const story of fromSite) {
-    if (used.has(looseTitle(story.title))) continue;
+    if (used.has(looseTitle(story.title)) || SET_ASIDE.has(story.title)) continue;
     const body = await siteWriting(story);
     if (!body) continue;
     used.add(looseTitle(story.title));
