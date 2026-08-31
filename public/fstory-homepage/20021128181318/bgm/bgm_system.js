@@ -187,5 +187,5 @@ function updateTrack() { //노래 제목 업데이트
 }
 
 function m_list() { //새창으로 BGM 선택창 띄우기
-	window.open('bgm_sele.html','LinksRemote','width=450,height=500,scrollbars=1,resizable=1');
+	window.open('../_unrestored.html?p=%2Fbgm%2Fbgm_sele.html&k=page','LinksRemote','width=450,height=500,scrollbars=1,resizable=1');
 }

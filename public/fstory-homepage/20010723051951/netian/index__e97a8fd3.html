@@ -1,0 +1,217 @@
+<style>
+.cad:link, A.cad:active, A.cad:visited {font-style:normal; font-weight:normal; color: black; text-decoration: none; };
+A.cad:hover{ text-decoration: underline; };
+TD.cad{ font-size: 9pt; font-style:normal; font-weight:normal;};
+.acad { font-size: 9pt; font-style:normal; font-weight:normal;};
+
+</STYLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+function netian_getCookie( name )
+{
+    var nameOfCookie = name + "=";
+    var x = 0;
+    while ( x <= document.cookie.length )
+    {
+        var y = (x+nameOfCookie.length);
+        if ( document.cookie.substring( x, y ) == nameOfCookie )
+        {
+            if ( (endOfCookie=document.cookie.indexOf( ";", y )) == -1 )
+            endOfCookie = document.cookie.length;
+            return unescape( document.cookie.substring( y, endOfCookie ) );
+        }
+        x = document.cookie.indexOf( " ", x ) + 1;
+        if ( x == 0 )
+            break;
+    }
+    return "";
+}
+
+function netian_makeWindow(url) {
+	newwin = window.open(url,"makewin","height=280,width=280,location=0,menubar=0,resizable=0,scrollbars=no,status=0,titlebar=0,toolbar=0");
+		}
+function netian_makeWindow1(url) {
+	if(netian_getCookie('NETIAN_ID') != ""){
+		newwin = window.open(url,"makewin1","height=220,width=280,location=0,menubar=0,resizable=yes,scrollbars=no,status=0,titlebar=0,toolbar=0");
+	}
+	else{
+		newwin = window.open(url,"makewin1","height=820,width=880,location=0,menubar=0,resizable=yes,scrollbars=no,status=0,titlebar=0,toolbar=0");
+	}
+}
+
+
+</SCRIPT>
+
+<script LANGUAGE="javascript">
+        if(navigator.appName == "Netscape"){
+                document.write('<script language="JavaScript" data-unrestored-src="http://my-ad.netian.com/js/new_NS_ad.js">');
+		document.write('</');
+		document.write('script>');        
+}
+        else{
+                document.write('<script language="JavaScript" data-unrestored-src="http://my-ad.netian.com/js/new_IE_ad.js">');
+		document.write('</');
+		document.write('script>');        
+        }
+</script>
+
+<script language='javascript' >
+var user_id = document.URL;
+var user_ip = '203.231.231.101';
+var netian_temp = 1;
+var home_id;
+var file_name;
+var netian_find_chk = "Y";
+var f_find = 0;	
+
+function netian_setCookie( name, value, expiredays, domain )
+{
+        var todayDate = new Date();
+        todayDate.setDate( todayDate.getDate() + expiredays );
+        document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + "; domain="+domain + ";";
+}
+
+function netian_framechk_IE() {
+	for(i=0;i<document.all.length;i++){
+		if (document.all[i].tagName == "FRAMESET" || document.all[i].tagName == "EMBED" || document.all[i].tagName == "OBJECT") {
+			f_find = 1;	
+		}
+	}		
+	if ( f_find != 0) {
+		netian_setCookie("home_id", home_id, 3600, ".netian.com");
+		f_find = 1;
+		yfEA(home_id, user_ip, netian_temp, f_find);
+	} 
+}
+
+function netian_framechk_NS() {
+	if ( window.frames != null && window.frames.length != 0) {
+			netian_setCookie("home_id", home_id, 3600, ".netian.com");
+			f_find = 1;
+			yfEA(home_id, user_ip, netian_temp, f_find);
+	} 
+}
+
+function checkid(id){
+	for(i=7;i<id.length;i++){
+		var text = id.substring(i,i+1);	
+//		if (id.indexOf('netian') == -1) {
+//			netian_find_chk = "N";
+//			break;
+//		}  
+		if(text == "/") {
+			var j = i+2;
+			break;
+		}
+	}
+//	if (netian_find_chk == "Y") {
+		for(i =j ;i<id.length;i++){
+			var text = id.substring(i,i+1);				
+			if(text == "/")	break;
+		}
+		home_id = id.substring(j, i);
+
+		for(j =i+1 ;j<id.length;j++){
+			text = id.substring(j,j+1);
+			if(text == "/" || text =="" || text == ".")	break;
+		}
+		file_name = id.substring(i, j);
+//	}	
+}
+
+checkid(user_id);
+//if (netian_find_chk == "Y") {
+	if(navigator.appName == "Netscape"){
+		window.onload=netian_framechk_NS;
+	} else {		
+		window.onload=netian_framechk_IE;
+	}
+//}	
+ </script>  
+<html>
+
+
+<head>
+<meta charset="utf-8">
+	<title> Fstory's homepage </title>
+</head>
+<body  bgcolor="ffffff">
+
+ 
+<marquee width=580><font color=000000 size=2>
+	이곳은 Fstory의 홈페이지 입니다. <b>MyhomePage</b>를 Click 하시면, 제 홈페이지로 갈수 있습니다.
+	<b> Explorer 4.0. 800*600 이상 </b>에서 가장 잘보입니다, 
+	<b>개인홍보</b>와 <b>개인 인터넷 사용편리</b>를 목적으로 제작되어졌습니다. 
+	이곳은 100% 메모장 노가다이며, 이미지 역시 직접 제작했으므로, 무단도용을 금합니다. 
+	 </font></marquee>
+</div>
+
+
+ <center>
+<table border=0 cellspacing=0 cellpadding=0>
+<td> <img src="../_missing-image.svg" data-unrestored-src="title1.gif" border=0><img src="../_missing-image.svg" data-unrestored-src="title2.gif" border=0><br> </td><tr>
+<td>  <img src="../_missing-image.svg" data-unrestored-src="title3.gif" border=0><img src="../_missing-image.svg" data-unrestored-src="title4.gif" usemap="#select" border=0 ></td>
+</table>
+ <map name = "select">
+	<area shape = "rect" coords="100,80,240,110" href="main.html">
+	<area shape = "rect" coords="120,111,240,130" href="link/link.html">
+	<area shape = "rect" coords="50,153,240,175" href="http://mulmi.ml.org/neomulmi">
+ </map>
+
+
+ <p><font size=2><b> Welcome ! You are <img src="../_missing-image.svg" data-unrestored-src="http://my.netian.com/cgi-bin/Count.cgi?id=fstory&dd=B&df=count.dat"> th visitor since 1999.3.17 </b></font><p>
+<hr color="003388" border=3 width=650>
+<font size=2>
+<br><b>
+[C] Copyright in Webmaster : the story in forest  / Fstory <br>
+<a href="mailto:pebble78@nownuri.net"> pebble78@nownuri.net </a> <br>
+Soongsil univ computer science school 97'
+</b>
+
+
+</body>
+</html>
+
+<script language="JavaScript">
+var user_id = document.URL;
+var user_ip = '203.231.231.101';
+var netian_temp = 1;
+var home_id;
+var file_name;
+var netian_find_chk = "Y";
+var f_find = 0;	
+function netian_NOframechk_IE() {
+	for(i=0;i<document.all.length;i++){
+		if (document.all[i].tagName == "FRAMESET" || document.all[i].tagName == "EMBED" || document.all[i].tagName == "OBJECT") {
+			f_find = 1;	
+		}
+	}		
+	if ( f_find == 0) {
+		netian_setCookie("home_id", home_id, 3600, ".netian.com");
+		f_find = 0;
+		yfEA(home_id, user_ip, netian_temp, f_find);
+	} 
+}
+
+function netian_NOframechk_NS() {
+	if ( window.frames != null && window.frames.length != 0) {
+	}
+	else {
+		netian_setCookie("home_id", home_id, 3600, ".netian.com");
+		f_find = 0;
+		yfEA(home_id, user_ip, netian_temp, f_find);
+	} 
+}
+
+checkid(user_id);
+
+if (netian_find_chk == "Y") {
+	if(navigator.appName == "Netscape"){	
+		netian_NOframechk_NS();
+	} else {
+		netian_NOframechk_IE();
+	}
+}	
+</script>
+

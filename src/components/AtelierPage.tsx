@@ -16,19 +16,16 @@ import {
     type Weather,
 } from '../lib/environmentBackgrounds';
 import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
+import {
+    FSTORY_ANNEXES,
+    FSTORY_LINEAGES,
+    FSTORY_SNAPSHOTS,
+    type FstorySnapshotId,
+} from '@/data/fstoryArchive';
 
 type LibraryMode = 'menu' | 'booting' | 'desktop' | 'shutdown';
-type FstorySnapshot =
-    | '20010715123146'
-    | '20010723051951'
-    | '20010925220320'
-    | '20011202212712'
-    | '20020325014505'
-    | '20020924164928'
-    | '20021120053627'
-    | '20021128181318'
-    | '20030726202839';
-type IeTarget = '1997' | '1998' | FstorySnapshot;
+type FstorySnapshot = FstorySnapshotId;
+type IeTarget = '1997' | '1998' | FstorySnapshot | `annex:${string}`;
 
 type IeHistoryContext = 'iframe' | 'frame2';
 
@@ -43,19 +40,27 @@ const IE_VIEWPORTS: Partial<Record<IeTarget, { width: number; height: number }>>
     '1998': { width: 800, height: 600 }
 };
 
-const FSTORY_SNAPSHOTS: Array<{ id: FstorySnapshot; year: '2001' | '2002' | '2003'; date: string; version: string }> = [
-    { id: '20010715123146', year: '2001', date: '2001-07-15', version: 'hosting' },
-    { id: '20010723051951', year: '2001', date: '2001-07-23', version: 'v1' },
-    { id: '20010925220320', year: '2001', date: '2001-09-25', version: 'v2' },
-    { id: '20011202212712', year: '2001', date: '2001-12-02', version: 'v2' },
-    { id: '20020325014505', year: '2002', date: '2002-03-25', version: 'v2' },
-    { id: '20020924164928', year: '2002', date: '2002-09-24', version: 'v2' },
-    { id: '20021120053627', year: '2002', date: '2002-11-20', version: 'v2' },
-    { id: '20021128181318', year: '2002', date: '2002-11-28', version: 'v2' },
-    { id: '20030726202839', year: '2003', date: '2003-07-26', version: 'v3' },
-];
+// The desktop still opens by year; the restore-point picker groups every
+// capture under the design generation it belongs to, so a visitor can tell a
+// redesign apart from the same page captured a second time.
+const FSTORY_YEAR_ENTRY: Record<'2001' | '2002' | '2003', FstorySnapshot> = {
+    '2001': '20011202212712',
+    '2002': '20021128181318',
+    '2003': '20030726202839',
+};
 
-const isFstorySnapshot = (target: IeTarget): target is FstorySnapshot => target.length === 14;
+const FSTORY_SNAPSHOT_BY_ID = new Map<string, (typeof FSTORY_SNAPSHOTS)[number]>(
+    FSTORY_SNAPSHOTS.map((snapshot) => [snapshot.timestamp as string, snapshot])
+);
+
+// Annexes are the addresses the site lived at before fstory.net. Nothing on the
+// later pages links back to them, so they get their own entry in the picker.
+const ANNEX_BY_ID = new Map<string, (typeof FSTORY_ANNEXES)[number]>(
+    FSTORY_ANNEXES.map((annex) => [`annex:${annex.id}`, annex])
+);
+
+const isFstorySnapshot = (target: IeTarget): target is FstorySnapshot =>
+    FSTORY_SNAPSHOT_BY_ID.has(target as FstorySnapshot) || ANNEX_BY_ID.has(target);
 
 const formatClock = (date: Date) => {
     const hours = String(date.getHours()).padStart(2, '0');
@@ -66,13 +71,17 @@ const formatClock = (date: Date) => {
 const getIeUrl = (target: IeTarget) => {
     if (target === '1997') return '/1997-homepage/index.html';
     if (target === '1998') return '/1998-homepage/index.html';
+    const annex = ANNEX_BY_ID.get(target);
+    if (annex) return `/fstory-homepage/${annex.snapshot}/${annex.entry}`;
     return `/fstory-homepage/${target}/index.html`;
 };
 
 const getIeTitle = (target: IeTarget) => {
     if (target === '1997') return 'Internet Explorer - 1997';
     if (target === '1998') return 'Internet Explorer - 1998';
-    const snapshot = FSTORY_SNAPSHOTS.find(({ id }) => id === target);
+    const annex = ANNEX_BY_ID.get(target);
+    if (annex) return `Internet Explorer - ${annex.label} (${annex.period})`;
+    const snapshot = FSTORY_SNAPSHOT_BY_ID.get(target);
     return `Internet Explorer - fstory.net ${snapshot?.date ?? target}`;
 };
 
@@ -532,10 +541,6 @@ const AtelierPage: React.FC = () => {
         setTimeout(() => setMode('menu'), 900);
     };
 
-    const handleMissing1999 = () => {
-        setDialogue(t('library.missing1999'));
-    };
-
     const handleMenuNotReady = (message: string) => {
         setDialogue(message);
     };
@@ -644,21 +649,8 @@ const AtelierPage: React.FC = () => {
                             <div className="win98-icon-label">{t('library.folder1998')}</div>
                         </button>
 
-                        <button
-                            type="button"
-                            className="win98-icon is-disabled"
-                            onClick={handleMissing1999}
-                        >
-                            <div className="win98-icon-image" aria-hidden="true" />
-                            <div className="win98-icon-label">{t('library.folder1999Missing')}</div>
-                        </button>
-
                         {(['2001', '2002', '2003'] as const).map((year) => {
-                            const defaultSnapshot = year === '2001'
-                                ? '20010723051951'
-                                : year === '2002'
-                                    ? '20021128181318'
-                                    : '20030726202839';
+                            const defaultSnapshot = FSTORY_YEAR_ENTRY[year];
                             return (
                                 <button
                                     type="button"
@@ -735,11 +727,30 @@ const AtelierPage: React.FC = () => {
                                                 value={ieTarget}
                                                 onChange={(event) => setIeTarget(event.target.value as FstorySnapshot)}
                                             >
-                                                {FSTORY_SNAPSHOTS.map((snapshot) => (
-                                                    <option key={snapshot.id} value={snapshot.id}>
-                                                        {snapshot.date} · {snapshot.version}
-                                                    </option>
-                                                ))}
+                                                <optgroup label="fstory.net 이전 주소">
+                                                    {FSTORY_ANNEXES.map((annex) => (
+                                                        <option key={annex.id} value={`annex:${annex.id}`}>
+                                                            {annex.label} · {annex.period}
+                                                        </option>
+                                                    ))}
+                                                </optgroup>
+                                                {FSTORY_LINEAGES.map((lineage) => {
+                                                    const captures = FSTORY_SNAPSHOTS.filter(
+                                                        (snapshot) => snapshot.lineage === lineage.id
+                                                    );
+                                                    if (!captures.length) return null;
+                                                    return (
+                                                        <optgroup key={lineage.id} label={`${lineage.label} · ${lineage.period}`}>
+                                                            {captures.map((snapshot) => (
+                                                                <option key={snapshot.timestamp} value={snapshot.timestamp}>
+                                                                    {snapshot.date}
+                                                                    {snapshot.timestamp === lineage.representative ? ' · 대표' : ''}
+                                                                    {` · ${snapshot.description}`}
+                                                                </option>
+                                                            ))}
+                                                        </optgroup>
+                                                    );
+                                                })}
                                             </select>
                                         </label>
                                     )}

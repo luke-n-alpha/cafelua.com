@@ -1,0 +1,902 @@
+<!--
+ZeroBoard에 대한 라이센스 명시입니다.
+
+아래 라이센스에 동의하시는 분만 제로보드를 사용할수 있습니다.
+    
+프로그램명 : Zeroboard
+배포버젼 : 4.1 pl 1 (2002. 02. 25)
+개발자 : zero 
+Homepage : http://zeroboard.com
+
+1. 제로보드의 배포권은 ZEROBOARD.COM에서 허용한 곳에만 있습니다.
+   (허락 맡지 않은 재배포는 허용하지 않습니다.)
+
+2. 제로보드는 저작권을 아래 3번항목에 의해 표기하는 한도내에서
+   개인홈페이지 및 학교나 교회등의 비영리단체, 기업이나 기타 영리단체에서 사용할수 있습니다.
+   (반국가 단체나 불법 싸이트에서의 사용은 금지합니다)
+
+3. 제로보드 사용시 저작권 명시부분을 훼손하면 안됩니다.
+   프로그램 소스, html소스상의 라이센스 및 웹상 출력물 하단에 있는 카피라이트와 링크를 수정하지 마십시요.
+   (저작권 표시는 게시판 배포시 작성된 형식만을 허용합니다. 임의 수정은 금지합니다)
+
+4. 단, 정식 등록버젼은 저작권 표시를 삭제할수 있습니다.
+   정식 등록버젼에 대한 문의는 http://zeroboard.com 에서 문의 방법을 찾아주시기 바랍니다.
+
+5. 링크서비스등의 기본 용도에 맞지 않는 사용은 금지합니다.
+
+6. 제로보드의 사용으로 인한 데이타 손실 및 기타 손해등 어떠한 사고나 문제에 대해서 ZEROBOARD.COM은 절대 책임을 지지 않습니다.
+
+7. 제로보드에 대해 ZEROBOARD.COM은 유지/ 보수의 의무가 없습니다.
+
+8. 제로보드 소스는 개인적으로 사용시 수정하여 사용할수 있지만 수정된 프로그램의 재배포는 금지합니다.
+   (저작권 관련 부분은 수정금지입니다)
+
+9. 제로보드에 쓰인 스킨의 저작권은 스킨 제작자에게 있으며 제작자의 동의하에 수정배포가 가능합니다.
+
+10. 기타 의문사항은 http://zeroboard.com 에서 제로보드 채널을 이용해주십시요.
+    (질문등에 대한 내용은 메일로 받지 않습니다)
+
+-->
+<html> 
+<head>
+	<title></title>
+	<meta http-equiv=Content-Type content=text/html; charset=utf-8>
+	<link rel=StyleSheet HREF=skin/gallery_huni_gray/style.css type=text/css title=style>
+	<script language='JavaScript'>
+	var select_obj;
+	function ZB_layerAction(name,status) { 
+		var obj=document.all[name];
+		var _tmpx,_tmpy, marginx, marginy;
+		_tmpx = event.clientX + parseInt(obj.offsetWidth);
+		_tmpy = event.clientY + parseInt(obj.offsetHeight);
+		_marginx = document.body.clientWidth - _tmpx;
+		_marginy = document.body.clientHeight - _tmpy ;
+		if(_marginx < 0)
+			_tmpx = event.clientX + document.body.scrollLeft + _marginx ;
+		else
+			_tmpx = event.clientX + document.body.scrollLeft ;
+		if(_marginy < 0)
+			_tmpy = event.clientY + document.body.scrollTop + _marginy +20;
+		else
+			_tmpy = event.clientY + document.body.scrollTop ;
+		obj.style.posLeft=_tmpx-13;
+		obj.style.posTop=_tmpy-12;
+		if(status=='visible') {
+			if(select_obj) {
+				select_obj.style.visibility='hidden';
+				select_obj=null;
+			}
+			select_obj=obj;
+		}else{
+			select_obj=null;
+		}
+		obj.style.visibility=status; 
+	}
+
+
+	function print_ZBlayer(name, homepage, mail, member_no, boardID, writer, traceID, traceType, isAdmin, isMember) {
+		var printHeight = 0;
+		var printMain="";
+	
+		if(homepage) {
+			printMain = "<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%22%2Bhomepage%2B%22&k=board');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src="../_missing-image.svg" data-unrestored-src="images/n_homepage.gif" border=0 align=absmiddle>&nbsp;&nbsp;홈페이지&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(mail) {
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3Dm%26str%3D%2522%2Bmail%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src="../_missing-image.svg" data-unrestored-src="images/n_mail.gif" border=0 align=absmiddle>&nbsp;&nbsp;메일 보내기&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(member_no) {
+			if(isMember) {
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fview_info.php%3Fmember_no%3D%2522%2Bmember_no%2B%2522&k=board','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src="../_missing-image.svg" data-unrestored-src="images/n_memo.gif" border=0 align=absmiddle>&nbsp;&nbsp;쪽지 보내기&nbsp;&nbsp;</td></tr>";
+				printHeight = printHeight + 16;
+			}
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fview_info2.php%3Fmember_no%3D%2522%2Bmember_no%2B%2522&k=board','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src="../_missing-image.svg" data-unrestored-src="images/n_information.gif" border=0 align=absmiddle>&nbsp;&nbsp;회원정보 보기&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(writer) {
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=location.href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3D%2522%2BboardID%2B%2522%26sn1%3Don%26sn%3Don%26ss%3Doff%26sc%3Doff%26keyword%3D%2522%2Bwriter%2B%2522&k=board';><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src="../_missing-image.svg" data-unrestored-src="images/n_search.gif" border=0 align=absmiddle>&nbsp;&nbsp;이름으로 검색&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(isAdmin) {
+			if(member_no) {
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3Di%26str%3D%2522%2Bmember_no%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src="../_missing-image.svg" data-unrestored-src="images/n_modify.gif" border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>회원정보 변경&nbsp;&nbsp;</td></tr>";
+				printHeight = printHeight + 16;
+			}
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3D%2522%2BtraceType%2B%2522%26str%3D%2522%2BtraceID%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_relationlist.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>관련글 추적</font>&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		
+		}
+		var printHeader = "<div id='../_unrestored.html?p=%22%2Bname%2B%22&k=board' style='position:absolute; left:10px; top:25px; width:127; height: "+printHeight+"; z-index:1; visibility: hidden' onMousedown=ZB_layerAction('../_unrestored.html?p=%22%2Bname%2B%22&k=board','hidden')><table border=0><tr><td colspan=3 onMouseover=ZB_layerAction('../_unrestored.html?p=%22%2Bname%2B%22&k=board','hidden') height=3></td></tr><tr><td width=5 onMouseover=ZB_layerAction('../_unrestored.html?p=%22%2Bname%2B%22&k=board','hidden') rowspan=2>&nbsp;</td><td height=5></td></tr><tr><td><table style=cursor:hand border='0' cellspacing='1' cellpadding='0' bgcolor='black' width=100% height=100%><tr><td valign=top bgcolor=white><table border=0 cellspacing=0 cellpadding=3 width=100% height=100%>";
+		var printFooter = "</table></td></tr></table></td><td width=5 rowspan=2 onMouseover=ZB_layerAction('../_unrestored.html?p=%22%2Bname%2B%22&k=board','hidden')>&nbsp;</td></tr><tr><td colspan=3 height=10 onMouseover=ZB_layerAction('../_unrestored.html?p=%22%2Bname%2B%22&k=board','hidden')></td></tr></table></div>";
+	
+		document.writeln(printHeader+printMain+printFooter);
+	}
+</script>
+	
+<script language="javascript">
+browserName = navigator.appName;
+browserVer = parseInt(navigator.appVersion);
+if(browserName == "Netscape" && browserVer >= 3){ init = "net"; }
+else { init = "ie"; }
+
+
+if(((init == "net")&&(browserVer >=3))||((init == "ie")&&(browserVer >= 4))){
+
+ sn_on=new Image;
+ sn_off=new Image;
+ sn_on.src= "../_missing-image.svg";
+ sn_off.src= "../_missing-image.svg";
+
+ ss_on=new Image;
+ ss_off=new Image;
+ ss_on.src= "../_missing-image.svg";
+ ss_off.src= "../_missing-image.svg";
+
+ sc_on=new Image;
+ sc_off=new Image;
+ sc_on.src= "../_missing-image.svg";
+ sc_off.src= "../_missing-image.svg";
+
+}
+
+function OnOff(name) {
+if(((init == "net")&&(browserVer >=3))||((init == "ie")&&(browserVer >= 4))) {
+  if(document.search[name].value=='on')
+  {
+   document.search[name].value='off';
+   ImgSrc=eval(name+"_off.src");
+   document[name].src=ImgSrc;
+  }
+  else
+  {
+   document.search[name].value='on';
+   ImgSrc=eval(name+"_on.src");
+   document[name].src=ImgSrc;
+  }
+ }
+}
+</script>
+
+<script language="javascript">
+  function reverse() {
+   var i, chked=0;
+   if(confirm('목록을 반전하시겠습니까?\n\n반전을 원하지 않는다면 취소를 누르시면 다음으로 넘어갑니다'))
+   {
+    for(i=0;i<document.list.length;i++)
+    {
+     if(document.list[i].type=='checkbox')
+     {
+      if(document.list[i].checked) { document.list[i].checked=false; }
+      else { document.list[i].checked=true; }
+     }
+    }
+   }
+   for(i=0;i<document.list.length;i++)
+   {
+    if(document.list[i].type=='checkbox')
+    {
+     if(document.list[i].checked) chked=1;
+    }
+   }
+   if(chked) {
+    if(confirm('선택된 항목을 보시겠습니까?'))
+     {
+      document.list.selected.value='';
+      document.list.exec.value='view_all';
+      for(i=0;i<document.list.length;i++)
+      {
+       if(document.list[i].type=='checkbox')
+       {
+        if(document.list[i].checked)
+        {
+         document.list.selected.value=document.list[i].value+';'+document.list.selected.value;
+        }
+       }
+      }
+      document.list.submit();
+      return true;
+     }
+    }
+   }
+
+ function delete_all() {
+  var i, chked=0;
+  for(i=0;i<document.list.length;i++)
+  {
+   if(document.list[i].type=='checkbox')
+   {
+    if(document.list[i].checked) chked=1;
+    }
+   }
+  if(chked)
+  {
+    document.list.selected.value='';
+    document.list.exec.value='delete_all';
+    for(i=0;i<document.list.length;i++)
+    {
+     if(document.list[i].type=='checkbox')
+     {
+      if(document.list[i].checked)
+      {
+       document.list.selected.value=document.list[i].value+';'+document.list.selected.value;
+      }
+     }
+    }
+    window.open("../_unrestored.html?p=%2Fzero%2Fselect_list_all.php%3Fid%3DMyalbum%26selected%3D&k=board"+document.list.selected.value,"게시물정리","width=260,height=180,toolbars=no,resize=no,scrollbars=no");
+  }
+  else {alert('정리할 게시물을 선택하여 주십시요');}
+ }
+
+ function category_change() {
+  var myindex=list.category.selectedIndex;
+  document.search.category.value=list.category.options[myindex].value;
+  document.search.submit();
+  return true;
+ }
+
+//-->
+</script>
+</head>
+<body topmargin='0'  leftmargin='0' marginwidth='0' marginheight='0'  bgcolor=white ><div align=center>
+<script language=JavaScript>
+function findObj(n, d) { //v4.0
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=findObj(n,d.layers[i].document);
+  if(!x && document.getElementById) x=document.getElementById(n); return x;
+}
+function swapImage() {
+  var i,j=0,x,a=swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+<!-- HTML 시작 -->
+<table border=0 cellspacing=0 cellpadding=0 width=95%>
+<tr>
+  <td width=1>&nbsp;</td>
+  <td valign=bottom nowrap width=5%>&nbsp;  </td>
+</tr>
+</table>
+  
+<table border=0 cellspacing=0 cellpadding=0 width=95%>
+<tr>
+  <td valign=top>
+   <table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+  <td align=center nowrap style='word-spacing:length'><a href="../_unrestored.html?p=%2Fzero%2Fzboard.php%3F%26id%3DMyalbum%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board">category</a>　　
+ ㅣ<a href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D1%26id%3DMyalbum%26page%3D1%26page_num%3D9%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><b>코스츔플레이 (120)</a></b>&nbsp;
+ ㅣ<a href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D2%26id%3DMyalbum%26page%3D1%26page_num%3D9%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'>여행사진 (18)</a></b>&nbsp;
+ ㅣ<a href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D3%26id%3DMyalbum%26page%3D1%26page_num%3D9%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'>개인앨범 (13)</a></b>&nbsp;
+ ㅣ<a href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D4%26id%3DMyalbum%26page%3D1%26page_num%3D9%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'>풍경/일상 (11)</a></b>&nbsp;
+ㅣ  </td>
+</tr>
+</table>
+  </td>
+<tr>
+  <td width=100% valign=top>
+
+
+
+<div ID="viewDIV" STYLE="position:absolute; visibility:hide;"></div>
+<script language="javascript">
+
+////////////////////////////////////////////////////////////////////////////////////
+// CONFIGURATION
+////////////////////////////////////////////////////////////////////////////////////
+
+ var fcolor = "#ffffff";	// Main background color
+ var textcolor = "<#000000>";	// Text color
+ var border_size = "1";		// border size, 1-3
+ var border_color = "<#000000>";	// Border color
+ var width = "200";		// 팝업 박스의 넓이, 100 - 300
+	
+////////////////////////////////////////////////////////////////////////////////////
+// END CONFIGURATION
+////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////
+// END CONFIGURATION
+////////////////////////////////////////////////////////////////////////////////////
+
+ns4 = (document.layers)? true:false
+ie4 = (document.all)? true:false
+
+// Microsoft Stupidity Check.
+if (ie4) {
+	if (navigator.userAgent.indexOf('MSIE 5')>0) {
+		ie5 = true;
+	} else {
+		ie5 = false; }
+} else {
+	ie5 = false;
+}
+
+var x = 0;
+var y = 0;
+var offsetx = 10;
+var offsety = 10;
+var popup_on = 0;
+var palign = 0;		// Default 팝업 박스의 위치, 0:center/1:right/2:left
+
+if ( (ns4) || (ie4) ) {
+	if (ns4) over = document.viewDIV
+	if (ie4) over = viewDIV.style
+	document.onmousemove = mouseMove
+	if (ns4) document.captureEvents(Event.MOUSEMOVE)
+}
+
+// Clears popups if appropriate
+function viewoff() {
+	if ( (ns4) || (ie4) ) {
+		popup_on = 0;
+		hideObject(over);
+	}
+	palign = 0	
+}
+
+// Non public functions. These are called by other functions etc.
+
+// Simple popup
+function viewon(text, left) {
+	txt = "<TABLE WIDTH="+width+" BORDER=0 CELLPADDING="+border_size+" CELLSPACING=0 BGCOLOR=\""+border_color+"\"><TR><TD><TABLE WIDTH=100% BORDER=0 CELLPADDING=2 CELLSPACING=0 BGCOLOR=\""+fcolor+"\"><TR><TD>"+text+"</TD></TR></TABLE></TD></TR></TABLE>"
+	layerWrite(txt);
+	if(left) palign = left;
+	disp(palign);
+}
+
+// Common calls
+function disp(palign) {
+	if ( (ns4) || (ie4) ) {
+		if (popup_on == 0) 	{
+			if (palign == 0) { // Center
+				moveTo(over,x+offsetx-(width/2),y+offsety);
+			}
+			if (palign == 1) { // Right
+				moveTo(over,x+offsetx,y+offsety);
+			}
+			if (palign == 2) { // Left
+				moveTo(over,x-offsetx-width,y+offsety);
+			}
+			showObject(over);
+			popup_on = 1;
+		}
+	}
+// Here you can make the text goto the statusbar.
+}
+
+// Moves the layer
+function mouseMove(e) {
+	if (ns4) {x=e.pageX; y=e.pageY;}
+	if (ie4) {x=event.x; y=event.y;}
+	if (ie5) {x=event.x+document.body.scrollLeft; y=event.y+document.body.scrollTop;}
+	if (popup_on) {
+		if (palign == 0) { // Center
+			moveTo(over,x+offsetx-(width/2),y+offsety);
+		}
+		if (palign == 1) { // Right
+			moveTo(over,x+offsetx,y+offsety);
+		}
+		if (palign == 2) { // Left
+			moveTo(over,x-offsetx-width,y+offsety);
+		}
+	}
+}
+
+// Writes to a layer
+function layerWrite(txt) {
+        if (ns4) {
+                var lyr = document.viewDIV.document
+                lyr.write(txt)
+                lyr.close()
+        }
+        else if (ie4) document.all["viewDIV"].innerHTML = txt
+}
+
+// Make an object visible
+function showObject(obj) {
+        if (ns4) obj.visibility = "show"
+        else if (ie4) obj.visibility = "visible"
+}
+
+// Hides an object
+function hideObject(obj) {
+        if (ns4) obj.visibility = "hide"
+        else if (ie4) obj.visibility = "hidden"
+}
+
+// Move a layer
+function moveTo(obj,xL,yL) {
+        obj.left = xL
+        obj.top = yL
+}
+
+</script>
+
+
+
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1>
+<form method="post" name="list" data-unrestored-action="../_unrestored.html?p=%2Fzero%2Flist_all.php&k=board" onsubmit="return false" data-unrestored="form"><input type="hidden" name="PHPSESSID" value="1c57e73c520357f23bd67319c0541102" />
+<input type="hidden" name="page" value="1">
+<input type="hidden" name="id" value="Myalbum">
+<input type="hidden" name="select_arrange" value="headnum">
+<input type="hidden" name="desc" value="asc">
+<input type="hidden" name="page_num" value="9">
+<input type="hidden" name="selected">
+<input type="hidden" name="exec">
+<input type="hidden" name="keyword" value="">
+<input type="hidden" name="sn" value="off">
+<input type="hidden" name="ss" value="on">
+<input type="hidden" name="sc" value="on">
+</td>
+</tr><tr><td width=100%>
+
+
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr height=1></tr>
+<tr align=center>
+  <td align=left height="10" colspan=3 class=thm8 data-unrestored-background="skin/gallery_huni_gray/images/lh_bg.gif"></td>
+</tr>
+<tr>
+ <td colspan=3 bgcolor=#FFFFFF><img src=images/t.gif height=3></td>
+</tr>
+<tr align=center bgcolor=#FFFFFF>
+<!-- 목록 부분 시작 -->
+<script language="JavaScript1.2">
+<!--
+
+var startopacity = 70;
+
+function fadeIt(obj,direct){ 
+if(window.timer) { clearInterval(timer); } 
+tobj=obj; drct=direct; 
+timer=setInterval("flowfilter(tobj,drct);",5); }
+
+function flowfilter(thing,dct){
+if(dct==1) { if (thing.filters.alpha.opacity<100) { thing.filters.alpha.opacity+=5; } else { clearInterval(timer); } }
+if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha.opacity-=5; } else { clearInterval(timer); } }
+}
+
+//-->
+</script>
+
+
+  <th class=thm8 width=33.3333333333% valign=top>
+     <table style="color: white; border-color:wite border-style:solid;"  border="0" cellspacing=0 cellpadding=0  bordercolordark=#ffffff bordercolorlight="#999999" bgcolor=white width=130.5 
+	 >
+	<tr height=120 bgcolor=ffffff>   
+  	    <td align=center data-unrestored-background="skin/gallery_huni_gray/images/back_.gif" >
+            	<a 
+     href='#' 
+     onMouseOver="viewon('!!! 중고자동차 구입 시기는 지금이 절호의 찬스 !!!&lt;br /&gt;이젠!!! 중고차도 구입 시기가 있습니다&lt;br /&gt;경제가 어려울수록 많은 중고차 매물이 나오기 마련!!!&lt;br /&gt;쏟아지는 많은 중고차와 판매 경쟁속에서 차량가격이 &lt;br /&gt;하락하는 것은 당연한 이치입니다&lt;br /&gt;현재!!! 경제 상황에따라 사업상 및 업무상 필요성을 &lt;br /&gt;느끼지 못하여 중고차를 파시는 분들이 아주 많이 계십니다&lt;br /&gt;이때!!! 모든 생활속에 자동차가 없어서는 안될분이라면&lt;br /&gt;바로 지금이 찬스입니다&lt;br /&gt;&lt;br /&gt;*** 폭넓게 고를수있는 중고차 ***&lt;br /&gt;*** 가격이 하락 될대로 된 중고차 ***&lt;br /&gt;*** 판매 경쟁속에서 친절한 서비스와 완벽한 A/S가 되는 중고차*** &lt;br /&gt;&gt;&gt;&gt; 돈버는 시기를 절대 놓치지 마십시요 ***&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;www.carjun.com 또는 한글 도메인 [중고차 찾기]로 제 &lt;br /&gt;홈페이지에 들어오시면 **티코**에서 **에쿠스**까지 &lt;br /&gt;엄청나게 많은 차량 사진과 자세한 내용을 보실수 있습니다&lt;br /&gt;&lt;br /&gt;@@@ 실수요자 위탁*급매물 차량 @@@&lt;br /&gt;&lt;br /&gt;*** 봉고 프론티어 더블캡 97년 10월식, 흰색, 70,000Km, &lt;br /&gt;실거래가 350만원&lt;br /&gt;*** 뉴세피아 오토 96년 9월식, 진녹색, 90,000Km, &lt;br /&gt;실거래가 270만원&lt;br /&gt;*** 크레도스 1,800cc 수동, 95년 12월식, 실내 방음처리, &lt;br /&gt;실거래가 190만원&lt;br /&gt;*** 뉴그레이스 12인승, 그랜드살롱 고급형, 95년 8월식, &lt;br /&gt;진녹색, 투톤칼라, 실거래가 260만원&lt;br /&gt;*** 하이베스타9인승 리미티드 고급형 94년 7월식 은색&lt;br /&gt;투톤칼라, 실거래가 140만원&lt;br /&gt;&lt;br /&gt;@@@ 중고차 친절상담&lt;br /&gt;핸드폰 : 011-742-6777&lt;br /&gt;사무실 : 02) 3414-1775&lt;br /&gt;@@@ 전문 감정사를통한 내차 시세문의 : 031)736-4545 (사오사오)&lt;br /&gt;&lt;br /&gt;&lt;a href="http://www.carjun.com"&gt; &lt;br /&gt;바로가기 클릭&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;게시판 운영자님의 허락 없는 글 죄송합니다&lt;br /&gt;필요하지 않으신 글이면 삭제 부탁드립니다&lt;br /&gt;비밀번호는 1111입니다', 1); return true;"
+     onMouseOut="viewoff(); return true;"
+    ><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/nzeo.gif" width=100 height=60 
+				style="border:1 solid #000000;filter:alpha(opacity=60)" onMouseover="fadeIt(this,1);" onMouseout="fadeIt(this,2);"></a>
+            </td>
+        </tr>  </table>
+	
+	
+  </th>
+
+
+<!-- 목록 부분 시작 -->
+<script language="JavaScript1.2">
+<!--
+
+var startopacity = 70;
+
+function fadeIt(obj,direct){ 
+if(window.timer) { clearInterval(timer); } 
+tobj=obj; drct=direct; 
+timer=setInterval("flowfilter(tobj,drct);",5); }
+
+function flowfilter(thing,dct){
+if(dct==1) { if (thing.filters.alpha.opacity<100) { thing.filters.alpha.opacity+=5; } else { clearInterval(timer); } }
+if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha.opacity-=5; } else { clearInterval(timer); } }
+}
+
+//-->
+</script>
+
+
+  <th class=thm8 width=33.3333333333% valign=top>
+     <table style="color: white; border-color:wite border-style:solid;"  border="0" cellspacing=0 cellpadding=0  bordercolordark=#ffffff bordercolorlight="#999999" bgcolor=white width=130.5 
+	 >
+	<tr height=120 bgcolor=ffffff>   
+  	    <td align=center data-unrestored-background="skin/gallery_huni_gray/images/back_.gif" >
+            	<a 
+     href='#' 
+     onMouseOver="viewon('성은 어패럴의 MOS 제품을 일괄 처분코자합니다&lt;br /&gt;1년 재고이며 백화점 매장에서 판매중이었던 제품을 &lt;br /&gt;폐점 관계로 일괄 처분코자합니다&lt;br /&gt;제품의 품질은 인지도있는 성은 어패럴의 얼굴입니다&lt;br /&gt;명품을 제외하고는 품질과 디자인으로서는 단연코 최고로&lt;br /&gt;알아주는 제품입니다&lt;br /&gt;제품의 보관상태 또한 완벽에 가깝습니다&lt;br /&gt;택 가격은 5만원~60만원으로 설정되어있으며 &lt;br /&gt;제품의 종류는 사계절 완비되어있습니다&lt;br /&gt;겨울 및 가을 순모코트류와 무스탕류, 정장류 모직치마 &lt;br /&gt;바지류가 30%이며&lt;br /&gt;봄,여름 의류는 니트앙상블 원피스 정장 쟈켓류 티셔츠 &lt;br /&gt;반바지 치마류 가 70% 정도입니다&lt;br /&gt;판매 타겟층은 미스 미시 층입니다&lt;br /&gt;제품의 질은 모직코트류는 대부분 양모이며 여름의류는 &lt;br /&gt;마 및 면섬유 제품이 많습니다&lt;br /&gt;제품의 이미지는 보유 제품의 특성상 디자인 및 종류와 &lt;br /&gt;색상이 대단히 다양하여 홈페이지에 일부만 올렸으므로 &lt;br /&gt;양지하여주시고 실제 방문하시면 제품의 품질을 직접&lt;br /&gt;확인하실수 있습니다&lt;br /&gt;총 수량은 2581장입니다&lt;br /&gt;완사입가격 4500원에 일괄 판매코자합니다&lt;br /&gt;소량판매 가능하나 제품에따라서 약간의 가격 조정이됩니다&lt;br /&gt;매장을 신규 준비하시는분들은 소규모 자금으로 훌륭한 물건을 &lt;br /&gt;준비하실 더 없는 좋은 기회일것으로 생각합니다&lt;br /&gt;제품의 이미지 사진과 상세 내역은 홈페이지 &lt;br /&gt;http://clothdumping.netian.com/&nbsp;&nbsp;싸다몰에서 확인 &lt;br /&gt;하실 수 있습니다&lt;br /&gt;&lt;br /&gt;&lt;a href="http://clothdumping.netian.com/"&gt; &lt;br /&gt;싸다몰 홈페이지 바로가기 클릭하세요&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;(연락처)&lt;br /&gt;손폰 : 018-213-6422 유범수&lt;br /&gt;이메일 : meander21c#hanmail.net&lt;br /&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(메일 보내실때는 "#"을 "@"로 바꾸어주세요)&lt;br /&gt;위치 : 부천시 오정구 작동 작동사거리&lt;br /&gt;(언제든지 방문하시면 제품을 보실수가 있습니다)&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;==================================================================&lt;br /&gt;&lt;br /&gt;게시판 관리자님 허락없이 글 올려서 죄송합니다. &lt;br /&gt;이 글의 비번은 3333입니다 게시판 성격에 맞지않는 &lt;br /&gt;글이라면 삭제 요망하며 상기 메일로 수신거부 홈 url을&lt;br /&gt;송부하여주시면 두번다시 등록되지 않도록 바로 &lt;br /&gt;조치하겠습니다.&lt;br /&gt;번거롭게 해드려서 진심으로 죄송합니다&lt;br /&gt;&lt;br /&gt;', 0); return true;"
+     onMouseOut="viewoff(); return true;"
+    ><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/nzeo.gif" width=100 height=60 
+				style="border:1 solid #000000;filter:alpha(opacity=60)" onMouseover="fadeIt(this,1);" onMouseout="fadeIt(this,2);"></a>
+            </td>
+        </tr>  </table>
+	
+	
+  </th>
+
+
+<!-- 목록 부분 시작 -->
+<script language="JavaScript1.2">
+<!--
+
+var startopacity = 70;
+
+function fadeIt(obj,direct){ 
+if(window.timer) { clearInterval(timer); } 
+tobj=obj; drct=direct; 
+timer=setInterval("flowfilter(tobj,drct);",5); }
+
+function flowfilter(thing,dct){
+if(dct==1) { if (thing.filters.alpha.opacity<100) { thing.filters.alpha.opacity+=5; } else { clearInterval(timer); } }
+if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha.opacity-=5; } else { clearInterval(timer); } }
+}
+
+//-->
+</script>
+
+
+  <th class=thm8 width=33.3333333333% valign=top>
+     <table style="color: white; border-color:wite border-style:solid;"  border="0" cellspacing=0 cellpadding=0  bordercolordark=#ffffff bordercolorlight="#999999" bgcolor=white width=130.5 
+	 >
+	<tr height=120 bgcolor=ffffff>   
+  	    <td align=center data-unrestored-background="skin/gallery_huni_gray/images/back_.gif" >
+            	<a 
+     href='#' 
+     onMouseOver="viewon('"TENTCAR"의 "자동차모기장"은 특허를 필하면서 작년 7월부터 &lt;br /&gt;&lt;br /&gt;초도 제품을 생산&nbsp;&nbsp;공급을 하고 있으며 운행중 썬바이져 기능과모기장 기능이 동시에 되는 21세기 획기적인 제품입니다.&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;국내 시장의 자동차가 공급대수가 약2.000만대 이상 이며&lt;br /&gt;&lt;br /&gt;"TENTCAR"의 "자동차모기장"은 작년 제품 판매에 대한 검증을 받아&lt;br /&gt;&lt;br /&gt;본격적인 제품생산에 돌입 완벽한 공급준비를 끝내고 &lt;br /&gt;&lt;br /&gt;이제 판매전략으로서 전국의 대리점(판매자)과의 &lt;br /&gt;&lt;br /&gt;영업준비중에 있습니다.&lt;br /&gt;&lt;br /&gt;올해 2003년 목표매출은 약 1.000,000 만대 정도의 &lt;br /&gt;&lt;br /&gt;물량을 예상하고 있습니다. &lt;br /&gt;&lt;br /&gt;TENTCAR"의 "자동차모기장" 시장의 수요는 국내 자동차의 &lt;br /&gt;&lt;br /&gt;공급된 수를보시면 짐작이 되리라 생각됨니다.&lt;br /&gt;&lt;br /&gt;여러사업자님들 ,회사관계자님들,영업직에 근무하시는 실무자님들&lt;br /&gt;&lt;br /&gt;현장에서 판매하시는 분들의 많은 사랑과 관심을 기대하겠습니다. &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;무더운 여름철 피서지에서 캠핑,낚시,야영,등산중 차내에서 잔다면.. &lt;br /&gt;&lt;br /&gt;열대야 속에서 에어컨을 켜고 잠시는 잠을 잘수가 있겠지만&lt;br /&gt;&lt;br /&gt;밤새 모기나 해충때문에 잠설치고 피서지에서 고생하신 일들이 많을검니다.&lt;br /&gt;&lt;br /&gt;"TENTCAR"의 자동차모기장은 차내에선 꼭 필요한 제품이며&lt;br /&gt;&lt;br /&gt;운행중 썬바이져 역활과 외부 오염된 공기의 필터 역활도 &lt;br /&gt;&lt;br /&gt;가능한 제품입니다.&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;---------------------------------------------------------------------&lt;br /&gt;허락없이 글을 올려 죄송합니다.&lt;br /&gt;계시판 성격에 맞지않으면 삭제하셔도 무방합니다.&lt;br /&gt;&lt;br /&gt;비밀번호:4949&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;a href="http://tentcar.hihome.com"&gt;&lt;br /&gt;&nbsp;&nbsp; [제품보기]&lt;br /&gt;&nbsp;&nbsp; &lt;/a&gt; ', 2); return true;"
+     onMouseOut="viewoff(); return true;"
+    ><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/nzeo.gif" width=100 height=60 
+				style="border:1 solid #000000;filter:alpha(opacity=60)" onMouseover="fadeIt(this,1);" onMouseout="fadeIt(this,2);"></a>
+            </td>
+        </tr>  </table>
+	
+	
+  </th>
+
+
+       	</tr><tr>
+	 <td colspan=3 bgcolor=#FFFFFF><img src=images/t.gif height=3></td>
+	</tr>
+<!-- 목록 부분 시작 -->
+<script language="JavaScript1.2">
+<!--
+
+var startopacity = 70;
+
+function fadeIt(obj,direct){ 
+if(window.timer) { clearInterval(timer); } 
+tobj=obj; drct=direct; 
+timer=setInterval("flowfilter(tobj,drct);",5); }
+
+function flowfilter(thing,dct){
+if(dct==1) { if (thing.filters.alpha.opacity<100) { thing.filters.alpha.opacity+=5; } else { clearInterval(timer); } }
+if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha.opacity-=5; } else { clearInterval(timer); } }
+}
+
+//-->
+</script>
+
+
+  <th class=thm8 width=33.3333333333% valign=top>
+     <table style="color: white; border-color:wite border-style:solid;"  border="0" cellspacing=0 cellpadding=0  bordercolordark=#ffffff bordercolorlight="#999999" bgcolor=white width=130.5 
+	 >
+	<tr height=120 bgcolor=ffffff>   
+  	    <td align=center data-unrestored-background="skin/gallery_huni_gray/images/back_.gif" >
+            	<a 
+     href='#' 
+     onMouseOver="viewon('안녕하세요~ 국내 국외 막론하고 풍부한 자료와 아리따운 미인들의 뽀얀 속살(?)사진과 &lt;br /&gt;10대 일본소녀들의 사진까지~그리고 몰카와 동영상자료도 많답니다~&lt;br /&gt;사랑하는것도 이것이 중요해야하겠죠?^ㅡ^; 오셔서 정보도 얻어가지고 글도 남겨주세요^^*&lt;br /&gt;단~! 19세만은 오시면 안돼는거 아시죠~&lt;br /&gt;&lt;br /&gt;http://jaja.co.tv&lt;br /&gt;&lt;br /&gt;http://ddong.co.tv&lt;br /&gt;&lt;br /&gt;&lt;a href="http://sexying.infomaster.co.kr"&gt;[감상하러가기]&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;==================================================================&lt;br /&gt;&lt;br /&gt;수신거부시 &lt;br /&gt;&lt;br /&gt;qjsckdgkfk@yahoo.co.kr&lt;br /&gt;&lt;br /&gt;으로 홈페이지주소와함께 수신거부의사를 밝혀주시면 바로 수신거부하겠습니다&lt;br /&gt;&lt;br /&gt;죄송합니다.꾸벅&lt;br /&gt;&lt;br /&gt;삭제비번1111&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;', 1); return true;"
+     onMouseOut="viewoff(); return true;"
+    ><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/nzeo.gif" width=100 height=60 
+				style="border:1 solid #000000;filter:alpha(opacity=60)" onMouseover="fadeIt(this,1);" onMouseout="fadeIt(this,2);"></a>
+            </td>
+        </tr>  </table>
+	
+	
+  </th>
+
+
+<!-- 목록 부분 시작 -->
+<script language="JavaScript1.2">
+<!--
+
+var startopacity = 70;
+
+function fadeIt(obj,direct){ 
+if(window.timer) { clearInterval(timer); } 
+tobj=obj; drct=direct; 
+timer=setInterval("flowfilter(tobj,drct);",5); }
+
+function flowfilter(thing,dct){
+if(dct==1) { if (thing.filters.alpha.opacity<100) { thing.filters.alpha.opacity+=5; } else { clearInterval(timer); } }
+if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha.opacity-=5; } else { clearInterval(timer); } }
+}
+
+//-->
+</script>
+
+
+  <th class=thm8 width=33.3333333333% valign=top>
+     <table style="color: white; border-color:wite border-style:solid;"  border="0" cellspacing=0 cellpadding=0  bordercolordark=#ffffff bordercolorlight="#999999" bgcolor=white width=130.5 
+	 >
+	<tr height=120 bgcolor=ffffff>   
+  	    <td align=center data-unrestored-background="skin/gallery_huni_gray/images/back_.gif" >
+            	<a 
+     href='#' 
+     onMouseOver="viewon('&gt;&gt;&gt;&gt; http://www.sexmart.co.tv &lt;br /&gt;&gt;&gt;&gt;&gt; http://www.sexmart.co.tv &lt;br /&gt;&lt;br /&gt;겅짜니깐 마니 와서 보세요 ^^ &lt;br /&gt;&lt;br /&gt;http://www.sexmart.co.tv &lt;br /&gt;&lt;br /&gt;캠사진과 동영상을 다운 받아 소장할수 있는 곳이에요 ^^... &lt;br /&gt;&lt;br /&gt;야캠 동영상 겅짜 자료실 입니다 ^^. &lt;br /&gt;&lt;br /&gt;겅짜로 보시고~! 다운도 받아가시길 바랍니다 &lt;br /&gt;&lt;br /&gt;유민, 이효리, 송혜교, 공효진, 연예인, 상납비디오 없는게 없어요 방대한자료천국 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;http://www.sexmart.co.tv &lt;br /&gt;http://www.sexmart.co.tv &lt;br /&gt;http://www.sexmart.co.tv &lt;br /&gt;http://www.sexmart.co.tv &lt;br /&gt;http://www.sexmart.co.tv &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;a href="http://sexmart.infomaster.co.kr"&gt;[★구경하기!! go!! go!! 클릭!!★]&lt;/a&gt; &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;a href="http://sexmart.infomaster.co.kr"&gt;▶성인들만의 캠동영상 자료실!◀&lt;br /&gt;▶남,여 캠사진 ▶원숭이와쌩뽀르노◀▶사창가 몰카◀▶연예인노출◀▶목욕탕몰카◀▶자취방몰카◀&lt;br /&gt;▶하두리[캠영상]각종 노출 자위행각◀▶원주 상미의 원조장면▶실제&lt;br /&gt;강간 동영상◀&lt;br /&gt;▶강남 단란에서 스트립쇼걸들 70장◀▶지하철,버스,택시 성추행 ◀&lt;br /&gt;▶서기 누드집◀▶미호 누드집◀▶정양 누드집◀▶김지현 누드집 ◀&lt;br /&gt;▶[강추]돈주면다하는 알바녀◀▶[동영상]이쁜이 얼굴에 막싸고◀&lt;br /&gt;▶[일본]생리도 쌩까고 박아대는..◀▶[중국]여형사의 범인잡기..◀&lt;br /&gt;▶[한국]교복을 위로젖히고고 팬티만 내려서 박아버리는데..◀&lt;br /&gt;▶[야동]고화질 뽕밭에서 뽕대신여잘따는데..◀▶[영국]저런곳에서 &lt;br /&gt;도베르만과의정사◀&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;----------------------------------------------------------------- &lt;br /&gt;삭제시 비밀번호 5678입니다. &lt;br /&gt;등록을 거부= nanana0831@hanmail.net으로 게시판 주소를 기입하셔서 &lt;br /&gt;등록거부 의사를 보내주시면 올리지 않겠습니다. &lt;br /&gt;&lt;br /&gt;', 0); return true;"
+     onMouseOut="viewoff(); return true;"
+    ><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/nzeo.gif" width=100 height=60 
+				style="border:1 solid #000000;filter:alpha(opacity=60)" onMouseover="fadeIt(this,1);" onMouseout="fadeIt(this,2);"></a>
+            </td>
+        </tr>  </table>
+	
+	
+  </th>
+
+
+<!-- 목록 부분 시작 -->
+<script language="JavaScript1.2">
+<!--
+
+var startopacity = 70;
+
+function fadeIt(obj,direct){ 
+if(window.timer) { clearInterval(timer); } 
+tobj=obj; drct=direct; 
+timer=setInterval("flowfilter(tobj,drct);",5); }
+
+function flowfilter(thing,dct){
+if(dct==1) { if (thing.filters.alpha.opacity<100) { thing.filters.alpha.opacity+=5; } else { clearInterval(timer); } }
+if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha.opacity-=5; } else { clearInterval(timer); } }
+}
+
+//-->
+</script>
+
+
+  <th class=thm8 width=33.3333333333% valign=top>
+     <table style="color: white; border-color:wite border-style:solid;"  border="0" cellspacing=0 cellpadding=0  bordercolordark=#ffffff bordercolorlight="#999999" bgcolor=white width=130.5 
+	 >
+	<tr height=120 bgcolor=ffffff>   
+  	    <td align=center data-unrestored-background="skin/gallery_huni_gray/images/back_.gif" >
+            	<a 
+     href='#' 
+     onMouseOver="viewon('"TENTCAR"의 "자동차모기장"은 특허를 필하면서 작년 7월부터 &lt;br /&gt;&lt;br /&gt;초도 제품을 생산&nbsp;&nbsp;공급을 하고 있으며 운행중 썬바이져 기능과모기장 기능이 동시에 되는 21세기 획기적인 제품입니다.&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;국내 시장의 자동차가 공급대수가 약2.000만대 이상 이며&lt;br /&gt;&lt;br /&gt;"TENTCAR"의 "자동차모기장"은 작년 제품 판매에 대한 검증을 받아&lt;br /&gt;&lt;br /&gt;본격적인 제품생산에 돌입 완벽한 공급준비를 끝내고 &lt;br /&gt;&lt;br /&gt;이제 판매전략으로서 전국의 대리점(판매자)과의 &lt;br /&gt;&lt;br /&gt;영업준비중에 있습니다.&lt;br /&gt;&lt;br /&gt;올해 2003년 목표매출은 약 1.000,000 만대 정도의 &lt;br /&gt;&lt;br /&gt;물량을 예상하고 있습니다. &lt;br /&gt;&lt;br /&gt;TENTCAR"의 "자동차모기장" 시장의 수요는 국내 자동차의 &lt;br /&gt;&lt;br /&gt;공급된 수를보시면 짐작이 되리라 생각됨니다.&lt;br /&gt;&lt;br /&gt;여러사업자님들 ,회사관계자님들,영업직에 근무하시는 실무자님들&lt;br /&gt;&lt;br /&gt;현장에서 판매하시는 분들의 많은 사랑과 관심을 기대하겠습니다. &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;무더운 여름철 피서지에서 캠핑,낚시,야영,등산중 차내에서 잔다면.. &lt;br /&gt;&lt;br /&gt;열대야 속에서 에어컨을 켜고 잠시는 잠을 잘수가 있겠지만&lt;br /&gt;&lt;br /&gt;밤새 모기나 해충때문에 잠설치고 피서지에서 고생하신 일들이 많을검니다.&lt;br /&gt;&lt;br /&gt;"TENTCAR"의 자동차모기장은 차내에선 꼭 필요한 제품이며&lt;br /&gt;&lt;br /&gt;운행중 썬바이져 역활과 외부 오염된 공기의 필터 역활도 &lt;br /&gt;&lt;br /&gt;가능한 제품입니다.&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;---------------------------------------------------------------------&lt;br /&gt;허락없이 글을 올려 죄송합니다.&lt;br /&gt;계시판 성격에 맞지않으면 삭제하셔도 무방합니다.&lt;br /&gt;&lt;br /&gt;비밀번호:4949&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;a href="http://tentcar.hihome.com"&gt;&lt;br /&gt;&nbsp;&nbsp; [제품보기]&lt;br /&gt;&nbsp;&nbsp; &lt;/a&gt; ', 2); return true;"
+     onMouseOut="viewoff(); return true;"
+    ><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/nzeo.gif" width=100 height=60 
+				style="border:1 solid #000000;filter:alpha(opacity=60)" onMouseover="fadeIt(this,1);" onMouseout="fadeIt(this,2);"></a>
+            </td>
+        </tr>  </table>
+	
+	
+  </th>
+
+
+       	</tr><tr>
+	 <td colspan=3 bgcolor=#FFFFFF><img src=images/t.gif height=3></td>
+	</tr>
+<!-- 목록 부분 시작 -->
+<script language="JavaScript1.2">
+<!--
+
+var startopacity = 70;
+
+function fadeIt(obj,direct){ 
+if(window.timer) { clearInterval(timer); } 
+tobj=obj; drct=direct; 
+timer=setInterval("flowfilter(tobj,drct);",5); }
+
+function flowfilter(thing,dct){
+if(dct==1) { if (thing.filters.alpha.opacity<100) { thing.filters.alpha.opacity+=5; } else { clearInterval(timer); } }
+if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha.opacity-=5; } else { clearInterval(timer); } }
+}
+
+//-->
+</script>
+
+
+  <th class=thm8 width=33.3333333333% valign=top>
+     <table style="color: white; border-color:wite border-style:solid;"  border="0" cellspacing=0 cellpadding=0  bordercolordark=#ffffff bordercolorlight="#999999" bgcolor=white width=130.5 
+	 >
+	<tr height=120 bgcolor=ffffff>   
+  	    <td align=center data-unrestored-background="skin/gallery_huni_gray/images/back_.gif" >
+            	<a 
+     href='#' 
+     onMouseOver="viewon('---------------------------------------------------------------------&lt;br /&gt;허락없이 글을 올려 대단히 죄송합니다.&lt;br /&gt;게시판 성격에 부적합하면 삭제시 비밀번호 1111입니다.&lt;br /&gt;등록을 거부하실 때에는 lywhang@hotmail.com 으로 게시판 주소를 기입하셔서&lt;br /&gt;등록거부 의사를 보내주시면 다음부터는 절대로 올리지 않겠습니다.&lt;br /&gt;번거롭게 해 드려서 대단히 죄송합니다.&lt;br /&gt;---------------------------------------------------------------------&lt;br /&gt;&lt;br /&gt;영어교육의 일대 혁명!&lt;br /&gt;7 가지의 주제로 완성하는 “되는-영어” Working-English!&lt;br /&gt;&lt;a href="http://www.onenglish.com"&gt;http://www.onenglish.com&lt;/a&gt;으로 들어오시면 놀라운 영어의 세계&lt;br /&gt;가 있습니다.&lt;br /&gt;&lt;font color="red"&gt;&lt;b&gt;[빅 이벤트!]&lt;b&gt;&lt;/font&gt;&nbsp;&nbsp;2003년 일년간 무제한 Offer! &lt;br /&gt;', 1); return true;"
+     onMouseOut="viewoff(); return true;"
+    ><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/nzeo.gif" width=100 height=60 
+				style="border:1 solid #000000;filter:alpha(opacity=60)" onMouseover="fadeIt(this,1);" onMouseout="fadeIt(this,2);"></a>
+            </td>
+        </tr>  </table>
+	
+	
+  </th>
+
+
+<!-- 목록 부분 시작 -->
+<script language="JavaScript1.2">
+<!--
+
+var startopacity = 70;
+
+function fadeIt(obj,direct){ 
+if(window.timer) { clearInterval(timer); } 
+tobj=obj; drct=direct; 
+timer=setInterval("flowfilter(tobj,drct);",5); }
+
+function flowfilter(thing,dct){
+if(dct==1) { if (thing.filters.alpha.opacity<100) { thing.filters.alpha.opacity+=5; } else { clearInterval(timer); } }
+if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha.opacity-=5; } else { clearInterval(timer); } }
+}
+
+//-->
+</script>
+
+
+  <th class=thm8 width=33.3333333333% valign=top>
+     <table style="color: white; border-color:wite border-style:solid;"  border="0" cellspacing=0 cellpadding=0  bordercolordark=#ffffff bordercolorlight="#999999" bgcolor=white width=130.5 
+	 >
+	<tr height=120 bgcolor=ffffff>   
+  	    <td align=center data-unrestored-background="skin/gallery_huni_gray/images/back_.gif" >
+            	<a 
+     href='#' 
+     onMouseOver="viewon('한국 야캠 동영상 자료실 완전 100% 무료로 운영되고 있습니다&lt;br /&gt;&lt;br /&gt;가입비도 전혀 안받구요 무료로 회원 모집 하는 중이에요~!&lt;br /&gt;&lt;br /&gt;이곳에는 사진을 올릴수가 없어요&lt;br /&gt;&lt;br /&gt;무로니깐 가서 마니마니 보시구요 저희 평생 공짜 회원이 되어 주세요 ^^&lt;br /&gt;&lt;br /&gt;http://8255.rg.ro&lt;br /&gt;&lt;br /&gt;한국 여자들의 캠앞에서 섹x 하는 모습과 초보들의 섹x 캠 동영상&lt;br /&gt;&lt;br /&gt;스타가 되기위해 캠앞에서 쑈를 하는 여자등&lt;br /&gt;&lt;br /&gt;캠 전문 동영상 카페구요&lt;br /&gt;&lt;br /&gt;http://8255.rg.ro&lt;br /&gt;&lt;br /&gt;== 터키탕의 모든것 == 한국 사창가의 실체 ==&lt;br /&gt;&lt;br /&gt;연예인들의 누드집과 문제가 되었던 각종 섹x 동영상 그리고&lt;br /&gt;&lt;br /&gt;원조하던 여대생의 몰카와 일본 포르노 여배우등 모든 자료를&lt;br /&gt;&lt;br /&gt;한군데에 완전 무료로 몰아두었습니다&lt;br /&gt;&lt;br /&gt;미성년자는 절대 보면 안되요~~&lt;br /&gt;&lt;br /&gt;http://8255.rg.ro&lt;br /&gt;&lt;br /&gt;제 카페 많이 찾아주세요~!&lt;br /&gt;&lt;br /&gt;# 만약 무료가 아니라면 사이트 완전 폐쇠시킬께요~!&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;@ 운영자님 제글이 불편했다면 삭제해 주세요&lt;br /&gt;&lt;br /&gt;삭제 비번은 828282 입니다&lt;br /&gt;&lt;br /&gt;죄송합니다 (--)(__)&lt;br /&gt;&lt;br /&gt;수신거부시 앞에 [수신거부]를 붙이신후&lt;br /&gt;메일로 게시판 주소 보내 주시면 확인후&lt;br /&gt;바로 수신거부 처리하도록 하겠습니다~!&lt;br /&gt;&lt;br /&gt;===수신거부 메일은 용량 관계로===&lt;br /&gt;rptlvksrjqn@hanmail.net&lt;br /&gt;===으로 해주시기 바랍니다===', 0); return true;"
+     onMouseOut="viewoff(); return true;"
+    ><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/nzeo.gif" width=100 height=60 
+				style="border:1 solid #000000;filter:alpha(opacity=60)" onMouseover="fadeIt(this,1);" onMouseout="fadeIt(this,2);"></a>
+            </td>
+        </tr>  </table>
+	
+	
+  </th>
+
+
+<!-- 목록 부분 시작 -->
+<script language="JavaScript1.2">
+<!--
+
+var startopacity = 70;
+
+function fadeIt(obj,direct){ 
+if(window.timer) { clearInterval(timer); } 
+tobj=obj; drct=direct; 
+timer=setInterval("flowfilter(tobj,drct);",5); }
+
+function flowfilter(thing,dct){
+if(dct==1) { if (thing.filters.alpha.opacity<100) { thing.filters.alpha.opacity+=5; } else { clearInterval(timer); } }
+if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha.opacity-=5; } else { clearInterval(timer); } }
+}
+
+//-->
+</script>
+
+
+  <th class=thm8 width=33.3333333333% valign=top>
+     <table style="color: white; border-color:wite border-style:solid;"  border="0" cellspacing=0 cellpadding=0  bordercolordark=#ffffff bordercolorlight="#999999" bgcolor=white width=130.5 
+	 >
+	<tr height=120 bgcolor=ffffff>   
+  	    <td align=center data-unrestored-background="skin/gallery_huni_gray/images/back_.gif" >
+            	<a 
+     href='#' 
+     onMouseOver="viewon('&lt;a href="http://sexhari.rg.ro"&gt;&lt;br /&gt;http://sexhari.rg.ro&lt;br /&gt;&lt;br /&gt;위에 주소로 언넝가보세요 &lt;br /&gt;&lt;br /&gt;제가 옆집누나 화상하는거 몰래찍어서 올려놨어여&lt;br /&gt;&lt;br /&gt;http://sexhari.rg.ro&lt;br /&gt;&lt;br /&gt;위에 주소로 언넝가보세요 &lt;br /&gt;&lt;br /&gt;제가 옆집누나 화상하는거 몰래찍어서 올려놨어여&lt;br /&gt;&lt;br /&gt;대한민국 최고의 캠야동,야동,야사,몰카,연예인자료,애인투고등&lt;br /&gt;&lt;br /&gt;빵빵한 자료들로서 최고의 즐거움을 느끼실수 있을것입니다&lt;br /&gt;&lt;br /&gt;복사 붙여넣기 그리고 즐겨찾기~&lt;br /&gt;&lt;br /&gt;http://sexhari.rg.ro&lt;br /&gt;&lt;br /&gt;대한민국 최고의 캠야동,야동,야사,몰카,연예인자료,애인투고등&lt;br /&gt;&lt;br /&gt;빵빵한 자료들로서 최고의 즐거움을 느끼실수 있을것입니다&lt;br /&gt;&lt;br /&gt;복사 붙여넣기 그리고 즐겨찾기~&lt;br /&gt;&lt;br /&gt;http://sexhari.rg.ro&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;이글은 게시판등록기로 게시된글입니다.&lt;br /&gt;허락없이 글을 올려 대단히 죄송합니다.&lt;br /&gt;게시판 성격에 부적합하면 삭제시 비밀번호 3576 입니다.&lt;br /&gt;등록을 거부하실 때에는tprtmgkfldlsvhaktmxj@yahoo.co.kr으로 게시판 주소를 기입하셔서&lt;br /&gt;등록거부 의사를 보내주시면 다음부터는 절대로 올리지 않겠습니다.&lt;br /&gt;번거롭게 해 드려서 대단히 죄송합니다&lt;/a&gt;', 2); return true;"
+     onMouseOut="viewoff(); return true;"
+    ><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/nzeo.gif" width=100 height=60 
+				style="border:1 solid #000000;filter:alpha(opacity=60)" onMouseover="fadeIt(this,1);" onMouseout="fadeIt(this,2);"></a>
+            </td>
+        </tr>  </table>
+	
+	
+  </th>
+
+
+       	</tr><tr>
+	 <td colspan=3 bgcolor=#FFFFFF><img src=images/t.gif height=3></td>
+	</tr>
+<!-- 마무리 부분입니다 -->
+</tr>
+
+
+	<tr>
+	 <td colspan=3 bgcolor=#FFFFFF><img src=images/t.gif height=1></td>
+	</tr>
+<tr>
+<td height=5 colspan=3 ><img src=images/t.gif height=1></td>
+</tr>
+</table>
+
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<tr>
+ <td></td>
+ <td>
+
+<!-- 버튼 부분 -->
+<table border=0 cellspacing=1 cellpadding=1 width=100%>
+<tr>
+ <td align=right colspan=1 class=thm8 nowrap >
+    <font style=font-size:8pt><b>1</b> <a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3DMyalbum%26page%3D2%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><font style=font-size:8pt>[2]</a><a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3DMyalbum%26page%3D3%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><font style=font-size:8pt>[3]</a><a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3DMyalbum%26page%3D4%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><font style=font-size:8pt>[4]</a><a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3DMyalbum%26page%3D5%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><font style=font-size:8pt>[5]</a><a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3DMyalbum%26page%3D6%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><font style=font-size:8pt>[6]</a><a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3DMyalbum%26page%3D7%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><font style=font-size:8pt>[7]</a><a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3DMyalbum%26page%3D8%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><font style=font-size:8pt>[8]</a><a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3DMyalbum%26page%3D9%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><font style=font-size:8pt>[9]</a><a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3DMyalbum%26page%3D10%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><font style=font-size:8pt>[10]</a><font style=font-size:8pt>..<a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3DMyalbum%26page%3D14%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><font style=font-size:8pt>[14]</a> </td>
+</tr>
+<tr>
+ <td height=15 nowrap align=right> 
+  <Zeroboard <img src=skin/gallery_huni_gray/images/btn_prevpage.gif border=0 align=absmiddle></a>  
+  <a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3DMyalbum%26page%3D2%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/btn_nextpage.gif" border=0 align=absmiddle></a>
+  <a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fwrite.php%3Fid%3DMyalbum%26page%3D1%26sn1%3D%26divpage%3D1%26category%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D%26mode%3Dwrite%26sn1%3D%26divpage%3D1%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/btn_write.gif" border=0 align=absmiddle></a>
+ </td>
+</tr>
+</table>
+</form>
+
+
+ </td>
+</tr>
+<tr>
+ <td>
+<!-- 검색폼 부분 ---------------------->
+<!-- 폼태그 부분;; 수정하지 않는 것이 좋습니다 -->
+<form method="post" name="search" data-unrestored-action="../_unrestored.html?p=%2Fzero%2Fzboard.php&k=board" onsubmit="return false" data-unrestored="form"><input type="hidden" name="PHPSESSID" value="1c57e73c520357f23bd67319c0541102" />
+<input type="hidden" name="page" value="1">
+<input type="hidden" name="id" value="Myalbum">
+<input type="hidden" name="select_arrange" value="headnum">
+<input type="hidden" name="desc" value="asc">
+<input type="hidden" name="page_num" value="9">
+<input type="hidden" name="selected">
+<input type="hidden" name="exec">
+<input type="hidden" name="sn" value="off">
+<input type="hidden" name="ss" value="on">
+<input type="hidden" name="sc" value="on">
+<input type="hidden" name="category" value="1">
+<!----------------------------------------------->
+ </td>
+ <td>
+
+<table border=0 width=100% cellspcing=0 cellpadding=0>
+<!--<tr>
+ <td colspan=2 align=center>
+    <a href="javascript:OnOff('sn')"><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/name_off.gif" border=0 name=sn></a>
+    <a href="javascript:OnOff('ss')"><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/subject_on.gif" border=0 name=ss></a>
+    <a href="javascript:OnOff('sc')"><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/content_on.gif" border=0 name=sc></a><img src=images/t.gif width=35 height=1><br>
+   <img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/search_left.gif" align=absmiddle><input type="text" name="keyword" value=""  size="9"  class="input" style="font-size:8pt;font-family:Arial;vertical-align:top;border-left-color:#ffffff;border-right-color:#ffffff;border-top-color:#000000;border-bottom-color:#000000;height:18px;"><input type="image" border="0" align="absmiddle" src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/search_right.gif?PHPSESSID=1c57e73c520357f23bd67319c0541102"><a onfocus="blur()" href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3DMyalbum%26PHPSESSID%3D1c57e73c520357f23bd67319c0541102&k=board'><img src="../_missing-image.svg" data-unrestored-src="skin/gallery_huni_gray/images/search_right2.gif" align=absmiddle border=0></a>
+ </td>
+</form>
+</tr>
+
+<!-- 페이지 출력 ---------------------->
+</form>
+</table>
+
+</td></tr></table>
+</td></tr></table>
+</td></tr></table>
+
+
+<script>
+print_ZBlayer('zbLayer1', 'http://www.carjun.com', 'Y2FyanVuQG5hdmVyLmNvbQ==', '', 'Myalbum', '중고차', '', '', '', '');
+print_ZBlayer('zbLayer2', 'http://clothdumping.netian.com/', '', '', 'Myalbum', '싸다몰', '', '', '', '');
+print_ZBlayer('zbLayer3', 'http://tentcar.hihome.com', 'Y2VvMjEzMUB5YWhvby5jby5rcg==', '', 'Myalbum', '왕대박', '', '', '', '');
+print_ZBlayer('zbLayer4', 'http://ses.co.tv', 'YmppZGZAaG90bWFpbC5jb20=', '', 'Myalbum', '엉애짱', '', '', '', '');
+print_ZBlayer('zbLayer5', 'http://sexmart.co.tv', 'bmFuYW5hMDgzMUBoYW5tYWlsLm5ldA==', '', 'Myalbum', '▶운영자◀', '', '', '', '');
+print_ZBlayer('zbLayer6', 'http://tentcar.hihome.com', 'Y2VvMjEzMUB5YWhvby5jby5rcg==', '', 'Myalbum', '21세기힛트상품', '', '', '', '');
+print_ZBlayer('zbLayer7', 'http://www.onenglish.com', 'bHl3aGFuZ0Bob3RtYWlsLmNvbQ==', '', 'Myalbum', 'OnEnglish', '', '', '', '');
+print_ZBlayer('zbLayer8', 'http://8255.rg.ro', 'aGFiaWJpMjUzNUBoYW5tYWlsLm5ldA==', '', 'Myalbum', '미여니', '', '', '', '');
+print_ZBlayer('zbLayer9', 'http://sexhari.rg.ro', '', '', 'Myalbum', '귀염둥이', '', '', '', '');
+</script>			<table border=0 cellpadding=0 cellspacing=0 height=20 width=95%>
+			<tr>
+				<td align=right style=font-family:tahoma,굴림;font-size:8pt;line-height:150%;letter-spacing:0px>
+					<font style=font-size:7pt>Copyright 1999-2003</font> <a href="http://www.zeroboard.com" target="_blank" onfocus="blur()"><font tyle=font-family:tahoma,굴림;font-size:5pt;>Zeroboard</a> / skin by <a href="http://beautiful-days.com" target="_blank">skin by Huni</a>				</td>   
+			</tr>
+			</table>
+			</div>			</body>
+			</html>
+			
+
+<!--
+ Session Excuted  : 0.0005
+ Connect Checked  : 0.0010
+ Query Excuted  : 0.115
+ PHP Excuted  : 0.051
+ Check Lists : 0.035
+ Skins Excuted  : 0.678
+ Total Excuted Time : 0.846
+-->

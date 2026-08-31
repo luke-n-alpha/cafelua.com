@@ -17,7 +17,7 @@ TD,TH,input,select {  font-size: 9pt; };
 .inputtext {font-size : 10pt; BACKGROUND-COLOR:white; COLOR:#000000; BORDER:1x solid #000000}
 -->
 </STYLE>
-<SCRIPT language="JavaScript" src="/supp/comm.js"></script>
+<SCRIPT language="JavaScript" data-unrestored-src="/supp/comm.js"></script>
 <SCRIPT language="JavaScript">
 <!--
 
@@ -50,15 +50,15 @@ function go_myweb() {
      j=i-1;
      
      if (document.Login.winurl.value.substring(j,i) == '/')
-        window.location =  document.Login.winurl.value + 'main.html';
+        window.location = '_unrestored.html?p=%2Fmain.html&k=page';
      else
-        window.location =  document.Login.winurl.value + '/main.html';
+        window.location = '_unrestored.html?p=%2Fmain.html&k=page';
 }
 // -->
 </SCRIPT>
 </head>
 <body bgcolor=#ffffff onload="javascript:go_myweb()">
-<form name="Login">
+<form name="Login" onsubmit="return false" data-unrestored="form">
 <input type=hidden name=winurl value="">
 </BODY>
 </HTML>

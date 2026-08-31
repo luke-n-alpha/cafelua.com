@@ -8,7 +8,7 @@ body {
 	scrollbar-arrow-color: #A9D46D;
 }
 
-body {background-image: url('./img/memo_bg.gif'); background-repeat: no-repeat; background-attachment: fixed; background-position: right bottom}
+body {background-image: url('../../../_missing-image.svg'); background-repeat: no-repeat; background-attachment: fixed; background-position: right bottom}
 body,td,select,div,form,textarea,center,option,pre,blockquote {font-size:9pt; color:#437200;}
 input {font-size:9pt; color:#437200;}
 

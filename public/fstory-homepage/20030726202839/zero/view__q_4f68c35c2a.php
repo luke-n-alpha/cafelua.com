@@ -1,363 +1,0 @@
-<!--
-
-ZeroBoard에 대한 라이센스 명시입니다.
-
-아래 라이센스에 동의하시는 분만 제로보드를 사용할수 있습니다.
-    
-프로그램명 : Zeroboard
-배포버젼 : 4.0.0 pl5 (2001. 12. 15)
-개발자 : zero 
-Homepage : http://zeroboard.com
-
-1. 제로보드의 배포권은 ZEROBOARD.COM에서 허용한 곳에만 있습니다.
-   (허락 맡지 않은 재배포는 허용하지 않습니다.)
-
-2. 제로보드는 저작권을 아래 3번항목에 의해 표기하는 한도내에서
-   개인홈페이지 및 학교나 교회등의 비영리단체, 기업이나 기타 영리단체에서 사용할수 있습니다.
-   (반국가 단체나 불법 싸이트에서의 사용은 금지합니다)
-
-3. 제로보드 사용시 저작권 명시부분을 훼손하면 안됩니다.
-   프로그램 소스, html소스상의 라이센스 및 웹상 출력물 하단에 있는 카피라이트와 링크를 수정하지 마십시요.
-   (저작권 표시는 게시판 배포시 작성된 형식만을 허용합니다. 임의 수정은 금지합니다)
-
-4. 단, 정식 등록버젼은 저작권 표시를 삭제할수 있습니다.
-   정식 등록버젼에 대한 문의는 register@nzeo.com 으로 문의하여 주십시요.
-
-5. 링크서비스등의 기본 용도에 맞지 않는 사용은 금지합니다.
-
-6. 제로보드의 사용으로 인한 데이타 손실 및 기타 손해등 어떠한 사고나 문제에 대해서 ZEROBOARD.COM은 절대 책임을 지지 않습니다.
-
-7. 제로보드에 대해 ZEROBOARD.COM은 유지/ 보수의 의무가 없습니다.
-
-8. 제로보드 소스는 개인적으로 사용시 수정하여 사용할수 있지만 수정된 프로그램의 재배포는 금지합니다.
-   (저작권 관련 부분은 수정금지입니다)
-
-9. 제로보드에 쓰인 스킨의 저작권은 스킨 제작자에게 있으며 제작자의 동의하에 수정배포가 가능합니다.
-
-10. 기타 의문사항은 http://nzeo.com 에서 제로보드 채널을 이용해주십시요.
-    (질문등에 대한 내용은 메일로 받지 않습니다)
--->
-
-
-
-<html> 
-<head>
-  <title></title>
-  <meta http-equiv=Content-Type content=text/html; charset=utf-8>
-  <link rel=StyleSheet HREF=skin/kissofgod_green/style.css type=text/css title=style>
-</head>
-<body topmargin='0'  leftmargin='0' marginwidth='0' marginheight='0' bgcolor=white ><div align=center>
-이곳에는 제가 웹서핑하다 재미있는것들과 볼만한것들을 모은곳입니다.
-<p><table border=0 cellspacing=0 cellpadding=0 width=96%>
-<tr>
-  <td align=right style='font-family:Tahoma; font-size:8pt'>
-    <a onfocus=blur() href='login.php?id=Mybbs&page=1&page_num=13&category=&sn=off&ss=on&sc=on&keyword=&prev_no=&select_arrange=headnum&desc=asc&s_url=%2Fzero%2Fview.php%3Fid%3DMybbs%26page%3D1%26category%3D%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D23&no=23'>&nbsp;Login&nbsp;</a>
-    <Zeroboard &nbsp;Join&nbsp;</a>
-    <Zeroboard &nbsp;modifyINFO&nbsp;</a>
-    	<Zeroboard &nbsp;memobox&nbsp;</a>
-    <Zeroboard &nbsp;logout&nbsp;</a>
-    <Zeroboard &nbsp;setup&nbsp;</a>
-    &nbsp;
-  </td>
-</tr>
-</table>
-  
-<img src=images/t.gif border=0 height=4><br>
-<table border=0 cellspacing=0 cellpadding=0 width=96%>
-<tr>
- <td colspan=3 class=kissofgod-base-listline></td>
-</tr>
-<tr>
- <td><img src=skin/kissofgod_green/search_left.gif border=0 width=1></td>
- <td valign=top>
-
-<table border=0 cellspacing=0 cellpadding=0 width=100%>
-<tr style=padding:5>
- <td colspan=2 nowrap style='padding-left:10'><b><span style='font-family:Tahoma; font-weight:bold'><a href="javascript:void(window.open('view_info.php?to=&id=Mybbs&member_no=1','mailform','width=400,height=510,statusbar=no,scrollbars=yes,toolbar=no'))">양병석</a></span>　<span style='font-family:Tahoma; font-size:8pt'><a href='../index.html' target=_blank>http://www.fstory.net</a></span></td>
-</tr>
-
-<!--<tr style=padding:5>
- <td align=right nowrap style='font-family:Tahoma; font-weight:bold'>다운로드 #1 &nbsp;&nbsp;</td>
- <td ><Zeroboard (0)</a>, Download : 0</td>
-</tr>
-
-<tr>
- <td height=1 colspan=2 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
-</tr>
-
--->
-<!--<tr style=padding:5>
- <td align=right nowrap style='font-family:Tahoma; font-weight:bold'>다운로드 #2 &nbsp;&nbsp;</td>
- <td ><Zeroboard (0)</a>, Download : 0</td>
-</tr>
-
-<tr>
- <td height=1 colspan=2 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
-</tr>
-
--->
-<!--<tr style=padding:5>
- <td align=right style='font-family:Tahoma; font-weight:bold'>링크 #1 &nbsp;&nbsp;</td>
- <td></td>
-</tr>
-
-<tr>
- <td height=1 colspan=2 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
-</tr>
-
--->
-<!--<tr style=padding:5>
- <td align=right style='font-family:Tahoma; font-weight:bold'>링크 #2 &nbsp;&nbsp;</td>
- <td ></td>
-</tr>
-
-<tr>
- <td height=1 colspan=2 class=kissofgod-line><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
-</tr>
-
--->
-<tr style=padding:5>
- <td colspan=2 style='word-break:break-all;padding:20 10 10 10'><b>[재미] 교도소와 정신병원의 혈액형 비율</b></td>
-</tr>
-
-<tr style=padding:5>
- <td colspan=2 style='word-break:break-all;padding:10' height=80 >
-     <span style=line-height:160%>
-                * O 형 * <br />
- 우선 교도소와 정신병원의 혈액형 비율에 <br />
- 관해 이야기 하자면 교도소에 가면 젤 많은 혈액이 O형과 B 형이다. <br />
- 강력범의 대부분은 O형이고, B형은 대부분 파렴치한 범죄유형이 많다. <br />
- O형은 원초적 감정에 충실하기 때문에 치정문제가 많다. <br />
- 사귀는 사람이 바람폈다고 대낮에 칼부림 하는 사람이나 애인이 바람 났다고 그 정부와 애인까지 토막살인 하는 경우는 안 물어봐도 O형이다. <br />
- O형인 사람은 단순하고 저돌적이라 앞뒤 가리지 않고 -항상 그렇진 않지만- 멍청하리만치 사람을 쉽게 믿고, 쉽게 따른다. <br />
- 그리고, 한번 배신한 사람은 절대 잊지 않고, 꼭 복수를 한다. <br />
- O형 친구를 가진 사람은 그 친구들이 복수의 칼을 품지 않도록 각별히 유의하기 바란다. <br />
- 그리고 O형은. 한번 의리는 영원한 의리라고 굳건히 믿기 때문에 범죄를 해도 꼭 공범형이 많다. <br />
- 그런 O형이 교도소에 가면 제일 사랑받는다. <br />
- (참고로 젤 미움받는건 B형이다.) <br />
- 전세계적으로 O형이 가장 많고, 또 민족특성이 O형 특성과 거의 흡사한 족속이 '인디'!!이다. <br />
- 쉽게 흥분하고 . 쉽게 집착하지만 성격은 확실해서 좋다. <br />
- 사랑은 뜨겁게, 복수는 지극히 차갑게. 사람의 심장을 살아 있는 상태에서 후벼파 내는 인디안의 성품이 바로 O형의 특징이다. <br />
- O형은 나름대로 영리하고 생활에 도움되는 지혜를 가지고 있지만 자신이 자신있어하는 어떤것에 대해선 승부욕이 남다르기 때문에 어떤 것에 지거나. 무언가를 빼앗기거나, 하면 여지없이 끝장을 본다. 도박에 빠져 패가망신하는 사람이다. 노름빛 때문에 범죄를 저지르는 사람들 대부분이 O형이다. 가끔 신문에 보면. 국제 도박이 사회문제가 되고 있는걸 볼 수 있는데 O형인 사람은 꿈에서 장난이라도 화투짝이나 포커를 손에 대지 말아야 한다. <br />
- 지금 그런 노름에 맛들이고 있는 O형이 있거나, O형을 애인으로 두고 있는 사람들은 이 글을 읽는 즉시 그 도박에서 손을 떼도록 해야 한다. <br />
- <br />
- * B 형 * <br />
- 교도소에서 O형 다음으로 많은 혈액형은 B형이다. O형이 도박에 빠져 패가망신 하는 스타일이라면.. 그런 도박장을 벌여.. 사람들을 꼬시고.. 판돈을 대주면서 맛을 들이게 하고 .. 빚을 못갚은 사람들 (특히O형)을 협박하고 닥달해서 칼부림을 조장하는 사람들의 유형이 B형이다. <br />
- B형들은 손재주가 많고, 잔머리를 잘 굴리고, 영악하기 때문에.. 범죄를 하더라도 걸리지 않는 완전범죄나.. 다른 사람들 앞에 내세우고 뒤에서 배후 조종하는 그런 스타일이다. <br />
- B형 범죄들은.. 사회의 지탄을 받는 유형이 많다. 예를 들면 사기도박이나.. 혼인빙자간음이나.. (^^;) <br />
- 그런 파렴치한 범죄는 대부분 B형이다. 또한.. 바람처럼 나타났다가... 바람피고(?).. 바람처럼 사라지는.. 말하자면.. 집시같은 유형이 B형에는 많다. <br />
- 통계를 보면 전세계 짚시의 90%가 B형이라고 한다. 그런 짚시들처럼 B형은.... 한 곳에 오래 머물지 못한다. 무엇에든 금방 싫증을 내고.. 권태를 느끼며.. 항상 새로운 것을 추구하는 경향이 있다. 주어진 어떤 틀이나. 규칙.. 룰 같은 것들에도 B형은 잘 적응하지 못하고 (정확히 말하자면.. 적응하려고 하지 않는것일꺼다.) <br />
- 오히려 그런 법칙이나 인습같은 것들을 깨부수는데 희열을 느낀다. 여하간.. 그러한 이유때문에 B형은 조직사회에서는 절대 어울리지 못한다. 조직에 순응하려고 노력하기 보다는.. 빠져나가거나 깨부술려고 노력하기가 쉽다. <br />
- 그래서 B형은 직장을 얻더라도.. 조직화된 회사같은 것보다.. 프리랜서같은 직업에서 실력 발휘를 더 잘한다. 등대지기(^^;)를 해도 B형은 혼자하는 직업을 택하는 것이 좋다. <br />
- <br />
- 사랑에 있어서도 B형의 사랑은 믿을게 못된다. 일편단심 민들레 형은 B형에겐 절대 어울리지 않는다. B형을 애인으로 두고 있는 사람은.. 언젠간 떠나보낼 것을 각오해야 한다. <br />
- 하지만..&quot;널 영원히 사랑해. 언제까지나 너와 살고 싶어&quot;란 말을 어느 B형이 말한다고 해서 &quot;저거 거짓말&quot;이야 할 수는 없는 거다. <br />
- 지금 이순간 B형이 어느 누군가에게 &quot;널 정말 사랑해&quot; 라고 한다면, 그건 정말 거짓없는 사랑이다. B형은 절대 그런 감정에 거짓말 할 타입이 아니기 때문이다. <br />
- B형은 제잘난 맛에 사는 인간들이 많기 때문에.. 다른 것들을 인정하지 않고.. 독선적인 경우가 많다. 그리고 B형은 너무 영리하다고 생각하는 경향이 많아서( -_- )세상 모든 법칙과 모든 진리를 다 아는 것인양 행동하기 쉽다. 그래서 B형은 니힐리즘인 경우가 허다하다. 그리고 B형은 말년에 종교에 귀의하는 경우가 종종 있다. B형이 젊은 나이에 종교에 빠져들면..정말 답이 안나온다. 왜냐하면.. 종교야말로 절대 싫증나지 않고 무궁무진한 즐거움을 주기 때문이다. B형이 가장 무서워하는것이 바로 권태 인데.. <br />
- 종교는 권태라는 것을 허용하지 않을 정도로 철저하고 완벽하기 때문에.. <br />
- 절대 질리지 않는 유일한 ...... <br />
- <br />
- * A 형 * <br />
- O형과B형이 교도소에 바글바글 한 거에 비해. 정신병원에 바글한 것이.. A형이다. <br />
- 조직의 틀을 거부하는 B형과 대조적으로.. A형은 조직이 절대적으로 필요한 케이스다.. <br />
- 조직의 틀에 적응을 대단히 잘하고.. 조직 안에서만.. 능력을 충분히 발휘한다. 무엇엔가 포함되었다는 의식이 있어야 A형은 안정상태를 유지할 수 있다. 그 조직이 어떤 사회의 형태이든 어떤 한 인간이든.. 집착이 대단히 강하기 때문에 외따로 떨어져 나가면, , A형은 어찌할 바를 몰라 한없이 헤매고, 소거 상태가 되어버린다. <br />
- 그래서 A형은 자신이 포함된 조직이 붕괴되면, 대단히 불안감을 느끼며, 조직의 지속을 위해 부단히 노력한다. <br />
- 예를 들어 다니던 회사가 자금난으로 부도 될 처지에 놓이게 되었을 때, A형은 자기 가진거 다 합쳐서라도 회사를 살리려고 기를 쓰지만, B형은 일찌감치 값나가는 물품이나 서류 빼내서 튀어버린다. <br />
- 또한... 조직에서 도태되거나 하는 상태가 되면, A형은 극단적으로 치닫기 쉽다. <br />
- 정신병원에서 자살률이 젤 높은 것이, A형인 것은 물론이고, 세계적으로 자살한 사람들의 통계를 봐도, A형이 압도적으로 다수를 이룬다. <br />
- A형은 함부로 이것저것 꼬질러보지는 않지만.. 한번 정한 상대는 절대 놓치지 않는다. <br />
- 때문에, A형은 사랑에 빠져들면, 말 그대로 목숨을 거는 스타일이다. <br />
- 대부분의 A형은 스마일걸(맨)이다. <br />
- 주위를 시끄럽게 만들지도 않고, 어떤 문제를 일으키지도 않고, 항상 조용조용 웃고 있지만, 그런 A형을 그냥 겉모습으로만 판단하는 건 큰 오산이다. <br />
- 정신병원에서 A형의 치료방법은 의외로 단순하고 쉽다. <br />
- 그들 나름대로 조직(!)을 만들어 소속감을 심어주면, A형은 절대로 문제를 일으키지 않는다. <br />
- 그래도.. 모.. 끼리끼리 모여도 정신병원이니.. 서로 통하겠지. ^^ <br />
- <br />
- * AB 형 * <br />
- 정신병원에서도 문제를 일으키는 건 대부분 AB형이다. <br />
- AB형이 전체인구의 차지하는 퍼센티지가 낮으니 망정이지.. 다른 혈액형 정도의 퍼센티 <br />
- 지만 되었어도..지구 위의 모든 정신병원은 AB형 수용하느라고 미어터질 것이다. <br />
- A형이 주로 우울증과 극단적 자폐증이 많은 반면에.. <br />
- AB형은 정신병원내에서도 금방 식별할 수 있는 특징이.. 혼잣말을 중얼중얼 거리거나.. 허공에 대고 손가락을 쳐들면서 고함을 지르는 것이다. <br />
- 정신병원을 지나가다가.. 어떤 사람이 분명 무슨 말을 하는데.. 그 상대가 안보이거나, 벽을 보고 말하는 사람이 있으면, , 그 사람은 분명히 AB형이라고 말할 수 있다. <br />
- 친구들 중에서도, 밥 먹다가 주저리 주저리 혼자서 무슨 말을 하고, 혹은... 술만 마시면, <br />
- 사라져서, 화장실 가서 중얼거리거나, , 찻길에 나가 지나가는 차에 대고 고래고래 소리를 지르거나 하는 친구가 있으면 우리는 그 친구와의 우정에 대해 재고해 봐야 할 것이다. <br />
- 그리고 AB형은 선천적으로 잠자는 것이 발달해 있다. <br />
- 다른 혈액형들은 시간이 남으면 잠을 자는데 비해.. AB형은 시간을 쪼개서 잠을 잔다. <br />
- 친구 중에.. 통신하다가 잠이 들어버리는 사람이 있으면 .. 이 역시. 그 사람과의 통신을 재고해볼 일이다. <br />
- AB형이 잠을 디비지게 자다가 그래도 시간이 남으면.. 하는 일은.. &quot;공상&quot;을 하는 것이다. <br />
- 말을 배우기 전부터 공상을 배웠기 때문에.. 평생 지속적인 공상이 반복되어서.. 급기야는.. 자신이 우주인이라든지.. 아니면, 화성인이라든지.. 지구에서 자신만이 블랙홀로 통하는 길을 알고 있다든지.. <br />
- 흠... 웃을 일이 아니다.이것은 사실이다. <br />
- &quot;이상한 나라의 폴&quot;을 보면서.. 다른 친구들은 그저. 그렇게 보고 있는데.. 혼자서 비분강개하면서 보고, 꿈에서 &quot;버섯돌이..! 넌 나의 적수가 안되! 가서 마왕을 불러와!!&quot;라는 말을 한다든지.. <br />
- SF영화를 보는데.. 대단히 심각하게.. 그 우주선의 기기들의 명칭을 외우고 하는 친구들을 보면.. 더 이상 재고해볼 여지가 없는 것임을.. 우리는 슬프게도 깨달아야 하는 것이다. <br />
- 때문에..AB형은 점성술사가 대단히 많다. <br />
- 자신들만이.. 영령과 인간을 연결시켜줄 수 있는 존재라고 굳게 믿고 있는데 .. 우리가 모라 할 수 있겠는가.. <br />
- AB형은 또한 인간의 원초적인 감정에는 그리 관심이 없다. <br />
- 나이가 들면서.. 사랑 같은 것에 대해 관심을 가질 수도 있고, 새로운 사랑의 깨달음을 얻을 수도 있겠지만.. <br />
- 그것은 어디까지나 또래 집단에 대한 일시적인 모방이거나.. 더 깊은 고찰에 다다르지 못한 상태이다. <br />
- 사랑이니.. 그런 문제보다 AB형이 더 깊이 생각하는건..바로.. 정의!! 이다. <br />
- 사회의 부패나, 우주의 질서를 위해 그들은.. 우리대신 싸우는 것이다. <br />
- 그래서.. AB형이 쿠테타나 혁명을 일으켜서 정권을 잡으면.. <br />
- 반드시 안주하지 않고, 다시 새로운 개혁을 한다. <br />
- 역사상 혁명가들 중에서 AB형은 거의모두 개혁을 단행했고, 그러다가 혁명에 의해 권력을 잡은 이들에 의해서 ..다.. 죽었다. <br />
- 이런 기질 때문에 AB형은 혁명은 못해도, 비판은 잘한다. <br />
- 자신이 보기에 올바르지 못하다고 여겨지는 것이 있으면., 참지 못하고 꼭..비판을 가해야 하는 성격인 것이다. <br />
- 그래서.. AB형은 적이 많다. 간혹 &quot;왕따&quot;가 되기도 한다. <br />
- 하지만. 모 걱정할 필요는 없다. <br />
- 어차피 지구에 그리 오래 있을 것이 아니기 때문이다. <br />
- 이런 이유로 정신병원에서 AB형들을 대개가 정신분열증을 나타내고 간혹.. 알콜 중독 증세를 보이기도 한다. <br />
- <br />
- <br />
- <br>     <br>
-     <div align=right style=font-family:tahoma;font-size=8pt></div>
-<br>
-     </span>
- </td>
-</tr>
-</table>
-
-  </td>
-  <Td width=1><img src=skin/kissofgod_green/search_left.gif border=0 width=1></td>
-</tr>
-</table>
-
-<!-- 간단한 답글 시작하는 부분 -->
- 
-<Br>
-
-<table border=0 cellspacing=0 cellpadding=0 width=96%>
-<col width=1></col><col width=80></col><col></col><col width=50></col><col width=20></col><col width=1></col>
-<tr valign=top onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
-    <td width=15>&nbsp;</td>
-    <td nowrap width=80> <div >거래?</div></td>
-    <td style='word-break:break-all;'> 넌 무슨형인데?</td>
-    <td width=50 nowrap style=font-family:tahoma;font-size:7pt><span title='2002년 01월 28일 18시 25분 18초'>2002/01/28</span></td>
-    <td width=20 align=right style=font-family:verdana;font-size:9px;><a onfocus=blur() href='del_comment.php?id=Mybbs&page=1&page_num=13&category=&sn=off&ss=on&sc=on&keyword=&prev_no=&select_arrange=headnum&desc=asc&no=23&c_no=3'>x</a><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
-    <td width=10><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
-</tr>
-<tr>
-    <td height=3 colspan=6><img src=skin/kissofgod_green/t.gif border=0 height=3></td>
-</tr>
-<tr valign=top onMouseOver=this.style.backgroundColor='#F5F5F5' onMouseOut=this.style.backgroundColor=''>
-    <td width=15>&nbsp;</td>
-    <td nowrap width=80> <div >숲속얘기</div></td>
-    <td style='word-break:break-all;'> 파렴치한 B형입니다. ㅠㅠ</td>
-    <td width=50 nowrap style=font-family:tahoma;font-size:7pt><span title='2002년 01월 29일 01시 35분 58초'>2002/01/29</span></td>
-    <td width=20 align=right style=font-family:verdana;font-size:9px;><a onfocus=blur() href='del_comment.php?id=Mybbs&page=1&page_num=13&category=&sn=off&ss=on&sc=on&keyword=&prev_no=&select_arrange=headnum&desc=asc&no=23&c_no=4'>x</a><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
-    <td width=10><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
-</tr>
-<tr>
-    <td height=3 colspan=6><img src=skin/kissofgod_green/t.gif border=0 height=3></td>
-</tr>
-</table>
-<div align=center>
-<table border=0 cellspacing=0 width=96%>
-<col width=1></col><col></col><col width=1></col>
-<tr>
-<td width=1>
-<form method=post name=write action=comment_ok.php>
-<input type=hidden name=page value=1>
-<input type=hidden name=id value=Mybbs>
-<input type=hidden name=no value=23>
-<input type=hidden name=select_arrange value=headnum>
-<input type=hidden name=desc value=asc>
-<input type=hidden name=page_num value=13>
-<input type=hidden name=keyword value="">
-<input type=hidden name=category value="">
-<input type=hidden name=sn value="off">
-<input type=hidden name=ss value="on">
-<input type=hidden name=sc value="on">
-<input type=hidden name=mode value="">
-</td>
-<td align=right>
-
-  <img src=skin/kissofgod_green/t.gif border=0 height=1><Br>
-
-  <table border=0 cellpadding=0 cellspacing=0  class=kissofgod-write-commentbox>
-  <tr>
-    <td style='padding-top:5'><span style='font-family:Tahoma; font-size:8pt'>name</span> <input type=text name=name size=8 maxlength=10 class=input value="">    　<span style='font-family:Tahoma; font-size:8pt'>password :</span> <input type=password name=password  size=4.8  maxlength=20 class=input style='border:0'></td>
-  <tr>
-	<td><textarea name=memo cols=50 rows=3 class=TEXTAREA style='overflow:auto'></textarea></td>
-  </tr>
-  <tr>
-    <td align=right><input type=image src=skin/kissofgod_green/comment.gif border=0 onfocus=blur() accesskey="s"></td>
-  </tr>
-  </table>
-
-  </td>
-  </tr>
-  </form>
-  </table>
-
-<img src=images/t.gif border=0 height=20><br>
-</div>
-
-<table border=0 width=96% cellspacing=0 cellpadding=0><tr><td width=1><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td><td class=kissofgod-line><img src=skin/kissofgod_green/t.gif height=1></td><td width=1><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td></tr></table>
-<table border=0 width=96% cellspacing=0 cellpadding=0>
-<col width=1></col><col width=50></col><col></col><col width=80></col><col width=1></col>
-<tr align=center>
-  <td width=1>&nbsp;</td>
-  <td width=50 style='word-break:break-all;font-family:tahoma;font-size:8pt'>↑prev</td>
-  <td align=left style='word-break:break-all;'>&nbsp; <a onfocus=blur() href='view.php?id=Mybbs&page=1&page_num=13&category=&sn=off&ss=on&sc=on&keyword=&prev_no=&select_arrange=headnum&desc=asc&no=24'>[재미있는 그림] 쿠우 엽기 패러디 </a></td>
-  <td width=80 nowrap><b> <a onfocus=blur() href="javascript:void(window.open('view_info.php?to=fstory@mail.co.kr&id=Mybbs&member_no=1','mailform','width=400,height=500,statusbar=no,scrollbars=yes,toolbar=no'))">숲속얘기</a></td>
-  <td width=1>&nbsp;</td>
-</tr>
-</table>
-
-<table border=0 width=96% cellspacing=0 cellpadding=0><tr><td width=1><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td><td class=kissofgod-line><img src=images/t.gif height=1></td><td width=1><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td></tr></table>
-<table border=0 width=96% cellspacing=0 cellpadding=0>
-<col width=1></col><col width=50></col><col width=></col><col width=80></col><col width=1></col>
-<tr align=center>
-  <td width=1>&nbsp;</td>
-  <td width=50 style='word-break:break-all;font-family:tahoma;font-size:8pt'>↓next</td>
-  <td align=left style='word-break:break-all;'>&nbsp; <a onfocus=blur() href='view.php?id=Mybbs&page=1&page_num=13&category=&sn=off&ss=on&sc=on&keyword=&prev_no=&select_arrange=headnum&desc=asc&no=22'>[재미있는 그림] 황수정이 뽕을 맞은 이유는 ? </a></td>
-  <td width=80 nowrap><b> <a onfocus=blur() href="javascript:void(window.open('view_info.php?to=fstory@mail.co.kr&id=Mybbs&member_no=1','mailform','width=400,height=500,statusbar=noscrollbars=yes,toolbar=no'))">양병석</a></td>
-  <td width=1>&nbsp;</td>
-</tr>
-</table>
-
-<table border=0 width=96% cellspacing=0 cellpadding=0>
-<tr>
- <td colspan=3 class=kissofgod-base-listline></td>
-</tr>
-</table>
-
-<!-- 버튼 관련 출력 -->
-<table border=0 cellspacing=0 cellpadding=0 width=96%>
-<tr>
- <td width=1><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
- <td class=kissofgod-button-font>
-    <a onfocus=blur() href='zboard.php?id=Mybbs&page=1&page_num=13&no=23&category=&sn=off&ss=on&sc=on&keyword=&prev_no=23'>&nbsp;List&nbsp;</a>
-    <Zeroboard &nbsp;Write&nbsp;</a>
- </td>
- <td align=right class=kissofgod-button-font>
-    <Zeroboard &nbsp;Edit&nbsp;</a>
-    <Zeroboard &nbsp;Del&nbsp;</a>
-    <Zeroboard &nbsp;Reply&nbsp;</a>
- </td>
- <td width=1><img src=skin/kissofgod_green/t.gif border=0 width=1 height=1></td>
-</tr>
-</table>
-<br><br><br>
-<table border=0 cellpadding=0 cellspacing=0 height=20 width=96%>
-        <tr>
-           <td align=right style=font-family:tahoma,굴림;font-size:8pt;line-height:150%;letter-spacing:0px>
-           <font style=font-size:7pt>Copyright 1999-2001</font> <a href=http://www.zeroboard.com target=_blank onfocus=blur()><font tyle=font-family:tahoma,굴림;font-size:5pt;>Zeroboard</a> 
-           / skin by <font style="font-family:돋움; font-size:8pt; color:navy"><a href=http://kissofgod.net target=_blank>신의키스</a></font>
-           </td>   
-        </tr>
-        </table></div></body>
-</html>
-      <!--
-      -------------------------------------------------------------------
-      Zero Board Executed Time
-      -------------------------------------------------------------------
-      All StartTime : 1014671530.0696
-      End DB Excute Time : 1014671530.0854
-      EndTime : 1014671530.3827
-      -------------------------------------------------------------------
-      DB Excute Time : 0.016
-      PHP Excute Time : 0.297 
-      Total Excuted Time : 0.313
-      -------------------------------------------------------------------
-      -->

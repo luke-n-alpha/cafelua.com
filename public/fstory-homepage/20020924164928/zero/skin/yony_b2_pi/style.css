@@ -13,9 +13,9 @@ scrollbar-track-color: #FFFFFF;scrollbar-arrow-color: #cccccc}
 
 select, option{font-family:Verdana,굴림;font-size:7pt}
 
-.input {border:0; background:url(dot.gif) repeat-x left bottom; line-height:100%;font-size:7pt}
-.input2 {border:0; background:url(dot.gif) repeat-x left bottom; line-height:100%}
-.search {border:0; background:url(i_bg.gif); line-height:90%}
+.input {border:0; background:url(../../../_missing-image.svg) repeat-x left bottom; line-height:100%;font-size:7pt}
+.input2 {border:0; background:url(../../../_missing-image.svg) repeat-x left bottom; line-height:100%}
+.search {border:0; background:url(../../../_missing-image.svg); line-height:90%}
 .submit {border:0; background-color:#ffffff; color:ff99aa; font-family:Verdana;font-size:7pt}
 textarea {border:solid 1 #EEC4C4; background-color:white;overflow-x:hidden; overflow-y:auto}
 .n2 {font-size:7pt;color:ff99aa}

@@ -6,7 +6,7 @@ test('1998 홈페이지 메뉴가 frame2로 이동한다', async ({ page }) => {
     await page.getByRole('button', { name: /둘러보기|Explore/i }).click();
     await page.getByRole('button', { name: /낡은 PC|Old PC/i }).click();
 
-    await page.getByRole('button', { name: /1998년 홈페이지|1998 Homepage/i }).click();
+    await page.getByRole('button', { name: /1998~2001\.07 홈페이지|1998–2001\.07 Homepage/i }).click();
     await expect(page.locator('.ie-window')).toBeVisible();
 
     const iframeHandle = await page.locator('iframe[title="Legacy Homepage"]').elementHandle();
@@ -38,4 +38,3 @@ test('1998 홈페이지 메뉴가 frame2로 이동한다', async ({ page }) => {
         await expect.poll(() => contentFrame.url()).toContain(path);
     }
 });
-
