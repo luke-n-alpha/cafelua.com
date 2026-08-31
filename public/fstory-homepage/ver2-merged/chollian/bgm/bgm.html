@@ -36,15 +36,53 @@
   var at = 0, player = null, ready = false;
   var now = document.getElementById('now');
   function label(text) { now.textContent = text; }
-  label(TRACKS[0].title + ' — ▶ 를 누르면 재생됩니다');
+  label(TRACKS[0].title);
+
+  // The 2002 player started the moment the page opened. A browser will not do
+  // that any more unless someone has already clicked something, so ask for it
+  // and, if the browser says no, start on the visitor's first click anywhere
+  // in the site. Every frame is same-origin, so a click in any of them counts.
+  var started = false;
+  function wake() {
+    if (started || !ready) return;
+    started = true;
+    player.playVideo();
+    label(TRACKS[at].title);
+  }
+  function listenEverywhere() {
+    var documents = [document];
+    try {
+      if (parent && parent !== window && parent.document) {
+        documents.push(parent.document);
+        for (var i = 0; i < parent.frames.length; i += 1) {
+          try { documents.push(parent.frames[i].document); } catch (blocked) { /* other origin */ }
+        }
+      }
+    } catch (blocked) { /* other origin */ }
+    for (var d = 0; d < documents.length; d += 1) {
+      documents[d].addEventListener('click', wake, true);
+      documents[d].addEventListener('keydown', wake, true);
+    }
+  }
 
   window.onYouTubeIframeAPIReady = function () {
     player = new YT.Player('stage', {
       height: '1', width: '1', videoId: TRACKS[0].id,
-      playerVars: { playsinline: 1 },
+      playerVars: { playsinline: 1, autoplay: 1 },
       events: {
-        onReady: function () { ready = true; },
+        onReady: function () {
+          ready = true;
+          player.playVideo();
+          // Give the browser a moment to refuse, then wait for a click rather
+          // than leaving the bar sitting silent with no explanation.
+          setTimeout(function () {
+            if (player.getPlayerState() === YT.PlayerState.PLAYING) { started = true; return; }
+            label(TRACKS[at].title + ' — 화면을 한 번 누르면 재생됩니다');
+            listenEverywhere();
+          }, 1200);
+        },
         onStateChange: function (event) {
+          if (event.data === YT.PlayerState.PLAYING) { started = true; label(TRACKS[at].title); }
           if (event.data === YT.PlayerState.ENDED) {
             if (document.getElementById('loop').checked) { go(at + 1); }
           }
@@ -56,10 +94,12 @@
     if (!ready) return;
     at = (index + TRACKS.length) % TRACKS.length;
     player.loadVideoById(TRACKS[at].id);
+    started = true;
     label(TRACKS[at].title);
   }
   document.getElementById('play').onclick = function () {
     if (!ready) return;
+    started = true;
     player.playVideo(); label(TRACKS[at].title);
   };
   document.getElementById('stop').onclick = function () { if (ready) player.stopVideo(); };

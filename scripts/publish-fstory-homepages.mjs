@@ -1584,6 +1584,22 @@ const mergedMenuNotes = [];
     }
   }
 
+  // 투하트의 멀티 was written for a 400px column, which is what the review pane
+  // was in 2002. It is read through the 640px picture frame now, so the text
+  // wrapped early and left a third of the frame empty beside it. Give the
+  // table the width the frame actually offers.
+  {
+    const review = path.join(merged, 'tech/movie/multi/multi.html');
+    if (existsSync(review)) {
+      const text = await readFile(review, 'utf8');
+      const next = text.replace(/<table width=400>/i, '<table width=620>');
+      if (next !== text) {
+        await writeFile(review, next, 'utf8');
+        mergedMenuNotes.push('투하트의 멀티 감상 폭을 화면에 맞췄다');
+      }
+    }
+  }
+
   // movie.html is read through the AI corner's 300px window, so a link inside
   // it that does not name a frame loads the whole review into that window —
   // 투하트의 멀티 arriving as a column of text three words wide. Its sister pane,
@@ -1852,15 +1868,53 @@ ${chooser}
   var at = 0, player = null, ready = false;
   var now = document.getElementById('now');
   function label(text) { now.textContent = text; }
-  label(TRACKS[0].title + ' — ▶ 를 누르면 재생됩니다');
+  label(TRACKS[0].title);
+
+  // The 2002 player started the moment the page opened. A browser will not do
+  // that any more unless someone has already clicked something, so ask for it
+  // and, if the browser says no, start on the visitor's first click anywhere
+  // in the site. Every frame is same-origin, so a click in any of them counts.
+  var started = false;
+  function wake() {
+    if (started || !ready) return;
+    started = true;
+    player.playVideo();
+    label(TRACKS[at].title);
+  }
+  function listenEverywhere() {
+    var documents = [document];
+    try {
+      if (parent && parent !== window && parent.document) {
+        documents.push(parent.document);
+        for (var i = 0; i < parent.frames.length; i += 1) {
+          try { documents.push(parent.frames[i].document); } catch (blocked) { /* other origin */ }
+        }
+      }
+    } catch (blocked) { /* other origin */ }
+    for (var d = 0; d < documents.length; d += 1) {
+      documents[d].addEventListener('click', wake, true);
+      documents[d].addEventListener('keydown', wake, true);
+    }
+  }
 
   window.onYouTubeIframeAPIReady = function () {
     player = new YT.Player('stage', {
       height: '1', width: '1', videoId: TRACKS[0].id,
-      playerVars: { playsinline: 1 },
+      playerVars: { playsinline: 1, autoplay: 1 },
       events: {
-        onReady: function () { ready = true; },
+        onReady: function () {
+          ready = true;
+          player.playVideo();
+          // Give the browser a moment to refuse, then wait for a click rather
+          // than leaving the bar sitting silent with no explanation.
+          setTimeout(function () {
+            if (player.getPlayerState() === YT.PlayerState.PLAYING) { started = true; return; }
+            label(TRACKS[at].title + ' — 화면을 한 번 누르면 재생됩니다');
+            listenEverywhere();
+          }, 1200);
+        },
         onStateChange: function (event) {
+          if (event.data === YT.PlayerState.PLAYING) { started = true; label(TRACKS[at].title); }
           if (event.data === YT.PlayerState.ENDED) {
             if (document.getElementById('loop').checked) { go(at + 1); }
           }
@@ -1872,10 +1926,12 @@ ${chooser}
     if (!ready) return;
     at = (index + TRACKS.length) % TRACKS.length;
     player.loadVideoById(TRACKS[at].id);
+    started = true;
     label(TRACKS[at].title);
   }
   document.getElementById('play').onclick = function () {
     if (!ready) return;
+    started = true;
     player.playVideo(); label(TRACKS[at].title);
   };
   document.getElementById('stop').onclick = function () { if (ready) player.stopVideo(); };
@@ -2151,12 +2207,36 @@ const curatedReports = [];
 
 for (const edition of curatedEditions) {
   const onDisk = new Map();
+  // Luke titled his 1993-2002 short pieces in Korean, and the browser that
+  // saved them wrote the titles into the filenames as percent-escaped EUC-KR
+  // bytes — p%b3%aa%b4%c2_....html. The pages link to them in EUC-KR too,
+  // which this publisher decodes to the Korean title, so a lookup by that
+  // title finds nothing: the name on disk is still the escaped form. Read the
+  // escaped name back the way it was written and index it under both.
+  const eucAlias = (relative) => {
+    if (!/%[0-9a-f]{2}/i.test(relative)) return null;
+    const bytes = [];
+    for (let at = 0; at < relative.length; at += 1) {
+      const escape = relative[at] === '%' && /^[0-9a-f]{2}$/i.test(relative.slice(at + 1, at + 3));
+      if (escape) { bytes.push(parseInt(relative.slice(at + 1, at + 3), 16)); at += 2; continue; }
+      const code = relative.charCodeAt(at);
+      if (code > 0x7f) return null;
+      bytes.push(code);
+    }
+    try {
+      const named = new TextDecoder('euc-kr', { fatal: true }).decode(Uint8Array.from(bytes));
+      return named === relative ? null : named;
+    } catch { return null; }
+  };
+
   const indexEdition = async (directory) => {
     for (const entry of await readdir(directory, { withFileTypes: true })) {
       const file = path.join(directory, entry.name);
       if (entry.isDirectory()) { await indexEdition(file); continue; }
       const relative = path.relative(edition.root, file).replaceAll('\\', '/');
       onDisk.set(relative.toLowerCase(), relative);
+      const named = eucAlias(relative);
+      if (named && !onDisk.has(named.toLowerCase())) onDisk.set(named.toLowerCase(), relative);
     }
   };
 
@@ -2317,6 +2397,94 @@ for (const edition of curatedEditions) {
     unresolved: [...missing.entries()].map(([target, count]) => ({ target, count })).sort((a, b) => b.count - a.count),
   });
 }
+
+// ------------------------------------- 짧은글: EUC-KR 로 저장된 파일명 되찾기
+
+// Luke titled his 1993-2002 short pieces in Korean, and the browser that saved
+// them wrote the title into the filename as percent-escaped EUC-KR bytes:
+// p%bc%bc%bb%f3%c0%ba.html is p세상은.html. The pages link to them in EUC-KR
+// too, which this publisher decodes to the Korean title — so the lookup asked
+// for p세상은.html while the file on disk still wore the escaped name, and 147
+// of Luke's own pieces were marked "never archived" while sitting in the very
+// folder being searched. Read the escaped name back the way it was written.
+const eucName = (name) => {
+  if (!/%[0-9a-f]{2}/i.test(name)) return null;
+  const bytes = [];
+  for (let at = 0; at < name.length; at += 1) {
+    const escaped = name[at] === '%' && /^[0-9a-f]{2}$/i.test(name.slice(at + 1, at + 3));
+    if (escaped) { bytes.push(parseInt(name.slice(at + 1, at + 3), 16)); at += 2; continue; }
+    const code = name.charCodeAt(at);
+    if (code > 0x7f) return null;
+    bytes.push(code);
+  }
+  try {
+    const named = new TextDecoder('euc-kr', { fatal: true }).decode(Uint8Array.from(bytes));
+    return named === name ? null : named;
+  } catch { return null; }
+};
+
+const eucIndexes = new Map();
+const eucLookup = async (directory) => {
+  if (eucIndexes.has(directory)) return eucIndexes.get(directory);
+  const index = new Map();
+  try {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      if (entry.isDirectory()) continue;
+      const named = eucName(entry.name);
+      if (named) index.set(named.toLowerCase(), entry.name);
+    }
+  } catch { /* directory gone */ }
+  eucIndexes.set(directory, index);
+  return index;
+};
+
+let reopened = 0;
+const reopenEucNames = async (directory) => {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const file = path.join(directory, entry.name);
+    if (entry.isDirectory()) { await reopenEucNames(file); continue; }
+    if (!htmlExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+    const text = await readFile(file, 'utf8');
+    if (!text.includes('data-unrestored-target')) continue;
+    let count = 0;
+    const output = await replaceAsync(text, /<a\b[^>]*data-unrestored-target\s*=\s*"([^"]+)"[^>]*>/gi, async (whole, recorded) => {
+      const wanted = recorded.split('?')[0].split('#')[0];
+      const folder = path.join(path.dirname(file), path.dirname(wanted));
+      const index = await eucLookup(folder);
+      const found = index.get(path.basename(wanted).toLowerCase());
+      if (!found) return whole;
+      // The percent signs are part of the name on disk, not an escape. Written
+      // into a link as they are, the browser decodes them before asking for the
+      // file and the server answers 500 on the malformed address. Escape them.
+      const href = path.posix.join(path.dirname(wanted).replaceAll('\\', '/'), found.replaceAll('%', '%25'));
+      count += 1;
+      // The tag was rewritten to say no: href="#", an alert, and the address it
+      // could not reach. All three go, and the link points at the piece again.
+      return whole
+        .replace(/href\s*=\s*"[^"]*"/i, `href="${href}"`)
+        .replace(/\s*onclick\s*=\s*"[^"]*"/i, '')
+        .replace(/\s*data-unrestored-target\s*=\s*"[^"]*"/i, '');
+    });
+    if (count) { await writeFile(file, output, 'utf8'); reopened += count; }
+  }
+};
+
+// String.replace has no asynchronous form, and the folder listings this needs
+// are read from disk. Collect the replacements first, then apply them.
+async function replaceAsync(text, pattern, make) {
+  const found = [];
+  for (const match of text.matchAll(pattern)) found.push(match);
+  let output = '';
+  let read = 0;
+  for (const match of found) {
+    output += text.slice(read, match.index) + await make(match[0], match[1]);
+    read = match.index + match[0].length;
+  }
+  return output + text.slice(read);
+}
+
+await reopenEucNames(destinationRoot);
+if (reopened) console.log(`EUC-KR 이름으로 저장된 글 ${reopened}편의 링크를 되살렸다`);
 
 // ------------------------------------------------------------------------ reports
 

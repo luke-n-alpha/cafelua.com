@@ -46,7 +46,10 @@ const IE_VIEWPORTS: Partial<Record<IeTarget, { width: number; height: number }>>
 // The desktop opens by year and lands on the edition that was current then.
 // Every capture of that design is already merged into it, so the picker offers
 // six editions of the site rather than nine visits by the crawler.
-// The ver 2.0 era is one edition now, so every year of it opens the same place.
+// The ver 2.0 era is one edition now, so it wears one icon: 2002년 홈페이지.
+// Three icons for 2001, 2002 and 2003 all opened this same merged edition,
+// which read as three different sites. The map is kept because the restore
+// point list still speaks in years.
 const FSTORY_YEAR_ENTRY: Record<'2001' | '2002' | '2003', FstoryEditionDirectory> = {
     '2001': FSTORY_MERGED_EDITION.directory,
     '2002': FSTORY_MERGED_EDITION.directory,
@@ -663,23 +666,17 @@ const AtelierPage: React.FC = () => {
                             <div className="win98-icon-label">{t('library.folder1998')}</div>
                         </button>
 
-                        {(['2001', '2002', '2003'] as const).map((year) => {
-                            const defaultSnapshot = FSTORY_YEAR_ENTRY[year];
-                            return (
-                                <button
-                                    type="button"
-                                    className="win98-icon"
-                                    key={year}
-                                    onClick={() => {
-                                        setIsStartMenuOpen(false);
-                                        setIeTarget(defaultSnapshot);
-                                    }}
-                                >
-                                    <div className="win98-icon-image" aria-hidden="true" />
-                                    <div className="win98-icon-label">{t(`library.folder${year}`)}</div>
-                                </button>
-                            );
-                        })}
+                        <button
+                            type="button"
+                            className="win98-icon"
+                            onClick={() => {
+                                setIsStartMenuOpen(false);
+                                setIeTarget(FSTORY_YEAR_ENTRY['2002']);
+                            }}
+                        >
+                            <div className="win98-icon-image" aria-hidden="true" />
+                            <div className="win98-icon-label">{t('library.folder2002')}</div>
+                        </button>
                     </div>
 
                     <div className="win98-taskbar">

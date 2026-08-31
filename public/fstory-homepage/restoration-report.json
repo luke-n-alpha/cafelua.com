@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T09:00:50.730Z",
+  "generatedAt": "2026-08-31T10:02:21.442Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -1095,6 +1095,7 @@
         "숲속얘기의 찻집 → teatime/teatime.html",
         "링크 → link/index.html",
         "ai/ai.html 프레임 → ../tech/movie/movie.html",
+        "투하트의 멀티 감상 폭을 화면에 맞췄다",
         "영화속의 AI 목록이 큰 화면으로 열리게 했다",
         "ai/ai.html 창 2개를 내용 높이에 맞춰 스크롤을 없앴다",
         "애니 감상록 8편에 오프닝을 걸었다",
