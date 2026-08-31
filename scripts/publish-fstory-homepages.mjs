@@ -401,6 +401,49 @@ const placeholderDocument = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 
 // Scaling a JPEG needs a decoder, and the repository has one in the Python
 // imaging library the sibling asset scripts already use. Shelling out keeps this
 // script free of a new npm dependency for six files.
+// The desk keeps the artwork as webp. The gallery pages ask for a .jpg by
+// name, and they were written for browsers that had never heard of webp, so
+// the picture is written out under the name the page uses, at full size.
+//
+// It writes only when the desk picture and the surviving thumbnail are the
+// same drawing, and says so by returning the likeness. Two galleries hold a
+// dragon_th.jpg and they are different drawings — 용의 계곡 in one, an
+// illustration for 드라고니아의 전설 in the other — so a match on the filename
+// alone put the wrong artwork under the wrong thumbnail. The pictures decide.
+//
+// The comparison scales both pictures to the same square, so it recognises a
+// thumbnail that is a shrunk copy and not one that is a crop. Several of the
+// gallery's own thumbnails are crops — 鬼劍 shows only its title on the
+// thumbnail and the whole drawing at full size — and a match like that scores
+// near zero here. So a rejection means "not the same picture, seen this way",
+// which is the safe direction: it never puts the wrong drawing on the page,
+// and a real match it turns away has to be found by eye.
+const copyIfSameDrawing = async (source, thumbnail, output) => {
+  const { execFile } = await import('node:child_process');
+  const { promisify } = await import('node:util');
+  const { stdout } = await promisify(execFile)('python3', ['-c', `
+from PIL import Image
+import sys
+import numpy as np
+
+source, thumbnail, output = sys.argv[1], sys.argv[2], sys.argv[3]
+
+def fingerprint(path, side=48):
+    with Image.open(path) as image:
+        grey = np.asarray(image.convert('L').resize((side, side), Image.LANCZOS), dtype=float)
+    grey -= grey.mean()
+    spread = grey.std()
+    return grey / spread if spread > 1e-6 else grey
+
+likeness = float((fingerprint(source) * fingerprint(thumbnail)).mean())
+print(f'{likeness:.4f}')
+if likeness >= 0.9:
+    with Image.open(source) as image:
+        image.convert('RGB').save(output, quality=92)
+`, source, thumbnail, output]);
+  return Number.parseFloat(stdout.trim());
+};
+
 const makeThumbnail = async (source, output) => {
   const { execFile } = await import('node:child_process');
   const { promisify } = await import('node:util');
@@ -1307,6 +1350,36 @@ document.onkeydown = function (event) { if ((event || window.event).keyCode === 
       stats.inPlacePictures = (stats.inPlacePictures || 0) + count;
     }
   };
+  // The gallery kept a 120x90 thumbnail of each drawing and opened the full
+  // picture in a second window. The archive saved the thumbnails and almost
+  // none of the pictures — but Luke reposted the artwork to his desk years
+  // later, at full size, and it is still there. Where a thumbnail and a desk
+  // picture are the same drawing, the drawing goes back into the gallery under
+  // the name the page asks for, so clicking a thumbnail opens Luke's own work
+  // again instead of nothing.
+  let galleryOriginals = 0;
+  const galleryMismatches = [];
+  const restoreGalleryOriginals = async (directory) => {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) { await restoreGalleryOriginals(file); continue; }
+      const match = GALLERY_MATCHES.find(
+        (item) => item.from && item.thumb.toLowerCase() === entry.name.toLowerCase(),
+      );
+      if (!match) continue;
+      const asked = path.join(directory, entry.name.replace(/_th\.(jpe?g|gif)$/i, '.jpg'));
+      if (existsSync(asked)) continue;
+      const source = path.join(appRoot, 'public', match.from.replace(/^\//, ''));
+      if (!existsSync(source)) continue;
+      const likeness = await copyIfSameDrawing(source, file, asked);
+      if (existsSync(asked)) galleryOriginals += 1;
+      else galleryMismatches.push(`${path.relative(destination, file)} ≠ ${match.from} (${likeness.toFixed(2)})`);
+    }
+  };
+  await restoreGalleryOriginals(destination);
+  if (galleryOriginals) stats.galleryOriginals = (stats.galleryOriginals || 0) + galleryOriginals;
+  for (const mismatch of galleryMismatches) console.log(`  같은 이름 다른 그림이라 넣지 않았다: ${mismatch}`);
+
   await openInPlace(destination);
 
   // A picture the archive never kept used to answer a click with a message

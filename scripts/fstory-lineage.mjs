@@ -191,6 +191,14 @@ export const GALLERY_MATCHES = [
   { thumb: 'noel_th.jpg', title: '메리크리스마스', year: '2000', from: '/desk/20060620-메리크리스마스-일러스트-창작물/01.webp' },
   { thumb: 'windy_th.jpg', title: '바람부는 해변', year: '2003', from: '/desk/20060620-바람부는-해변-일러스트-창작물/01.webp' },
   { thumb: 'dream_th.jpg', title: '거위의 꿈', year: '2002', from: '/desk/20140410-거위의-꿈/01.webp' },
+  // Found by comparing the pictures themselves rather than their names. Each of
+  // these three scored 0.999 or better against the surviving thumbnail on a
+  // normalised greyscale comparison, where the next best candidate scored 0.62.
+  // The gallery's own captions agree: 사진든 소녀 and 용의 계곡 are written on
+  // the page beside them.
+  { thumb: 'space_th.jpg', title: '날고 싶은 소년', matchedBy: 'image', from: '/desk/20060620-날고-싶은-소년-일러스트-창작물/01.webp' },
+  { thumb: 'dragon_th.jpg', title: '용의 계곡', matchedBy: 'image', from: '/desk/20060620-용의-계곡-일러스트-창작물/01.webp' },
+  { thumb: 'Picgirl_th.jpg', title: '사진을 들고 있는 소녀', matchedBy: 'image', from: '/desk/20060620-사진을-들고-있는-소녀-일러스트-창작물/01.webp' },
 ];
 
 export const PATH_ALIASES = [
