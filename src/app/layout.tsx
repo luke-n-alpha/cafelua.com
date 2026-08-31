@@ -7,14 +7,14 @@ const GA_ID = 'G-Y6Y0KRRKMS';
 const SITE_DESCRIPTION = '루크와 알파가 함께 운영하는 작은 가상 카페. 계절과 날씨에 따라 달라지는 공간에서 커피챗, 타로, 기록을 만납니다.';
 
 export const metadata: Metadata = {
-    metadataBase: new URL('https://cafelua.com'),
+    metadataBase: new URL('https://www.cafelua.com'),
     title: {
         default: '카페루아 (Café Luα)',
         template: '%s | 카페루아'
     },
     description: SITE_DESCRIPTION,
     applicationName: 'Cαfé Luα',
-    authors: [{ name: 'Luke Yang', url: 'https://cafelua.com' }],
+    authors: [{ name: 'Luke Yang', url: 'https://www.cafelua.com' }],
     creator: 'Luke Yang',
     publisher: 'Cαfé Luα',
     category: 'personal website',
