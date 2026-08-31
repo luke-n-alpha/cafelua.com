@@ -29,6 +29,11 @@ const legacy1998Root = path.join(appRoot, 'public/1998-homepage');
 const cyworldComebackImage = path.join(dataRoot, 'manual/cycomeback_fstory97.jpg');
 
 const NOTICE_PAGE = '_unrestored.html';
+// A pane inside a frameset is furniture, not a destination. Telling a visitor
+// there that something is missing puts a notice card in the middle of a page
+// they did not ask a question about, so an unrestorable pane gets a quiet one
+// instead. What was there is still recorded on the frame and in the report.
+const QUIET_PANE = '_quiet.html';
 const DYNAMIC = new Set(['.php', '.cgi', '.asp']);
 const mergedGuestbook = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -89,6 +94,10 @@ const scanTags = (text) => {
 };
 const ATTRIBUTE_PATTERN = /([a-zA-Z_:][\w:.-]*)\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/g;
 const CSS_URL_PATTERN = /url\(\s*(["']?)([^)"']+)\1\s*\)/gi;
+// `<meta http-equiv="refresh" content="0; url=...">`. The kept editions use it
+// to bridge a case difference — Crack_ftp.html forwards to crack_ftp.html — so
+// leaving it unrewritten leaves a redirect pointing at a file nobody copied.
+const META_REFRESH_PATTERN = /(<meta[^>]*http-equiv\s*=\s*["']?refresh["']?[^>]*content\s*=\s*["'][^"']*?url\s*=\s*)([^"';\s]+)/gi;
 const SCRIPT_URL_PATTERN = /((?:window\.open|location\.replace|location\.href\s*=|location\s*=)\s*\(?\s*)(["'])([^"']+)\2/gi;
 // Rollover menus preload their artwork with `image.src = "…"`, which no attribute
 // rewrite can reach. A dead one requests a file that is not there.
@@ -181,15 +190,29 @@ const curatedRoots = [
   { label: '1997-homepage', root: path.join(appRoot, 'public/1997-homepage') },
 ];
 const curatedByName = new Map();
+// Pages are matched on the whole path, never on the filename alone. A page is
+// the site's writing, and two files called `poe_tab.html` in different folders
+// are different writing; a picture called `face.jpg` is the same photograph
+// wherever the site filed it.
+const curatedByPath = new Map();
 const indexCurated = async (root, label, directory = root) => {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const file = path.join(directory, entry.name);
     if (entry.isDirectory()) { await indexCurated(root, label, file); continue; }
-    if (!imageExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+    const relative = path.relative(root, file).replaceAll('\\', '/');
+    const extension = path.extname(entry.name).toLowerCase();
+    if (htmlExtensions.has(extension)) {
+      // Two files can differ only by case — the edition ships `Crack_ftp.html`
+      // as a meta-refresh to `crack_ftp.html`, which holds the actual page.
+      // Keep both, so a request gets the one it actually named and never a
+      // redirect pointing back at a file that was not copied.
+      const key = relative.toLowerCase();
+      curatedByPath.set(key, [...(curatedByPath.get(key) || []), { label, file, relative }]);
+      continue;
+    }
+    if (!imageExtensions.has(extension)) continue;
     const key = entry.name.toLowerCase();
-    curatedByName.set(key, [...(curatedByName.get(key) || []), {
-      label, file, relative: path.relative(root, file).replaceAll('\\', '/'),
-    }]);
+    curatedByName.set(key, [...(curatedByName.get(key) || []), { label, file, relative }]);
   }
 };
 for (const { root, label } of curatedRoots) {
@@ -469,7 +492,7 @@ const publishEdition = async ({ lineage, captures }) => {
     placeholderImages: 0, droppedBackgrounds: 0, disabledDownloads: 0, disabledMedia: 0,
     disabledForms: 0, noticeLinks: 0, unresolvedKept: 0, extensionsAdded: 0,
     staticised: 0, guestbookMerged: 0, curatedRestored: 0, reconstructedAssets: 0, thumbnailsMade: 0,
-    unpinnedBlocks: 0, unpinnedBlocks: 0,
+    unpinnedBlocks: 0, curatedPages: 0, quietPanes: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
   };
 
@@ -619,6 +642,48 @@ const publishEdition = async ({ lineage, captures }) => {
           if (isAlias) stats.aliasResolved += 1;
           return { kind: 'local', relative: await pullFromArchive(record, record.sitePath), url };
         }
+      }
+    }
+
+    // A page the archive missed may still be in Luke's own copy of the site.
+    // Matched on the full path, and on the path with an era prefix removed:
+    // `netian/bbs/bbs_tab.html` is the same page as `bbs/bbs_tab.html`, filed
+    // under the address the site lived at before the domain.
+    if (htmlExtensions.has(path.extname(relative).toLowerCase())) {
+      const withoutEra = relative.replace(/^(netian|chollian)\//i, '');
+      const candidates = curatedByPath.get(relative.toLowerCase()) || curatedByPath.get(withoutEra.toLowerCase());
+      // Prefer the file whose name matches exactly; fall back to the case-
+      // insensitive match only when nothing matches outright.
+      const kept = candidates?.find((item) => item.relative === relative || item.relative === withoutEra)
+        || candidates?.[0];
+      if (kept) {
+        const output = path.join(destination, relative);
+        if (!existsSync(output)) {
+          await mkdir(path.dirname(output), { recursive: true });
+          await cp(kept.file, output, { force: true, preserveTimestamps: true });
+        }
+        // Where the edition ships more than one spelling of the same path, take
+        // them all. One of them is usually a redirect to the other, and copying
+        // only the one that was asked for leaves that redirect pointing at
+        // nothing — or, once rewritten case-insensitively, at itself.
+        for (const sibling of candidates || []) {
+          if (sibling === kept) continue;
+          const prefix = relative.slice(0, relative.length - path.basename(relative).length);
+          const alias = `${prefix}${path.basename(sibling.relative)}`;
+          const aliasOutput = path.join(destination, alias);
+          if (existsSync(aliasOutput)) continue;
+          await mkdir(path.dirname(aliasOutput), { recursive: true });
+          await cp(sibling.file, aliasOutput, { force: true, preserveTimestamps: true });
+          onDisk.set(alias.toLowerCase(), alias);
+          occupied.add(alias.toLowerCase());
+          restored.push({ url: url.href, path: alias, from: `${sibling.label}/${sibling.relative}`, source: 'luke-kept-page' });
+          stats.curatedPages += 1;
+        }
+        onDisk.set(relative.toLowerCase(), relative);
+        occupied.add(relative.toLowerCase());
+        restored.push({ url: url.href, path: relative, from: `${kept.label}/${kept.relative}`, source: 'luke-kept-page' });
+        stats.curatedPages += 1;
+        return { kind: 'local', relative, url };
       }
     }
 
@@ -922,6 +987,25 @@ const publishEdition = async ({ lineage, captures }) => {
         }
       }
 
+      for (const match of [...output.matchAll(META_REFRESH_PATTERN)]) {
+        const outcome = await resolve(match[2], sourceRelative);
+        if (outcome.kind === 'local') {
+          // A case-insensitive match can resolve a redirect onto the very file
+          // that holds it, which is a loop. Leave it as written; the sibling
+          // copy it names is published beside it.
+          if (outcome.relative === sourceRelative) continue;
+          const next = relativeTo(sourceRelative, outcome.relative) + (outcome.url.search || '');
+          if (next !== match[2]) {
+            output = output.replace(match[0], `${match[1]}${next}`);
+            stats.rewrittenReferences += 1;
+          }
+        } else if (outcome.kind === 'missing') {
+          output = output.replace(match[0], `${match[1]}${noticeHref(sourceRelative, outcome.url, 'page')}`);
+          stats.noticeLinks += 1;
+          noteUnresolved(outcome.url, 'notice-refresh');
+        }
+      }
+
       const scriptTargets = [...output.matchAll(SCRIPT_URL_PATTERN)];
       for (const match of scriptTargets) {
         const outcome = await resolve(match[3], sourceRelative);
@@ -967,6 +1051,21 @@ const publishEdition = async ({ lineage, captures }) => {
       const rewritten = await rewriteText(text, relative, extension);
       await writeFile(output, withCharset(rewritten, extension), 'utf8');
     }
+  }
+
+  // One more pass over everything. A page pulled in near the end of the sweep —
+  // from Luke's kept copies, say — can carry references that were resolvable
+  // only once the rest of the tree existed. Rewriting is idempotent, so the
+  // second pass changes nothing that was already right.
+  processed.clear();
+  for (const relative of [...onDisk.values()]) {
+    if (!textExtensions.has(path.extname(relative).toLowerCase())) continue;
+    const output = path.join(destination, relative);
+    if (!existsSync(output)) continue;
+    const extension = path.extname(relative).toLowerCase();
+    const text = decode(await readFile(output));
+    const rewritten = await rewriteText(text, relative, extension);
+    await writeFile(output, withCharset(rewritten, extension), 'utf8');
   }
 
   // A block positioned at a fixed offset was placed against a picture that sat
@@ -1016,6 +1115,40 @@ const publishEdition = async ({ lineage, captures }) => {
   const palette = `background: ${bodyColour && /^#?[0-9a-z]+$/i.test(bodyColour) ? (bodyColour.startsWith('#') ? bodyColour : `#${bodyColour}`.replace(/^#(white|black)$/i, '#ffffff')) : '#ffffff'}`;
   await writeFile(path.join(destination, NOTICE_PAGE), noticeDocument({ timestamp, date }, palette), 'utf8');
   await writeFile(path.join(destination, PLACEHOLDER_IMAGE), placeholderDocument, 'utf8');
+  await writeFile(path.join(destination, QUIET_PANE), `<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title> </title>
+<style>html,body{margin:0;height:100%;${palette};}</style>
+</head>
+<body></body>
+</html>
+`, 'utf8');
+
+  // Point every unrestorable pane at it. Frames only — a link still says what
+  // it cannot reach, because there the visitor asked.
+  const quietenPanes = async (directory) => {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) { await quietenPanes(file); continue; }
+      if (!htmlExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+      const text = decode(await readFile(file));
+      if (!/<i?frame[^>]*_unrestored/i.test(text)) continue;
+      const relative = path.relative(destination, file).replaceAll('\\', '/');
+      const quiet = path.posix.relative(path.posix.dirname(relative), QUIET_PANE) || QUIET_PANE;
+      let count = 0;
+      const output = text.replace(/<(i?frame)([^>]*?)src\s*=\s*"([^"]*_unrestored[^"]*)"/gi, (whole, tag, head, src) => {
+        count += 1;
+        const wanted = /[?&]p=([^&"]+)/.exec(src);
+        const address = wanted ? decodeURIComponent(wanted[1]) : '';
+        return `<${tag}${head}src="${quiet}" data-unrestored-pane="${address.replace(/"/g, '&quot;')}"`;
+      });
+      if (count) {
+        await writeFile(file, output, 'utf8');
+        stats.quietPanes += count;
+      }
+    }
+  };
+  await quietenPanes(destination);
 
   return {
     timestamp, date, lineage: lineage.id, cyworldRewrites,
@@ -1147,6 +1280,30 @@ const mergedMenuNotes = [];
       </td></tr>`
     : '';
 
+  // Frames that were left showing the "not restored" card, where the corner has
+  // a surviving page of the same subject. The AI corner's left pane called
+  // ai/movie/movie1.html, which was never archived; tech/movie/movie.html is
+  // that very list — "영화/게임/에니 등의 상상속의 AI에 대한 개인적 고찰", with 투하트의
+  // 멀티 and AI의 DAVID under it — and the tech menu links it as 영화속의AI.
+  const FRAME_STANDINS = [
+    ['ai/ai.html', /%2Fai%2Fmovie%2Fmovie1\.html/i, '../tech/movie/movie.html'],
+  ];
+  for (const [page, wanted, standin] of FRAME_STANDINS) {
+    const target = path.join(merged, page);
+    if (!existsSync(target)) continue;
+    const resolved = path.join(path.dirname(target), standin);
+    if (!existsSync(resolved)) continue;
+    const text = await readFile(target, 'utf8');
+    const next = text.replace(
+      new RegExp(`src="[^"]*_unrestored[^"]*${wanted.source}[^"]*"`, 'i'),
+      `src="${standin}"`,
+    );
+    if (next !== text) {
+      await writeFile(target, next, 'utf8');
+      mergedMenuNotes.push(`${page} 프레임 → ${standin}`);
+    }
+  }
+
   // The opening pane has to follow the same choice the menu made, or the
   // edition greets a visitor with the empty Zeroboard frame.
   const contentPath = path.join(merged, 'content.html');
@@ -1195,7 +1352,8 @@ ${characterArt}
     rewrittenReferences: 0, placeholderImages: 0, droppedBackgrounds: 0,
     disabledDownloads: 0, disabledMedia: 0, disabledForms: 0, noticeLinks: 0,
     unresolvedKept: 0, extensionsAdded: 0, staticised: 0, guestbookMerged: 0,
-    curatedRestored: 0, reconstructedAssets: 0, thumbnailsMade: 0, unpinnedBlocks: 0,
+    curatedRestored: 0, curatedPages: 0, reconstructedAssets: 0, thumbnailsMade: 0, unpinnedBlocks: 0,
+    quietPanes: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
     cyworldRewrites: 0, unresolvedUniquePaths: 0, unresolved: [], restored: [],
   });
@@ -1512,6 +1670,8 @@ await writeFile(path.join(destinationRoot, 'restoration-report.json'), `${JSON.s
     staticised: totals('staticised'),
     guestbookMerged: totals('guestbookMerged'),
     curatedRestored: totals('curatedRestored'),
+    curatedPages: totals('curatedPages'),
+    quietPanes: totals('quietPanes'),
     reconstructedAssets: totals('reconstructedAssets'),
     thumbnailsMade: totals('thumbnailsMade'),
     unpinnedBlocks: totals('unpinnedBlocks'),
@@ -1699,6 +1859,8 @@ console.log(JSON.stringify({
   staticised: totals('staticised'),
   guestbookMerged: totals('guestbookMerged'),
   curatedRestored: totals('curatedRestored'),
+  curatedPages: totals('curatedPages'),
+  quietPanes: totals('quietPanes'),
   reconstructedAssets: totals('reconstructedAssets'),
   thumbnailsMade: totals('thumbnailsMade'),
   unpinnedBlocks: totals('unpinnedBlocks'),
