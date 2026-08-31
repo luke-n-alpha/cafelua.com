@@ -12,9 +12,7 @@ externalUrl: https://blog.naver.com/fstory97/70005184812
 ---
 
 <!-- ko -->
-**2021년 작가의 말 ** - 본 단편소설은 1998년도에 썼던 글로 오늘날의 성감수성 정서와 다소 안맞을 수 있는 점을 미리 알려드립니다. - 수정을 하지 않는 이유는 부족한 글이지만 어릴 때 글이라 차마 손을 못대겠습니다.
-
-양해 부탁드립니다.​--바삐 돌아가고 있는 신문사.
+바삐 돌아가고 있는 신문사.
 
 그리 대단한 영향력을 가지고  있지도 않았고, 판매  부수도 업계의 탑을 다투는 위치도 아니다.
 
@@ -1739,9 +1737,7 @@ R.
 #인공지능
 
 <!-- en -->
-**Author's Note 2021** - Please be aware that this short story was written in 1998, and some of its content may not align with today's sensibilities regarding gender sensitivity. - The reason for not making revisions is that, despite its flaws, it's a piece from my youth, and I can't bring myself to touch it. I ask for your understanding.
-
---The bustling newspaper office. It didn't wield much influence, nor was its circulation among the industry's top contenders. And it certainly didn't possess any grand journalistic spirit. It was just an ordinary place, churning out gossip as gossip, and news as news. This was where I worked. And what was I doing here for? I thought it was time to decide.
+The bustling newspaper office. It didn't wield much influence, nor was its circulation among the industry's top contenders. And it certainly didn't possess any grand journalistic spirit. It was just an ordinary place, churning out gossip as gossip, and news as news. This was where I worked. And what was I doing here for? I thought it was time to decide.
 
 "Did it go well, Ms. Kim Hyerim?" The editor-in-chief, with a slightly aquiline nose that would suit a villain, called out to me from in front.
 
