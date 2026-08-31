@@ -25,6 +25,7 @@
  */
 
 import { readFile, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -37,7 +38,28 @@ const OUT_FILE = path.join(appRoot, 'scripts/fstory-translation-review.json');
 const SHORT_AT = 0.75;
 const HANGUL = /[가-힣]/g;
 
+
+/**
+ * A translation done by hand, kept as scripts/translations/<제목>.en.txt.
+ *
+ * The pipeline's translations are what they are; where one of them failed the
+ * review, the story is translated properly and the result put here. A file in
+ * that folder always wins over the pipeline's version, so the review and the
+ * book both read the same text and a retranslation shows up as a plain diff.
+ */
+const HAND_TRANSLATED = path.join(appRoot, 'scripts/translations');
+const handTranslation = async (title) => {
+  const file = path.join(HAND_TRANSLATED, `${title}.en.txt`);
+  if (!existsSync(file)) return null;
+  const text = (await readFile(file, 'utf8')).trim();
+  return text ? { title: null, text, by: 'hand' } : null;
+};
+
 const { stories } = JSON.parse(await readFile(STORIES, 'utf8'));
+for (const story of stories) {
+  const hand = await handTranslation(story.title);
+  if (hand) story.english = hand;
+}
 
 const measure = (story) => {
   const korean = story.text ?? '';

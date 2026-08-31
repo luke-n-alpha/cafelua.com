@@ -299,6 +299,23 @@ const looseTitle = (title) => title
 const TRANSLATION_REVIEW = path.join(appRoot, 'scripts/fstory-translation-review.json');
 
 /**
+ * A translation done by hand, kept as scripts/translations/<제목>.en.txt.
+ *
+ * The pipeline's translations are what they are; where one of them failed the
+ * review, the story is translated properly and the result put here. A file in
+ * that folder always wins over the pipeline's version, so the review and the
+ * book both read the same text and a retranslation shows up as a plain diff.
+ */
+const HAND_TRANSLATED = path.join(appRoot, 'scripts/translations');
+const handTranslation = async (title) => {
+  const file = path.join(HAND_TRANSLATED, `${title}.en.txt`);
+  if (!existsSync(file)) return null;
+  const text = (await readFile(file, 'utf8')).trim();
+  return text ? { title: null, text, by: 'hand' } : null;
+};
+
+
+/**
  * 영어 판본. 한국어와 같은 순서, 같은 연도 표기.
  *
  * Only the translations that pass scripts/review-short-story-translations.mjs
@@ -318,6 +335,8 @@ const buildShortStoriesEn = async () => {
   const chapters = [];
   const held = [];
   for (const story of recovered) {
+    const hand = await handTranslation(story.title);
+    if (hand) story.english = hand;
     if (!story.english?.text?.trim()) continue;
     if (review.get(story.title)?.verdict === 'rejected') { held.push(story); continue; }
     // The pipeline kept the Korean title's parenthetical year in the English
