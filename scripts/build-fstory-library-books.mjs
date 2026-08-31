@@ -317,6 +317,7 @@ const COVER_SOURCES = {
   'fstory-thought-notes': '/var/home/luke/다운로드/ChatGPT Image 2026년 8월 31일 오후 07_36_37.png',
   'fstory-windy': '/var/home/luke/다운로드/ChatGPT Image 2026년 8월 31일 오후 08_37_46.png',
   'fstory-windy-en': '/var/home/luke/다운로드/ChatGPT Image 2026년 8월 31일 오후 08_39_49.png',
+  'fstory-short-stories': '/var/home/luke/다운로드/1c332f26-a886-4d1a-b65a-783ae42396fd.png',
 };
 
 const placeCover = async (slug) => {
