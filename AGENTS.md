@@ -242,7 +242,7 @@ systemctl restart cafelua
 
 `src/middleware.ts` 는 `x-azure-fdid` 헤더가 `AZURE_FRONT_DOOR_ID` 와 맞지 않으면 403 Forbidden 을 냅니다. Front Door 를 우회해 오리진에 직접 붙으면 403 이 나므로, 이 사실을 모르면 오리진이 죽은 줄로 오해하게 됩니다.
 
-Azure Container App `ca-cafelua-prod` 는 **서빙 경로가 아닙니다.** 같은 앱 코드가 올라가 있어 헷갈리기 쉬운 미사용 잔재이고, 정리 여부는 아직 정해지지 않았습니다.
+Azure Container App `ca-cafelua-prod` 는 **서빙 경로가 아닙니다.** 같은 앱 코드가 올라가 있어 헷갈리기 쉬운 미사용 잔재이고, 2026년 9월 1일에 삭제했습니다.
 
 ### 배포 확인의 함정
 
@@ -260,3 +260,13 @@ Azure Container App `ca-cafelua-prod` 는 **서빙 경로가 아닙니다.** 같
 > 바이브 코딩 시대, AI 컨텍스트는 코드만큼 가치 있는 자산입니다.
 > 이 프로젝트의 패턴이 도움이 되었다면 후원으로 응원해주세요.
 > https://naia.nextain.io/donation
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

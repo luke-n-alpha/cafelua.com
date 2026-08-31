@@ -61,9 +61,9 @@ Copy `.env.example` to `.env`:
 
 | Variable | Required | Description |
 |----------|:--------:|-------------|
-| `AI_GATEWAY_API_KEY` | ✅* | Vercel AI Gateway key for local/CI. Production can use Vercel OIDC. |
-| `CAFELUA_COFFEE_CHAT_MODEL` | — | Coffee chat model override. Default: `google/gemini-3.1-flash-lite` |
-| `CAFELUA_TAROT_CHAT_MODEL` | — | Tarot chat model override. Default: `google/gemini-3.1-flash-lite` |
+| `GEMINI_API_KEY` | ✅ | Gemini API key used by server-side chat routes. |
+| `CAFELUA_COFFEE_CHAT_MODEL` | — | Coffee chat model override. Default: `gemini-3.1-flash-lite` |
+| `CAFELUA_TAROT_CHAT_MODEL` | — | Tarot chat model override. Default: `gemini-3.1-flash-lite` |
 | `FIREBASE_CLIENT_EMAIL` | ✅* | Firebase Admin SDK service account email |
 | `FIREBASE_PRIVATE_KEY` | ✅* | Firebase Admin SDK private key |
 | `NEXT_PUBLIC_FIREBASE_*` | ✅* | Firebase client config (apiKey, projectId, etc.) |
@@ -189,7 +189,7 @@ Pushing alone deploys nothing, and there is no CI — this repo has no `.github`
 
 `src/middleware.ts` returns 403 Forbidden when the `x-azure-fdid` header does not match `AZURE_FRONT_DOOR_ID`. Hitting the origin directly, bypassing Front Door, therefore returns 403; without knowing that you will mistake a healthy origin for a dead one.
 
-The Azure Container App `ca-cafelua-prod` is **not on the serving path.** It is an unused leftover running the same app code, which makes it easy to confuse; whether to clean it up has not been decided.
+The Azure Container App `ca-cafelua-prod` is **not on the serving path.** It is an unused leftover running the same app code, which makes it easy to confuse; It was deleted on 1 September 2026.
 
 ### Pitfalls when verifying a deploy
 

@@ -61,9 +61,9 @@ API 키 없이도 사이트는 동작합니다 (AI 채팅, 방명록, 날씨 기
 
 | 변수명 | 필수 | 설명 |
 |--------|:----:|------|
-| `AI_GATEWAY_API_KEY` | ✅* | 로컬/CI용 Vercel AI Gateway 키. 프로덕션은 Vercel OIDC 사용 가능 |
-| `CAFELUA_COFFEE_CHAT_MODEL` | — | 커피챗 모델 override. 기본값: `google/gemini-3.1-flash-lite` |
-| `CAFELUA_TAROT_CHAT_MODEL` | — | 타로챗 모델 override. 기본값: `google/gemini-3.1-flash-lite` |
+| `GEMINI_API_KEY` | ✅ | 서버 측 채팅 경로에서 사용하는 Gemini API 키 |
+| `CAFELUA_COFFEE_CHAT_MODEL` | — | 커피챗 모델 override. 기본값: `gemini-3.1-flash-lite` |
+| `CAFELUA_TAROT_CHAT_MODEL` | — | 타로챗 모델 override. 기본값: `gemini-3.1-flash-lite` |
 | `FIREBASE_CLIENT_EMAIL` | ✅* | Firebase Admin SDK 서비스 계정 이메일 |
 | `FIREBASE_PRIVATE_KEY` | ✅* | Firebase Admin SDK 비공개 키 |
 | `NEXT_PUBLIC_FIREBASE_*` | ✅* | Firebase 클라이언트 설정 (apiKey, projectId 등) |
@@ -189,7 +189,7 @@ systemctl restart cafelua
 
 `src/middleware.ts` 는 `x-azure-fdid` 헤더가 `AZURE_FRONT_DOOR_ID` 와 맞지 않으면 403 Forbidden 을 냅니다. Front Door 를 우회해 오리진에 직접 붙으면 403 이 나므로, 이 사실을 모르면 오리진이 죽은 줄로 오해하게 됩니다.
 
-Azure Container App `ca-cafelua-prod` 는 **서빙 경로가 아닙니다.** 같은 앱 코드가 올라가 있어 헷갈리기 쉬운 미사용 잔재이고, 정리 여부는 아직 정해지지 않았습니다.
+Azure Container App `ca-cafelua-prod` 는 **서빙 경로가 아닙니다.** 같은 앱 코드가 올라가 있어 헷갈리기 쉬운 미사용 잔재이고, 2026년 9월 1일에 삭제했습니다.
 
 ### 배포 확인의 함정
 
