@@ -70,14 +70,7 @@ const ANNEX_BY_ID = new Map<string, (typeof FSTORY_ANNEXES)[number]>(
 // The restore-point list covers the whole timeline, so the two curated editions
 // belong to it as much as the archived ones.
 const CURATED_BY_ID = new Map(FSTORY_CURATED_EDITIONS.map((edition) => [edition.id, edition]));
-const CURATED_TARGET: Record<string, IeTarget> = { C1997: '1997', C1998: '1998' };
 const TARGET_TO_CURATED: Record<string, string> = { '1997': 'C1997', '1998': 'C1998' };
-
-const isFstorySnapshot = (target: IeTarget): target is FstoryEditionDirectory =>
-    FSTORY_EDITION_BY_DIRECTORY.has(target as FstoryEditionDirectory)
-    || ANNEX_BY_ID.has(target)
-    || target === '1997'
-    || target === '1998';
 
 const formatClock = (date: Date) => {
     const hours = String(date.getHours()).padStart(2, '0');

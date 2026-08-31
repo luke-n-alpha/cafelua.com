@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
-import { SITEMAP_SECTIONS } from '@/data/sitemapData';
+import { SITEMAP_SECTIONS, isRecentlyUpdated } from '@/data/sitemapData';
 import { resolveEnvironmentBackgroundSrc, type Season, type TimeOfDay, type Weather } from '@/lib/environmentBackgrounds';
 import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 import './AboutModal.css';
@@ -124,6 +124,14 @@ const AboutModal: React.FC<AboutModalProps> = ({ activeTab: initialTab, onClose 
                                                     >
                                                         <span className="about-sitemap-link-label">
                                                             {isKo ? item.labelKo : item.labelEn}
+                                                            {isRecentlyUpdated(item) && (
+                                                                <span
+                                                                    className="about-sitemap-new"
+                                                                    title={isKo ? '최근에 새로 들어온 것이 있습니다' : 'Something new arrived recently'}
+                                                                >
+                                                                    NEW
+                                                                </span>
+                                                            )}
                                                         </span>
                                                         {(isKo ? item.descKo : item.descEn) && (
                                                             <span className="about-sitemap-link-desc">

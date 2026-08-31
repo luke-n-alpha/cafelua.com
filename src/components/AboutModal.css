@@ -300,3 +300,19 @@
         padding: 14px 14px 12px 14px;
     }
 }
+
+/* Marks a corner whose contents changed in the last few weeks. The date lives
+   with the item in sitemapData, so the badge falls off on its own. */
+.about-sitemap-new {
+    display: inline-block;
+    margin-left: 0.5em;
+    padding: 0.05em 0.4em;
+    border-radius: 0.7em;
+    background: #c0392b;
+    color: #fff;
+    font-size: 0.62em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    vertical-align: 0.18em;
+    line-height: 1.5;
+}
