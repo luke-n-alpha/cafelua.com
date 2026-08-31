@@ -163,6 +163,70 @@ const closestTo = (records, timestamp) => [...records].sort((a, b) => {
   return da - db || a.timestamp.localeCompare(b.timestamp);
 })[0];
 
+// ------------------------------------------------- Luke's own surviving copies
+//
+// The pictures on this site were Luke's own, and he kept the 1997 and
+// 1998–2001.07 editions himself. When Wayback never stored a picture, the same
+// file is often still sitting in one of those two folders, because the site
+// carried its artwork forward every time it was rebuilt.
+//
+// Matching by filename is exactly what this restoration refuses to do
+// everywhere else, and for good reason: the Zeroboard skins ship the same
+// filenames in a dozen colour variants. The exception holds here because both
+// source folders are Luke's own hand-kept copies of this same site rather than
+// third-party artwork, and because skin trees are excluded outright below.
+// Every hit records where it came from, so a wrong one is findable.
+const curatedRoots = [
+  { label: '1998-homepage', root: path.join(appRoot, 'public/1998-homepage') },
+  { label: '1997-homepage', root: path.join(appRoot, 'public/1997-homepage') },
+];
+const curatedByName = new Map();
+const indexCurated = async (root, label, directory = root) => {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const file = path.join(directory, entry.name);
+    if (entry.isDirectory()) { await indexCurated(root, label, file); continue; }
+    if (!imageExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+    const key = entry.name.toLowerCase();
+    curatedByName.set(key, [...(curatedByName.get(key) || []), {
+      label, file, relative: path.relative(root, file).replaceAll('\\', '/'),
+    }]);
+  }
+};
+for (const { root, label } of curatedRoots) {
+  if (existsSync(root)) await indexCurated(root, label);
+}
+
+// Rebuilt assets. These are not archive material and not Luke's own files: they
+// are reconstructed from what did survive, and they are counted separately in
+// every report so the distinction never blurs. See the script named in each
+// folder's README for the evidence behind one.
+const reconstructedRoots = [
+  { label: 'menu-buttons', root: path.join(dataRoot, 'manual/menu-buttons'), by: 'scripts/make-fstory-menu-buttons.py' },
+];
+const reconstructedByName = new Map();
+for (const { root, label, by } of reconstructedRoots) {
+  if (!existsSync(root)) continue;
+  for (const entry of await readdir(root, { withFileTypes: true })) {
+    if (entry.isDirectory()) continue;
+    reconstructedByName.set(entry.name.toLowerCase(), { label, by, file: path.join(root, entry.name) });
+  }
+}
+
+// A colour-variant skin folder is the one place filenames genuinely lie, so the
+// curated lookup never applies inside one.
+const isSkinPath = (relative) => /(^|\/)(skin|skins|icon|images)\//i.test(relative);
+
+// When the same filename survives in more than one place, prefer the copy whose
+// folders overlap the address being restored.
+const closestCurated = (candidates, wanted) => {
+  const parts = wanted.toLowerCase().split('/').slice(0, -1);
+  return [...candidates].sort((a, b) => {
+    const score = (item) => item.relative.toLowerCase().split('/').slice(0, -1)
+      .filter((segment) => parts.includes(segment)).length;
+    return score(b) - score(a) || a.relative.length - b.relative.length;
+  })[0];
+};
+
 const aliasOf = (relative) => {
   for (const { from, to } of PATH_ALIASES) {
     if (relative.toLowerCase().startsWith(from.toLowerCase())) return to + relative.slice(from.length);
@@ -383,7 +447,7 @@ const publishEdition = async ({ lineage, captures }) => {
     rewrittenReferences: 0, restoredFromArchive: 0, aliasResolved: 0, caseResolved: 0,
     placeholderImages: 0, droppedBackgrounds: 0, disabledDownloads: 0, disabledMedia: 0,
     disabledForms: 0, noticeLinks: 0, unresolvedKept: 0, extensionsAdded: 0,
-    staticised: 0, guestbookMerged: 0,
+    staticised: 0, guestbookMerged: 0, curatedRestored: 0, reconstructedAssets: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
   };
 
@@ -535,6 +599,40 @@ const publishEdition = async ({ lineage, captures }) => {
         }
       }
     }
+
+    // Last resort before giving up on a picture: Luke's own kept copies.
+    const extension = path.extname(relative).toLowerCase();
+    if (imageExtensions.has(extension) && !isSkinPath(relative)) {
+      const candidates = curatedByName.get(path.basename(relative).toLowerCase());
+      if (candidates?.length) {
+        const pick = closestCurated(candidates, relative);
+        const output = path.join(destination, relative);
+        if (!existsSync(output)) {
+          await mkdir(path.dirname(output), { recursive: true });
+          await cp(pick.file, output, { force: true, preserveTimestamps: true });
+        }
+        onDisk.set(relative.toLowerCase(), relative);
+        occupied.add(relative.toLowerCase());
+        restored.push({ url: url.href, path: relative, from: `${pick.label}/${pick.relative}`, source: 'luke-kept-copy' });
+        stats.curatedRestored += 1;
+        return { kind: 'local', relative, url, curated: pick };
+      }
+
+      const rebuilt = reconstructedByName.get(path.basename(relative).toLowerCase());
+      if (rebuilt) {
+        const output = path.join(destination, relative);
+        if (!existsSync(output)) {
+          await mkdir(path.dirname(output), { recursive: true });
+          await cp(rebuilt.file, output, { force: true, preserveTimestamps: true });
+        }
+        onDisk.set(relative.toLowerCase(), relative);
+        occupied.add(relative.toLowerCase());
+        restored.push({ url: url.href, path: relative, from: rebuilt.by, source: 'reconstructed' });
+        stats.reconstructedAssets += 1;
+        return { kind: 'local', relative, url, reconstructed: rebuilt };
+      }
+    }
+
     return { kind: 'missing', url, relative };
   };
 
@@ -1130,6 +1228,8 @@ await writeFile(path.join(destinationRoot, 'restoration-report.json'), `${JSON.s
     externalLinks: totals('externalLinks'),
     staticised: totals('staticised'),
     guestbookMerged: totals('guestbookMerged'),
+    curatedRestored: totals('curatedRestored'),
+    reconstructedAssets: totals('reconstructedAssets'),
     cyworldRewrites,
   },
   // The served report stays a summary. The full per-reference detail is large
@@ -1269,6 +1369,8 @@ console.log(JSON.stringify({
   externalLinks: totals('externalLinks'),
   staticised: totals('staticised'),
   guestbookMerged: totals('guestbookMerged'),
+  curatedRestored: totals('curatedRestored'),
+  reconstructedAssets: totals('reconstructedAssets'),
   cyworldRewrites,
   destinationRoot,
 }, null, 2));

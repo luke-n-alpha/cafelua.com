@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T01:46:17.233Z",
+  "generatedAt": "2026-08-31T02:13:42.274Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -31,23 +31,25 @@
     }
   ],
   "totals": {
-    "publishedFiles": 3551,
+    "publishedFiles": 4109,
     "restoredFromArchive": 293,
     "aliasResolved": 1287,
     "caseResolved": 0,
-    "rewrittenReferences": 1675,
-    "placeholderImages": 5377,
-    "droppedBackgrounds": 2538,
+    "rewrittenReferences": 1970,
+    "placeholderImages": 4821,
+    "droppedBackgrounds": 525,
     "disabledDownloads": 18,
     "disabledMedia": 1022,
     "disabledForms": 343,
-    "noticeLinks": 8259,
+    "noticeLinks": 8213,
     "externalImages": 194,
     "externalAssets": 47,
     "externalFrames": 25,
     "externalLinks": 354,
     "staticised": 278,
     "guestbookMerged": 4,
+    "curatedRestored": 520,
+    "reconstructedAssets": 38,
     "cyworldRewrites": 11
   },
   "snapshots": [
@@ -64,13 +66,13 @@
         }
       ],
       "originalFiles": 211,
-      "publishedFiles": 243,
-      "rewrittenReferences": 11,
+      "publishedFiles": 312,
+      "rewrittenReferences": 20,
       "restoredFromArchive": 32,
       "aliasResolved": 9,
       "caseResolved": 0,
-      "placeholderImages": 122,
-      "droppedBackgrounds": 219,
+      "placeholderImages": 48,
+      "droppedBackgrounds": 0,
       "disabledDownloads": 0,
       "disabledMedia": 10,
       "disabledForms": 1,
@@ -79,59 +81,19 @@
       "extensionsAdded": 0,
       "staticised": 0,
       "guestbookMerged": 0,
+      "curatedRestored": 69,
+      "reconstructedAssets": 0,
       "externalImages": 1,
       "externalAssets": 6,
       "externalFrames": 2,
       "externalLinks": 0,
-      "unresolvedUniquePaths": 263,
+      "unresolvedUniquePaths": 194,
       "unresolvedTopPaths": [
-        {
-          "path": "/~fstory/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 145
-        },
-        {
-          "path": "/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 26
-        },
-        {
-          "path": "/~fstory/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 25
-        },
         {
           "path": "/~fstory/gallery/gallery2/gallery2.html",
           "query": "",
           "treatment": "notice-link",
           "count": 9
-        },
-        {
-          "path": "/~fstory/link/space.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 8
-        },
-        {
-          "path": "/~fstory/t_back.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 5
-        },
-        {
-          "path": "/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 5
-        },
-        {
-          "path": "/t_back.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 3
         },
         {
           "path": "/~fstory/gallery/gallery1/97Card/jing.mid",
@@ -146,64 +108,106 @@
           "count": 2
         },
         {
-          "path": "/~fstory/r_notice.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 2
-        },
-        {
-          "path": "/~fstory/r_prof.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 2
-        },
-        {
-          "path": "/~fstory/r_gal.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 2
-        },
-        {
-          "path": "/~fstory/r_novel.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 2
-        },
-        {
-          "path": "/~fstory/r_poem.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 2
-        },
-        {
-          "path": "/~fstory/r_study.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 2
-        },
-        {
-          "path": "/~fstory/r_bbs.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 2
-        },
-        {
           "path": "/~fstory/music/C-sakura.mid",
           "query": "",
           "treatment": "media-disabled",
           "count": 2
         },
         {
-          "path": "/r_notice.gif",
+          "path": "/gallery/gallery3/Pic12.html",
           "query": "",
-          "treatment": "placeholder-image",
+          "treatment": "notice-link",
           "count": 2
         },
         {
-          "path": "/r_prof.gif",
+          "path": "/gallery/gallery3/98Card/xmas.mid",
+          "query": "",
+          "treatment": "media-disabled",
+          "count": 2
+        },
+        {
+          "path": "/gallery/gal_tab.html",
+          "query": "",
+          "treatment": "notice-frame",
+          "count": 1
+        },
+        {
+          "path": "/supp/comm.js",
+          "query": "",
+          "treatment": "inert-asset",
+          "count": 1
+        },
+        {
+          "path": "/mydoc/novel/short/short1.gif",
           "query": "",
           "treatment": "placeholder-image",
-          "count": 2
+          "count": 1
+        },
+        {
+          "path": "/mydoc/novel/short/short2.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 1
+        },
+        {
+          "path": "/mydoc/novel/short/illusion2.html",
+          "query": "",
+          "treatment": "notice-link",
+          "count": 1
+        },
+        {
+          "path": "/~fstory/bbs/bbs_tab.html",
+          "query": "",
+          "treatment": "notice-frame",
+          "count": 1
+        },
+        {
+          "path": "/~fstory/gallery/gallery1/imfy.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 1
+        },
+        {
+          "path": "/~fstory/gallery/gallery1/Ybs1_th.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 1
+        },
+        {
+          "path": "/~fstory/gallery/gallery1/Ybs2_th.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 1
+        },
+        {
+          "path": "/~fstory/gallery/gallery1/Ybs3_th.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 1
+        },
+        {
+          "path": "/~fstory/gallery/gallery1/Pic4.html",
+          "query": "",
+          "treatment": "notice-link",
+          "count": 1
+        },
+        {
+          "path": "/~fstory/gallery/gallery1/Ybs4_th.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 1
+        },
+        {
+          "path": "/~fstory/gallery/gallery1/Ybs5_th.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 1
+        },
+        {
+          "path": "/~fstory/gallery/gallery1/Ybs6_th.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 1
         }
       ]
     },
@@ -220,13 +224,13 @@
         }
       ],
       "originalFiles": 235,
-      "publishedFiles": 274,
-      "rewrittenReferences": 34,
+      "publishedFiles": 352,
+      "rewrittenReferences": 66,
       "restoredFromArchive": 39,
       "aliasResolved": 32,
       "caseResolved": 0,
-      "placeholderImages": 130,
-      "droppedBackgrounds": 255,
+      "placeholderImages": 48,
+      "droppedBackgrounds": 0,
       "disabledDownloads": 0,
       "disabledMedia": 10,
       "disabledForms": 1,
@@ -235,59 +239,19 @@
       "extensionsAdded": 0,
       "staticised": 0,
       "guestbookMerged": 0,
+      "curatedRestored": 78,
+      "reconstructedAssets": 0,
       "externalImages": 2,
       "externalAssets": 6,
       "externalFrames": 3,
       "externalLinks": 0,
-      "unresolvedUniquePaths": 324,
+      "unresolvedUniquePaths": 246,
       "unresolvedTopPaths": [
-        {
-          "path": "/~fstory/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 145
-        },
-        {
-          "path": "/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 51
-        },
-        {
-          "path": "/~fstory/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 25
-        },
-        {
-          "path": "/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 14
-        },
         {
           "path": "/~fstory/gallery/gallery2/gallery2.html",
           "query": "",
           "treatment": "notice-link",
           "count": 9
-        },
-        {
-          "path": "/~fstory/link/space.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 8
-        },
-        {
-          "path": "/~fstory/t_back.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 5
-        },
-        {
-          "path": "/t_back.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 3
         },
         {
           "path": "/gallery/gallery3/Pic12.html",
@@ -299,12 +263,6 @@
           "path": "/link/favorite.html",
           "query": "",
           "treatment": "notice-frame",
-          "count": 2
-        },
-        {
-          "path": "/link/space.jpg",
-          "query": "",
-          "treatment": "background-dropped",
           "count": 2
         },
         {
@@ -320,46 +278,94 @@
           "count": 2
         },
         {
-          "path": "/~fstory/r_notice.gif",
+          "path": "/~fstory/music/C-sakura.mid",
           "query": "",
-          "treatment": "placeholder-image",
+          "treatment": "media-disabled",
           "count": 2
         },
         {
-          "path": "/~fstory/r_prof.gif",
+          "path": "/gallery/gallery3/98Card/xmas.mid",
           "query": "",
-          "treatment": "placeholder-image",
+          "treatment": "media-disabled",
           "count": 2
         },
         {
-          "path": "/~fstory/r_gal.gif",
+          "path": "/~foreststory/top_left.html",
           "query": "",
-          "treatment": "placeholder-image",
-          "count": 2
+          "treatment": "notice-frame",
+          "count": 1
         },
         {
-          "path": "/~fstory/r_novel.gif",
+          "path": "/~foreststory/top_right.html",
           "query": "",
-          "treatment": "placeholder-image",
-          "count": 2
+          "treatment": "notice-frame",
+          "count": 1
         },
         {
-          "path": "/~fstory/r_poem.gif",
+          "path": "/gallery/gal_tab.html",
           "query": "",
-          "treatment": "placeholder-image",
-          "count": 2
+          "treatment": "notice-frame",
+          "count": 1
         },
         {
-          "path": "/~fstory/r_study.gif",
+          "path": "/gallery/gallery3/EndW01.jpg",
           "query": "",
           "treatment": "placeholder-image",
-          "count": 2
+          "count": 1
         },
         {
-          "path": "/~fstory/r_bbs.gif",
+          "path": "/gallery/gallery3/EndW02.jpg",
           "query": "",
           "treatment": "placeholder-image",
-          "count": 2
+          "count": 1
+        },
+        {
+          "path": "/gallery/gallery3/Pic2.html",
+          "query": "",
+          "treatment": "notice-link",
+          "count": 1
+        },
+        {
+          "path": "/gallery/gallery3/EndW01_th.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 1
+        },
+        {
+          "path": "/gallery/gallery3/Pic5.html",
+          "query": "",
+          "treatment": "notice-link",
+          "count": 1
+        },
+        {
+          "path": "/gallery/gallery3/Pic6.html",
+          "query": "",
+          "treatment": "notice-link",
+          "count": 1
+        },
+        {
+          "path": "/gallery/gallery3/window_th.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 1
+        },
+        {
+          "path": "/gallery/gallery3/Pic7.html",
+          "query": "",
+          "treatment": "notice-link",
+          "count": 1
+        },
+        {
+          "path": "/gallery/gallery3/2cy2100_th.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 1
+        },
+        {
+          "path": "/gallery/gallery3/Pic8.html",
+          "query": "",
+          "treatment": "notice-link",
+          "count": 1
         }
       ]
     },
@@ -381,39 +387,29 @@
         }
       ],
       "originalFiles": 670,
-      "publishedFiles": 539,
-      "rewrittenReferences": 372,
+      "publishedFiles": 639,
+      "rewrittenReferences": 431,
       "restoredFromArchive": 142,
       "aliasResolved": 291,
       "caseResolved": 0,
-      "placeholderImages": 582,
-      "droppedBackgrounds": 352,
+      "placeholderImages": 485,
+      "droppedBackgrounds": 25,
       "disabledDownloads": 1,
       "disabledMedia": 168,
       "disabledForms": 38,
-      "noticeLinks": 1200,
+      "noticeLinks": 1189,
       "unresolvedKept": 0,
       "extensionsAdded": 0,
       "staticised": 24,
       "guestbookMerged": 1,
+      "curatedRestored": 92,
+      "reconstructedAssets": 8,
       "externalImages": 45,
       "externalAssets": 9,
       "externalFrames": 5,
       "externalLinks": 47,
-      "unresolvedUniquePaths": 1296,
+      "unresolvedUniquePaths": 1196,
       "unresolvedTopPaths": [
-        {
-          "path": "/~fstory/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 145
-        },
-        {
-          "path": "/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 105
-        },
         {
           "path": "/chollian/cgi/pury/icon/blank.gif",
           "query": "",
@@ -431,12 +427,6 @@
           "query": "?to=&id=Mybbs&member_no=1",
           "treatment": "notice-script-literal",
           "count": 31
-        },
-        {
-          "path": "/~fstory/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 25
         },
         {
           "path": "/zero/skin/kissofgod_green/old_head.gif",
@@ -467,18 +457,6 @@
           "query": "",
           "treatment": "placeholder-image",
           "count": 15
-        },
-        {
-          "path": "/ai/back2.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 14
-        },
-        {
-          "path": "/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 14
         },
         {
           "path": "/chollian/cgi/pury/icon/arima.jpg",
@@ -521,6 +499,36 @@
           "query": "",
           "treatment": "placeholder-image",
           "count": 10
+        },
+        {
+          "path": "/zero/view_info.php",
+          "query": "?to=fstory@mail.co.kr&id=Mybbs&member_no=1",
+          "treatment": "notice-script-literal",
+          "count": 10
+        },
+        {
+          "path": "/chollian/cgi/pury/icon/king.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 9
+        },
+        {
+          "path": "/chollian/cgi/pury/icon/pika.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 9
+        },
+        {
+          "path": "/~fstory/gallery/gallery2/gallery2.html",
+          "query": "",
+          "treatment": "notice-link",
+          "count": 9
+        },
+        {
+          "path": "/chollian/cgi/pury/icon/duli.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 8
         }
       ]
     },
@@ -547,39 +555,29 @@
         }
       ],
       "originalFiles": 1848,
-      "publishedFiles": 686,
-      "rewrittenReferences": 391,
+      "publishedFiles": 789,
+      "rewrittenReferences": 454,
       "restoredFromArchive": 63,
       "aliasResolved": 311,
       "caseResolved": 0,
-      "placeholderImages": 977,
-      "droppedBackgrounds": 454,
+      "placeholderImages": 876,
+      "droppedBackgrounds": 56,
       "disabledDownloads": 1,
       "disabledMedia": 137,
       "disabledForms": 63,
-      "noticeLinks": 1431,
+      "noticeLinks": 1420,
       "unresolvedKept": 0,
       "extensionsAdded": 0,
       "staticised": 42,
       "guestbookMerged": 1,
+      "curatedRestored": 93,
+      "reconstructedAssets": 10,
       "externalImages": 47,
       "externalAssets": 8,
       "externalFrames": 5,
       "externalLinks": 101,
-      "unresolvedUniquePaths": 1520,
+      "unresolvedUniquePaths": 1417,
       "unresolvedTopPaths": [
-        {
-          "path": "/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 168
-        },
-        {
-          "path": "/~fstory/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 145
-        },
         {
           "path": "/zero/skin/kissofgod_gray/t.gif",
           "query": "",
@@ -615,12 +613,6 @@
           "query": "",
           "treatment": "placeholder-image",
           "count": 26
-        },
-        {
-          "path": "/~fstory/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 25
         },
         {
           "path": "/chollian/cgi/pury/icon/",
@@ -665,21 +657,9 @@
           "count": 16
         },
         {
-          "path": "/ai/back2.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 14
-        },
-        {
           "path": "/chollian/cgi/pury/icon/arima.jpg",
           "query": "",
           "treatment": "placeholder-image",
-          "count": 14
-        },
-        {
-          "path": "/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
           "count": 14
         },
         {
@@ -687,6 +667,36 @@
           "query": "",
           "treatment": "placeholder-image",
           "count": 14
+        },
+        {
+          "path": "/chollian/cgi/pury/icon/banjang.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 13
+        },
+        {
+          "path": "/chollian/cgi/pury/icon/shadow59.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 13
+        },
+        {
+          "path": "/chollian/cgi/pury/icon/card6.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 13
+        },
+        {
+          "path": "/chollian/cgi/pury/icon/bakgu.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 12
+        },
+        {
+          "path": "/chollian/cgi/pury/back.jpg",
+          "query": "",
+          "treatment": "background-dropped",
+          "count": 12
         }
       ]
     },
@@ -703,44 +713,34 @@
         }
       ],
       "originalFiles": 886,
-      "publishedFiles": 904,
-      "rewrittenReferences": 432,
+      "publishedFiles": 1008,
+      "rewrittenReferences": 498,
       "restoredFromArchive": 17,
       "aliasResolved": 322,
       "caseResolved": 0,
-      "placeholderImages": 1783,
-      "droppedBackgrounds": 629,
+      "placeholderImages": 1682,
+      "droppedBackgrounds": 222,
       "disabledDownloads": 8,
       "disabledMedia": 348,
       "disabledForms": 120,
-      "noticeLinks": 2636,
+      "noticeLinks": 2624,
       "unresolvedKept": 0,
       "extensionsAdded": 10,
       "staticised": 106,
       "guestbookMerged": 1,
+      "curatedRestored": 94,
+      "reconstructedAssets": 10,
       "externalImages": 47,
       "externalAssets": 9,
       "externalFrames": 5,
       "externalLinks": 104,
-      "unresolvedUniquePaths": 2080,
+      "unresolvedUniquePaths": 1976,
       "unresolvedTopPaths": [
         {
           "path": "\"+name+\"",
           "query": "",
           "treatment": "notice-script-template",
           "count": 414
-        },
-        {
-          "path": "/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 177
-        },
-        {
-          "path": "/~fstory/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 145
         },
         {
           "path": "/zero/skin/gallery_huni_gray/images/dot_.gif",
@@ -843,6 +843,18 @@
           "query": "",
           "treatment": "placeholder-image",
           "count": 50
+        },
+        {
+          "path": "/zero/comment_ok.php",
+          "query": "",
+          "treatment": "notice-script-literal",
+          "count": 46
+        },
+        {
+          "path": "/chollian/cgi/pury/icon/dare.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 41
         }
       ]
     },
@@ -859,44 +871,34 @@
         }
       ],
       "originalFiles": 903,
-      "publishedFiles": 905,
-      "rewrittenReferences": 435,
+      "publishedFiles": 1009,
+      "rewrittenReferences": 501,
       "restoredFromArchive": 0,
       "aliasResolved": 322,
       "caseResolved": 0,
-      "placeholderImages": 1783,
-      "droppedBackgrounds": 629,
+      "placeholderImages": 1682,
+      "droppedBackgrounds": 222,
       "disabledDownloads": 8,
       "disabledMedia": 349,
       "disabledForms": 120,
-      "noticeLinks": 2643,
+      "noticeLinks": 2631,
       "unresolvedKept": 0,
       "extensionsAdded": 10,
       "staticised": 106,
       "guestbookMerged": 1,
+      "curatedRestored": 94,
+      "reconstructedAssets": 10,
       "externalImages": 52,
       "externalAssets": 9,
       "externalFrames": 5,
       "externalLinks": 102,
-      "unresolvedUniquePaths": 2084,
+      "unresolvedUniquePaths": 1980,
       "unresolvedTopPaths": [
         {
           "path": "\"+name+\"",
           "query": "",
           "treatment": "notice-script-template",
           "count": 414
-        },
-        {
-          "path": "/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 177
-        },
-        {
-          "path": "/~fstory/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 145
         },
         {
           "path": "/zero/skin/gallery_huni_gray/images/dot_.gif",
@@ -999,6 +1001,18 @@
           "query": "",
           "treatment": "placeholder-image",
           "count": 50
+        },
+        {
+          "path": "/zero/comment_ok.php",
+          "query": "",
+          "treatment": "notice-script-literal",
+          "count": 46
+        },
+        {
+          "path": "/chollian/cgi/pury/icon/dare.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 41
         }
       ]
     }
