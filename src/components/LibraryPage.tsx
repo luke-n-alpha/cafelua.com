@@ -499,7 +499,8 @@ export default function LibraryPage({
                 </div>
               </div>
               <p>
-                {selected.id === "mars-invasion" ? copy.mars : copy.harness}
+                {edition.summary ??
+                  (selected.id === "mars-invasion" ? copy.mars : copy.harness)}
               </p>
               <small>
                 {[

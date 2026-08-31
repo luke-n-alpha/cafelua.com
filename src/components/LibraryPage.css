@@ -169,6 +169,19 @@
 .library-detail-cover.rust {
   background: linear-gradient(135deg, #4c211b, #aa5c40);
 }
+/* 복원한 옛 글 세 권. 숲(윈디), 자두(단편집), 어스름(생각의 노트). */
+.library-book-card.moss,
+.library-detail-cover.moss {
+  background: linear-gradient(135deg, #16301f, #4a7a55);
+}
+.library-book-card.plum,
+.library-detail-cover.plum {
+  background: linear-gradient(135deg, #2d1730, #7a4a72);
+}
+.library-book-card.dusk,
+.library-detail-cover.dusk {
+  background: linear-gradient(135deg, #1b2436, #566a8c);
+}
 .library-book-spine {
   position: absolute;
   inset: 0 auto 0 10px;
