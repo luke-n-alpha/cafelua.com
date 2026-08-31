@@ -161,7 +161,9 @@ describe('Legacy homepage bundles', () => {
 
         for (const edition of manifest.editions) {
             expect(generated).toContain(edition.representativeCapture);
-            expect(generated).toContain(edition.label);
+            // An edition folded into a curated one is still published and still
+            // in the manifest, but the picker offers the curated edition instead.
+            if (!edition.mergedInto) expect(generated).toContain(edition.label);
         }
     });
 

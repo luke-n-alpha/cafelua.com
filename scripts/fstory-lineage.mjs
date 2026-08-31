@@ -18,6 +18,11 @@ export const LINEAGES = [
     representative: '20010723051951',
     summary:
       '프레임 없이 title1~4.gif 메뉴 그림을 세로로 늘어놓은 초기 계보. Wayback에 남은 마지막 상태가 2001-07-23이다.',
+    // Luke kept this era himself, and his copy is fuller than the capture. The
+    // capture is still published so the merge has a source and the archive keeps
+    // its own record, but the Atelier offers the curated 1998 edition instead of
+    // listing a second, thinner copy of the same site.
+    mergedInto: 'C1998',
   },
   {
     id: 'L2.0',
@@ -50,6 +55,30 @@ export const LINEAGES = [
     representative: '20030726202839',
     summary:
       '프레임을 모두 걷어내고 단일 index.html로 돌아간 마지막 판. 본문 대부분을 싸이월드 미니홈피에 넘겼다.',
+  },
+];
+
+// The two editions Luke kept himself, restored from his own files rather than
+// from the archive. They open the same timeline, so the Atelier offers them in
+// the same list. The 1998 edition is where the classic era is served from: the
+// 2001-07 capture is merged into it at publish time rather than being offered
+// as a separate, thinner copy of the same site.
+export const CURATED_EDITIONS = [
+  {
+    id: 'C1997',
+    label: '1997년 판',
+    period: '1997',
+    base: '/1997-homepage',
+    entry: 'index.html',
+    summary: '가장 이른 판. 루크가 직접 보관해 온 파일이고, 목록에만 남아 본문을 잃었던 시 27편을 뒷날 판에서 되찾아 채웠다.',
+  },
+  {
+    id: 'C1998',
+    label: '클래식 (1998 ~ 2001.07)',
+    period: '1998 ~ 2001-07',
+    base: '/1998-homepage',
+    entry: 'index.html',
+    summary: 'title1~4.gif 메뉴 그림을 세로로 늘어놓은 초기 계보. 루크의 보관본을 바탕으로, 2001년 7월 캡처에만 남아 있던 자료를 더해 완성했다.',
   },
 ];
 

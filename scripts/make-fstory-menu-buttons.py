@@ -37,6 +37,13 @@ FONT_PATH = Path('/usr/share/fonts/liberation-sans-fonts/LiberationSans-Bold.ttf
 # Filename → the word the button carried. The two that survive prove the rule:
 # the stem is an abbreviation of an English label, and the page's `alt` gives
 # the Korean meaning. Kept here so a wrong guess is one line to correct.
+# The menu had two states. `_n` is the resting button; `_y` is what the rollover
+# script swaps in when the pointer is over it. The archive holds neither state
+# of ten buttons and no `_y` at all — not one is even in the CDX index — so the
+# hover state is rebuilt from the resting one: same pill, same size, turned up.
+# Size matters as much as colour here. A hover image of a different size makes
+# the menu jump under the pointer.
+HOVER_SUFFIX = '_y'
 BUTTONS = {
     'pro_n.gif': ('Profile', '프로필'),
     'let_n.gif': ('Letter', '내 글'),
@@ -117,6 +124,23 @@ def draw(pill: Image.Image, word: str, box: tuple[int, int], colour) -> Image.Im
     return canvas
 
 
+def sharpen(image: Image.Image, box: tuple[int, int]) -> Image.Image:
+    """The hover state of the same button: the pill brighter and more saturated,
+    the lettering darker. Nothing moves and nothing resizes."""
+    from PIL import ImageEnhance
+    lifted = ImageEnhance.Color(image.convert('RGB')).enhance(1.45)
+    lifted = ImageEnhance.Contrast(lifted).enhance(1.22)
+    lifted = ImageEnhance.Brightness(lifted).enhance(1.06)
+
+    # Darken just the lettering, so the word reads harder rather than the whole
+    # button simply glowing.
+    source = np.array(image.convert('RGB')).astype(int)
+    out = np.array(lifted).astype(int)
+    ink = ink_mask(source)
+    out[ink] = np.clip(out[ink] * 0.72, 0, 255)
+    return Image.fromarray(out.astype(np.uint8))
+
+
 def main() -> int:
     check = '--check' in sys.argv
     if not SAMPLE.exists():
@@ -133,12 +157,29 @@ def main() -> int:
     written = []
     for name, (word, korean) in BUTTONS.items():
         image = draw(pill, word, box, colour)
+        hover = sharpen(image, box)
+        stem, suffix = name.rsplit('.', 1)
+        hover_name = f'{stem.removesuffix("_n")}{HOVER_SUFFIX}.{suffix}'
         if check:
-            written.append(f'{name}: {word} ({korean})')
+            written.append(f'{name} / {hover_name}: {word} ({korean})')
             continue
         # Match the originals: palette GIF, no transparency.
         image.convert('P', palette=Image.ADAPTIVE, colors=128).save(OUT_DIR / name)
-        written.append(f'{name}: {word} ({korean})')
+        hover.convert('P', palette=Image.ADAPTIVE, colors=128).save(OUT_DIR / hover_name)
+        written.append(f'{name} / {hover_name}: {word} ({korean})')
+
+    # The two buttons the archive kept are not redrawn, but their hover state is
+    # missing too, so it is derived from the surviving artwork itself.
+    for survivor in ('dia_n.gif', 'gal_n.gif'):
+        source = SAMPLE.parent / survivor
+        if not source.exists():
+            continue
+        with Image.open(source) as opened:
+            resting = opened.convert('RGB')
+        hover_name = f'{survivor.removesuffix("_n.gif")}{HOVER_SUFFIX}.gif'
+        if not check:
+            sharpen(resting, box).convert('P', palette=Image.ADAPTIVE, colors=128).save(OUT_DIR / hover_name)
+        written.append(f'{hover_name}: hover state of the surviving {survivor}')
 
     print(f'{"would write" if check else "wrote"} {len(written)} buttons to {OUT_DIR}')
     for line in written:

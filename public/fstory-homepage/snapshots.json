@@ -28,9 +28,9 @@
       "summary": "도메인 등록 대행사의 기본 안내 화면. 홈페이지 본체가 아니다.",
       "entry": "/fstory-homepage/20010715123146/index.html",
       "representativeCapture": "20010715123146",
-      "publishedFileCount": 322,
+      "publishedFileCount": 326,
       "restoredFileCount": 32,
-      "unresolvedUniquePaths": 184,
+      "unresolvedUniquePaths": 180,
       "builtFrom": [
         {
           "timestamp": "20010715123146",
@@ -47,11 +47,12 @@
       "label": "클래식 (1998 ~ 2001-07)",
       "period": "1998 ~ 2001-07-23",
       "summary": "프레임 없이 title1~4.gif 메뉴 그림을 세로로 늘어놓은 초기 계보. Wayback에 남은 마지막 상태가 2001-07-23이다.",
+      "mergedInto": "C1998",
       "entry": "/fstory-homepage/20010723051951/index.html",
       "representativeCapture": "20010723051951",
-      "publishedFileCount": 362,
+      "publishedFileCount": 366,
       "restoredFileCount": 39,
-      "unresolvedUniquePaths": 236,
+      "unresolvedUniquePaths": 232,
       "builtFrom": [
         {
           "timestamp": "20010723051951",
@@ -70,9 +71,9 @@
       "summary": "index.html 안의 800x600 iframe이 main.html(42/560 2분할 프레임)을 부른다. 메뉴에 ai·study 항목이 있다.",
       "entry": "/fstory-homepage/20011202212712/index.html",
       "representativeCapture": "20011202212712",
-      "publishedFileCount": 719,
+      "publishedFileCount": 733,
       "restoredFileCount": 142,
-      "unresolvedUniquePaths": 1116,
+      "unresolvedUniquePaths": 1102,
       "builtFrom": [
         {
           "timestamp": "20010925220320",
@@ -99,9 +100,9 @@
       "summary": "프레임 구조는 그대로이고 메뉴가 teatime·tech·zboard 중심으로 바뀐다. 본문 첫 화면이 diary/diary.html이다.",
       "entry": "/fstory-homepage/20021120053627/index.html",
       "representativeCapture": "20021120053627",
-      "publishedFileCount": 923,
+      "publishedFileCount": 939,
       "restoredFileCount": 63,
-      "unresolvedUniquePaths": 1282,
+      "unresolvedUniquePaths": 1266,
       "builtFrom": [
         {
           "timestamp": "20020325014505",
@@ -136,9 +137,9 @@
       "summary": "main.html이 topmenu·left·content·right·bottom 5분할 프레임으로 바뀌고 bgm 프레임이 붙는다. album·cartoon·media·insidece 메뉴가 새로 생기고 싸이월드 링크가 처음 등장한다.",
       "entry": "/fstory-homepage/20021128181318/index.html",
       "representativeCapture": "20021128181318",
-      "publishedFileCount": 1190,
+      "publishedFileCount": 1206,
       "restoredFileCount": 17,
-      "unresolvedUniquePaths": 1793,
+      "unresolvedUniquePaths": 1777,
       "builtFrom": [
         {
           "timestamp": "20021128181318",
@@ -157,9 +158,9 @@
       "summary": "프레임을 모두 걷어내고 단일 index.html로 돌아간 마지막 판. 본문 대부분을 싸이월드 미니홈피에 넘겼다.",
       "entry": "/fstory-homepage/20030726202839/index.html",
       "representativeCapture": "20030726202839",
-      "publishedFileCount": 1192,
+      "publishedFileCount": 1208,
       "restoredFileCount": 0,
-      "unresolvedUniquePaths": 1796,
+      "unresolvedUniquePaths": 1780,
       "builtFrom": [
         {
           "timestamp": "20030726202839",

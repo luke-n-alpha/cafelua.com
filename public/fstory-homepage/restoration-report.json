@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T03:28:05.462Z",
+  "generatedAt": "2026-08-31T04:24:10.738Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -31,25 +31,25 @@
     }
   ],
   "totals": {
-    "publishedFiles": 4708,
+    "publishedFiles": 4778,
     "restoredFromArchive": 293,
     "aliasResolved": 1287,
     "caseResolved": 0,
-    "rewrittenReferences": 1970,
-    "placeholderImages": 989,
+    "rewrittenReferences": 2016,
+    "placeholderImages": 919,
     "droppedBackgrounds": 7,
     "disabledDownloads": 18,
     "disabledMedia": 1022,
     "disabledForms": 343,
-    "noticeLinks": 8213,
+    "noticeLinks": 9248,
     "externalImages": 194,
     "externalAssets": 47,
     "externalFrames": 25,
     "externalLinks": 354,
     "staticised": 278,
     "guestbookMerged": 4,
-    "curatedRestored": 520,
-    "reconstructedAssets": 541,
+    "curatedRestored": 544,
+    "reconstructedAssets": 587,
     "thumbnailsMade": 96,
     "cyworldRewrites": 11
   },
@@ -67,12 +67,12 @@
         }
       ],
       "originalFiles": 211,
-      "publishedFiles": 322,
+      "publishedFiles": 326,
       "rewrittenReferences": 20,
       "restoredFromArchive": 32,
       "aliasResolved": 9,
       "caseResolved": 0,
-      "placeholderImages": 38,
+      "placeholderImages": 34,
       "droppedBackgrounds": 0,
       "disabledDownloads": 0,
       "disabledMedia": 10,
@@ -82,19 +82,19 @@
       "extensionsAdded": 0,
       "staticised": 0,
       "guestbookMerged": 0,
-      "curatedRestored": 69,
+      "curatedRestored": 73,
       "reconstructedAssets": 0,
       "thumbnailsMade": 10,
       "externalImages": 1,
       "externalAssets": 6,
       "externalFrames": 2,
       "externalLinks": 0,
-      "unresolvedUniquePaths": 184,
+      "unresolvedUniquePaths": 180,
       "unresolvedTopPaths": [
         {
           "path": "/~fstory/gallery/gallery2/gallery2.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 9
         },
         {
@@ -118,7 +118,7 @@
         {
           "path": "/gallery/gallery3/Pic12.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 2
         },
         {
@@ -154,7 +154,7 @@
         {
           "path": "/mydoc/novel/short/illusion2.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 1
         },
         {
@@ -172,13 +172,13 @@
         {
           "path": "/~fstory/gallery/gallery1/Pic4.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 1
         },
         {
           "path": "/~fstory/gallery/gallery1/Pic9.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 1
         },
         {
@@ -190,7 +190,7 @@
         {
           "path": "/~fstory/gallery/gallery1/Pic12.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 1
         },
         {
@@ -226,12 +226,12 @@
         }
       ],
       "originalFiles": 235,
-      "publishedFiles": 362,
+      "publishedFiles": 366,
       "rewrittenReferences": 66,
       "restoredFromArchive": 39,
       "aliasResolved": 32,
       "caseResolved": 0,
-      "placeholderImages": 38,
+      "placeholderImages": 34,
       "droppedBackgrounds": 0,
       "disabledDownloads": 0,
       "disabledMedia": 10,
@@ -241,25 +241,25 @@
       "extensionsAdded": 0,
       "staticised": 0,
       "guestbookMerged": 0,
-      "curatedRestored": 78,
+      "curatedRestored": 82,
       "reconstructedAssets": 0,
       "thumbnailsMade": 10,
       "externalImages": 2,
       "externalAssets": 6,
       "externalFrames": 3,
       "externalLinks": 0,
-      "unresolvedUniquePaths": 236,
+      "unresolvedUniquePaths": 232,
       "unresolvedTopPaths": [
         {
           "path": "/~fstory/gallery/gallery2/gallery2.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 9
         },
         {
           "path": "/gallery/gallery3/Pic12.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 2
         },
         {
@@ -325,7 +325,7 @@
         {
           "path": "/gallery/gallery3/Pic2.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 1
         },
         {
@@ -337,13 +337,13 @@
         {
           "path": "/gallery/gallery3/Pic5.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 1
         },
         {
           "path": "/gallery/gallery3/Pic6.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 1
         },
         {
@@ -355,7 +355,7 @@
         {
           "path": "/gallery/gallery3/Pic7.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 1
         },
         {
@@ -367,7 +367,7 @@
         {
           "path": "/gallery/gallery3/Pic8.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 1
         }
       ]
@@ -390,29 +390,29 @@
         }
       ],
       "originalFiles": 670,
-      "publishedFiles": 719,
-      "rewrittenReferences": 431,
+      "publishedFiles": 733,
+      "rewrittenReferences": 441,
       "restoredFromArchive": 142,
       "aliasResolved": 291,
       "caseResolved": 0,
-      "placeholderImages": 111,
+      "placeholderImages": 97,
       "droppedBackgrounds": 0,
       "disabledDownloads": 1,
       "disabledMedia": 168,
       "disabledForms": 38,
-      "noticeLinks": 1189,
+      "noticeLinks": 1265,
       "unresolvedKept": 0,
       "extensionsAdded": 0,
       "staticised": 24,
       "guestbookMerged": 1,
-      "curatedRestored": 92,
-      "reconstructedAssets": 70,
+      "curatedRestored": 96,
+      "reconstructedAssets": 80,
       "thumbnailsMade": 18,
       "externalImages": 45,
       "externalAssets": 9,
       "externalFrames": 5,
       "externalLinks": 47,
-      "unresolvedUniquePaths": 1116,
+      "unresolvedUniquePaths": 1102,
       "unresolvedTopPaths": [
         {
           "path": "/zero/view_info.php",
@@ -435,7 +435,7 @@
         {
           "path": "/~fstory/gallery/gallery2/gallery2.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 9
         },
         {
@@ -449,6 +449,18 @@
           "query": "",
           "treatment": "notice-script-literal",
           "count": 5
+        },
+        {
+          "path": "/zero/view.php",
+          "query": "?id=Mybbs&page=1&page_num=13&category=&sn=off&ss=on&sc=on&keyword=&prev_no=&select_arrange=headnum&desc=asc&no=19",
+          "treatment": "alert-link",
+          "count": 4
+        },
+        {
+          "path": "/zero/zboard.php",
+          "query": "?id=Mybbs&page=1&category=&sn=off&ss=on&sc=on&keyword=&prev_no=",
+          "treatment": "alert-link",
+          "count": 4
         },
         {
           "path": "/zero/skin/kissofgod_green/dot.gif",
@@ -521,18 +533,6 @@
           "query": "?mode=msg_del&num=14%27",
           "treatment": "notice-script-literal",
           "count": 3
-        },
-        {
-          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
-          "query": "?mode=msg_del&num=13%27",
-          "treatment": "notice-script-literal",
-          "count": 3
-        },
-        {
-          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
-          "query": "?mode=msg_del&num=12%27",
-          "treatment": "notice-script-literal",
-          "count": 3
         }
       ]
     },
@@ -559,29 +559,29 @@
         }
       ],
       "originalFiles": 1848,
-      "publishedFiles": 923,
-      "rewrittenReferences": 454,
+      "publishedFiles": 939,
+      "rewrittenReferences": 466,
       "restoredFromArchive": 63,
       "aliasResolved": 311,
       "caseResolved": 0,
-      "placeholderImages": 180,
+      "placeholderImages": 164,
       "droppedBackgrounds": 2,
       "disabledDownloads": 1,
       "disabledMedia": 137,
       "disabledForms": 63,
-      "noticeLinks": 1420,
+      "noticeLinks": 1595,
       "unresolvedKept": 0,
       "extensionsAdded": 0,
       "staticised": 42,
       "guestbookMerged": 1,
-      "curatedRestored": 93,
-      "reconstructedAssets": 126,
+      "curatedRestored": 97,
+      "reconstructedAssets": 138,
       "thumbnailsMade": 18,
       "externalImages": 47,
       "externalAssets": 8,
       "externalFrames": 5,
       "externalLinks": 101,
-      "unresolvedUniquePaths": 1282,
+      "unresolvedUniquePaths": 1266,
       "unresolvedTopPaths": [
         {
           "path": "\"+name+\"",
@@ -610,7 +610,7 @@
         {
           "path": "/~fstory/gallery/gallery2/gallery2.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 9
         },
         {
@@ -692,16 +692,16 @@
           "count": 4
         },
         {
-          "path": "/zero/skin/kissofgod_pink/dot.gif",
-          "query": "",
-          "treatment": "placeholder-image",
+          "path": "/zero/view.php",
+          "query": "?id=Mybbs&page=1&page_num=13&category=&sn=off&ss=on&sc=on&keyword=&prev_no=&select_arrange=headnum&desc=asc&no=19",
+          "treatment": "alert-link",
           "count": 4
         },
         {
-          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
-          "query": "?mode=msg_del&num=95%27",
-          "treatment": "notice-script-literal",
-          "count": 3
+          "path": "/zero/zboard.php",
+          "query": "?id=Memo&page=2&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=59f2be15b12a3904cc04810949b7720d",
+          "treatment": "alert-link",
+          "count": 4
         }
       ]
     },
@@ -718,29 +718,29 @@
         }
       ],
       "originalFiles": 886,
-      "publishedFiles": 1190,
-      "rewrittenReferences": 498,
+      "publishedFiles": 1206,
+      "rewrittenReferences": 510,
       "restoredFromArchive": 17,
       "aliasResolved": 322,
       "caseResolved": 0,
-      "placeholderImages": 312,
+      "placeholderImages": 296,
       "droppedBackgrounds": 2,
       "disabledDownloads": 8,
       "disabledMedia": 348,
       "disabledForms": 120,
-      "noticeLinks": 2624,
+      "noticeLinks": 3016,
       "unresolvedKept": 0,
       "extensionsAdded": 10,
       "staticised": 106,
       "guestbookMerged": 1,
-      "curatedRestored": 94,
-      "reconstructedAssets": 173,
+      "curatedRestored": 98,
+      "reconstructedAssets": 185,
       "thumbnailsMade": 19,
       "externalImages": 47,
       "externalAssets": 9,
       "externalFrames": 5,
       "externalLinks": 104,
-      "unresolvedUniquePaths": 1793,
+      "unresolvedUniquePaths": 1777,
       "unresolvedTopPaths": [
         {
           "path": "\"+name+\"",
@@ -835,13 +835,19 @@
         {
           "path": "/~fstory/gallery/gallery2/gallery2.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 9
         },
         {
           "path": "/gallery/noimg.jpg",
           "query": "",
           "treatment": "placeholder-image",
+          "count": 5
+        },
+        {
+          "path": "/zero/zboard.php",
+          "query": "?id=Mybbs",
+          "treatment": "alert-link",
           "count": 5
         },
         {
@@ -852,12 +858,6 @@
         },
         {
           "path": "/zero/skin/kissofgod_gray/dot.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 4
-        },
-        {
-          "path": "/zero/skin/kissofgod_green/dot.gif",
           "query": "",
           "treatment": "placeholder-image",
           "count": 4
@@ -877,29 +877,29 @@
         }
       ],
       "originalFiles": 903,
-      "publishedFiles": 1192,
-      "rewrittenReferences": 501,
+      "publishedFiles": 1208,
+      "rewrittenReferences": 513,
       "restoredFromArchive": 0,
       "aliasResolved": 322,
       "caseResolved": 0,
-      "placeholderImages": 310,
+      "placeholderImages": 294,
       "droppedBackgrounds": 3,
       "disabledDownloads": 8,
       "disabledMedia": 349,
       "disabledForms": 120,
-      "noticeLinks": 2631,
+      "noticeLinks": 3023,
       "unresolvedKept": 0,
       "extensionsAdded": 10,
       "staticised": 106,
       "guestbookMerged": 1,
-      "curatedRestored": 94,
-      "reconstructedAssets": 172,
+      "curatedRestored": 98,
+      "reconstructedAssets": 184,
       "thumbnailsMade": 21,
       "externalImages": 52,
       "externalAssets": 9,
       "externalFrames": 5,
       "externalLinks": 102,
-      "unresolvedUniquePaths": 1796,
+      "unresolvedUniquePaths": 1780,
       "unresolvedTopPaths": [
         {
           "path": "\"+name+\"",
@@ -994,8 +994,14 @@
         {
           "path": "/~fstory/gallery/gallery2/gallery2.html",
           "query": "",
-          "treatment": "notice-link",
+          "treatment": "alert-link",
           "count": 9
+        },
+        {
+          "path": "/zero/zboard.php",
+          "query": "?id=Mybbs",
+          "treatment": "notice-script-literal",
+          "count": 6
         },
         {
           "path": "/gallery/noimg.jpg",
@@ -1008,12 +1014,6 @@
           "query": "",
           "treatment": "placeholder-image",
           "count": 5
-        },
-        {
-          "path": "/zero/zboard.php",
-          "query": "?id=Mybbs",
-          "treatment": "notice-script-literal",
-          "count": 4
         },
         {
           "path": "/zero/skin/kissofgod_gray/dot.gif",
@@ -1067,14 +1067,39 @@
     },
     {
       "edition": "1998–2001.07",
-      "files": 394,
+      "files": 403,
       "climbFixes": 0,
       "caseFixes": 0,
       "recoveredLinks": 0,
       "noticeLinks": 0,
-      "placeholders": 0,
-      "unresolvedUniquePaths": 0,
-      "unresolvedTopPaths": []
+      "placeholders": 6,
+      "unresolvedUniquePaths": 6,
+      "unresolvedTopPaths": [
+        {
+          "target": "EndW01_th.jpg",
+          "count": 1
+        },
+        {
+          "target": "window_th.jpg",
+          "count": 1
+        },
+        {
+          "target": "2cy2100_th.jpg",
+          "count": 1
+        },
+        {
+          "target": "indrob_th.jpg",
+          "count": 1
+        },
+        {
+          "target": "subway_th.jpg",
+          "count": 1
+        },
+        {
+          "target": "wxmas_th.jpg",
+          "count": 1
+        }
+      ]
     }
   ]
 }

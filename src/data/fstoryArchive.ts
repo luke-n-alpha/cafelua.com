@@ -38,20 +38,6 @@ export const FSTORY_EDITIONS: FstoryEdition[] = [
         ]
     },
     {
-        "id": "L1",
-        "label": "클래식 (1998 ~ 2001-07)",
-        "period": "1998 ~ 2001-07-23",
-        "summary": "프레임 없이 title1~4.gif 메뉴 그림을 세로로 늘어놓은 초기 계보. Wayback에 남은 마지막 상태가 2001-07-23이다.",
-        "directory": "20010723051951",
-        "date": "2001-07-23",
-        "builtFrom": [
-            {
-                "timestamp": "20010723051951",
-                "date": "2001-07-23"
-            }
-        ]
-    },
-    {
         "id": "L2.0",
         "label": "ver 2.0 최초판",
         "period": "2001-09 ~ 2002-03",
@@ -118,6 +104,36 @@ export const FSTORY_EDITIONS: FstoryEdition[] = [
                 "date": "2003-07-26"
             }
         ]
+    }
+];
+
+// Editions restored from Luke's own kept files rather than from the archive.
+// They open the same timeline and belong in the same list.
+export type FstoryCuratedEdition = {
+    id: string;
+    label: string;
+    period: string;
+    summary: string;
+    base: string;
+    entry: string;
+};
+
+export const FSTORY_CURATED_EDITIONS: FstoryCuratedEdition[] = [
+    {
+        "id": "C1997",
+        "label": "1997년 판",
+        "period": "1997",
+        "summary": "가장 이른 판. 루크가 직접 보관해 온 파일이고, 목록에만 남아 본문을 잃었던 시 27편을 뒷날 판에서 되찾아 채웠다.",
+        "base": "/1997-homepage",
+        "entry": "index.html"
+    },
+    {
+        "id": "C1998",
+        "label": "클래식 (1998 ~ 2001.07)",
+        "period": "1998 ~ 2001-07",
+        "summary": "title1~4.gif 메뉴 그림을 세로로 늘어놓은 초기 계보. 루크의 보관본을 바탕으로, 2001년 7월 캡처에만 남아 있던 자료를 더해 완성했다.",
+        "base": "/1998-homepage",
+        "entry": "index.html"
     }
 ];
 

@@ -18,6 +18,7 @@ import {
 import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 import {
     FSTORY_ANNEXES,
+    FSTORY_CURATED_EDITIONS,
     FSTORY_EDITIONS,
     type FstoryCaptureId,
 } from '@/data/fstoryArchive';
@@ -60,8 +61,17 @@ const ANNEX_BY_ID = new Map<string, (typeof FSTORY_ANNEXES)[number]>(
     FSTORY_ANNEXES.map((annex) => [`annex:${annex.id}`, annex])
 );
 
+// The restore-point list covers the whole timeline, so the two curated editions
+// belong to it as much as the archived ones.
+const CURATED_BY_ID = new Map(FSTORY_CURATED_EDITIONS.map((edition) => [edition.id, edition]));
+const CURATED_TARGET: Record<string, IeTarget> = { C1997: '1997', C1998: '1998' };
+const TARGET_TO_CURATED: Record<string, string> = { '1997': 'C1997', '1998': 'C1998' };
+
 const isFstorySnapshot = (target: IeTarget): target is FstoryEditionDirectory =>
-    FSTORY_EDITION_BY_DIRECTORY.has(target as FstoryEditionDirectory) || ANNEX_BY_ID.has(target);
+    FSTORY_EDITION_BY_DIRECTORY.has(target as FstoryEditionDirectory)
+    || ANNEX_BY_ID.has(target)
+    || target === '1997'
+    || target === '1998';
 
 const formatClock = (date: Date) => {
     const hours = String(date.getHours()).padStart(2, '0');
@@ -78,8 +88,8 @@ const getIeUrl = (target: IeTarget) => {
 };
 
 const getIeTitle = (target: IeTarget) => {
-    if (target === '1997') return 'Internet Explorer - 1997';
-    if (target === '1998') return 'Internet Explorer - 1998';
+    const curated = CURATED_BY_ID.get(TARGET_TO_CURATED[target] ?? '');
+    if (curated) return `Internet Explorer - ${curated.label} (${curated.period})`;
     const annex = ANNEX_BY_ID.get(target);
     if (annex) return `Internet Explorer - ${annex.label} (${annex.period})`;
     const edition = FSTORY_EDITION_BY_DIRECTORY.get(target);
@@ -725,9 +735,19 @@ const AtelierPage: React.FC = () => {
                                             <span>{t('library.restorePoint')}</span>
                                             <select
                                                 aria-label={t('library.restorePoint')}
-                                                value={ieTarget}
-                                                onChange={(event) => setIeTarget(event.target.value as FstoryEditionDirectory)}
+                                                value={TARGET_TO_CURATED[ieTarget] ?? ieTarget}
+                                                onChange={(event) => {
+                                                    const chosen = event.target.value;
+                                                    setIeTarget((CURATED_TARGET[chosen] ?? chosen) as IeTarget);
+                                                }}
                                             >
+                                                <optgroup label="루크가 보관해 온 판">
+                                                    {FSTORY_CURATED_EDITIONS.map((edition) => (
+                                                        <option key={edition.id} value={edition.id}>
+                                                            {edition.label} · {edition.period}
+                                                        </option>
+                                                    ))}
+                                                </optgroup>
                                                 <optgroup label="fstory.net">
                                                     {FSTORY_EDITIONS.map((edition) => (
                                                         <option key={edition.id} value={edition.directory}>

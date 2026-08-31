@@ -15,7 +15,7 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ANNEXES, LINEAGES, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS } from './fstory-lineage.mjs';
+import { ANNEXES, CURATED_EDITIONS, LINEAGES, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS } from './fstory-lineage.mjs';
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dataRoot = path.resolve(appRoot, '../data/fstory-net-wayback');
@@ -693,6 +693,23 @@ const publishEdition = async ({ lineage, captures }) => {
     const target = isFstory(url.hostname) ? `${url.pathname}${url.search}`.replace(/^\/+/, '/') : url.href;
     return `${notice}?p=${encodeURIComponent(target)}&k=${kind}`;
   };
+  // A dead menu item used to take the visitor to a notice page, which meant
+  // leaving whatever they were reading to be told that something does not
+  // exist. Saying it in place is less disruptive: the click is intercepted, the
+  // address and the reason are shown, and the page stays put.
+  const alertLink = (url, kind) => {
+    const target = isFstory(url.hostname) ? `${url.pathname}${url.search}`.replace(/^\/+/, '/') : url.href;
+    const reasons = {
+      page: '당시 인터넷 아카이브가 이 페이지를 저장하지 않았습니다.',
+      board: '제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.',
+      external: '이 메뉴가 가리키던 바깥 서비스가 문을 닫았습니다.',
+    };
+    const message = `복원되지 않은 자료입니다.\n\n${target}\n\n${reasons[kind] || reasons.page}`;
+    // Escaped for a double-quoted HTML attribute holding a single-quoted JS string.
+    const escaped = message.replaceAll('\\', '\\\\').replaceAll("'", "\\'").replaceAll('"', '&quot;');
+    return `href="#" onclick="alert('${escaped}');return false;"`;
+  };
+
   const placeholderHref = (sourceRelative) =>
     path.posix.relative(path.posix.dirname(sourceRelative), PLACEHOLDER_IMAGE) || PLACEHOLDER_IMAGE;
   const relativeTo = (sourceRelative, target) =>
@@ -808,9 +825,10 @@ const publishEdition = async ({ lineage, captures }) => {
           if (category === 'download') stats.disabledDownloads += 1; else stats.disabledMedia += 1;
           noteUnresolved(outcome.url, category === 'download' ? 'download-disabled' : 'media-disabled');
         } else {
-          replace(`${key}=${quote}${noticeHref(sourceRelative, outcome.url, category === 'board' ? 'board' : 'page')}${quote}`);
+          const kind = category === 'board' ? 'board' : 'page';
+          replace(`${alertLink(outcome.url, kind)} data-unrestored-target=${quote}${value}${quote}`);
           stats.noticeLinks += 1;
-          noteUnresolved(outcome.url, 'notice-link');
+          noteUnresolved(outcome.url, 'alert-link');
         }
       }
     }
@@ -1010,16 +1028,29 @@ await writeFile(parkingEntry, parkingRewritten, 'utf8');
 // not the September 2001 redesign. Merge its unique content into the curated
 // 1998–2001.07 edition so visitors can actually reach it.
 const july2001Root = path.join(destinationRoot, '20010723051951');
-const july2001UniqueFiles = [
-  'gallery/gallery3/Pic3.html',
-  'gallery/gallery3/Pic4.html',
-  'gallery/gallery3/EndW02_th.jpg',
-  'mydoc/novel/short/22cen1.html',
-  'mydoc/novel/short/22cen2.html',
-  'mydoc/novel/short/b612_1.html',
-  'mydoc/novel/short/b612_2.html',
-  'notice/not_dat3.html',
-];
+// The 1998–2001.07 edition Luke kept is the one this era is served from, so the
+// July 2001 capture contributes only what that edition does not already have.
+// Nothing it already holds is touched.
+//
+// Three trees are held back. `netian/` and `chollian/` are other addresses of
+// other eras and are offered separately; `myletter/` is the later name for the
+// same files this edition carries under `mydoc/novel/`, so copying it in would
+// duplicate the writing under two names.
+const HELD_BACK = /^(netian|chollian|myletter)\//i;
+const july2001UniqueFiles = [];
+const gatherUnique = async (directory = july2001Root) => {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const file = path.join(directory, entry.name);
+    if (entry.isDirectory()) { await gatherUnique(file); continue; }
+    const relative = path.relative(july2001Root, file).replaceAll('\\', '/');
+    // `index__<hash>.html` is a second capture of a page this edition already
+    // has under its real name. Copying it in would shelve the same page twice.
+    if (HELD_BACK.test(relative) || entry.name.startsWith('_') || /__[0-9a-f]{8}\.html?$/i.test(entry.name)) continue;
+    if (existsSync(path.join(legacy1998Root, relative))) continue;
+    july2001UniqueFiles.push(relative);
+  }
+};
+await gatherUnique();
 for (const relative of july2001UniqueFiles) {
   const output = path.join(legacy1998Root, relative);
   await mkdir(path.dirname(output), { recursive: true });
@@ -1033,6 +1064,7 @@ for (const relative of july2001UniqueFiles) {
 // gallery" link has to climb.
 for (const page of ['Pic3.html', 'Pic4.html']) {
   const output = path.join(legacy1998Root, 'gallery/gallery3', page);
+  if (!existsSync(output)) continue;
   const text = await readFile(output, 'utf8');
   const next = text
     .replace(/src="[^"]*_missing-image\.svg"\s*data-unrestored-src="[^"]*"/gi, 'src="EndW02_th.jpg"')
@@ -1316,6 +1348,9 @@ await writeFile(path.join(destinationRoot, 'snapshots.json'), `${JSON.stringify(
       label: lineage.label,
       period: lineage.period,
       summary: lineage.summary,
+      // Published so the merge has a source and the archive keeps its record,
+      // but offered to visitors through the curated edition named here.
+      ...(lineage.mergedInto ? { mergedInto: lineage.mergedInto } : {}),
       entry: `/fstory-homepage/${lineage.representative}/index.html`,
       representativeCapture: lineage.representative,
       publishedFileCount: report?.publishedFiles ?? 0,
@@ -1343,7 +1378,7 @@ for (const annex of ANNEXES) {
 
 // The Atelier restore-point picker reads this generated module, so the UI can
 // never drift from the lineage analysis that produced the snapshots.
-const uiEditions = LINEAGES.map((lineage) => {
+const uiEditions = LINEAGES.filter((lineage) => !lineage.mergedInto).map((lineage) => {
   const captures = SNAPSHOTS.filter(([, , id]) => id === lineage.id);
   const representative = captures.find(([timestamp]) => timestamp === lineage.representative);
   return {
@@ -1383,6 +1418,21 @@ export type FstoryEdition = {
 };
 
 export const FSTORY_EDITIONS: FstoryEdition[] = ${JSON.stringify(uiEditions, null, 4)};
+
+// Editions restored from Luke's own kept files rather than from the archive.
+// They open the same timeline and belong in the same list.
+export type FstoryCuratedEdition = {
+    id: string;
+    label: string;
+    period: string;
+    summary: string;
+    base: string;
+    entry: string;
+};
+
+export const FSTORY_CURATED_EDITIONS: FstoryCuratedEdition[] = ${JSON.stringify(
+  CURATED_EDITIONS.map(({ id, label, period, summary, base, entry }) => ({ id, label, period, summary, base, entry })),
+  null, 4)};
 
 export type FstoryAnnex = {
     id: string;
