@@ -45,6 +45,47 @@ export async function sendEmail(payload: EmailPayload): Promise<boolean> {
     }
 }
 
+/**
+ * Where the master hears about anything new — a guestbook entry, a comment, a
+ * reply. Set OWNER_NOTIFY_EMAIL to change it; the address below is the one
+ * cafelua.com has always answered from.
+ */
+export function ownerAddress(): string {
+    return process.env.OWNER_NOTIFY_EMAIL || 'luke.yang@cafelua.com';
+}
+
+/**
+ * The master's copy. The visitor's own notification only goes out when someone
+ * answers them; this one goes out whenever anything is written, so that a
+ * message left at three in the morning is not found a week later.
+ */
+export function buildOwnerNotificationEmail(opts: {
+    kind: 'guestbook' | 'comment';
+    isReply: boolean;
+    nickname: string;
+    content: string;
+    where: string;
+    url: string;
+}): { subject: string; html: string } {
+    const nick = escapeHtml(opts.nickname);
+    const where = escapeHtml(opts.where);
+    const body = escapeHtml(opts.content).replace(/\n/g, '<br>');
+    const noun = opts.kind === 'guestbook' ? '방명록' : '댓글';
+    const act = opts.isReply ? '답글' : (opts.kind === 'guestbook' ? '글' : '댓글');
+    const subject = `[Cafe Lua] ${opts.nickname}님이 ${noun}에 ${act}을 남겼습니다`;
+    const html = `
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 480px; margin: 0 auto; padding: 24px;">
+    <h2 style="color: #8b6914; margin-bottom: 16px;">Cafe Lua - 새 ${noun} 알림</h2>
+    <p><strong>${nick}</strong>님이 ${where}에 ${act}을 남겼습니다.</p>
+    <blockquote style="border-left: 3px solid #d4a843; padding: 8px 12px; margin: 16px 0; background: #fdf8ec; color: #333;">
+        ${body}
+    </blockquote>
+    <a href="${escapeHtml(opts.url)}" style="display: inline-block; padding: 8px 16px; background: #8b6914; color: #fff; text-decoration: none; border-radius: 4px;">보러 가기</a>
+    <p style="margin-top: 24px; font-size: 12px; color: #999;">주인장에게만 가는 알림입니다.</p>
+</div>`.trim();
+    return { subject, html };
+}
+
 export function buildReplyNotificationEmail(opts: {
     parentNickname: string;
     replyNickname: string;
