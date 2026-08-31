@@ -1294,10 +1294,15 @@ const mergedMenuNotes = [];
     const resolved = path.join(path.dirname(target), standin);
     if (!existsSync(resolved)) continue;
     const text = await readFile(target, 'utf8');
-    const next = text.replace(
-      new RegExp(`src="[^"]*_unrestored[^"]*${wanted.source}[^"]*"`, 'i'),
-      `src="${standin}"`,
-    );
+    // By this point the pane may already have been quietened, so match either
+    // the original notice link or the blank pane that replaced it.
+    const address = decodeURIComponent(wanted.source.replace(/\\/g, ''));
+    const next = text
+      .replace(new RegExp(`src="[^"]*_unrestored[^"]*${wanted.source}[^"]*"`, 'i'), `src="${standin}"`)
+      .replace(
+        new RegExp(`src="[^"]*_quiet\\.html"(\\s+data-unrestored-pane="[^"]*${address.replace(/[.*+?^$()|[\]\\]/g, '\\$&')}[^"]*")`, 'i'),
+        `src="${standin}"$1`,
+      );
     if (next !== text) {
       await writeFile(target, next, 'utf8');
       mergedMenuNotes.push(`${page} 프레임 → ${standin}`);

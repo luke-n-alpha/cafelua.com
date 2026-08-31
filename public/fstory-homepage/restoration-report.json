@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T06:46:44.118Z",
+  "generatedAt": "2026-08-31T06:50:31.306Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -1066,6 +1066,7 @@
         "숲속얘기의 찻집 → teatime/teatime.html",
         "방명록 → chollian/cgi/pury/purybbs.html",
         "링크 → link/index.html",
+        "ai/ai.html 프레임 → ../tech/movie/movie.html",
         "첫 화면 → diary/frame.html"
       ],
       "mergedFrom": [
