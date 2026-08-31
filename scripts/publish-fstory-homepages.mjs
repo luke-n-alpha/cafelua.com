@@ -492,7 +492,7 @@ const publishEdition = async ({ lineage, captures }) => {
     placeholderImages: 0, droppedBackgrounds: 0, disabledDownloads: 0, disabledMedia: 0,
     disabledForms: 0, noticeLinks: 0, unresolvedKept: 0, extensionsAdded: 0,
     staticised: 0, guestbookMerged: 0, curatedRestored: 0, reconstructedAssets: 0, thumbnailsMade: 0,
-    unpinnedBlocks: 0, curatedPages: 0, quietPanes: 0, groundedBodies: 0,
+    unpinnedBlocks: 0, curatedPages: 0, quietPanes: 0, groundedBodies: 0, clearedPlaceholders: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
   };
 
@@ -1068,6 +1068,34 @@ const publishEdition = async ({ lineage, captures }) => {
     await writeFile(output, withCharset(rewritten, extension), 'utf8');
   }
 
+  // A picture the archive never held used to leave a dashed grey card saying
+  // "그림 없음". Sixty of those down one page is not information, it is damage —
+  // and on the front page they sit in the empty space below the content where
+  // nothing was ever meant to be. Take the card out and let the layout close
+  // up. The address stays on the element, so nothing is forgotten and dropping
+  // a file in still brings the picture back.
+  const clearPlaceholders = async (directory) => {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) { await clearPlaceholders(file); continue; }
+      if (!htmlExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+      const text = decode(await readFile(file));
+      if (!text.includes(PLACEHOLDER_IMAGE)) continue;
+      let count = 0;
+      const output = text.replace(/<img\b[^>]*>/gi, (tag) => {
+        if (!tag.includes(PLACEHOLDER_IMAGE)) return tag;
+        const wanted = /data-unrestored-src\s*=\s*("[^"]*"|'[^']*')/i.exec(tag);
+        count += 1;
+        return `<span data-unrestored-src=${wanted ? wanted[1] : '""'} hidden></span>`;
+      });
+      if (count) {
+        await writeFile(file, output, 'utf8');
+        stats.clearedPlaceholders += count;
+      }
+    }
+  };
+  await clearPlaceholders(destination);
+
   // Pages that hard-code a white body sit inside a frame tiled with the site's
   // own strip — #bce2eb blue and #8e7fb0 violet — so plain white reads as a
   // hole punched in the middle of it. Luke set the inner pages against that
@@ -1345,6 +1373,49 @@ const mergedMenuNotes = [];
     }
   }
 
+  // The Cyworld notice carries the picture wherever the picture exists. Only
+  // the 2003 edition shipped it originally, but the merged edition holds that
+  // file too, and the notice is the one place a visitor is told where the
+  // writing went — it should show the screen Luke kept of it.
+  const cyworldPicture = path.join(merged, CYWORLD_IMAGE);
+  if (existsSync(cyworldPicture)) {
+    await writeFile(
+      path.join(merged, CYWORLD_NOTICE),
+      cyworldNoticeDocument("Fstory's Homepage ver 2.0 &gt; Cyworld", true),
+      'utf8',
+    );
+    mergedMenuNotes.push('싸이월드 안내에 당시 화면 그림을 실었다');
+  }
+
+  // The top strip is 42px and holds both the BGM player (an iframe 30 tall)
+  // and the greeting — "마음까지 시원한 가을입니다. 숲속얘기의 홈에 오신것을
+  // 환영합니다." At 9pt in a 2002 browser that fit; here the greeting is cut in
+  // half. Give the strip the room the two actually need and let the pane below
+  // take the rest.
+  const mainPath = path.join(merged, 'main.html');
+  if (existsSync(mainPath)) {
+    const text = await readFile(mainPath, 'utf8');
+    const next = text.replace(/rows\s*=\s*"42,\s*560"/i, 'rows="62,*"');
+    if (next !== text) {
+      await writeFile(mainPath, next, 'utf8');
+      mergedMenuNotes.push('상단 띠 높이를 인사말이 잘리지 않게 늘렸다');
+    }
+  }
+
+  // Panes sized to their content. The AI corner's two frames are 202 tall
+  // against pages that fit exactly, so a scrollbar appearing means the frame is
+  // a few pixels short, not that there is more to read.
+  for (const page of ['ai/ai.html']) {
+    const target = path.join(merged, page);
+    if (!existsSync(target)) continue;
+    const text = await readFile(target, 'utf8');
+    const next = text.replace(/scrolling\s*=\s*'yes'/gi, "scrolling='no'");
+    if (next !== text) {
+      await writeFile(target, next, 'utf8');
+      mergedMenuNotes.push(`${page} 프레임 스크롤 제거`);
+    }
+  }
+
   // The opening pane has to follow the same choice the menu made, or the
   // edition greets a visitor with the empty Zeroboard frame.
   const contentPath = path.join(merged, 'content.html');
@@ -1365,7 +1436,9 @@ const mergedMenuNotes = [];
 function mail(address) { location.href = 'mailto:' + address; }
 </script>
 <style type="text/css">
-  body { margin: 0; background: #ffffff; }
+  /* The strip behind the frame is #bce2eb; a white column beside it reads as a
+     cut-out, so the menu sits on the same pale ground as the pages. */
+  body { margin: 0; background: #f0f9fb; }
   table { border-collapse: collapse; }
 </style>
 </head>
@@ -1394,7 +1467,7 @@ ${characterArt}
     disabledDownloads: 0, disabledMedia: 0, disabledForms: 0, noticeLinks: 0,
     unresolvedKept: 0, extensionsAdded: 0, staticised: 0, guestbookMerged: 0,
     curatedRestored: 0, curatedPages: 0, reconstructedAssets: 0, thumbnailsMade: 0, unpinnedBlocks: 0,
-    quietPanes: 0, groundedBodies: 0,
+    quietPanes: 0, groundedBodies: 0, clearedPlaceholders: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
     cyworldRewrites: 0, unresolvedUniquePaths: 0, unresolved: [], restored: [],
   });
@@ -1714,6 +1787,7 @@ await writeFile(path.join(destinationRoot, 'restoration-report.json'), `${JSON.s
     curatedPages: totals('curatedPages'),
     quietPanes: totals('quietPanes'),
     groundedBodies: totals('groundedBodies'),
+    clearedPlaceholders: totals('clearedPlaceholders'),
     reconstructedAssets: totals('reconstructedAssets'),
     thumbnailsMade: totals('thumbnailsMade'),
     unpinnedBlocks: totals('unpinnedBlocks'),
@@ -1904,6 +1978,7 @@ console.log(JSON.stringify({
   curatedPages: totals('curatedPages'),
   quietPanes: totals('quietPanes'),
   groundedBodies: totals('groundedBodies'),
+  clearedPlaceholders: totals('clearedPlaceholders'),
   reconstructedAssets: totals('reconstructedAssets'),
   thumbnailsMade: totals('thumbnailsMade'),
   unpinnedBlocks: totals('unpinnedBlocks'),
