@@ -492,7 +492,7 @@ const publishEdition = async ({ lineage, captures }) => {
     placeholderImages: 0, droppedBackgrounds: 0, disabledDownloads: 0, disabledMedia: 0,
     disabledForms: 0, noticeLinks: 0, unresolvedKept: 0, extensionsAdded: 0,
     staticised: 0, guestbookMerged: 0, curatedRestored: 0, reconstructedAssets: 0, thumbnailsMade: 0,
-    unpinnedBlocks: 0, curatedPages: 0, quietPanes: 0, groundedBodies: 0, clearedPlaceholders: 0,
+    unpinnedBlocks: 0, curatedPages: 0, quietPanes: 0, groundedBodies: 0, clearedPlaceholders: 0, closedGalleryCells: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
   };
 
@@ -840,13 +840,17 @@ const publishEdition = async ({ lineage, captures }) => {
             stats.externalAssets += 1;
           }
         } else if (FRAME_ATTRIBUTES[tag]?.includes(attribute)) {
-          replace(`${key}=${quote}${noticeHref(sourceRelative, outcome.url, 'external')}${quote}`);
+          replace(NAVIGATION_ATTRIBUTES[tag]?.includes(attribute)
+            ? `${alertLink(outcome.url, 'external')} data-unrestored-target=${quote}${value}${quote}`
+            : `${key}=${quote}${noticeHref(sourceRelative, outcome.url, 'external')}${quote}`);
           stats.externalFrames += 1;
         } else if (BACKGROUND_ATTRIBUTES[tag]?.includes(attribute)) {
           replace(`data-unrestored-background=${quote}${value}${quote}`);
           stats.externalAssets += 1;
         } else if (NAVIGATION_ATTRIBUTES[tag]?.includes(attribute) && isRetiredHost(outcome.url.hostname)) {
-          replace(`${key}=${quote}${noticeHref(sourceRelative, outcome.url, 'external')}${quote}`);
+          replace(NAVIGATION_ATTRIBUTES[tag]?.includes(attribute)
+            ? `${alertLink(outcome.url, 'external')} data-unrestored-target=${quote}${value}${quote}`
+            : `${key}=${quote}${noticeHref(sourceRelative, outcome.url, 'external')}${quote}`);
           stats.externalLinks += 1;
         }
         continue;
@@ -1095,6 +1099,39 @@ const publishEdition = async ({ lineage, captures }) => {
     }
   };
   await clearPlaceholders(destination);
+
+  // A gallery is a grid of thumbnails, so a cell whose picture is gone leaves a
+  // hole and the ones after it stay where they were. Drop the cell instead and
+  // let the grid close up, which is what the page would have looked like if the
+  // picture had never been listed. Only cells that held nothing but the missing
+  // picture are removed; anything with words in it stays.
+  const closeGalleryGaps = async (directory) => {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) { await closeGalleryGaps(file); continue; }
+      if (!htmlExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+      const relative = path.relative(destination, file).replaceAll('\\', '/');
+      if (!/(^|\/)gallery/i.test(relative)) continue;
+      const text = decode(await readFile(file));
+      if (!text.includes('data-unrestored-src')) continue;
+      let count = 0;
+      const output = text.replace(/<td\b[^>]*>([\s\S]*?)(?=<td\b|<\/tr>|<tr\b|<\/table>)/gi, (cell, inner) => {
+        if (!inner.includes('data-unrestored-src')) return cell;
+        const words = inner
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/&nbsp;/gi, ' ')
+          .trim();
+        if (words.length > 2) return cell;
+        count += 1;
+        return '';
+      });
+      if (count) {
+        await writeFile(file, output, 'utf8');
+        stats.closedGalleryCells += count;
+      }
+    }
+  };
+  await closeGalleryGaps(destination);
 
   // Pages that hard-code a white body sit inside a frame tiled with the site's
   // own strip — #bce2eb blue and #8e7fb0 violet — so plain white reads as a
@@ -1373,6 +1410,32 @@ const mergedMenuNotes = [];
     }
   }
 
+  // The AI corner shows its two sub-corners through 300x202 windows against
+  // pages a little taller than that, so the scrollbar was the frame coming up
+  // short rather than more to read. Give the row the height the pages need and
+  // turn scrolling off: nothing is hidden and nothing scrolls.
+  {
+    const target = path.join(merged, 'ai/ai.html');
+    if (existsSync(target)) {
+      const text = await readFile(target, 'utf8');
+      let count = 0;
+      const next = text
+        .replace(/(<td[^>]*\s)height=200(\s)/gi, '$1height=250$2')
+        .replace(/<iframe\b([^>]*)>/gi, (whole, attributes) => {
+          if (!/name\s*=\s*(movie|tech)\b/i.test(attributes)) return whole;
+          count += 1;
+          const sized = attributes
+            .replace(/height\s*=\s*'?\d+'?/i, "height='248'")
+            .replace(/scrolling\s*=\s*'?\w+'?/i, "scrolling='no'");
+          return `<iframe${sized}>`;
+        });
+      if (count) {
+        await writeFile(target, next, 'utf8');
+        mergedMenuNotes.push(`ai/ai.html 창 ${count}개를 내용 높이에 맞춰 스크롤을 없앴다`);
+      }
+    }
+  }
+
   // The Cyworld notice carries the picture wherever the picture exists. Only
   // the 2003 edition shipped it originally, but the merged edition holds that
   // file too, and the notice is the one place a visitor is told where the
@@ -1498,19 +1561,23 @@ const mergedMenuNotes = [];
   }
   if (bgmPages.length) mergedMenuNotes.push(`BGM 플레이어 ${bgmPages.length}곳에 ${BGM_TRACKS.length}곡을 걸었다`);
 
-  // Panes sized to their content. The AI corner's two frames are 202 tall
-  // against pages that fit exactly, so a scrollbar appearing means the frame is
-  // a few pixels short, not that there is more to read.
-  for (const page of ['ai/ai.html']) {
-    const target = path.join(merged, page);
-    if (!existsSync(target)) continue;
-    const text = await readFile(target, 'utf8');
-    const next = text.replace(/scrolling\s*=\s*'yes'/gi, "scrolling='no'");
+  // The strip along the bottom held a Java applet clock and the words
+  // "<-현재시간" beside it, plus a welcome graphic the archive never kept. No
+  // browser has run a Java applet in years, so all that reaches a visitor now
+  // is the label pointing at nothing and 45px of empty band. Drop the pane and
+  // give its height back to the page.
+  const contentFrame = path.join(merged, 'frame3.html');
+  if (existsSync(contentFrame)) {
+    const text = await readFile(contentFrame, 'utf8');
+    const next = text
+      .replace(/rows\s*=\s*"695,\s*45"/i, 'rows="*"')
+      .replace(/<frame[^>]*name\s*=\s*"?bot_info"?[^>]*>\s*/i, '');
     if (next !== text) {
-      await writeFile(target, next, 'utf8');
-      mergedMenuNotes.push(`${page} 프레임 스크롤 제거`);
+      await writeFile(contentFrame, next, 'utf8');
+      mergedMenuNotes.push('하단 시계 띠를 걷어냈다');
     }
   }
+
 
   // The opening pane has to follow the same choice the menu made, or the
   // edition greets a visitor with the empty Zeroboard frame.
@@ -1532,9 +1599,10 @@ const mergedMenuNotes = [];
 function mail(address) { location.href = 'mailto:' + address; }
 </script>
 <style type="text/css">
-  /* The strip behind the frame is #bce2eb; a white column beside it reads as a
-     cut-out, so the menu sits on the same pale ground as the pages. */
-  body { margin: 0; background: #f0f9fb; }
+  /* White, as the original had it. The pill buttons carry their own pale blue
+     and a tinted column behind them makes the two blues fight; against white
+     the buttons read cleanly. Luke checked this against the buttons. */
+  body { margin: 0; background: #ffffff; }
   table { border-collapse: collapse; }
 </style>
 </head>
@@ -1563,7 +1631,7 @@ ${characterArt}
     disabledDownloads: 0, disabledMedia: 0, disabledForms: 0, noticeLinks: 0,
     unresolvedKept: 0, extensionsAdded: 0, staticised: 0, guestbookMerged: 0,
     curatedRestored: 0, curatedPages: 0, reconstructedAssets: 0, thumbnailsMade: 0, unpinnedBlocks: 0,
-    quietPanes: 0, groundedBodies: 0, clearedPlaceholders: 0,
+    quietPanes: 0, groundedBodies: 0, clearedPlaceholders: 0, closedGalleryCells: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
     cyworldRewrites: 0, unresolvedUniquePaths: 0, unresolved: [], restored: [],
   });
@@ -1884,6 +1952,7 @@ await writeFile(path.join(destinationRoot, 'restoration-report.json'), `${JSON.s
     quietPanes: totals('quietPanes'),
     groundedBodies: totals('groundedBodies'),
     clearedPlaceholders: totals('clearedPlaceholders'),
+    closedGalleryCells: totals('closedGalleryCells'),
     reconstructedAssets: totals('reconstructedAssets'),
     thumbnailsMade: totals('thumbnailsMade'),
     unpinnedBlocks: totals('unpinnedBlocks'),
@@ -2075,6 +2144,7 @@ console.log(JSON.stringify({
   quietPanes: totals('quietPanes'),
   groundedBodies: totals('groundedBodies'),
   clearedPlaceholders: totals('clearedPlaceholders'),
+  closedGalleryCells: totals('closedGalleryCells'),
   reconstructedAssets: totals('reconstructedAssets'),
   thumbnailsMade: totals('thumbnailsMade'),
   unpinnedBlocks: totals('unpinnedBlocks'),
