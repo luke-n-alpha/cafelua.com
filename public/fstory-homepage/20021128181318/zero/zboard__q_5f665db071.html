@@ -79,19 +79,19 @@ Homepage : http://zeroboard.com
 		var printMain="";
 	
 		if(homepage) {
-			printMain = "<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%22%2Bhomepage%2B%22&k=board');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_homepage.gif border=0 align=absmiddle>&nbsp;&nbsp;홈페이지&nbsp;&nbsp;</td></tr>";
+			printMain = "<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n"+homepage+"\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_homepage.gif border=0 align=absmiddle>&nbsp;&nbsp;홈페이지&nbsp;&nbsp;</td></tr>";
 			printHeight = printHeight + 16;
 		}
 		if(mail) {
-			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3Dm%26str%3D%2522%2Bmail%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_mail.gif border=0 align=absmiddle>&nbsp;&nbsp;메일 보내기&nbsp;&nbsp;</td></tr>";
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/open_window.php?mode=m&str=%22+mail+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_mail.gif border=0 align=absmiddle>&nbsp;&nbsp;메일 보내기&nbsp;&nbsp;</td></tr>";
 			printHeight = printHeight + 16;
 		}
 		if(member_no) {
 			if(isMember) {
-				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fview_info.php%3Fmember_no%3D%2522%2Bmember_no%2B%2522&k=board','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_memo.gif border=0 align=absmiddle>&nbsp;&nbsp;쪽지 보내기&nbsp;&nbsp;</td></tr>";
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view_info.php?member_no=%22+member_no+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_memo.gif border=0 align=absmiddle>&nbsp;&nbsp;쪽지 보내기&nbsp;&nbsp;</td></tr>";
 				printHeight = printHeight + 16;
 			}
-			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fview_info2.php%3Fmember_no%3D%2522%2Bmember_no%2B%2522&k=board','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_information.gif border=0 align=absmiddle>&nbsp;&nbsp;회원정보 보기&nbsp;&nbsp;</td></tr>";
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view_info2.php?member_no=%22+member_no+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_information.gif border=0 align=absmiddle>&nbsp;&nbsp;회원정보 보기&nbsp;&nbsp;</td></tr>";
 			printHeight = printHeight + 16;
 		}
 		if(writer) {
@@ -100,10 +100,10 @@ Homepage : http://zeroboard.com
 		}
 		if(isAdmin) {
 			if(member_no) {
-				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3Di%26str%3D%2522%2Bmember_no%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_modify.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>회원정보 변경&nbsp;&nbsp;</td></tr>";
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/open_window.php?mode=i&str=%22+member_no+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_modify.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>회원정보 변경&nbsp;&nbsp;</td></tr>";
 				printHeight = printHeight + 16;
 			}
-			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3D%2522%2BtraceType%2B%2522%26str%3D%2522%2BtraceID%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_relationlist.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>관련글 추적</font>&nbsp;&nbsp;</td></tr>";
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/open_window.php?mode=%22+traceType+%22&str=%22+traceID+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_relationlist.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>관련글 추적</font>&nbsp;&nbsp;</td></tr>";
 			printHeight = printHeight + 16;
 		
 		}
@@ -247,7 +247,7 @@ if(((init == "net")&&(browserVer >=3))||((init == "ie")&&(browserVer >= 4))) {
 /zero/login.php?id=veritas&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&s_url=%2Fzero%2Fzboard.php%3Fid%3Dveritas&PHPSESSID=e50264b0722a17f57dc9b81c4b1c1f1e
 
 제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Flogin.php%3Fid%3Dveritas%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26s_url%3D%252Fzero%252Fzboard.php%253Fid%253Dveritas%26PHPSESSID%3De50264b0722a17f57dc9b81c4b1c1f1e&k=board'>&nbsp;Login&nbsp;</a>
-    <a onfocus="blur()" href="#" onclick="window.open('../_unrestored.html?p=%2Fzero%2Fmember_join.php%3Fgroup_no%3D2&k=board','zbMemberJoin','width=560,height=590,toolbars=no,resizable=yes,scrollbars=yes')">&nbsp;Join&nbsp;</a>
+    <a onfocus="blur()" href="#" onclick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/member_join.php?group_no=2\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;">&nbsp;Join&nbsp;</a>
     <Zeroboard &nbsp;modifyINFO&nbsp;</a>
     	<Zeroboard &nbsp;memobox&nbsp;</a>
     <Zeroboard &nbsp;logout&nbsp;</a>

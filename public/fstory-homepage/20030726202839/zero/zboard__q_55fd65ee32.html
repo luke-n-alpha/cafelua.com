@@ -79,19 +79,19 @@ Homepage : http://zeroboard.com
 		var printMain="";
 	
 		if(homepage) {
-			printMain = "<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%22%2Bhomepage%2B%22&k=board');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_homepage.gif border=0 align=absmiddle>&nbsp;&nbsp;홈페이지&nbsp;&nbsp;</td></tr>";
+			printMain = "<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n"+homepage+"\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_homepage.gif border=0 align=absmiddle>&nbsp;&nbsp;홈페이지&nbsp;&nbsp;</td></tr>";
 			printHeight = printHeight + 16;
 		}
 		if(mail) {
-			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3Dm%26str%3D%2522%2Bmail%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_mail.gif border=0 align=absmiddle>&nbsp;&nbsp;메일 보내기&nbsp;&nbsp;</td></tr>";
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/open_window.php?mode=m&str=%22+mail+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_mail.gif border=0 align=absmiddle>&nbsp;&nbsp;메일 보내기&nbsp;&nbsp;</td></tr>";
 			printHeight = printHeight + 16;
 		}
 		if(member_no) {
 			if(isMember) {
-				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fview_info.php%3Fmember_no%3D%2522%2Bmember_no%2B%2522&k=board','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_memo.gif border=0 align=absmiddle>&nbsp;&nbsp;쪽지 보내기&nbsp;&nbsp;</td></tr>";
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view_info.php?member_no=%22+member_no+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_memo.gif border=0 align=absmiddle>&nbsp;&nbsp;쪽지 보내기&nbsp;&nbsp;</td></tr>";
 				printHeight = printHeight + 16;
 			}
-			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fview_info2.php%3Fmember_no%3D%2522%2Bmember_no%2B%2522&k=board','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_information.gif border=0 align=absmiddle>&nbsp;&nbsp;회원정보 보기&nbsp;&nbsp;</td></tr>";
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view_info2.php?member_no=%22+member_no+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_information.gif border=0 align=absmiddle>&nbsp;&nbsp;회원정보 보기&nbsp;&nbsp;</td></tr>";
 			printHeight = printHeight + 16;
 		}
 		if(writer) {
@@ -100,10 +100,10 @@ Homepage : http://zeroboard.com
 		}
 		if(isAdmin) {
 			if(member_no) {
-				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3Di%26str%3D%2522%2Bmember_no%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_modify.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>회원정보 변경&nbsp;&nbsp;</td></tr>";
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/open_window.php?mode=i&str=%22+member_no+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_modify.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>회원정보 변경&nbsp;&nbsp;</td></tr>";
 				printHeight = printHeight + 16;
 			}
-			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3D%2522%2BtraceType%2B%2522%26str%3D%2522%2BtraceID%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_relationlist.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>관련글 추적</font>&nbsp;&nbsp;</td></tr>";
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/open_window.php?mode=%22+traceType+%22&str=%22+traceID+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_relationlist.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>관련글 추적</font>&nbsp;&nbsp;</td></tr>";
 			printHeight = printHeight + 16;
 		
 		}
@@ -491,7 +491,7 @@ if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha
   	    <td align=center background=skin/gallery_huni_gray/images/back_.gif >
             	<a 
      href='#' 
-    onclick="new_win=window.open('../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3DMyalbum%26no%3D59%26table_width%3D650%26category_no%3Dno&k=board','img_win','left=0,top=0,width=1, height=1, resizable=yes, scrollbars=yes,status=no'); new_win.resizeTo(700,600); new_win.focus()" 
+    onclick="new_win=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=Myalbum&no=59&table_width=650&category_no=no\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;; new_win.resizeTo(700,600); new_win.focus()" 
      onMouseOver="viewon('고창 읍성에서..', 1); return true;"
      onMouseOut="viewoff(); return true;" 
 	 onfocus="blur(); return true;"
@@ -531,7 +531,7 @@ if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha
   	    <td align=center background=skin/gallery_huni_gray/images/back_.gif >
             	<a 
      href='#' 
-    onclick="new_win=window.open('../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3DMyalbum%26no%3D58%26table_width%3D650%26category_no%3Dno&k=board','img_win','left=0,top=0,width=1, height=1, resizable=yes, scrollbars=yes,status=no'); new_win.resizeTo(700,600); new_win.focus()" 
+    onclick="new_win=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=Myalbum&no=58&table_width=650&category_no=no\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;; new_win.resizeTo(700,600); new_win.focus()" 
      onMouseOver="viewon('비가 오고 있습니다. 텐트 철수중. ㅠㅠ&lt;br /&gt;', 0); return true;"
      onMouseOut="viewoff(); return true;" 
 	 onfocus="blur(); return true;"
@@ -571,7 +571,7 @@ if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha
   	    <td align=center background=skin/gallery_huni_gray/images/back_.gif >
             	<a 
      href='#' 
-    onclick="new_win=window.open('../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3DMyalbum%26no%3D57%26table_width%3D650%26category_no%3Dno&k=board','img_win','left=0,top=0,width=1, height=1, resizable=yes, scrollbars=yes,status=no'); new_win.resizeTo(700,600); new_win.focus()" 
+    onclick="new_win=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=Myalbum&no=57&table_width=650&category_no=no\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;; new_win.resizeTo(700,600); new_win.focus()" 
      onMouseOver="viewon('방파제 위에서..', 2); return true;"
      onMouseOut="viewoff(); return true;" 
 	 onfocus="blur(); return true;"
@@ -614,7 +614,7 @@ if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha
   	    <td align=center background=skin/gallery_huni_gray/images/back_.gif >
             	<a 
      href='#' 
-    onclick="new_win=window.open('../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3DMyalbum%26no%3D56%26table_width%3D650%26category_no%3Dno&k=board','img_win','left=0,top=0,width=1, height=1, resizable=yes, scrollbars=yes,status=no'); new_win.resizeTo(700,600); new_win.focus()" 
+    onclick="new_win=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=Myalbum&no=56&table_width=650&category_no=no\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;; new_win.resizeTo(700,600); new_win.focus()" 
      onMouseOver="viewon('컥.. 이건 제가 자는 모습입니다.', 1); return true;"
      onMouseOut="viewoff(); return true;" 
 	 onfocus="blur(); return true;"
@@ -654,7 +654,7 @@ if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha
   	    <td align=center background=skin/gallery_huni_gray/images/back_.gif >
             	<a 
      href='#' 
-    onclick="new_win=window.open('../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3DMyalbum%26no%3D55%26table_width%3D650%26category_no%3Dno&k=board','img_win','left=0,top=0,width=1, height=1, resizable=yes, scrollbars=yes,status=no'); new_win.resizeTo(700,600); new_win.focus()" 
+    onclick="new_win=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=Myalbum&no=55&table_width=650&category_no=no\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;; new_win.resizeTo(700,600); new_win.focus()" 
      onMouseOver="viewon('작년에 비해 교통편도 업그레이드에 식사도 업그레이드 되었습니다. 라면뿐만아니라 이런 고급 인스탄트 식품까지..', 0); return true;"
      onMouseOut="viewoff(); return true;" 
 	 onfocus="blur(); return true;"
@@ -694,7 +694,7 @@ if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha
   	    <td align=center background=skin/gallery_huni_gray/images/back_.gif >
             	<a 
      href='#' 
-    onclick="new_win=window.open('../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3DMyalbum%26no%3D54%26table_width%3D650%26category_no%3Dno&k=board','img_win','left=0,top=0,width=1, height=1, resizable=yes, scrollbars=yes,status=no'); new_win.resizeTo(700,600); new_win.focus()" 
+    onclick="new_win=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=Myalbum&no=54&table_width=650&category_no=no\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;; new_win.resizeTo(700,600); new_win.focus()" 
      onMouseOver="viewon('철지났다는것은 한눈에 알수 있지 않습니까 ? 저기 조그맣게 보이는게 우리일행입니다. 총 네명인데 한명은 사진기 들고 있습니다.', 2); return true;"
      onMouseOut="viewoff(); return true;" 
 	 onfocus="blur(); return true;"
@@ -737,7 +737,7 @@ if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha
   	    <td align=center background=skin/gallery_huni_gray/images/back_.gif >
             	<a 
      href='#' 
-    onclick="new_win=window.open('../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3DMyalbum%26no%3D53%26table_width%3D650%26category_no%3Dno&k=board','img_win','left=0,top=0,width=1, height=1, resizable=yes, scrollbars=yes,status=no'); new_win.resizeTo(700,600); new_win.focus()" 
+    onclick="new_win=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=Myalbum&no=53&table_width=650&category_no=no\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;; new_win.resizeTo(700,600); new_win.focus()" 
      onMouseOver="viewon('이것이 그 문제의 자동차. --;&lt;br /&gt;이거 찍을때는 이렇게 밝았는데 다음날 엄청 쏟아졌습니다. 덕분에 모래밭에 한번빠지니까.. 안나오더군요. 결국 다른차와 끈을 메어 끌어냈습니다.', 1); return true;"
      onMouseOut="viewoff(); return true;" 
 	 onfocus="blur(); return true;"
@@ -777,7 +777,7 @@ if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha
   	    <td align=center background=skin/gallery_huni_gray/images/back_.gif >
             	<a 
      href='#' 
-    onclick="new_win=window.open('../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3DMyalbum%26no%3D52%26table_width%3D650%26category_no%3Dno&k=board','img_win','left=0,top=0,width=1, height=1, resizable=yes, scrollbars=yes,status=no'); new_win.resizeTo(700,600); new_win.focus()" 
+    onclick="new_win=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=Myalbum&no=52&table_width=650&category_no=no\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;; new_win.resizeTo(700,600); new_win.focus()" 
      onMouseOver="viewon('철 다지난 해수욕장에 덩그라니 우리 텐트 두개 ~!', 0); return true;"
      onMouseOut="viewoff(); return true;" 
 	 onfocus="blur(); return true;"
@@ -817,7 +817,7 @@ if(dct==2) { if (thing.filters.alpha.opacity>startopacity) { thing.filters.alpha
   	    <td align=center background=skin/gallery_huni_gray/images/back_.gif >
             	<a 
      href='#' 
-    onclick="new_win=window.open('../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3DMyalbum%26no%3D51%26table_width%3D650%26category_no%3Dno&k=board','img_win','left=0,top=0,width=1, height=1, resizable=yes, scrollbars=yes,status=no'); new_win.resizeTo(700,600); new_win.focus()" 
+    onclick="new_win=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=Myalbum&no=51&table_width=650&category_no=no\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;; new_win.resizeTo(700,600); new_win.focus()" 
      onMouseOver="viewon('이런 풍경은 참 흔하죠.. 그러나 역시 시야를 가리는 건물과 산이 없으니 좋습니다.', 2); return true;"
      onMouseOut="viewoff(); return true;" 
 	 onfocus="blur(); return true;"

@@ -79,19 +79,19 @@ Homepage : http://zeroboard.com
 		var printMain="";
 	
 		if(homepage) {
-			printMain = "<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%22%2Bhomepage%2B%22&k=board');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_homepage.gif border=0 align=absmiddle>&nbsp;&nbsp;홈페이지&nbsp;&nbsp;</td></tr>";
+			printMain = "<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n"+homepage+"\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_homepage.gif border=0 align=absmiddle>&nbsp;&nbsp;홈페이지&nbsp;&nbsp;</td></tr>";
 			printHeight = printHeight + 16;
 		}
 		if(mail) {
-			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3Dm%26str%3D%2522%2Bmail%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_mail.gif border=0 align=absmiddle>&nbsp;&nbsp;메일 보내기&nbsp;&nbsp;</td></tr>";
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/open_window.php?mode=m&str=%22+mail+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_mail.gif border=0 align=absmiddle>&nbsp;&nbsp;메일 보내기&nbsp;&nbsp;</td></tr>";
 			printHeight = printHeight + 16;
 		}
 		if(member_no) {
 			if(isMember) {
-				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fview_info.php%3Fmember_no%3D%2522%2Bmember_no%2B%2522&k=board','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_memo.gif border=0 align=absmiddle>&nbsp;&nbsp;쪽지 보내기&nbsp;&nbsp;</td></tr>";
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view_info.php?member_no=%22+member_no+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_memo.gif border=0 align=absmiddle>&nbsp;&nbsp;쪽지 보내기&nbsp;&nbsp;</td></tr>";
 				printHeight = printHeight + 16;
 			}
-			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fview_info2.php%3Fmember_no%3D%2522%2Bmember_no%2B%2522&k=board','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_information.gif border=0 align=absmiddle>&nbsp;&nbsp;회원정보 보기&nbsp;&nbsp;</td></tr>";
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view_info2.php?member_no=%22+member_no+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_information.gif border=0 align=absmiddle>&nbsp;&nbsp;회원정보 보기&nbsp;&nbsp;</td></tr>";
 			printHeight = printHeight + 16;
 		}
 		if(writer) {
@@ -100,10 +100,10 @@ Homepage : http://zeroboard.com
 		}
 		if(isAdmin) {
 			if(member_no) {
-				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3Di%26str%3D%2522%2Bmember_no%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_modify.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>회원정보 변경&nbsp;&nbsp;</td></tr>";
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/open_window.php?mode=i&str=%22+member_no+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_modify.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>회원정보 변경&nbsp;&nbsp;</td></tr>";
 				printHeight = printHeight + 16;
 			}
-			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3D%2522%2BtraceType%2B%2522%26str%3D%2522%2BtraceID%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_relationlist.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>관련글 추적</font>&nbsp;&nbsp;</td></tr>";
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/open_window.php?mode=%22+traceType+%22&str=%22+traceID+%22\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;;><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_relationlist.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>관련글 추적</font>&nbsp;&nbsp;</td></tr>";
 			printHeight = printHeight + 16;
 		
 		}
@@ -256,7 +256,7 @@ function swapImage() {
 <!-- HTML 시작 -->
 <table border=0 cellspacing=0 cellpadding=0 width=95%>
 <tr>
-  <td valign=bottom class=kissofgod-tahoma7 nowrap><a href=javascript:void(window.open('../_unrestored.html?p=%2Fzero%2Fmember_memo3.php&k=board','member_memo','width=450,height=500,status=no,toolbar=no,resizable=yes,scrollbars=yes')) onfocus='this.blur()'><img src=skin/zipulragi_dairy2/member_logged.gif border=0 align=absmiddle alt='접속된 회원 및 총회원 목록보기&#10;&#13;현재 1분께서 회원으로 접속해 있습니다.'><span onfocus='this.blur()'> 1</span></td>
+  <td valign=bottom class=kissofgod-tahoma7 nowrap><a href=#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/member_memo3.php\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false; onfocus='this.blur()'><img src=skin/zipulragi_dairy2/member_logged.gif border=0 align=absmiddle alt='접속된 회원 및 총회원 목록보기&#10;&#13;현재 1분께서 회원으로 접속해 있습니다.'><span onfocus='this.blur()'> 1</span></td>
   <td valign=bottom rowspan=2 align=right width=100%>
     <Zeroboard <img src=skin/zipulragi_dairy2/member_join.gif border=0 alt='회원가입'></a>
     <Zeroboard <img src=skin/zipulragi_dairy2/member_modify.gif border=0 alt='회원정보 수정'></a>
@@ -348,9 +348,9 @@ function swapImage() {
  
 <tr align=center onMouseOver=this.style.backgroundColor='#F1F1F1' onMouseOut=this.style.backgroundColor=''>
   <td height=22 style='font-family:Tahoma;font-size:8pt; padding:0 7'>116</td>
-  <!--  <td><input type=checkbox name=cart value="142"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D142&k=board"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월17일</b>]</td>
+  <!--  <td><input type=checkbox name=cart value="142"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=142\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월17일</b>]</td>
   <td align=center style='word-break:break-all;'><img src=skin/zipulragi_dairy2/weather1.gif></td>
-  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D142&k=board"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/new_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=142\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/new_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
 
 /zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=142&PHPSESSID=a4eec35755d14fe29c204899c7e329d6
 
@@ -362,9 +362,9 @@ function swapImage() {
  
 <tr align=center onMouseOver=this.style.backgroundColor='#F1F1F1' onMouseOut=this.style.backgroundColor=''>
   <td height=22 style='font-family:Tahoma;font-size:8pt; padding:0 7'>115</td>
-  <!--  <td><input type=checkbox name=cart value="141"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D141&k=board"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월16일</b>]</td>
+  <!--  <td><input type=checkbox name=cart value="141"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=141\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월16일</b>]</td>
   <td align=center style='word-break:break-all;'><img src=skin/zipulragi_dairy2/weather0.gif></td>
-  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D141&k=board"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=141\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
 
 /zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=141&PHPSESSID=a4eec35755d14fe29c204899c7e329d6
 
@@ -376,9 +376,9 @@ function swapImage() {
  
 <tr align=center onMouseOver=this.style.backgroundColor='#F1F1F1' onMouseOut=this.style.backgroundColor=''>
   <td height=22 style='font-family:Tahoma;font-size:8pt; padding:0 7'>114</td>
-  <!--  <td><input type=checkbox name=cart value="140"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D140&k=board"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월15일</b>]</td>
+  <!--  <td><input type=checkbox name=cart value="140"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=140\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월15일</b>]</td>
   <td align=center style='word-break:break-all;'><img src=skin/zipulragi_dairy2/weather3.gif></td>
-  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D140&k=board"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=140\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
 
 /zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=140&PHPSESSID=a4eec35755d14fe29c204899c7e329d6
 
@@ -390,9 +390,9 @@ function swapImage() {
  
 <tr align=center onMouseOver=this.style.backgroundColor='#F1F1F1' onMouseOut=this.style.backgroundColor=''>
   <td height=22 style='font-family:Tahoma;font-size:8pt; padding:0 7'>113</td>
-  <!--  <td><input type=checkbox name=cart value="139"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D139&k=board"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월14일</b>]</td>
+  <!--  <td><input type=checkbox name=cart value="139"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=139\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월14일</b>]</td>
   <td align=center style='word-break:break-all;'><img src=skin/zipulragi_dairy2/weather0.gif></td>
-  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D139&k=board"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=139\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
 
 /zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=139&PHPSESSID=a4eec35755d14fe29c204899c7e329d6
 
@@ -404,9 +404,9 @@ function swapImage() {
  
 <tr align=center onMouseOver=this.style.backgroundColor='#F1F1F1' onMouseOut=this.style.backgroundColor=''>
   <td height=22 style='font-family:Tahoma;font-size:8pt; padding:0 7'>112</td>
-  <!--  <td><input type=checkbox name=cart value="138"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D138&k=board"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월13일</b>]</td>
+  <!--  <td><input type=checkbox name=cart value="138"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=138\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월13일</b>]</td>
   <td align=center style='word-break:break-all;'><img src=skin/zipulragi_dairy2/weather0.gif></td>
-  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D138&k=board"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=138\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
 
 /zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=138&PHPSESSID=a4eec35755d14fe29c204899c7e329d6
 
@@ -418,9 +418,9 @@ function swapImage() {
  
 <tr align=center onMouseOver=this.style.backgroundColor='#F1F1F1' onMouseOut=this.style.backgroundColor=''>
   <td height=22 style='font-family:Tahoma;font-size:8pt; padding:0 7'>111</td>
-  <!--  <td><input type=checkbox name=cart value="137"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D137&k=board"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월12일</b>]</td>
+  <!--  <td><input type=checkbox name=cart value="137"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=137\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월12일</b>]</td>
   <td align=center style='word-break:break-all;'><img src=skin/zipulragi_dairy2/weather3.gif></td>
-  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D137&k=board"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=137\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
 
 /zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=137&PHPSESSID=a4eec35755d14fe29c204899c7e329d6
 
@@ -432,9 +432,9 @@ function swapImage() {
  
 <tr align=center onMouseOver=this.style.backgroundColor='#F1F1F1' onMouseOut=this.style.backgroundColor=''>
   <td height=22 style='font-family:Tahoma;font-size:8pt; padding:0 7'>110</td>
-  <!--  <td><input type=checkbox name=cart value="136"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D136&k=board"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월12일</b>]</td>
+  <!--  <td><input type=checkbox name=cart value="136"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=136\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월12일</b>]</td>
   <td align=center style='word-break:break-all;'><img src=skin/zipulragi_dairy2/weather3.gif></td>
-  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D136&k=board"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=136\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
 
 /zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=136&PHPSESSID=a4eec35755d14fe29c204899c7e329d6
 
@@ -446,9 +446,9 @@ function swapImage() {
  
 <tr align=center onMouseOver=this.style.backgroundColor='#F1F1F1' onMouseOut=this.style.backgroundColor=''>
   <td height=22 style='font-family:Tahoma;font-size:8pt; padding:0 7'>109</td>
-  <!--  <td><input type=checkbox name=cart value="135"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D135&k=board"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월11일</b>]</td>
+  <!--  <td><input type=checkbox name=cart value="135"></td>-->  <!--  <td align=left style='padding-left:10'>&nbsp;</td>-->  <td align=center style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=135\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br>[<B>2003년 07월11일</b>]</td>
   <td align=center style='word-break:break-all;'><img src=skin/zipulragi_dairy2/weather0.gif></td>
-  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Ddiary%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D135&k=board"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+  <td align=left style='word-break:break-all;cursor:hand;' onclick=location.href="#" onclick="alert('복원되지 않은 자료입니다.\n\n/zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=135\n\n제로보드가 그때그때 만들어 보여 주던 화면입니다.');return false;"><img src=images/t.gif border=0 width=1 height=3><br><img src=skin/zipulragi_dairy2/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
 
 /zero/view.php?id=diary&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=135&PHPSESSID=a4eec35755d14fe29c204899c7e329d6
 

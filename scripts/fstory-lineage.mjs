@@ -162,6 +162,28 @@ export const RECENT_ANIME = [
   { thumb: 'yusi.jpg', page: 'recentani/yusi/yusiop.html', title: '쁘티프리 유시', video: '13V8C6yL2i8' },
 ];
 
+// Gallery thumbnails the archive never held, matched to the same artwork on
+// Luke's own desk. The match is made on two things at once and needs both: the
+// filename says what the picture is ({shower} → 샤워님 축전, {blackangel} → 검은
+// 천사, {skypaint} → 하늘색 칠하기), and the post's own text dates the drawing
+// inside this site's lifetime. Where either fails the slot stays empty — a
+// wrong picture in a gallery is worse than a missing one, and the detail pages
+// that could have confirmed a match were themselves never archived.
+export const GALLERY_MATCHES = [
+  { thumb: 'shower_th.jpg', title: '샤워님 축전', year: '2002', from: '/desk/20060620-샤워님-축전-일러스트-창작물/01.webp' },
+  { thumb: 'blackangel_th.jpg', title: '검은 천사', year: '2002', from: '/desk/20060620-검은-천사-일러스트-창작물/01.webp' },
+  { thumb: 'banana_th.jpg', title: '바나나 우유 소녀', year: '2003', from: '/desk/20060620-바나나-우유-소녀-일러스트-창작물/01.webp' },
+  { thumb: 'mask_th.jpg', title: '가면 오페라', year: '2002', from: '/desk/20060620-가면-오페라-일러스트-창작물/01.webp' },
+  { thumb: 'skypaint_th.jpg', title: '하늘색 칠하기', year: '2002', from: '/desk/20060620-하늘색-칠하기-일러스트-창작물/01.webp' },
+  { thumb: 'ken_th.jpg', title: '검도', year: '2003', from: '/desk/20150806-검도/01.webp' },
+  { thumb: 'santa_th.jpg', title: '산타 소녀', year: '2001', from: '/desk/20060620-산타-소녀-일러스트-창작물/01.webp' },
+  { thumb: 'untitled_th.jpg', title: '무제', year: '2002', from: '/desk/20150511-무제/01.webp' },
+  { thumb: 'dogfairy_th.jpg', title: '요정과 지뢰를 밟은 병사', year: '2002', from: '/desk/20060620-요정과-지뢰를-밟은-병사-일러스트-창작물/01.webp' },
+  { thumb: 'noel_th.jpg', title: '메리크리스마스', year: '2000', from: '/desk/20060620-메리크리스마스-일러스트-창작물/01.webp' },
+  { thumb: 'windy_th.jpg', title: '바람부는 해변', year: '2003', from: '/desk/20060620-바람부는-해변-일러스트-창작물/01.webp' },
+  { thumb: 'dream_th.jpg', title: '거위의 꿈', year: '2002', from: '/desk/20140410-거위의-꿈/01.webp' },
+];
+
 export const PATH_ALIASES = [
   { from: 'mydoc/novel/', to: 'myletter/', corroborations: 32 },
 ];

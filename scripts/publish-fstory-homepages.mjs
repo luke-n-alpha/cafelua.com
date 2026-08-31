@@ -15,7 +15,7 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ANNEXES, BGM_TRACKS, RECENT_ANIME, CURATED_EDITIONS, LINEAGES, MERGED_EDITION, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS } from './fstory-lineage.mjs';
+import { ANNEXES, BGM_TRACKS, GALLERY_MATCHES, RECENT_ANIME, CURATED_EDITIONS, LINEAGES, MERGED_EDITION, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS } from './fstory-lineage.mjs';
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dataRoot = path.resolve(appRoot, '../data/fstory-net-wayback');
@@ -492,7 +492,7 @@ const publishEdition = async ({ lineage, captures }) => {
     placeholderImages: 0, droppedBackgrounds: 0, disabledDownloads: 0, disabledMedia: 0,
     disabledForms: 0, noticeLinks: 0, unresolvedKept: 0, extensionsAdded: 0,
     staticised: 0, guestbookMerged: 0, curatedRestored: 0, reconstructedAssets: 0, thumbnailsMade: 0,
-    unpinnedBlocks: 0, curatedPages: 0, quietPanes: 0, groundedBodies: 0, clearedPlaceholders: 0, closedGalleryCells: 0,
+    unpinnedBlocks: 0, curatedPages: 0, quietPanes: 0, groundedBodies: 0, clearedPlaceholders: 0, closedGalleryCells: 0, galleryFromDesk: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
   };
 
@@ -732,6 +732,30 @@ const publishEdition = async ({ lineage, captures }) => {
           occupied.add(relative.toLowerCase());
           restored.push({ url: url.href, path: relative, from: sameFolder || 'curated', source: 'thumbnail-of-surviving-original' });
           stats.thumbnailsMade += 1;
+          return { kind: 'local', relative, url };
+        }
+      }
+
+      // A gallery thumbnail whose artwork survives on Luke's desk. Matched by
+      // filename and by the drawing's own date; see GALLERY_MATCHES.
+      const galleryMatch = GALLERY_MATCHES.find(
+        (item) => item.thumb.toLowerCase() === path.basename(relative).toLowerCase(),
+      );
+      if (galleryMatch) {
+        const stored = path.join(reconstructedRoot, 'gallery-thumbs', galleryMatch.thumb);
+        if (existsSync(stored)) {
+          const output = path.join(destination, relative);
+          if (!existsSync(output)) {
+            await mkdir(path.dirname(output), { recursive: true });
+            await cp(stored, output, { force: true, preserveTimestamps: true });
+          }
+          onDisk.set(relative.toLowerCase(), relative);
+          occupied.add(relative.toLowerCase());
+          restored.push({
+            url: url.href, path: relative, source: 'desk-artwork',
+            from: galleryMatch.from || galleryMatch.title, title: galleryMatch.title, year: galleryMatch.year,
+          });
+          stats.galleryFromDesk += 1;
           return { kind: 'local', relative, url };
         }
       }
@@ -1132,6 +1156,46 @@ const publishEdition = async ({ lineage, captures }) => {
     }
   };
   await closeGalleryGaps(destination);
+
+  // Zeroboard opened its member-info card in a popup window. Rewritten, that
+  // became a popup carrying the "not restored" notice — a window opening just
+  // to say no. Say it in place instead, the way every other dead link does.
+  const quietenPopups = async (directory) => {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) { await quietenPopups(file); continue; }
+      if (!htmlExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+      const text = decode(await readFile(file));
+      if (!/_unrestored/i.test(text)) continue;
+      let count = 0;
+      const output = text.replace(
+        // A plain link to the notice page, left behind by a rewrite path that
+        // predates the in-place alert. Same treatment as the rest.
+        /href="([^"]*_unrestored[^"]*)"/gi,
+        (whole, notice) => {
+          const wanted = /[?&]p=([^&"]+)/.exec(notice);
+          const address = wanted ? decodeURIComponent(wanted[1]) : '';
+          count += 1;
+          const message = `복원되지 않은 자료입니다.\\n\\n${address}\\n\\n제로보드가 그때그때 만들어 보여 주던 화면입니다.`;
+          return `href="#" onclick="alert('${message.replace(/'/g, "\\'")}');return false;"`;
+        },
+      ).replace(
+        /(?:javascript:void\()?window\.open\('([^']*_unrestored[^']*)'[^)]*\)\)?/gi,
+        (whole, notice) => {
+          const wanted = /[?&]p=([^&']+)/.exec(notice);
+          const address = wanted ? decodeURIComponent(wanted[1]) : '';
+          count += 1;
+          const message = `복원되지 않은 자료입니다.\\n\\n${address}\\n\\n제로보드가 그때그때 만들어 보여 주던 창입니다.`;
+          return `#" onclick="alert('${message.replace(/'/g, "\\'")}');return false;`;
+        },
+      );
+      if (count) {
+        await writeFile(file, output, 'utf8');
+        stats.quietPanes += count;
+      }
+    }
+  };
+  await quietenPopups(destination);
 
   // Pages that hard-code a white body sit inside a frame tiled with the site's
   // own strip — #bce2eb blue and #8e7fb0 violet — so plain white reads as a
@@ -1715,7 +1779,7 @@ ${characterArt}
     disabledDownloads: 0, disabledMedia: 0, disabledForms: 0, noticeLinks: 0,
     unresolvedKept: 0, extensionsAdded: 0, staticised: 0, guestbookMerged: 0,
     curatedRestored: 0, curatedPages: 0, reconstructedAssets: 0, thumbnailsMade: 0, unpinnedBlocks: 0,
-    quietPanes: 0, groundedBodies: 0, clearedPlaceholders: 0, closedGalleryCells: 0,
+    quietPanes: 0, groundedBodies: 0, clearedPlaceholders: 0, closedGalleryCells: 0, galleryFromDesk: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
     cyworldRewrites: 0, unresolvedUniquePaths: 0, unresolved: [], restored: [],
   });
@@ -2037,6 +2101,7 @@ await writeFile(path.join(destinationRoot, 'restoration-report.json'), `${JSON.s
     groundedBodies: totals('groundedBodies'),
     clearedPlaceholders: totals('clearedPlaceholders'),
     closedGalleryCells: totals('closedGalleryCells'),
+    galleryFromDesk: totals('galleryFromDesk'),
     reconstructedAssets: totals('reconstructedAssets'),
     thumbnailsMade: totals('thumbnailsMade'),
     unpinnedBlocks: totals('unpinnedBlocks'),
@@ -2229,6 +2294,7 @@ console.log(JSON.stringify({
   groundedBodies: totals('groundedBodies'),
   clearedPlaceholders: totals('clearedPlaceholders'),
   closedGalleryCells: totals('closedGalleryCells'),
+  galleryFromDesk: totals('galleryFromDesk'),
   reconstructedAssets: totals('reconstructedAssets'),
   thumbnailsMade: totals('thumbnailsMade'),
   unpinnedBlocks: totals('unpinnedBlocks'),
