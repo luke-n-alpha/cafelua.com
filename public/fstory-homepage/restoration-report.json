@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-29T21:18:18.830Z",
+  "generatedAt": "2026-08-31T01:46:17.233Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -31,24 +31,24 @@
     }
   ],
   "totals": {
-    "publishedFiles": 5324,
-    "restoredFromArchive": 571,
-    "aliasResolved": 1935,
+    "publishedFiles": 3551,
+    "restoredFromArchive": 293,
+    "aliasResolved": 1287,
     "caseResolved": 0,
-    "rewrittenReferences": 2568,
-    "placeholderImages": 7539,
-    "droppedBackgrounds": 3725,
-    "disabledDownloads": 20,
-    "disabledMedia": 1309,
-    "disabledForms": 458,
-    "noticeLinks": 11845,
-    "externalImages": 332,
-    "externalAssets": 72,
-    "externalFrames": 39,
-    "externalLinks": 586,
-    "staticised": 353,
-    "guestbookMerged": 7,
-    "cyworldRewrites": 17
+    "rewrittenReferences": 1675,
+    "placeholderImages": 5377,
+    "droppedBackgrounds": 2538,
+    "disabledDownloads": 18,
+    "disabledMedia": 1022,
+    "disabledForms": 343,
+    "noticeLinks": 8259,
+    "externalImages": 194,
+    "externalAssets": 47,
+    "externalFrames": 25,
+    "externalLinks": 354,
+    "staticised": 278,
+    "guestbookMerged": 4,
+    "cyworldRewrites": 11
   },
   "snapshots": [
     {
@@ -56,6 +56,13 @@
       "date": "2001-07-15",
       "lineage": "L0",
       "cyworldRewrites": 0,
+      "mergedFrom": [
+        {
+          "capture": "20010715123146",
+          "newFiles": 211,
+          "representative": true
+        }
+      ],
       "originalFiles": 211,
       "publishedFiles": 243,
       "rewrittenReferences": 11,
@@ -205,6 +212,13 @@
       "date": "2001-07-23",
       "lineage": "L1",
       "cyworldRewrites": 0,
+      "mergedFrom": [
+        {
+          "capture": "20010723051951",
+          "newFiles": 235,
+          "representative": true
+        }
+      ],
       "originalFiles": 235,
       "publishedFiles": 274,
       "rewrittenReferences": 34,
@@ -350,160 +364,23 @@
       ]
     },
     {
-      "timestamp": "20010925220320",
-      "date": "2001-09-25",
-      "lineage": "L2.0",
-      "cyworldRewrites": 0,
-      "originalFiles": 274,
-      "publishedFiles": 418,
-      "rewrittenReferences": 122,
-      "restoredFromArchive": 144,
-      "aliasResolved": 46,
-      "caseResolved": 0,
-      "placeholderImages": 350,
-      "droppedBackgrounds": 300,
-      "disabledDownloads": 0,
-      "disabledMedia": 13,
-      "disabledForms": 3,
-      "noticeLinks": 781,
-      "unresolvedKept": 0,
-      "extensionsAdded": 0,
-      "staticised": 4,
-      "guestbookMerged": 1,
-      "externalImages": 44,
-      "externalAssets": 9,
-      "externalFrames": 4,
-      "externalLinks": 30,
-      "unresolvedUniquePaths": 950,
-      "unresolvedTopPaths": [
-        {
-          "path": "/~fstory/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 145
-        },
-        {
-          "path": "/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 66
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/dare.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 31
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/blank.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 29
-        },
-        {
-          "path": "/~fstory/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 25
-        },
-        {
-          "path": "/ai/back2.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 15
-        },
-        {
-          "path": "/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 14
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/basket59.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 9
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/sample3.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 9
-        },
-        {
-          "path": "/~fstory/gallery/gallery2/gallery2.html",
-          "query": "",
-          "treatment": "notice-link",
-          "count": 9
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/banjang.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 8
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/shadow59.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 8
-        },
-        {
-          "path": "/~fstory/link/space.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 8
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/arima.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 6
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/card6.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 6
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/bakgu.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 6
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/pika.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 6
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/king.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 5
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/duli.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 5
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/joe.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 5
-        }
-      ]
-    },
-    {
       "timestamp": "20011202212712",
       "date": "2001-12-02",
       "lineage": "L2.0",
       "cyworldRewrites": 1,
-      "originalFiles": 396,
+      "mergedFrom": [
+        {
+          "capture": "20010925220320",
+          "newFiles": 274,
+          "representative": false
+        },
+        {
+          "capture": "20011202212712",
+          "newFiles": 122,
+          "representative": true
+        }
+      ],
+      "originalFiles": 670,
       "publishedFiles": 539,
       "rewrittenReferences": 372,
       "restoredFromArchive": 142,
@@ -648,309 +525,28 @@
       ]
     },
     {
-      "timestamp": "20020325014505",
-      "date": "2002-03-25",
-      "lineage": "L2.1",
-      "cyworldRewrites": 3,
-      "originalFiles": 598,
-      "publishedFiles": 669,
-      "rewrittenReferences": 380,
-      "restoredFromArchive": 71,
-      "aliasResolved": 291,
-      "caseResolved": 0,
-      "placeholderImages": 835,
-      "droppedBackgrounds": 433,
-      "disabledDownloads": 1,
-      "disabledMedia": 137,
-      "disabledForms": 49,
-      "noticeLinks": 1374,
-      "unresolvedKept": 0,
-      "extensionsAdded": 0,
-      "staticised": 29,
-      "guestbookMerged": 1,
-      "externalImages": 47,
-      "externalAssets": 8,
-      "externalFrames": 5,
-      "externalLinks": 101,
-      "unresolvedUniquePaths": 1468,
-      "unresolvedTopPaths": [
-        {
-          "path": "/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 168
-        },
-        {
-          "path": "/~fstory/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 145
-        },
-        {
-          "path": "/zero/skin/kissofgod_gray/t.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 96
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/blank.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 49
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/dare.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 40
-        },
-        {
-          "path": "\"+name+\"",
-          "query": "",
-          "treatment": "notice-script-template",
-          "count": 30
-        },
-        {
-          "path": "/zero/skin/kissofgod_green/old_head.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 26
-        },
-        {
-          "path": "/~fstory/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 25
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/",
-          "query": "",
-          "treatment": "placeholder-script-image",
-          "count": 24
-        },
-        {
-          "path": "/zero/skin/kissofgod_pink/t.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 23
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/sample3.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 18
-        },
-        {
-          "path": "/zero/view_info.php",
-          "query": "?to=&id=Mybbs&member_no=1",
-          "treatment": "notice-script-literal",
-          "count": 18
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/basket59.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 15
-        },
-        {
-          "path": "/ai/back2.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 14
-        },
-        {
-          "path": "/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 14
-        },
-        {
-          "path": "/zero/skin/kissofgod_gray/old_head.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 14
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/arima.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 13
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/banjang.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 12
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/shadow59.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 12
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/card6.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 12
-        }
-      ]
-    },
-    {
-      "timestamp": "20020924164928",
-      "date": "2002-09-24",
-      "lineage": "L2.1",
-      "cyworldRewrites": 3,
-      "originalFiles": 625,
-      "publishedFiles": 686,
-      "rewrittenReferences": 391,
-      "restoredFromArchive": 63,
-      "aliasResolved": 311,
-      "caseResolved": 0,
-      "placeholderImages": 977,
-      "droppedBackgrounds": 454,
-      "disabledDownloads": 1,
-      "disabledMedia": 137,
-      "disabledForms": 63,
-      "noticeLinks": 1431,
-      "unresolvedKept": 0,
-      "extensionsAdded": 0,
-      "staticised": 42,
-      "guestbookMerged": 1,
-      "externalImages": 47,
-      "externalAssets": 8,
-      "externalFrames": 5,
-      "externalLinks": 101,
-      "unresolvedUniquePaths": 1520,
-      "unresolvedTopPaths": [
-        {
-          "path": "/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 168
-        },
-        {
-          "path": "/~fstory/back1.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 145
-        },
-        {
-          "path": "/zero/skin/kissofgod_gray/t.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 96
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/blank.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 50
-        },
-        {
-          "path": "\"+name+\"",
-          "query": "",
-          "treatment": "notice-script-template",
-          "count": 42
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/dare.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 41
-        },
-        {
-          "path": "/zero/skin/yony_b2_pi/a3.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 41
-        },
-        {
-          "path": "/zero/skin/kissofgod_green/old_head.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 26
-        },
-        {
-          "path": "/~fstory/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 25
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/",
-          "query": "",
-          "treatment": "placeholder-script-image",
-          "count": 24
-        },
-        {
-          "path": "/zero/skin/kissofgod_pink/t.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 23
-        },
-        {
-          "path": "/zero/skin/yony_b2_pi/a2.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 21
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/sample3.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 19
-        },
-        {
-          "path": "/zero/view_info.php",
-          "query": "?to=&id=Mybbs&member_no=1",
-          "treatment": "notice-script-literal",
-          "count": 18
-        },
-        {
-          "path": "/zero/skin/yony_b2_pi/old_head.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 18
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/basket59.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 16
-        },
-        {
-          "path": "/ai/back2.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 14
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/arima.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 14
-        },
-        {
-          "path": "/tab.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 14
-        },
-        {
-          "path": "/zero/skin/kissofgod_gray/old_head.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 14
-        }
-      ]
-    },
-    {
       "timestamp": "20021120053627",
       "date": "2002-11-20",
       "lineage": "L2.1",
       "cyworldRewrites": 3,
-      "originalFiles": 625,
+      "mergedFrom": [
+        {
+          "capture": "20020325014505",
+          "newFiles": 598,
+          "representative": false
+        },
+        {
+          "capture": "20020924164928",
+          "newFiles": 27,
+          "representative": false
+        },
+        {
+          "capture": "20021120053627",
+          "newFiles": 0,
+          "representative": true
+        }
+      ],
+      "originalFiles": 1848,
       "publishedFiles": 686,
       "rewrittenReferences": 391,
       "restoredFromArchive": 63,
@@ -1099,6 +695,13 @@
       "date": "2002-11-28",
       "lineage": "L2.2",
       "cyworldRewrites": 3,
+      "mergedFrom": [
+        {
+          "capture": "20021128181318",
+          "newFiles": 886,
+          "representative": true
+        }
+      ],
       "originalFiles": 886,
       "publishedFiles": 904,
       "rewrittenReferences": 432,
@@ -1248,6 +851,13 @@
       "date": "2003-07-26",
       "lineage": "L3",
       "cyworldRewrites": 4,
+      "mergedFrom": [
+        {
+          "capture": "20030726202839",
+          "newFiles": 903,
+          "representative": true
+        }
+      ],
       "originalFiles": 903,
       "publishedFiles": 905,
       "rewrittenReferences": 435,

@@ -69,41 +69,47 @@ describe('Legacy homepage bundles', () => {
         }
     });
 
-    test('publishes all nine recovered fstory.net restore points', () => {
+    test('publishes the six merged fstory.net editions', () => {
         const archiveRoot = path.join(legacyRoot, 'fstory-homepage');
         const manifest = JSON.parse(fs.readFileSync(path.join(archiveRoot, 'snapshots.json'), 'utf8'));
 
-        expect(manifest.snapshots).toHaveLength(9);
-        for (const snapshot of manifest.snapshots) {
-            const entryPath = path.join(archiveRoot, snapshot.timestamp, 'index.html');
+        expect(manifest.editions).toHaveLength(6);
+        for (const edition of manifest.editions) {
+            const entryPath = path.join(archiveRoot, edition.representativeCapture, 'index.html');
             expect(fs.existsSync(entryPath)).toBe(true);
             expect(fs.readFileSync(entryPath, 'utf8')).toMatch(/charset\s*=\s*["']?utf-8/i);
         }
     });
 
-    test('classifies every capture into a design lineage with a representative', () => {
+    test('builds every edition from the captures that share its design', () => {
         const archiveRoot = path.join(legacyRoot, 'fstory-homepage');
         const manifest = JSON.parse(fs.readFileSync(path.join(archiveRoot, 'snapshots.json'), 'utf8'));
-        const lineageIds = manifest.lineages.map((lineage: { id: string }) => lineage.id);
 
-        expect(lineageIds.length).toBeGreaterThan(1);
-        for (const snapshot of manifest.snapshots) {
-            expect(lineageIds).toContain(snapshot.lineage);
-        }
-        for (const lineage of manifest.lineages) {
-            expect(manifest.snapshots.some(
-                (snapshot: { timestamp: string }) => snapshot.timestamp === lineage.representative,
+        expect(manifest.editions.length).toBeGreaterThan(1);
+        for (const edition of manifest.editions) {
+            // The representative has to be one of the captures the edition was
+            // built from, or the folder name would name a capture nothing merged.
+            expect(edition.builtFrom.some(
+                (capture: { timestamp: string }) => capture.timestamp === edition.representativeCapture,
             )).toBe(true);
+            expect(edition.builtFrom.filter(
+                (capture: { representative: boolean }) => capture.representative,
+            )).toHaveLength(1);
+            expect(edition.publishedFileCount).toBeGreaterThan(0);
         }
     });
 
     test('keeps 2002-11-20 and 2002-11-28 apart because their frame layouts differ', () => {
         const archiveRoot = path.join(legacyRoot, 'fstory-homepage');
         const manifest = JSON.parse(fs.readFileSync(path.join(archiveRoot, 'snapshots.json'), 'utf8'));
-        const lineageOf = (timestamp: string) =>
-            manifest.snapshots.find((snapshot: { timestamp: string }) => snapshot.timestamp === timestamp)?.lineage;
+        const editionOf = (capture: string) =>
+            manifest.editions.find((edition: { builtFrom: { timestamp: string }[] }) =>
+                edition.builtFrom.some((item) => item.timestamp === capture),
+            )?.id;
 
-        expect(lineageOf('20021120053627')).not.toBe(lineageOf('20021128181318'));
+        // Eight days apart, but a different site: they must never be merged into
+        // one edition.
+        expect(editionOf('20021120053627')).not.toBe(editionOf('20021128181318'));
 
         const older = fs.readFileSync(path.join(archiveRoot, '20021120053627', 'main.html'), 'utf8');
         const newer = fs.readFileSync(path.join(archiveRoot, '20021128181318', 'main.html'), 'utf8');
@@ -112,12 +118,12 @@ describe('Legacy homepage bundles', () => {
         expect(newer).toContain('bgm/bgm.html');
     });
 
-    test('every capture carries its notice page and picture placeholder', () => {
+    test('every edition carries its notice page and picture placeholder', () => {
         const archiveRoot = path.join(legacyRoot, 'fstory-homepage');
         const manifest = JSON.parse(fs.readFileSync(path.join(archiveRoot, 'snapshots.json'), 'utf8'));
 
-        for (const snapshot of manifest.snapshots) {
-            const root = path.join(archiveRoot, snapshot.timestamp);
+        for (const edition of manifest.editions) {
+            const root = path.join(archiveRoot, edition.representativeCapture);
             expect(fs.existsSync(path.join(root, '_unrestored.html'))).toBe(true);
             expect(fs.existsSync(path.join(root, '_missing-image.svg'))).toBe(true);
         }
@@ -153,12 +159,33 @@ describe('Legacy homepage bundles', () => {
             'utf8',
         );
 
-        for (const snapshot of manifest.snapshots) {
-            expect(generated).toContain(snapshot.timestamp);
+        for (const edition of manifest.editions) {
+            expect(generated).toContain(edition.representativeCapture);
+            expect(generated).toContain(edition.label);
         }
-        for (const lineage of manifest.lineages) {
-            expect(generated).toContain(lineage.label);
-        }
+    });
+
+    test('publishes one folder per design generation, not one per capture', () => {
+        const archiveRoot = path.join(legacyRoot, 'fstory-homepage');
+        const manifest = JSON.parse(fs.readFileSync(path.join(archiveRoot, 'snapshots.json'), 'utf8'));
+        const published = fs
+            .readdirSync(archiveRoot, { withFileTypes: true })
+            .filter((entry) => entry.isDirectory())
+            .map((entry) => entry.name)
+            .sort();
+        const expected = manifest.editions
+            .map((edition: { representativeCapture: string }) => edition.representativeCapture)
+            .sort();
+
+        expect(published).toEqual(expected);
+
+        // Every capture the archive holds is accounted for by exactly one edition,
+        // so merging never silently drops one.
+        const merged = manifest.editions.flatMap((edition: { builtFrom: { timestamp: string }[] }) =>
+            edition.builtFrom.map((item) => item.timestamp),
+        );
+        expect(new Set(merged).size).toBe(merged.length);
+        expect(merged.length).toBeGreaterThan(published.length);
     });
 
     test('restores the 1997 poems whose bodies survived in a later edition', () => {

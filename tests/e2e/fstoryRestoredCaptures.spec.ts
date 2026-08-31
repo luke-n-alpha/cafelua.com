@@ -3,13 +3,15 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { expect, test, type Page } from '@playwright/test';
 
-type Snapshot = { timestamp: string; date: string; lineage: string; description: string };
+type Edition = { id: string; label: string; period: string; representativeCapture: string };
 
 const specDir = path.dirname(fileURLToPath(import.meta.url));
 const archiveRoot = path.resolve(specDir, '../../public/fstory-homepage');
-const snapshots: Snapshot[] = JSON.parse(
+// One entry per design generation. Every capture that shares a design is merged
+// into it, so crawling the editions covers the whole published archive.
+const editions: Edition[] = JSON.parse(
     fs.readFileSync(path.join(archiveRoot, 'snapshots.json'), 'utf8'),
-).snapshots;
+).editions;
 
 const CRAWL_TIMEOUT_MS = 900000;
 const PAGE_EXTENSIONS = /\.(html?|php|cgi)$/i;
@@ -137,10 +139,10 @@ test.describe('restored fstory.net captures', () => {
         });
     }
 
-    for (const snapshot of snapshots) {
-        test(`${snapshot.date} · ${snapshot.lineage} — every reachable page, picture and asset answers`, async ({ page }) => {
+    for (const edition of editions) {
+        test(`${edition.id} · ${edition.label} — every reachable page, picture and asset answers`, async ({ page }) => {
             test.setTimeout(CRAWL_TIMEOUT_MS);
-            const prefix = `/fstory-homepage/${snapshot.timestamp}/`;
+            const prefix = `/fstory-homepage/${edition.representativeCapture}/`;
             const failures = new Set<string>();
             const broken = new Set<string>();
 
@@ -184,7 +186,7 @@ test.describe('restored fstory.net captures', () => {
             expect(visited.size).toBeGreaterThan(0);
             expect([...failures].sort()).toEqual([]);
             expect([...broken].sort()).toEqual([]);
-            console.log(`${snapshot.date} ${snapshot.lineage}: ${visited.size} pages, ${assets.size} assets`);
+            console.log(`${edition.id} ${edition.label}: ${visited.size} pages, ${assets.size} assets`);
         });
     }
 
@@ -201,7 +203,7 @@ test.describe('restored fstory.net captures', () => {
     }
 
     test('the notice page names the resource it could not restore', async ({ page }) => {
-        const target = snapshots.at(-1)!.timestamp;
+        const target = editions.at(-1)!.representativeCapture;
         await page.goto(`/fstory-homepage/${target}/_unrestored.html?p=%2Fzero%2Fzboard.php&k=board`);
         await expect(page.locator('#what')).toHaveText('/zero/zboard.php');
         await expect(page.locator('#headline')).toContainText('게시판');
@@ -218,8 +220,8 @@ test.describe('restored fstory.net captures', () => {
     test('no download or media link stays clickable', async ({ page }) => {
         test.setTimeout(CRAWL_TIMEOUT_MS);
         await blockExternalHosts(page);
-        for (const snapshot of snapshots) {
-            await page.goto(`/fstory-homepage/${snapshot.timestamp}/index.html`);
+        for (const edition of editions) {
+            await page.goto(`/fstory-homepage/${edition.representativeCapture}/index.html`);
             // A locator re-resolves after a navigation; the 2001 parking page
             // redirects itself, which would destroy a page.evaluate context.
             expect(await page.locator('a[data-unrestored-href][href]').count()).toBe(0);

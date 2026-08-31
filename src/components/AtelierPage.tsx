@@ -18,14 +18,15 @@ import {
 import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
 import {
     FSTORY_ANNEXES,
-    FSTORY_LINEAGES,
-    FSTORY_SNAPSHOTS,
-    type FstorySnapshotId,
+    FSTORY_EDITIONS,
+    type FstoryCaptureId,
 } from '@/data/fstoryArchive';
 
 type LibraryMode = 'menu' | 'booting' | 'desktop' | 'shutdown';
-type FstorySnapshot = FstorySnapshotId;
-type IeTarget = '1997' | '1998' | FstorySnapshot | `annex:${string}`;
+// An edition is addressed by the folder it is published in, which is its
+// representative capture. The picker offers editions, never individual captures.
+type FstoryEditionDirectory = FstoryCaptureId;
+type IeTarget = '1997' | '1998' | FstoryEditionDirectory | `annex:${string}`;
 
 type IeHistoryContext = 'iframe' | 'frame2';
 
@@ -40,17 +41,17 @@ const IE_VIEWPORTS: Partial<Record<IeTarget, { width: number; height: number }>>
     '1998': { width: 800, height: 600 }
 };
 
-// The desktop still opens by year; the restore-point picker groups every
-// capture under the design generation it belongs to, so a visitor can tell a
-// redesign apart from the same page captured a second time.
-const FSTORY_YEAR_ENTRY: Record<'2001' | '2002' | '2003', FstorySnapshot> = {
+// The desktop opens by year and lands on the edition that was current then.
+// Every capture of that design is already merged into it, so the picker offers
+// six editions of the site rather than nine visits by the crawler.
+const FSTORY_YEAR_ENTRY: Record<'2001' | '2002' | '2003', FstoryEditionDirectory> = {
     '2001': '20011202212712',
     '2002': '20021128181318',
     '2003': '20030726202839',
 };
 
-const FSTORY_SNAPSHOT_BY_ID = new Map<string, (typeof FSTORY_SNAPSHOTS)[number]>(
-    FSTORY_SNAPSHOTS.map((snapshot) => [snapshot.timestamp as string, snapshot])
+const FSTORY_EDITION_BY_DIRECTORY = new Map<string, (typeof FSTORY_EDITIONS)[number]>(
+    FSTORY_EDITIONS.map((edition) => [edition.directory as string, edition])
 );
 
 // Annexes are the addresses the site lived at before fstory.net. Nothing on the
@@ -59,8 +60,8 @@ const ANNEX_BY_ID = new Map<string, (typeof FSTORY_ANNEXES)[number]>(
     FSTORY_ANNEXES.map((annex) => [`annex:${annex.id}`, annex])
 );
 
-const isFstorySnapshot = (target: IeTarget): target is FstorySnapshot =>
-    FSTORY_SNAPSHOT_BY_ID.has(target as FstorySnapshot) || ANNEX_BY_ID.has(target);
+const isFstorySnapshot = (target: IeTarget): target is FstoryEditionDirectory =>
+    FSTORY_EDITION_BY_DIRECTORY.has(target as FstoryEditionDirectory) || ANNEX_BY_ID.has(target);
 
 const formatClock = (date: Date) => {
     const hours = String(date.getHours()).padStart(2, '0');
@@ -81,8 +82,8 @@ const getIeTitle = (target: IeTarget) => {
     if (target === '1998') return 'Internet Explorer - 1998';
     const annex = ANNEX_BY_ID.get(target);
     if (annex) return `Internet Explorer - ${annex.label} (${annex.period})`;
-    const snapshot = FSTORY_SNAPSHOT_BY_ID.get(target);
-    return `Internet Explorer - fstory.net ${snapshot?.date ?? target}`;
+    const edition = FSTORY_EDITION_BY_DIRECTORY.get(target);
+    return `Internet Explorer - fstory.net ${edition ? `${edition.label} (${edition.period})` : target}`;
 };
 
 const ScaledLegacyFrame = ({
@@ -725,8 +726,15 @@ const AtelierPage: React.FC = () => {
                                             <select
                                                 aria-label={t('library.restorePoint')}
                                                 value={ieTarget}
-                                                onChange={(event) => setIeTarget(event.target.value as FstorySnapshot)}
+                                                onChange={(event) => setIeTarget(event.target.value as FstoryEditionDirectory)}
                                             >
+                                                <optgroup label="fstory.net">
+                                                    {FSTORY_EDITIONS.map((edition) => (
+                                                        <option key={edition.id} value={edition.directory}>
+                                                            {edition.label} · {edition.period}
+                                                        </option>
+                                                    ))}
+                                                </optgroup>
                                                 <optgroup label="fstory.net 이전 주소">
                                                     {FSTORY_ANNEXES.map((annex) => (
                                                         <option key={annex.id} value={`annex:${annex.id}`}>
@@ -734,23 +742,6 @@ const AtelierPage: React.FC = () => {
                                                         </option>
                                                     ))}
                                                 </optgroup>
-                                                {FSTORY_LINEAGES.map((lineage) => {
-                                                    const captures = FSTORY_SNAPSHOTS.filter(
-                                                        (snapshot) => snapshot.lineage === lineage.id
-                                                    );
-                                                    if (!captures.length) return null;
-                                                    return (
-                                                        <optgroup key={lineage.id} label={`${lineage.label} · ${lineage.period}`}>
-                                                            {captures.map((snapshot) => (
-                                                                <option key={snapshot.timestamp} value={snapshot.timestamp}>
-                                                                    {snapshot.date}
-                                                                    {snapshot.timestamp === lineage.representative ? ' · 대표' : ''}
-                                                                    {` · ${snapshot.description}`}
-                                                                </option>
-                                                            ))}
-                                                        </optgroup>
-                                                    );
-                                                })}
                                             </select>
                                         </label>
                                     )}

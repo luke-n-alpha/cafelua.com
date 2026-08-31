@@ -1,50 +1,7 @@
 {
   "source": "Internet Archive Wayback Machine captures of fstory.net",
   "generatedFrom": "../data/fstory-net-wayback/versions/reconstructed",
-  "lineages": [
-    {
-      "id": "L0",
-      "label": "도메인 호스팅 안내",
-      "period": "2001-07-15",
-      "representative": "20010715123146",
-      "summary": "도메인 등록 대행사의 기본 안내 화면. 홈페이지 본체가 아니다."
-    },
-    {
-      "id": "L1",
-      "label": "클래식 (1998 ~ 2001-07)",
-      "period": "1998 ~ 2001-07-23",
-      "representative": "20010723051951",
-      "summary": "프레임 없이 title1~4.gif 메뉴 그림을 세로로 늘어놓은 초기 계보. Wayback에 남은 마지막 상태가 2001-07-23이다."
-    },
-    {
-      "id": "L2.0",
-      "label": "ver 2.0 최초판",
-      "period": "2001-09 ~ 2002-03",
-      "representative": "20011202212712",
-      "summary": "index.html 안의 800x600 iframe이 main.html(42/560 2분할 프레임)을 부른다. 메뉴에 ai·study 항목이 있다."
-    },
-    {
-      "id": "L2.1",
-      "label": "ver 2.0 메뉴 개편판",
-      "period": "2002-03 ~ 2002-11-20",
-      "representative": "20021120053627",
-      "summary": "프레임 구조는 그대로이고 메뉴가 teatime·tech·zboard 중심으로 바뀐다. 본문 첫 화면이 diary/diary.html이다."
-    },
-    {
-      "id": "L2.2",
-      "label": "ver 2.0 5분할 재설계판",
-      "period": "2002-11-28 ~ 2003-07",
-      "representative": "20021128181318",
-      "summary": "main.html이 topmenu·left·content·right·bottom 5분할 프레임으로 바뀌고 bgm 프레임이 붙는다. album·cartoon·media·insidece 메뉴가 새로 생기고 싸이월드 링크가 처음 등장한다."
-    },
-    {
-      "id": "L3",
-      "label": "ver 3.0 싸이월드 연동판",
-      "period": "2003-07-26",
-      "representative": "20030726202839",
-      "summary": "프레임을 모두 걷어내고 단일 index.html로 돌아간 마지막 판. 본문 대부분을 싸이월드 미니홈피에 넘겼다."
-    }
-  ],
+  "note": "One entry per design generation, each merged from every capture that belongs to it. The captures are listed under builtFrom as evidence, not as separate restore points.",
   "annexes": [
     {
       "id": "netian",
@@ -63,114 +20,156 @@
       "summary": "cgi.chollian.net/~foreststory 에 있던 PURY BBS 방명록. 목록 화면에 글 본문이 그대로 실리는 형식이라 오간 글과 답글이 남아 있다. 캡처마다 다른 쪽이 잡혀서 한 캡처만으로는 일부만 보이므로, 모든 캡처의 글을 번호로 합쳐 한 페이지로 다시 세웠다."
     }
   ],
-  "snapshots": [
+  "editions": [
     {
-      "timestamp": "20010715123146",
-      "date": "2001-07-15",
-      "lineage": "L0",
-      "description": "도메인 호스팅 초기 화면",
-      "representative": true,
+      "id": "L0",
+      "label": "도메인 호스팅 안내",
+      "period": "2001-07-15",
+      "summary": "도메인 등록 대행사의 기본 안내 화면. 홈페이지 본체가 아니다.",
       "entry": "/fstory-homepage/20010715123146/index.html",
-      "fileCount": 211,
+      "representativeCapture": "20010715123146",
       "publishedFileCount": 243,
       "restoredFileCount": 32,
-      "unresolvedUniquePaths": 263
+      "unresolvedUniquePaths": 263,
+      "builtFrom": [
+        {
+          "timestamp": "20010715123146",
+          "date": "2001-07-15",
+          "description": "도메인 호스팅 초기 화면",
+          "representative": true,
+          "archivedFileCount": 211,
+          "newFilesContributed": 211
+        }
+      ]
     },
     {
-      "timestamp": "20010723051951",
-      "date": "2001-07-23",
-      "lineage": "L1",
-      "description": "클래식 계보의 마지막 확인 상태",
-      "representative": true,
+      "id": "L1",
+      "label": "클래식 (1998 ~ 2001-07)",
+      "period": "1998 ~ 2001-07-23",
+      "summary": "프레임 없이 title1~4.gif 메뉴 그림을 세로로 늘어놓은 초기 계보. Wayback에 남은 마지막 상태가 2001-07-23이다.",
       "entry": "/fstory-homepage/20010723051951/index.html",
-      "fileCount": 235,
+      "representativeCapture": "20010723051951",
       "publishedFileCount": 274,
       "restoredFileCount": 39,
-      "unresolvedUniquePaths": 324
+      "unresolvedUniquePaths": 324,
+      "builtFrom": [
+        {
+          "timestamp": "20010723051951",
+          "date": "2001-07-23",
+          "description": "클래식 계보의 마지막 확인 상태",
+          "representative": true,
+          "archivedFileCount": 235,
+          "newFilesContributed": 235
+        }
+      ]
     },
     {
-      "timestamp": "20010925220320",
-      "date": "2001-09-25",
-      "lineage": "L2.0",
-      "description": "ver 2.0 최초 확인",
-      "representative": false,
-      "entry": "/fstory-homepage/20010925220320/index.html",
-      "fileCount": 274,
-      "publishedFileCount": 418,
-      "restoredFileCount": 144,
-      "unresolvedUniquePaths": 950
-    },
-    {
-      "timestamp": "20011202212712",
-      "date": "2001-12-02",
-      "lineage": "L2.0",
-      "description": "ver 2.0 · 본문 프레임까지 확보",
-      "representative": true,
+      "id": "L2.0",
+      "label": "ver 2.0 최초판",
+      "period": "2001-09 ~ 2002-03",
+      "summary": "index.html 안의 800x600 iframe이 main.html(42/560 2분할 프레임)을 부른다. 메뉴에 ai·study 항목이 있다.",
       "entry": "/fstory-homepage/20011202212712/index.html",
-      "fileCount": 396,
+      "representativeCapture": "20011202212712",
       "publishedFileCount": 539,
       "restoredFileCount": 142,
-      "unresolvedUniquePaths": 1296
+      "unresolvedUniquePaths": 1296,
+      "builtFrom": [
+        {
+          "timestamp": "20010925220320",
+          "date": "2001-09-25",
+          "description": "ver 2.0 최초 확인",
+          "representative": false,
+          "archivedFileCount": 274,
+          "newFilesContributed": 274
+        },
+        {
+          "timestamp": "20011202212712",
+          "date": "2001-12-02",
+          "description": "ver 2.0 · 본문 프레임까지 확보",
+          "representative": true,
+          "archivedFileCount": 396,
+          "newFilesContributed": 122
+        }
+      ]
     },
     {
-      "timestamp": "20020325014505",
-      "date": "2002-03-25",
-      "lineage": "L2.1",
-      "description": "메뉴 개편 직후",
-      "representative": false,
-      "entry": "/fstory-homepage/20020325014505/index.html",
-      "fileCount": 598,
-      "publishedFileCount": 669,
-      "restoredFileCount": 71,
-      "unresolvedUniquePaths": 1468
-    },
-    {
-      "timestamp": "20020924164928",
-      "date": "2002-09-24",
-      "lineage": "L2.1",
-      "description": "메뉴 개편 · 배경 back.gif",
-      "representative": false,
-      "entry": "/fstory-homepage/20020924164928/index.html",
-      "fileCount": 625,
-      "publishedFileCount": 686,
-      "restoredFileCount": 63,
-      "unresolvedUniquePaths": 1520
-    },
-    {
-      "timestamp": "20021120053627",
-      "date": "2002-11-20",
-      "lineage": "L2.1",
-      "description": "메뉴 개편 · 배경 back.jpg",
-      "representative": true,
+      "id": "L2.1",
+      "label": "ver 2.0 메뉴 개편판",
+      "period": "2002-03 ~ 2002-11-20",
+      "summary": "프레임 구조는 그대로이고 메뉴가 teatime·tech·zboard 중심으로 바뀐다. 본문 첫 화면이 diary/diary.html이다.",
       "entry": "/fstory-homepage/20021120053627/index.html",
-      "fileCount": 625,
+      "representativeCapture": "20021120053627",
       "publishedFileCount": 686,
       "restoredFileCount": 63,
-      "unresolvedUniquePaths": 1520
+      "unresolvedUniquePaths": 1520,
+      "builtFrom": [
+        {
+          "timestamp": "20020325014505",
+          "date": "2002-03-25",
+          "description": "메뉴 개편 직후",
+          "representative": false,
+          "archivedFileCount": 598,
+          "newFilesContributed": 598
+        },
+        {
+          "timestamp": "20020924164928",
+          "date": "2002-09-24",
+          "description": "메뉴 개편 · 배경 back.gif",
+          "representative": false,
+          "archivedFileCount": 625,
+          "newFilesContributed": 27
+        },
+        {
+          "timestamp": "20021120053627",
+          "date": "2002-11-20",
+          "description": "메뉴 개편 · 배경 back.jpg",
+          "representative": true,
+          "archivedFileCount": 625,
+          "newFilesContributed": 0
+        }
+      ]
     },
     {
-      "timestamp": "20021128181318",
-      "date": "2002-11-28",
-      "lineage": "L2.2",
-      "description": "5분할 프레임 재설계",
-      "representative": true,
+      "id": "L2.2",
+      "label": "ver 2.0 5분할 재설계판",
+      "period": "2002-11-28 ~ 2003-07",
+      "summary": "main.html이 topmenu·left·content·right·bottom 5분할 프레임으로 바뀌고 bgm 프레임이 붙는다. album·cartoon·media·insidece 메뉴가 새로 생기고 싸이월드 링크가 처음 등장한다.",
       "entry": "/fstory-homepage/20021128181318/index.html",
-      "fileCount": 886,
+      "representativeCapture": "20021128181318",
       "publishedFileCount": 904,
       "restoredFileCount": 17,
-      "unresolvedUniquePaths": 2080
+      "unresolvedUniquePaths": 2080,
+      "builtFrom": [
+        {
+          "timestamp": "20021128181318",
+          "date": "2002-11-28",
+          "description": "5분할 프레임 재설계",
+          "representative": true,
+          "archivedFileCount": 886,
+          "newFilesContributed": 886
+        }
+      ]
     },
     {
-      "timestamp": "20030726202839",
-      "date": "2003-07-26",
-      "lineage": "L3",
-      "description": "싸이월드 연동형 마지막 판",
-      "representative": true,
+      "id": "L3",
+      "label": "ver 3.0 싸이월드 연동판",
+      "period": "2003-07-26",
+      "summary": "프레임을 모두 걷어내고 단일 index.html로 돌아간 마지막 판. 본문 대부분을 싸이월드 미니홈피에 넘겼다.",
       "entry": "/fstory-homepage/20030726202839/index.html",
-      "fileCount": 903,
+      "representativeCapture": "20030726202839",
       "publishedFileCount": 905,
       "restoredFileCount": 0,
-      "unresolvedUniquePaths": 2084
+      "unresolvedUniquePaths": 2084,
+      "builtFrom": [
+        {
+          "timestamp": "20030726202839",
+          "date": "2003-07-26",
+          "description": "싸이월드 연동형 마지막 판",
+          "representative": true,
+          "archivedFileCount": 903,
+          "newFilesContributed": 903
+        }
+      ]
     }
   ]
 }

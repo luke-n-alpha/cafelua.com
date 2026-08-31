@@ -307,11 +307,43 @@ const placeholderDocument = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 
 </svg>
 `;
 
-const publishSnapshot = async ({ timestamp, date, lineage }) => {
-  const source = path.join(sourceRoot, timestamp);
-  const destination = path.join(destinationRoot, timestamp);
-  const records = await loadManifest(path.join(source, 'manifest.json'));
+const countFiles = async (directory) => {
+  if (!existsSync(directory)) return 0;
+  let total = 0;
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    total += entry.isDirectory() ? await countFiles(path.join(directory, entry.name)) : 1;
+  }
+  return total;
+};
+
+// One edition is one design generation, not one capture. Wayback crawled the
+// same site many times without the site changing, so publishing every capture
+// separately would offer a visitor nine near-identical copies and hide the fact
+// that only six designs ever existed. Each generation is published once, built
+// from every capture that belongs to it: the representative capture defines
+// what the page says, and the others only fill in files its crawl happened to
+// miss. Which captures share a generation is decided by scripts/fstory-lineage.mjs
+// from the composed frame chrome, the menu link set and the DOM skeleton hash.
+const publishEdition = async ({ lineage, captures }) => {
+  const { representative } = lineage;
+  const date = captures.find(([timestamp]) => timestamp === representative)?.[1] ?? captures.at(-1)[1];
+  const timestamp = representative;
+  const destination = path.join(destinationRoot, representative);
+  // Supporting captures first, oldest to newest, then the representative last.
+  // `cp` overwrites, so the representative always wins a collision and the rest
+  // contribute only what it does not already have.
+  const order = [
+    ...captures.map(([id]) => id).filter((id) => id !== representative),
+    representative,
+  ];
+  const manifests = [];
+  for (const id of order) {
+    manifests.push([id, await loadManifest(path.join(sourceRoot, id, 'manifest.json'))]);
+  }
+  const records = manifests.flatMap(([, items]) => items);
   const localPathOf = (item) => item.snapshotPath || item.sitePath;
+  // Later entries overwrite earlier ones, so the representative's own idea of
+  // where a file came from is the one that survives.
   const originalByLocal = new Map(records.map((item) => [localPathOf(item), item.original]));
   const occupied = new Set(records.map((item) => localPathOf(item).toLowerCase()));
   const onDisk = new Map();          // lowercase relative path -> actual relative path
@@ -321,7 +353,13 @@ const publishSnapshot = async ({ timestamp, date, lineage }) => {
   // artefacts of an earlier version of this script.
   await rm(destination, { recursive: true, force: true });
   await mkdir(destination, { recursive: true });
-  await cp(path.join(source, 'files'), destination, { recursive: true, force: true, preserveTimestamps: true });
+  const contributed = [];
+  for (const id of order) {
+    const before = await countFiles(destination);
+    await cp(path.join(sourceRoot, id, 'files'), destination, { recursive: true, force: true, preserveTimestamps: true });
+    const after = await countFiles(destination);
+    contributed.push({ capture: id, newFiles: after - before, representative: id === representative });
+  }
 
   // Luke's own Cyworld mini-hompy gets a dedicated notice before the reference
   // sweep runs, so those menus land on the page that shows the real address and
@@ -769,7 +807,8 @@ const publishSnapshot = async ({ timestamp, date, lineage }) => {
   await writeFile(path.join(destination, PLACEHOLDER_IMAGE), placeholderDocument, 'utf8');
 
   return {
-    timestamp, date, lineage, cyworldRewrites,
+    timestamp, date, lineage: lineage.id, cyworldRewrites,
+    mergedFrom: contributed,
     originalFiles: records.length,
     publishedFiles: onDisk.size,
     ...stats,
@@ -781,8 +820,18 @@ const publishSnapshot = async ({ timestamp, date, lineage }) => {
 
 const reports = [];
 await mkdir(destinationRoot, { recursive: true });
-for (const [timestamp, date, lineage] of SNAPSHOTS) {
-  reports.push(await publishSnapshot({ timestamp, date, lineage }));
+// Anything left over from an earlier run that published one folder per capture.
+for (const entry of await readdir(destinationRoot, { withFileTypes: true })) {
+  if (!entry.isDirectory()) continue;
+  if (LINEAGES.some((lineage) => lineage.representative === entry.name)) continue;
+  await rm(path.join(destinationRoot, entry.name), { recursive: true, force: true });
+}
+for (const lineage of LINEAGES) {
+  const captures = SNAPSHOTS.filter(([, , id]) => id === lineage.id);
+  if (!captures.some(([timestamp]) => timestamp === lineage.representative)) {
+    throw new Error(`lineage "${lineage.id}" names a representative that is not one of its captures`);
+  }
+  reports.push(await publishEdition({ lineage, captures }));
 }
 
 // ------------------------------------------------ domain parking capture (L0)
@@ -1104,18 +1153,29 @@ await writeFile(path.join(archiveRoot, 'restoration-detail.json'), `${JSON.strin
 await writeFile(path.join(destinationRoot, 'snapshots.json'), `${JSON.stringify({
   source: 'Internet Archive Wayback Machine captures of fstory.net',
   generatedFrom: '../data/fstory-net-wayback/versions/reconstructed',
-  lineages: LINEAGES,
+  note: 'One entry per design generation, each merged from every capture that belongs to it. The captures are listed under builtFrom as evidence, not as separate restore points.',
   annexes: ANNEXES,
-  snapshots: SNAPSHOTS.map(([timestamp, date, lineage, description]) => {
-    const report = reports.find((item) => item.timestamp === timestamp);
+  editions: LINEAGES.map((lineage) => {
+    const report = reports.find((item) => item.lineage === lineage.id);
+    const captures = SNAPSHOTS.filter(([, , id]) => id === lineage.id);
     return {
-      timestamp, date, lineage, description,
-      representative: LINEAGES.some((item) => item.representative === timestamp),
-      entry: `/fstory-homepage/${timestamp}/index.html`,
-      fileCount: versionSummary.snapshots?.find((item) => item.timestamp === timestamp)?.files ?? null,
+      id: lineage.id,
+      label: lineage.label,
+      period: lineage.period,
+      summary: lineage.summary,
+      entry: `/fstory-homepage/${lineage.representative}/index.html`,
+      representativeCapture: lineage.representative,
       publishedFileCount: report?.publishedFiles ?? 0,
       restoredFileCount: report?.restoredFromArchive ?? 0,
       unresolvedUniquePaths: report?.unresolvedUniquePaths ?? 0,
+      builtFrom: captures.map(([timestamp, date, , description]) => ({
+        timestamp,
+        date,
+        description,
+        representative: timestamp === lineage.representative,
+        archivedFileCount: versionSummary.snapshots?.find((item) => item.timestamp === timestamp)?.files ?? null,
+        newFilesContributed: report?.mergedFrom?.find((item) => item.capture === timestamp)?.newFiles ?? 0,
+      })),
     };
   }),
 }, null, 2)}\n`);
@@ -1130,38 +1190,52 @@ for (const annex of ANNEXES) {
 
 // The Atelier restore-point picker reads this generated module, so the UI can
 // never drift from the lineage analysis that produced the snapshots.
-const uiSnapshots = SNAPSHOTS.map(([timestamp, date, lineage, description]) => ({ timestamp, date, lineage, description }));
+const uiEditions = LINEAGES.map((lineage) => {
+  const captures = SNAPSHOTS.filter(([, , id]) => id === lineage.id);
+  const representative = captures.find(([timestamp]) => timestamp === lineage.representative);
+  return {
+    id: lineage.id,
+    label: lineage.label,
+    period: lineage.period,
+    summary: lineage.summary,
+    directory: lineage.representative,
+    date: representative[1],
+    // Kept so the picker can say what a merged edition was built from, and so a
+    // reader can check the lineage claim against the archive itself.
+    builtFrom: captures.map(([timestamp, date]) => ({ timestamp, date })),
+  };
+});
 await writeFile(path.join(appRoot, 'src/data/fstoryArchive.ts'), `// Generated by scripts/publish-fstory-homepages.mjs — do not edit by hand.
 // Source of truth: scripts/fstory-lineage.mjs
 
-export type FstoryLineageId = ${LINEAGES.map((item) => `'${item.id}'`).join(' | ')};
+export type FstoryEditionId = ${LINEAGES.map((item) => `'${item.id}'`).join(' | ')};
 
-export type FstorySnapshotId = ${uiSnapshots.map((item) => `'${item.timestamp}'`).join(' | ')};
+export type FstoryCaptureId = ${SNAPSHOTS.map(([timestamp]) => `'${timestamp}'`).join(' | ')};
 
-export type FstoryLineage = {
-    id: FstoryLineageId;
+export type FstoryCapture = {
+    timestamp: FstoryCaptureId;
+    date: string;
+};
+
+// One entry per design generation. Every capture that belongs to a generation is
+// merged into it, so these are editions of the site, not crawler visits.
+export type FstoryEdition = {
+    id: FstoryEditionId;
     label: string;
     period: string;
-    representative: FstorySnapshotId;
     summary: string;
-};
-
-export type FstorySnapshot = {
-    timestamp: FstorySnapshotId;
+    directory: FstoryCaptureId;
     date: string;
-    lineage: FstoryLineageId;
-    description: string;
+    builtFrom: FstoryCapture[];
 };
 
-export const FSTORY_LINEAGES: FstoryLineage[] = ${JSON.stringify(LINEAGES, null, 4).replace(/\n/g, '\n')};
-
-export const FSTORY_SNAPSHOTS: FstorySnapshot[] = ${JSON.stringify(uiSnapshots, null, 4).replace(/\n/g, '\n')};
+export const FSTORY_EDITIONS: FstoryEdition[] = ${JSON.stringify(uiEditions, null, 4)};
 
 export type FstoryAnnex = {
     id: string;
     label: string;
     period: string;
-    snapshot: FstorySnapshotId;
+    snapshot: FstoryCaptureId;
     entry: string;
     summary: string;
 };
@@ -1170,14 +1244,14 @@ export type FstoryAnnex = {
 // restore points so the recovered pages are reachable.
 export const FSTORY_ANNEXES: FstoryAnnex[] = ${JSON.stringify(ANNEXES, null, 4)};
 
-export const FSTORY_SNAPSHOT_IDS = FSTORY_SNAPSHOTS.map((snapshot) => snapshot.timestamp);
+export const FSTORY_EDITION_IDS = FSTORY_EDITIONS.map((edition) => edition.id);
 
-export const lineageOf = (timestamp: string) =>
-    FSTORY_LINEAGES.find((lineage) => lineage.id === FSTORY_SNAPSHOTS.find((snapshot) => snapshot.timestamp === timestamp)?.lineage);
+export const editionOf = (id: string) => FSTORY_EDITIONS.find((edition) => edition.id === id);
 `, 'utf8');
 
 console.log(JSON.stringify({
-  published: SNAPSHOTS.length,
+  editions: LINEAGES.length,
+  mergedFromCaptures: SNAPSHOTS.length,
   publishedFiles: totals('publishedFiles'),
   restoredFromArchive: totals('restoredFromArchive'),
   aliasResolved: totals('aliasResolved'),
