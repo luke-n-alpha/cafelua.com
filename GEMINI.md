@@ -14,7 +14,7 @@ Luke와 AI 동반자 Alpha의 개인 웹사이트. 현실과 이세계의 경계
 | Framework | Next.js 16 (App Router) + React 19 |
 | Language | TypeScript |
 | UI | shadcn/ui + custom CSS |
-| Hosting | Azure Container Apps — `ca-cafelua-prod` (SSR), Cloudflare → Caddy 앞단 |
+| Hosting | Azure VM `naia-home-prod-az` 의 도커 컨테이너 (SSR). Cloudflare → Azure Front Door → VM 안 Caddy → 앱 `:3000` |
 | Analytics | Google Analytics 4 |
 | Backend | Firebase (guestbook), Gemini API (chat/tarot), GA4 Data API |
 | i18n | react-i18next (ko/en) |
@@ -165,20 +165,41 @@ COMMENT_NOTIFY_FROM                   # Reply notification sender (optional)
 
 ## Deployment
 
-배포는 Azure Container Apps 로 합니다. 앱은 `ca-cafelua-prod`(리소스 그룹 `rg-nextain-koreacentral`)이고, 이미지는 `acrnextainpolicylab.azurecr.io` 레지스트리의 `cafelua/web` 입니다. 태그는 `<용도>-<YYYYMMDD>-<public-home 짧은 커밋>` 규칙을 따릅니다. 앞단은 Cloudflare → Caddy 입니다.
+요청 경로는 이렇습니다.
 
-순서는 이렇습니다. 이 레포를 먼저 푸시하고, **그 커밋으로 이미지를 구워 앱을 갱신**합니다.
+```
+Cloudflare → Azure Front Door → cafelua.naia.land (VM 안 Caddy) → cafelua 컨테이너 :3000
+```
+
+Front Door 프로필은 `afd-naia-global`(리소스 그룹 `rg-naia-koreacentral`)입니다. `www.cafelua.com` 과 `cafelua.com` 은 엔드포인트 `afd-naia-dev` 의 라우트 `route-cafelua-www-prod` 를 타고, 오리진 그룹 `og-cafelua-prod` 를 거쳐 오리진 호스트 `cafelua.naia.land` 로 갑니다. 라우트 캐시는 꺼져 있습니다.
+
+`cafelua.naia.land` 는 `20.214.153.4`, 곧 VM `naia-home-prod-az`(리소스 그룹 `RG-NAIA-KOREACENTRAL`)입니다. 그 VM 에서 systemd 유닛 `cafelua.service` 가 도커 컨테이너 두 개를 띄웁니다. 앱 컨테이너 `cafelua` 와 `caddy`(`caddy:2.10-alpine`)입니다. Caddy 설정은 VM 의 `/opt/cafelua/Caddyfile` 이고, `www.cafelua.com` 과 `cafelua.naia.land` 를 `cafelua:3000` 으로 프록시합니다. `cafelua.com` 은 `www` 로 영구 리다이렉트합니다.
+
+이미지 레지스트리는 `acrnaia83b29893.azurecr.io`, 저장소는 `cafelua/home` 입니다. 태그는 `<용도>-<YYYYMMDD>-<public-home 짧은 커밋>` 규칙을 따릅니다. 앱 컨테이너는 `--read-only`, `--cap-drop ALL`, 메모리 1400m, CPU 1.5 로 돌고, 시크릿은 유닛이 Key Vault `kv-naia-83b29893` 의 `cafelua-naia-key` 를 읽어 `/run/cafelua.env` 로 떨군 뒤 `--env-file` 로 넣습니다.
+
+순서는 이렇습니다. 이 레포를 먼저 푸시하고, **그 커밋으로 이미지를 구워**, VM 유닛의 IMAGE 를 새 태그로 바꿔 재시작합니다.
 
 ```bash
 git push origin main
-az acr build --registry acrnextainpolicylab \
-  --resource-group rg-nextain-koreacentral \
-  --image cafelua/web:<태그> --file Dockerfile .
-az containerapp update -n ca-cafelua-prod -g rg-nextain-koreacentral \
-  --image acrnextainpolicylab.azurecr.io/cafelua/web:<태그>
+az acr build --registry acrnaia83b29893 --resource-group RG-NAIA-KOREACENTRAL \
+  --image cafelua/home:<태그> --file Dockerfile .
+
+# 아래는 VM 에서 실행합니다.
+#   az vm run-command invoke -g RG-NAIA-KOREACENTRAL -n naia-home-prod-az \
+#     --command-id RunShellScript --scripts '...'
+# systemctl set-environment 가 아니라 드롭인으로 IMAGE 를 새 태그로 바꾼 뒤
+systemctl restart cafelua
 ```
 
-푸시만으로는 아무것도 배포되지 않습니다. 자동 배포는 없습니다. 작업 트리에 남아 있는 `.vercel/`(git 추적 밖)과 Private 레포의 `.github/workflows/deploy.yml`(GitHub Pages)은 둘 다 죽은 흔적입니다.
+푸시만으로는 아무것도 배포되지 않습니다. 자동 배포는 없습니다. CI 도 없습니다 — 이 레포에 `.github` 디렉터리는 없습니다.
+
+`src/middleware.ts` 는 `x-azure-fdid` 헤더가 `AZURE_FRONT_DOOR_ID` 와 맞지 않으면 403 Forbidden 을 냅니다. Front Door 를 우회해 오리진에 직접 붙으면 403 이 나므로, 이 사실을 모르면 오리진이 죽은 줄로 오해하게 됩니다.
+
+Azure Container App `ca-cafelua-prod` 는 **서빙 경로가 아닙니다.** 같은 앱 코드가 올라가 있어 헷갈리기 쉬운 미사용 잔재이고, 정리 여부는 아직 정해지지 않았습니다.
+
+### 배포 확인의 함정
+
+확인은 상태 코드로 하지 않습니다. `cafelua.com` 은 `www` 로 영구 리다이렉트되므로 `curl -L` 과 `www.cafelua.com` 을 씁니다. 데스크 글과 책 페이지는 서버가 껍데기(`Loading...`)만 내려보내고 브라우저에서 본문을 채우므로 `curl` 과 `grep` 으로는 내용을 볼 수 없습니다. 헤드리스 브라우저로 렌더한 뒤 본문 문자열을 확인해야 합니다. 그리고 확인용 검사 스크립트는 먼저 정상인 이미지에 돌려 기준선을 잡고 나서 운영에 돌립니다.
 
 이 레포는 Private 레포(`luke-n-alpha/cafelua-private`)의 `public-home/` 서브모듈입니다.
 동기화: `src/scripts/sync-public-home.sh`

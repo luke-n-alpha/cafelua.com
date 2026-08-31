@@ -51,7 +51,7 @@ The site works without any API keys (AI chat, guestbook, and weather features wi
 | AI | Vercel AI Gateway + Google Gemini Flash 3.1 Lite |
 | Backend | Firebase (guestbook/comments), GA4 Data API |
 | i18n | react-i18next (ko/en) |
-| Deployment | Azure Container Apps (`ca-cafelua-prod`), Cloudflare → Caddy in front |
+| Deployment | Docker containers on the Azure VM `naia-home-prod-az`. Cloudflare → Azure Front Door → Caddy on the VM |
 
 ---
 
@@ -157,24 +157,43 @@ npm run lint         # ESLint
 npx tsc --noEmit     # TypeScript type check
 ```
 
-### Deploy to Azure Container Apps
+### Deploy
 
-The site runs as the container app `ca-cafelua-prod` in the resource group `rg-nextain-koreacentral`. Images live in the `acrnextainpolicylab.azurecr.io` registry under `cafelua/web`, tagged `<purpose>-<YYYYMMDD>-<short public-home commit>`. Cloudflare sits in front of Caddy.
+A request travels this path:
 
-There is no auto-deploy. Push this repo first, then build an image from that commit and point the app at it.
+```
+Cloudflare → Azure Front Door → cafelua.naia.land (Caddy on a VM) → cafelua container :3000
+```
+
+The Front Door profile is `afd-naia-global` (resource group `rg-naia-koreacentral`). `www.cafelua.com` and `cafelua.com` go through the endpoint `afd-naia-dev`, the route `route-cafelua-www-prod`, and the origin group `og-cafelua-prod` to the origin host `cafelua.naia.land`. Route caching is off.
+
+`cafelua.naia.land` resolves to `20.214.153.4`, the VM `naia-home-prod-az` (resource group `RG-NAIA-KOREACENTRAL`). On that VM the systemd unit `cafelua.service` runs two docker containers: the app container `cafelua` and `caddy` (`caddy:2.10-alpine`). The Caddy config lives at `/opt/cafelua/Caddyfile` on the VM and proxies `www.cafelua.com` and `cafelua.naia.land` to `cafelua:3000`. `cafelua.com` is permanently redirected to `www`.
+
+Images live in the registry `acrnaia83b29893.azurecr.io` under the repository `cafelua/home`, tagged `<purpose>-<YYYYMMDD>-<short public-home commit>`. The app container runs with `--read-only`, `--cap-drop ALL`, 1400m memory and 1.5 CPU; the unit reads the secret `cafelua-naia-key` from Key Vault `kv-naia-83b29893`, writes it to `/run/cafelua.env`, and passes it with `--env-file`.
+
+There is no auto-deploy. Push this repo first, build an image from that commit, then point the VM unit's IMAGE at the new tag and restart it.
 
 ```bash
 git push origin main
-az acr build --registry acrnextainpolicylab \
-  --resource-group rg-nextain-koreacentral \
-  --image cafelua/web:<tag> --file Dockerfile .
-az containerapp update -n ca-cafelua-prod -g rg-nextain-koreacentral \
-  --image acrnextainpolicylab.azurecr.io/cafelua/web:<tag>
+az acr build --registry acrnaia83b29893 --resource-group RG-NAIA-KOREACENTRAL \
+  --image cafelua/home:<tag> --file Dockerfile .
+
+# Run the following on the VM:
+#   az vm run-command invoke -g RG-NAIA-KOREACENTRAL -n naia-home-prod-az \
+#     --command-id RunShellScript --scripts '...'
+# Change IMAGE to the new tag through a drop-in (not systemctl set-environment), then
+systemctl restart cafelua
 ```
 
-Environment variables are set on the container app, not in a hosting dashboard.
+Pushing alone deploys nothing, and there is no CI — this repo has no `.github` directory.
 
-The untracked `.vercel/` directory left in the working tree and the private repo's `.github/workflows/deploy.yml` (GitHub Pages) are both dead leftovers.
+`src/middleware.ts` returns 403 Forbidden when the `x-azure-fdid` header does not match `AZURE_FRONT_DOOR_ID`. Hitting the origin directly, bypassing Front Door, therefore returns 403; without knowing that you will mistake a healthy origin for a dead one.
+
+The Azure Container App `ca-cafelua-prod` is **not on the serving path.** It is an unused leftover running the same app code, which makes it easy to confuse; whether to clean it up has not been decided.
+
+### Pitfalls when verifying a deploy
+
+Do not verify with status codes. `cafelua.com` redirects permanently to `www`, so use `curl -L` and `www.cafelua.com`. Desk posts and book pages ship only a shell (`Loading...`) from the server and fill in on the client, so `curl` plus `grep` cannot see the body — render with a headless browser and assert on body strings instead. And run any verification script against a known-good image first to establish a baseline before running it against production.
 
 ---
 
