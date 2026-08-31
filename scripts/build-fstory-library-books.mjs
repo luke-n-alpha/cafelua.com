@@ -156,19 +156,94 @@ const buildWindy = async () => {
   return chapters;
 };
 
-/** 숲속얘기 단편집 — short.html 이 순서와 제목을 모두 들고 있다. */
+/**
+ * 숲속얘기의 단편소설집.
+ *
+ * The stories come from two places and neither one holds them all. Most of them
+ * Luke posted again to his blog years later, whole and dated, and those are
+ * recovered into scripts/fstory-short-stories.json — see
+ * scripts/recover-naver-short-stories.mjs for where that file comes from. A few
+ * exist only on the 2002 website, where a page could hold just so much and a
+ * long story was split across two of them.
+ *
+ * The blog copy is preferred wherever there is one: it is whole, it carries the
+ * year Luke wrote the story, and it is the version he chose to publish again.
+ * The website fills in what the blog does not have.
+ */
+const SHORT_STORY_FILE = path.join(appRoot, 'scripts/fstory-short-stories.json');
+
+// Matching the two sources by title, allowing for the punctuation and spacing
+// that drifted between a 1996 web page and a 2006 blog post.
+const looseTitle = (title) => title
+  .replace(/[[\]()（）?？!！.,·:：\s]/g, '')
+  .replace(/fantasy/i, '판타지')
+  .toLowerCase();
+
 const buildShortStories = async () => {
+  const recovered = existsSync(SHORT_STORY_FILE)
+    ? JSON.parse(await readFile(SHORT_STORY_FILE, 'utf8')).stories
+    : [];
+  const byTitle = new Map(recovered.map((story) => [looseTitle(story.title), story]));
+
+  // What the 2002 website has, in the order its index lists it, with the pages
+  // numbered (1) and (2) put back together as one story.
   const { links } = await indexLinks('short/short.html');
-  const chapters = [];
+  const fromSite = [];
+  const grouped = new Map();
   const seen = new Set();
   for (const { href, at, label } of links) {
     if (href === 'short.html' || seen.has(at)) continue;
-    const writing = await readPage(at);
-    if (writing === null) continue;
     seen.add(at);
-    const { title, body } = splitHeading(writing);
+    const named = (label || href).replace(/\s*[(（]\s*\d+\s*[)）]\s*$/, '').trim();
+    let story = grouped.get(named);
+    if (!story) {
+      story = { title: named, parts: [], source: at };
+      grouped.set(named, story);
+      fromSite.push(story);
+    }
+    story.parts.push(at);
+  }
+
+  // 메리크리스마스 sits in the same folder but no link points at it, so reading
+  // the index alone would miss it. The blog has it too, and this is where the
+  // two lists meet.
+  for (const orphan of ['short/mrch.html']) {
+    if (!seen.has(orphan) && existsSync(path.join(SOURCE, orphan))) {
+      const writing = await readPage(orphan);
+      const heading = splitHeading(writing ?? '');
+      if (heading.title) fromSite.push({ title: heading.title, parts: [orphan], source: orphan });
+    }
+  }
+
+  const siteWriting = async (story) => {
+    const pieces = [];
+    for (const at of story.parts) {
+      const writing = await readPage(at);
+      if (writing === null) continue;
+      const split = splitHeading(writing);
+      if (split.body) pieces.push(split.body);
+    }
+    return pieces.join('\n\n').trim();
+  };
+
+  const chapters = [];
+  const used = new Set();
+
+  // The recovered stories first, in the order they were written.
+  for (const story of recovered) {
+    used.add(looseTitle(story.title));
+    const where = story.note ? ` · ${story.note}` : '';
+    const heading = story.year ? `${story.title} (${story.year}${where})` : story.title;
+    chapters.push(chapterOf(heading, story.text, story.slug));
+  }
+
+  // Then anything the website has that the blog does not.
+  for (const story of fromSite) {
+    if (used.has(looseTitle(story.title))) continue;
+    const body = await siteWriting(story);
     if (!body) continue;
-    chapters.push(chapterOf(label || title || href, body, at));
+    used.add(looseTitle(story.title));
+    chapters.push(chapterOf(`${story.title} (연도 미상)`, body, story.source));
   }
   return chapters;
 };
@@ -284,9 +359,9 @@ const BOOKS = [
     id: 'fstory-short-stories',
     slug: 'fstory-short-stories',
     coverTone: 'plum',
-    title: '숲속얘기 단편집',
-    subtitle: '1996 ~ 2002 · 단편소설',
-    summary: '10대 후반부터 20대 초반까지 쓴 단편들입니다. 그림을 그리는 소녀, 소행성 B612, 22세기에서 걸려온 인사까지 스물한 편을 당시의 목차 순서 그대로 실었습니다.',
+    title: '숲속얘기의 단편소설집',
+    subtitle: '1993 ~ 2015 · 단편소설',
+    summary: '숲속얘기는 루크가 나우누리와 천리안 시절에 쓰던 필명입니다. 중학교 3학년에 쓴 첫 이야기부터 스무 해 뒤의 것까지, 그 이름으로 남긴 단편들을 한 권으로 모았습니다. 유리구슬 하나에 담긴 이야기, 소행성 B612, 22세기에서 걸려온 인사, 그리고 2030년의 재귀적 접촉. 쓴 순서대로 실었고, 웹페이지가 한 편을 두 쪽으로 나눠 싣던 것은 다시 한 편으로 붙였습니다.',
     build: buildShortStories,
   },
   {
