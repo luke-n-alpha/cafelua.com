@@ -2,6 +2,14 @@
 
 # Changelog
 
+### v0.2.1 (2026-09-01)
+- **Timeline at the Front Door**: A tab at the top left of the entrance slides a panel in from the edge holding the most recent guestbook entries and post comments in one stream. Every line is a shortcut — it carries the visitor straight to the corner that writing lives in, with the season, time, and weather they picked still on.
+- **NEW Badges on the Map**: Each corner of the sitemap can now carry the date its contents last changed, and the map marks anything from the last three weeks. The badge follows the content and falls off on its own. The Library and the Old PC carry it today.
+- **The Old PC Holds 2001-2003**: The restored fstory.net homepage joined the 1997 and 1998 ones inside the atelier's old PC.
+- **Reply Notifications for the Master**: A new guestbook entry or comment now also reaches the master by email, not only the visitor being replied to. A secret entry is announced without its text.
+- **Guestbook and Comments Are Back**: Both had been answering with a 500 since the move to Azure, because the storage credentials never came across. They now live in Azure Table Storage beside the rest of the site, and the Firestore dependency is gone.
+- **Canonical Address Fixed**: `og:url`, `og:image`, and the canonical link pointed at the bare domain, which redirects to `www`; link previews gave up at the redirect and showed nothing. They now point where the site actually answers.
+
 ### v0.2.0 (2026-07-23)
 - **Auto-turn and Continuous Read Aloud**: Added a configurable 3–120 second auto-turn timer plus browser-native speech playback, pause, voice, and rate controls. Read-aloud continues when each spread finishes, and timed auto-turn and speech are mutually exclusive.
 - **Canonical Library Reader**: Declared the deployed Library as the single ebook reader and removed the disconnected legacy BookViewer, Bookshelf, WorldGuide, and loader implementation.
