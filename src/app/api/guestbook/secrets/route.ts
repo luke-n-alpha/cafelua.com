@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAdminDb } from '@/lib/firebase-admin';
+import { listSecretGuestbookEntries } from '@/lib/guest-store';
 import { hashPassword, isAdmin as checkIsAdmin, checkRateLimit, getClientIp } from '@/lib/server-utils';
 
 export async function POST(request: NextRequest) {
@@ -18,27 +18,22 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Missing credentials' }, { status: 400 });
         }
 
-        const db = getAdminDb();
         const admin = checkIsAdmin(nickname, password);
-
-        const snapshot = await db.collection('guestbook')
-            .where('isSecret', '==', true)
-            .get();
+        const entries = await listSecretGuestbookEntries();
 
         const secrets: Record<string, string> = {};
 
         if (admin) {
-            snapshot.docs.forEach((d) => {
-                secrets[d.id] = d.data().message;
-            });
+            for (const entry of entries) {
+                secrets[entry.id] = entry.message;
+            }
         } else {
             const pwHash = hashPassword(password);
-            snapshot.docs.forEach((d) => {
-                const data = d.data();
-                if (data.nickname === nickname && data.passwordHash === pwHash) {
-                    secrets[d.id] = data.message;
+            for (const entry of entries) {
+                if (entry.nickname === nickname && entry.passwordHash === pwHash) {
+                    secrets[entry.id] = entry.message;
                 }
-            });
+            }
         }
 
         return NextResponse.json({ isAdmin: admin, secrets });

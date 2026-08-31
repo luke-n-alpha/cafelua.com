@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAdminDb } from '@/lib/firebase-admin';
+import {
+    deleteGuestbookEntry,
+    guestbookEntryHasReplies,
+    readGuestbookEntry,
+    softDeleteGuestbookEntry,
+} from '@/lib/guest-store';
 import { hashPassword, safeCompare, isAdmin, checkRateLimit, getClientIp } from '@/lib/server-utils';
 
-const FIRESTORE_ID_RE = /^[a-zA-Z0-9]{10,30}$/;
+const ENTRY_ID_RE = /^[a-zA-Z0-9]{10,30}$/;
 
 export async function DELETE(request: NextRequest) {
     const ip = getClientIp(request);
@@ -18,29 +23,23 @@ export async function DELETE(request: NextRequest) {
             adminPassword?: string;
         };
 
-        if (!id || !FIRESTORE_ID_RE.test(id)) {
+        if (!id || !ENTRY_ID_RE.test(id)) {
             return NextResponse.json({ error: 'Invalid id' }, { status: 400 });
         }
 
-        const db = getAdminDb();
-        const docRef = db.collection('guestbook').doc(id);
-        const docSnap = await docRef.get();
-        if (!docSnap.exists) {
+        const entry = await readGuestbookEntry(id);
+        if (!entry) {
             return NextResponse.json({ error: 'Not found' }, { status: 404 });
         }
 
         // Check if entry has replies — use soft delete if so
-        const repliesSnap = await db.collection('guestbook')
-            .where('parentId', '==', id)
-            .limit(1)
-            .get();
-        const hasReplies = !repliesSnap.empty;
+        const hasReplies = await guestbookEntryHasReplies(id);
 
         const performDelete = async () => {
             if (hasReplies) {
-                await docRef.update({ deleted: true, message: '' });
+                await softDeleteGuestbookEntry(id);
             } else {
-                await docRef.delete();
+                await deleteGuestbookEntry(id);
             }
         };
 
@@ -60,7 +59,7 @@ export async function DELETE(request: NextRequest) {
         // 3. Regular password — hash and compare server-side
         if (password) {
             const pwHash = hashPassword(password);
-            if (docSnap.data()?.passwordHash === pwHash) {
+            if (entry.passwordHash === pwHash) {
                 await performDelete();
                 return NextResponse.json({ success: true, softDeleted: hasReplies });
             }

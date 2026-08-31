@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { FieldValue, Timestamp } from 'firebase-admin/firestore';
-import { getAdminDb } from '@/lib/firebase-admin';
+import {
+    addGuestbookEntry,
+    listGuestbookEntries,
+    readGuestbookEntry,
+} from '@/lib/guest-store';
 import { hashPassword, checkRateLimit, getClientIp } from '@/lib/server-utils';
-import { sendEmail, buildGuestbookReplyNotificationEmail } from '@/lib/email';
+import { sendEmail, buildGuestbookReplyNotificationEmail, buildOwnerNotificationEmail, ownerAddress } from '@/lib/email';
 
-const COLLECTION = 'guestbook';
-const FIRESTORE_ID_RE = /^[a-zA-Z0-9]{10,30}$/;
+const ENTRY_ID_RE = /^[a-zA-Z0-9]{10,30}$/;
 
 /** GET /api/guestbook/entries?limit=20&after=<ISO timestamp> */
 export async function GET(request: NextRequest) {
@@ -14,32 +16,23 @@ export async function GET(request: NextRequest) {
         const limitCount = Math.min(Number(searchParams.get('limit')) || 20, 50);
         const afterParam = searchParams.get('after');
 
-        const db = getAdminDb();
-        let q = db.collection(COLLECTION).orderBy('createdAt', 'desc');
-
+        let after: Date | null = null;
         if (afterParam) {
-            const afterDate = new Date(afterParam);
-            if (!isNaN(afterDate.getTime())) {
-                q = q.startAfter(Timestamp.fromDate(afterDate));
-            }
+            const parsed = new Date(afterParam);
+            if (!isNaN(parsed.getTime())) after = parsed;
         }
 
-        const snapshot = await q.limit(limitCount).get();
+        const records = await listGuestbookEntries(limitCount, after);
 
-        const entries = snapshot.docs.map((d) => {
-            const data = d.data();
-            const ts = data.createdAt as Timestamp | null;
-            const deleted = data.deleted ?? false;
-            return {
-                id: d.id,
-                nickname: data.nickname ?? '',
-                message: deleted ? '' : (data.isSecret ? '' : (data.message ?? '')),
-                isSecret: data.isSecret ?? false,
-                createdAt: ts?.toDate().toISOString() ?? null,
-                parentId: data.parentId ?? null,
-                deleted,
-            };
-        });
+        const entries = records.map((entry) => ({
+            id: entry.id,
+            nickname: entry.nickname,
+            message: entry.deleted ? '' : (entry.isSecret ? '' : entry.message),
+            isSecret: entry.isSecret,
+            createdAt: entry.createdAt?.toISOString() ?? null,
+            parentId: entry.parentId,
+            deleted: entry.deleted,
+        }));
 
         const lastEntry = entries.length > 0 ? entries[entries.length - 1] : null;
 
@@ -89,55 +82,59 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
         }
 
-        const db = getAdminDb();
-
         // If reply, verify parent exists and enforce 1-level nesting
-        let parentDoc: FirebaseFirestore.DocumentData | undefined;
+        let parent = null;
         if (parentId) {
-            if (!FIRESTORE_ID_RE.test(parentId)) {
+            if (!ENTRY_ID_RE.test(parentId)) {
                 return NextResponse.json({ error: 'Invalid parentId' }, { status: 400 });
             }
-            const parentSnap = await db.collection(COLLECTION).doc(parentId).get();
-            if (!parentSnap.exists || parentSnap.data()?.deleted) {
+            parent = await readGuestbookEntry(parentId);
+            if (!parent || parent.deleted) {
                 return NextResponse.json({ error: 'Parent entry not found' }, { status: 404 });
             }
-            parentDoc = parentSnap.data();
-            if (parentDoc?.parentId) {
+            if (parent.parentId) {
                 return NextResponse.json({ error: 'Cannot reply to a reply' }, { status: 400 });
             }
         }
 
-        const passwordHash = hashPassword(trimPass);
-
-        const docData: Record<string, unknown> = {
+        const id = await addGuestbookEntry({
             nickname: trimNick,
             message: trimMsg,
-            passwordHash,
+            passwordHash: hashPassword(trimPass),
             isSecret: isSecret ?? false,
             parentId: parentId || null,
-            createdAt: FieldValue.serverTimestamp(),
-            deleted: false,
-        };
-        if (trimEmail) {
-            docData.email = trimEmail;
-        }
+            email: trimEmail,
+        });
 
-        const docRef = await db.collection(COLLECTION).add(docData);
+        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.cafelua.com';
+        const guestbookUrl = `${baseUrl}/ko/guestbook`;
 
         // Send reply notification email (fire and forget)
-        if (parentId && parentDoc?.email) {
-            const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.cafelua.com';
-            const guestbookUrl = `${baseUrl}/ko/guestbook`;
+        if (parent?.email) {
             const emailData = buildGuestbookReplyNotificationEmail({
-                parentNickname: parentDoc.nickname,
+                parentNickname: parent.nickname,
                 replyNickname: trimNick,
                 replyContent: trimMsg,
                 guestbookUrl,
             });
-            sendEmail({ to: parentDoc.email, ...emailData }).catch(() => {});
+            sendEmail({ to: parent.email, ...emailData }).catch(() => {});
         }
 
-        return NextResponse.json({ id: docRef.id });
+        // And the master's own copy, for every entry — not only replies.
+        // A secret entry is announced without its text.
+        sendEmail({
+            to: ownerAddress(),
+            ...buildOwnerNotificationEmail({
+                kind: 'guestbook',
+                isReply: Boolean(parentId),
+                nickname: trimNick,
+                content: isSecret ? '(비밀글입니다)' : trimMsg,
+                where: '방명록',
+                url: guestbookUrl,
+            }),
+        }).catch(() => {});
+
+        return NextResponse.json({ id });
     } catch (err) {
         console.error('[guestbook/entries POST]', err);
         return NextResponse.json({ error: 'Internal error' }, { status: 500 });

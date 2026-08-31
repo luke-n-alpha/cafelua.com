@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { FieldValue, Timestamp } from 'firebase-admin/firestore';
-import { getAdminDb } from '@/lib/firebase-admin';
+import {
+    addComment,
+    listCommentsForPost,
+    readComment,
+    softDeleteComment,
+} from '@/lib/guest-store';
 import { hashPassword, checkRateLimit, getClientIp } from '@/lib/server-utils';
-import { sendEmail, buildReplyNotificationEmail } from '@/lib/email';
+import { sendEmail, buildReplyNotificationEmail, buildOwnerNotificationEmail, ownerAddress } from '@/lib/email';
 
-const COLLECTION = 'comments';
 const VALID_POST_TYPES = ['desk', 'diary'];
 const SLUG_RE = /^[\w가-힣\-.]{1,200}$/;
-const FIRESTORE_ID_RE = /^[a-zA-Z0-9]{10,30}$/;
+const COMMENT_ID_RE = /^[a-zA-Z0-9]{10,30}$/;
 
 /** GET /api/comments?slug=xxx&type=desk — load all comments for a post (max 200) */
 export async function GET(request: NextRequest) {
@@ -20,28 +23,18 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: 'Invalid params' }, { status: 400 });
         }
 
-        const db = getAdminDb();
-        const snapshot = await db.collection(COLLECTION)
-            .where('postSlug', '==', slug)
-            .where('postType', '==', postType)
-            .orderBy('createdAt', 'asc')
-            .limit(200)
-            .get();
+        const records = await listCommentsForPost(slug, postType, 200);
 
-        const comments = snapshot.docs.map((d) => {
-            const data = d.data();
-            const ts = data.createdAt as Timestamp | null;
-            return {
-                id: d.id,
-                postSlug: data.postSlug,
-                postType: data.postType,
-                parentId: data.parentId ?? null,
-                nickname: data.nickname ?? '',
-                content: data.deleted ? '' : (data.content ?? ''),
-                createdAt: ts?.toDate().toISOString() ?? null,
-                deleted: data.deleted ?? false,
-            };
-        });
+        const comments = records.map((comment) => ({
+            id: comment.id,
+            postSlug: comment.postSlug,
+            postType: comment.postType,
+            parentId: comment.parentId,
+            nickname: comment.nickname,
+            content: comment.deleted ? '' : comment.content,
+            createdAt: comment.createdAt?.toISOString() ?? null,
+            deleted: comment.deleted,
+        }));
 
         return NextResponse.json({ comments });
     } catch (err) {
@@ -94,59 +87,62 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
         }
 
-        const db = getAdminDb();
-
         // If reply, verify parent exists and enforce 1-level nesting
-        let parentDoc: FirebaseFirestore.DocumentData | undefined;
+        let parent = null;
         if (parentId) {
-            if (!FIRESTORE_ID_RE.test(parentId)) {
+            if (!COMMENT_ID_RE.test(parentId)) {
                 return NextResponse.json({ error: 'Invalid parentId' }, { status: 400 });
             }
-            const parentSnap = await db.collection(COLLECTION).doc(parentId).get();
-            if (!parentSnap.exists || parentSnap.data()?.deleted) {
+            parent = await readComment(parentId);
+            if (!parent || parent.deleted) {
                 return NextResponse.json({ error: 'Parent comment not found' }, { status: 404 });
             }
-            parentDoc = parentSnap.data();
-            if (parentDoc?.parentId) {
+            if (parent.parentId) {
                 return NextResponse.json({ error: 'Cannot reply to a reply' }, { status: 400 });
             }
         }
 
-        const passwordHash = hashPassword(trimPass);
-
-        const docData: Record<string, unknown> = {
+        const id = await addComment({
             postSlug: trimSlug,
             postType,
-            parentId: parentId || null,
             nickname: trimNick,
-            passwordHash,
             content: trimContent,
-            createdAt: FieldValue.serverTimestamp(),
-            deleted: false,
-        };
-        if (trimEmail) {
-            docData.email = trimEmail;
-        }
+            passwordHash: hashPassword(trimPass),
+            parentId: parentId || null,
+            email: trimEmail,
+        });
 
-        const docRef = await db.collection(COLLECTION).add(docData);
+        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.cafelua.com';
+        const postPath = postType === 'desk' ? `/desk/${trimSlug}` : `/gallery/diary/${trimSlug}`;
+        const postUrl = `${baseUrl}/ko${postPath}`;
+        const displayTitle = formatSlugAsTitle(trimSlug);
 
         // Send reply notification email (fire and forget)
-        if (parentId && parentDoc?.email) {
-            const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.cafelua.com';
-            const postPath = postType === 'desk' ? `/desk/${trimSlug}` : `/gallery/diary/${trimSlug}`;
-            const postUrl = `${baseUrl}/ko${postPath}`;
-            const displayTitle = formatSlugAsTitle(trimSlug);
+        if (parent?.email) {
             const emailData = buildReplyNotificationEmail({
-                parentNickname: parentDoc.nickname,
+                parentNickname: parent.nickname,
                 replyNickname: trimNick,
                 replyContent: trimContent,
                 postTitle: displayTitle,
                 postUrl,
             });
-            sendEmail({ to: parentDoc.email, ...emailData }).catch(() => {});
+            sendEmail({ to: parent.email, ...emailData }).catch(() => {});
         }
 
-        return NextResponse.json({ id: docRef.id });
+        // And the master's own copy, for every comment — not only replies.
+        sendEmail({
+            to: ownerAddress(),
+            ...buildOwnerNotificationEmail({
+                kind: 'comment',
+                isReply: Boolean(parentId),
+                nickname: trimNick,
+                content: trimContent,
+                where: `「${displayTitle}」`,
+                url: postUrl,
+            }),
+        }).catch(() => {});
+
+        return NextResponse.json({ id });
     } catch (err) {
         console.error('[comments POST]', err);
         return NextResponse.json({ error: 'Internal error' }, { status: 500 });
@@ -166,24 +162,21 @@ export async function DELETE(request: NextRequest) {
             password?: string;
         };
 
-        if (!id || !password || !FIRESTORE_ID_RE.test(id)) {
+        if (!id || !password || !COMMENT_ID_RE.test(id)) {
             return NextResponse.json({ error: 'Missing or invalid id/password' }, { status: 400 });
         }
 
-        const db = getAdminDb();
-        const docRef = db.collection(COLLECTION).doc(id);
-        const docSnap = await docRef.get();
-
-        if (!docSnap.exists) {
+        const comment = await readComment(id);
+        if (!comment) {
             return NextResponse.json({ error: 'Not found' }, { status: 404 });
         }
 
         const pwHash = hashPassword(password);
-        if (docSnap.data()?.passwordHash !== pwHash) {
+        if (comment.passwordHash !== pwHash) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
         }
 
-        await docRef.update({ deleted: true, content: '' });
+        await softDeleteComment(id);
         return NextResponse.json({ success: true });
     } catch (err) {
         console.error('[comments DELETE]', err);

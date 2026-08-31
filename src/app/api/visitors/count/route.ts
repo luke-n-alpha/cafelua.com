@@ -5,12 +5,10 @@ export async function GET() {
     const propertyId = process.env.GA4_PROPERTY_ID;
     const clientEmail =
         process.env.GA4_CLIENT_EMAIL ||
-        process.env.GA_SERVICE_ACCOUNT_EMAIL ||
-        process.env.FIREBASE_CLIENT_EMAIL;
+        process.env.GA_SERVICE_ACCOUNT_EMAIL;
     const privateKey = (
         process.env.GA4_PRIVATE_KEY ||
         process.env.GA_SERVICE_ACCOUNT_PRIVATE_KEY ||
-        process.env.FIREBASE_PRIVATE_KEY ||
         ''
     ).replace(/\\n/g, '\n');
     const metricName = process.env.GA4_VISITOR_METRIC || 'screenPageViews';
