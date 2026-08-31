@@ -1494,12 +1494,12 @@ const mergedMenuNotes = [];
       const text = await readFile(target, 'utf8');
       let count = 0;
       const next = text
-        .replace(/(<td[^>]*\s)height=200(\s)/gi, '$1height=250$2')
+        .replace(/(<td[^>]*\s)height=\d+(\s)/gi, '$1height=170$2')
         .replace(/<iframe\b([^>]*)>/gi, (whole, attributes) => {
           if (!/name\s*=\s*(movie|tech)\b/i.test(attributes)) return whole;
           count += 1;
           const sized = attributes
-            .replace(/height\s*=\s*'?\d+'?/i, "height='248'")
+            .replace(/height\s*=\s*'?\d+'?/i, "height='168'")
             .replace(/scrolling\s*=\s*'?\w+'?/i, "scrolling='no'");
           return `<iframe${sized}>`;
         });
@@ -1517,6 +1517,23 @@ const mergedMenuNotes = [];
   // match the four that survived.
   for (const anime of RECENT_ANIME) {
     const target = path.join(merged, 'media', anime.page);
+    const screen = `<iframe width="320" height="180" src="https://www.youtube.com/embed/${anime.video}"
+      title="${anime.title} 오프닝" frameborder="0" allowfullscreen></iframe>`;
+
+    // Where the page survived, keep it — the writing on it is Luke's own review
+    // of what he had just watched, and that is the point of the corner. Only
+    // the Media Player object is swapped out.
+    if (existsSync(target)) {
+      const text = decode(await readFile(target));
+      if (/<OBJECT\b/i.test(text)) {
+        await writeFile(target, text.replace(/<OBJECT\b[\s\S]*?<\/OBJECT>/i, screen), 'utf8');
+        continue;
+      }
+      if (text.includes('youtube.com/embed')) continue;
+    }
+
+    // Where it did not survive there is no review to keep, so the page is
+    // written to hold the opening and say so.
     await mkdir(path.dirname(target), { recursive: true });
     await writeFile(target, `<html>
 <head>
@@ -1526,18 +1543,14 @@ const mergedMenuNotes = [];
   body { margin: 0; background: #f0f9fb; text-align: center;
     font: 12px 돋움, Dotum, 굴림, sans-serif; color: #225577; }
   h1 { margin: 10px 0 8px; font-size: 15px; }
-  .screen { width: 320px; margin: 0 auto; }
   iframe { border: 1px solid #9ab6c4; }
   p { margin: 8px 12px; color: #4a6b7a; }
 </style>
 </head>
 <body>
 <h1>${anime.title}</h1>
-<div class="screen">
-  <iframe width="320" height="180" src="https://www.youtube.com/embed/${anime.video}"
-    title="${anime.title} 오프닝" frameborder="0" allowfullscreen></iframe>
-</div>
-<p>오프닝 영상. 원본은 이 자리에서 미디어 플레이어로 재생됐습니다.</p>
+${screen}
+<p>오프닝 영상. 이 판의 감상기는 보관되지 않았습니다.</p>
 </body>
 </html>
 `, 'utf8');
@@ -1570,41 +1583,64 @@ const mergedMenuNotes = [];
     for (const entry of await readdir(seasonsFrom, { withFileTypes: true })) {
       if (entry.isFile()) await cp(path.join(seasonsFrom, entry.name), path.join(into, entry.name), { force: true, preserveTimestamps: true });
     }
+    // Which season, though? The greeting on the top strip is fixed — "마음까지
+    // 시원한 가을입니다" — because Luke wrote it by hand for that season, and he
+    // changed the photograph at the same time. So the page reads its own
+    // greeting and dresses to match. A greeting that names no season falls back
+    // to the month the page is opened in.
+    const strip = path.join(merged, 'frame1.html');
+    let named = null;
+    if (existsSync(strip)) {
+      const words = decode(await readFile(strip));
+      for (const [season, word] of [['spring', '봄'], ['summer', '여름'], ['autumn', '가을'], ['winter', '겨울']]) {
+        if (words.includes(word)) { named = season; break; }
+      }
+    }
     const frontDoor = path.join(merged, 'index.html');
     if (existsSync(frontDoor)) {
       const text = await readFile(frontDoor, 'utf8');
       if (!text.includes('seasons/back_')) {
-        const next = text.replace('</body>', `<script>
-// 계절에 맞는 배경. 원래는 루크가 철마다 사진을 바꿔 걸었습니다.
-(function () {
-  var month = new Date().getMonth() + 1;
+        const chooser = named
+          ? `  var season = '${named}';   // 위 띠의 인사말이 말하는 계절`
+          : `  var month = new Date().getMonth() + 1;
   var season = month <= 2 || month === 12 ? 'winter'
     : month <= 5 ? 'spring'
     : month <= 8 ? 'summer'
-    : 'autumn';
+    : 'autumn';`;
+        const next = text.replace('</body>', `<script>
+// 계절 배경. 원래는 루크가 철마다 사진과 인사말을 함께 바꿔 걸었습니다.
+(function () {
+${chooser}
   document.body.background = 'seasons/back_' + season + '.jpg';
 })();
 </script>
 </body>`);
         if (next !== text) {
           await writeFile(frontDoor, next, 'utf8');
-          mergedMenuNotes.push('첫 화면 배경을 계절에 맞춰 바꾸게 했다');
+          mergedMenuNotes.push(named ? `첫 화면 배경을 인사말의 계절(${named})에 맞췄다` : '첫 화면 배경을 계절에 맞춰 바꾸게 했다');
         }
       }
     }
   }
 
-  // The two panes inside the AI corner are previews, 300px wide. A link clicked
-  // in one used to open its page inside that same 300px box. Send it to the
-  // frame the visitor is actually looking at.
-  for (const page of ['tech/movie/movie.html', 'ai/tech/tech1.html']) {
-    const target = path.join(merged, page);
-    if (!existsSync(target)) continue;
-    const text = await readFile(target, 'utf8');
-    const next = text.replace(/<a\s+href=("[^"]+"|'[^']+')(?![^>]*\btarget=)/gi, '<a href=$1 target="screen"');
-    if (next !== text) {
-      await writeFile(target, next, 'utf8');
-      mergedMenuNotes.push(`${page} 의 링크를 액자 전체에서 열게 했다`);
+  // 찻집 was a community page whose board lived on Zeroboard, so its lower
+  // frame now loads a blank pane — a white slab under one paragraph. Luke asked
+  // for the picture he kept of the Cyworld screen there instead.
+  const teatime = path.join(merged, 'teatime/teatime.html');
+  if (existsSync(teatime) && existsSync(path.join(merged, CYWORLD_IMAGE))) {
+    const text = await readFile(teatime, 'utf8');
+    let count = 0;
+    const next = text.replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi, () => {
+      count += 1;
+      // Sized so the paragraph above it and the picture together clear the
+      // 450px pane without scrolling.
+      return `<div style="text-align:center;margin:6px 0">
+  <img src="../${CYWORLD_IMAGE}" width="150" border="0" alt="숲속얘기의 싸이월드 미니홈피">
+</div>`;
+    });
+    if (count) {
+      await writeFile(teatime, next, 'utf8');
+      mergedMenuNotes.push('찻집 아래 빈 프레임을 싸이월드 화면 그림으로 바꿨다');
     }
   }
 
@@ -1782,6 +1818,19 @@ const mergedMenuNotes = [];
           }
         }
       }
+    }
+  }
+
+  // The link corner's top strip is 13px and carries two lines — "숲속얘기의
+  // 링꾸(Link)세상 돌아가기" and the note about IE 6.0 frames and the Shift key.
+  // At 2002 font sizes that fit; here it is sliced in half.
+  const linkFrame = path.join(merged, 'link/index.html');
+  if (existsSync(linkFrame)) {
+    const text = await readFile(linkFrame, 'utf8');
+    const next = text.replace(/rows\s*=\s*"13,\s*\*"/i, 'rows="46,*"');
+    if (next !== text) {
+      await writeFile(linkFrame, next, 'utf8');
+      mergedMenuNotes.push('링크 코너 상단 띠가 잘리지 않게 높였다');
     }
   }
 
