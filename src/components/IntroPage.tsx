@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import BackgroundMusic from './BackgroundMusic';
 import VisitorCounter from './VisitorCounter';
+import IntroTimeline from './IntroTimeline';
 import { getWeatherByCoords } from '../services/WeatherService';
 import type { AppWeather, AppTimeOfDay } from '../services/WeatherService';
 
@@ -408,8 +409,8 @@ const IntroPage: React.FC = () => {
         }
     }, [applyQueryEnvironment, handleRefresh]);
 
-    const handleEnter = () => {
-        // Navigate to Lounge with current environmental state.
+    /** Enter the cafe at a given corner, carrying the chosen environment in. */
+    const enterAt = useCallback((path: string) => {
         const params = new URLSearchParams({
             season,
             time,
@@ -417,9 +418,10 @@ const IntroPage: React.FC = () => {
             christmas: String(isChristmas),
             from: 'entrance'
         });
+        router.push(`/${preferredLanguage}${path}?${params.toString()}`);
+    }, [season, time, weather, isChristmas, preferredLanguage, router]);
 
-        router.push(`/${preferredLanguage}/lounge?${params.toString()}`);
-    };
+    const handleEnter = () => enterAt('/lounge');
 
     return (
         <div className="intro-container">
@@ -434,6 +436,11 @@ const IntroPage: React.FC = () => {
                 aria-hidden="true"
             />
             <BackgroundMusic src="/sounds/intro.mp3" />
+
+            <IntroTimeline
+                isKo={preferredLanguage === 'ko'}
+                onNavigate={enterAt}
+            />
             
             <div className="control-bar glass">
                 <IconSelect
@@ -492,7 +499,7 @@ const IntroPage: React.FC = () => {
             </div>
 
             <div className="intro-footer glass" onClick={(e) => e.stopPropagation()}>
-                <span>v0.2.0</span>
+                <span>v0.2.1</span>
                 <a href="https://github.com/luke-n-alpha/cafelua.com" target="_blank" rel="noopener noreferrer" title="Open Source on GitHub">
                     <Github size={16} />
                 </a>

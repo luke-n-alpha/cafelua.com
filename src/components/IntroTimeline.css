@@ -1,0 +1,173 @@
+/* The tab that lives at the top left of the front door, and the panel it opens. */
+
+.intro-timeline-tab {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    width: auto;
+    padding: 0.5rem 0.8rem;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.intro-timeline-tab-label {
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+}
+
+.intro-timeline-tab.open {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-timeline-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 31;
+    background: rgba(0, 0, 0, 0.28);
+}
+
+.intro-timeline-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 32;
+    display: flex;
+    flex-direction: column;
+    width: min(360px, 88vw);
+    height: 100dvh;
+    /* Parked just off the left edge; opening slides it in rather than popping. */
+    transform: translateX(-102%);
+    transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.intro-timeline-panel.open {
+    transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .intro-timeline-panel {
+        transition: none;
+    }
+}
+
+.intro-timeline-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem 0.6rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.intro-timeline-header h2 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.intro-timeline-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0.75;
+}
+
+.intro-timeline-close:hover {
+    opacity: 1;
+}
+
+.intro-timeline-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem 0.6rem 1.4rem;
+}
+
+.intro-timeline-empty {
+    margin: 1.6rem 0.6rem;
+    font-size: 0.85rem;
+    opacity: 0.7;
+}
+
+.intro-timeline-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+    padding: 0.6rem 0.7rem;
+    border: 0;
+    border-radius: 0.6rem;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.intro-timeline-item:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.intro-timeline-item-top {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+}
+
+.intro-timeline-kind {
+    padding: 0.05em 0.45em;
+    border-radius: 999px;
+    background: rgba(212, 168, 67, 0.85);
+    color: #2b2216;
+    font-weight: 700;
+    font-size: 0.66rem;
+    white-space: nowrap;
+}
+
+.intro-timeline-kind.comment {
+    background: rgba(139, 105, 20, 0.85);
+    color: #fdf8ec;
+}
+
+.intro-timeline-nick {
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.intro-timeline-when {
+    margin-left: auto;
+    opacity: 0.65;
+    white-space: nowrap;
+}
+
+.intro-timeline-text {
+    font-size: 0.84rem;
+    line-height: 1.45;
+    /* Two lines is enough to recognise a message; the rest is behind the tap. */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.intro-timeline-where {
+    font-size: 0.72rem;
+    opacity: 0.62;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
