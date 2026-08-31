@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T02:13:42.274Z",
+  "generatedAt": "2026-08-31T02:37:57.656Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -31,13 +31,13 @@
     }
   ],
   "totals": {
-    "publishedFiles": 4109,
+    "publishedFiles": 4612,
     "restoredFromArchive": 293,
     "aliasResolved": 1287,
     "caseResolved": 0,
     "rewrittenReferences": 1970,
-    "placeholderImages": 4821,
-    "droppedBackgrounds": 525,
+    "placeholderImages": 1085,
+    "droppedBackgrounds": 7,
     "disabledDownloads": 18,
     "disabledMedia": 1022,
     "disabledForms": 343,
@@ -49,7 +49,7 @@
     "staticised": 278,
     "guestbookMerged": 4,
     "curatedRestored": 520,
-    "reconstructedAssets": 38,
+    "reconstructedAssets": 541,
     "cyworldRewrites": 11
   },
   "snapshots": [
@@ -387,13 +387,13 @@
         }
       ],
       "originalFiles": 670,
-      "publishedFiles": 639,
+      "publishedFiles": 701,
       "rewrittenReferences": 431,
       "restoredFromArchive": 142,
       "aliasResolved": 291,
       "caseResolved": 0,
-      "placeholderImages": 485,
-      "droppedBackgrounds": 25,
+      "placeholderImages": 129,
+      "droppedBackgrounds": 0,
       "disabledDownloads": 1,
       "disabledMedia": 168,
       "disabledForms": 38,
@@ -403,36 +403,18 @@
       "staticised": 24,
       "guestbookMerged": 1,
       "curatedRestored": 92,
-      "reconstructedAssets": 8,
+      "reconstructedAssets": 70,
       "externalImages": 45,
       "externalAssets": 9,
       "externalFrames": 5,
       "externalLinks": 47,
-      "unresolvedUniquePaths": 1196,
+      "unresolvedUniquePaths": 1134,
       "unresolvedTopPaths": [
-        {
-          "path": "/chollian/cgi/pury/icon/blank.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 49
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/dare.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 40
-        },
         {
           "path": "/zero/view_info.php",
           "query": "?to=&id=Mybbs&member_no=1",
           "treatment": "notice-script-literal",
           "count": 31
-        },
-        {
-          "path": "/zero/skin/kissofgod_green/old_head.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 25
         },
         {
           "path": "/chollian/cgi/pury/icon/",
@@ -441,82 +423,10 @@
           "count": 24
         },
         {
-          "path": "/zero/skin/kissofgod_gray/t.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 23
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/sample3.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 18
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/basket59.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 15
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/arima.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 13
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/banjang.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 12
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/shadow59.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 12
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/card6.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 12
-        },
-        {
-          "path": "/chollian/cgi/pury/back.jpg",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 12
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/bakgu.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 11
-        },
-        {
-          "path": "/zero/skin/kissofgod_green/search_left.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 10
-        },
-        {
           "path": "/zero/view_info.php",
           "query": "?to=fstory@mail.co.kr&id=Mybbs&member_no=1",
           "treatment": "notice-script-literal",
           "count": 10
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/king.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 9
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/pika.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 9
         },
         {
           "path": "/~fstory/gallery/gallery2/gallery2.html",
@@ -525,10 +435,100 @@
           "count": 9
         },
         {
-          "path": "/chollian/cgi/pury/icon/duli.jpg",
+          "path": "/zero/skin/kissofgod_green/comment.gif",
           "query": "",
           "treatment": "placeholder-image",
-          "count": 8
+          "count": 5
+        },
+        {
+          "path": "/zero/comment_ok.php",
+          "query": "",
+          "treatment": "notice-script-literal",
+          "count": 5
+        },
+        {
+          "path": "/zero/skin/kissofgod_green/dot.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 4
+        },
+        {
+          "path": "/zero/skin/kissofgod_gray/dot.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 4
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=95%27",
+          "treatment": "notice-script-literal",
+          "count": 3
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=95&rnum=1%27",
+          "treatment": "notice-script-literal",
+          "count": 3
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=94%27",
+          "treatment": "notice-script-literal",
+          "count": 3
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=94&rnum=1%27",
+          "treatment": "notice-script-literal",
+          "count": 3
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=93%27",
+          "treatment": "notice-script-literal",
+          "count": 3
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=92%27",
+          "treatment": "notice-script-literal",
+          "count": 3
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=91%27",
+          "treatment": "notice-script-literal",
+          "count": 3
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=90%27",
+          "treatment": "notice-script-literal",
+          "count": 3
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=89%27",
+          "treatment": "notice-script-literal",
+          "count": 3
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=14%27",
+          "treatment": "notice-script-literal",
+          "count": 3
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=13%27",
+          "treatment": "notice-script-literal",
+          "count": 3
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=12%27",
+          "treatment": "notice-script-literal",
+          "count": 3
         }
       ]
     },
@@ -555,13 +555,13 @@
         }
       ],
       "originalFiles": 1848,
-      "publishedFiles": 789,
+      "publishedFiles": 905,
       "rewrittenReferences": 454,
       "restoredFromArchive": 63,
       "aliasResolved": 311,
       "caseResolved": 0,
-      "placeholderImages": 876,
-      "droppedBackgrounds": 56,
+      "placeholderImages": 198,
+      "droppedBackgrounds": 2,
       "disabledDownloads": 1,
       "disabledMedia": 137,
       "disabledForms": 63,
@@ -571,48 +571,18 @@
       "staticised": 42,
       "guestbookMerged": 1,
       "curatedRestored": 93,
-      "reconstructedAssets": 10,
+      "reconstructedAssets": 126,
       "externalImages": 47,
       "externalAssets": 8,
       "externalFrames": 5,
       "externalLinks": 101,
-      "unresolvedUniquePaths": 1417,
+      "unresolvedUniquePaths": 1300,
       "unresolvedTopPaths": [
-        {
-          "path": "/zero/skin/kissofgod_gray/t.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 96
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/blank.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 50
-        },
         {
           "path": "\"+name+\"",
           "query": "",
           "treatment": "notice-script-template",
           "count": 42
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/dare.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 41
-        },
-        {
-          "path": "/zero/skin/yony_b2_pi/a3.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 41
-        },
-        {
-          "path": "/zero/skin/kissofgod_green/old_head.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 26
         },
         {
           "path": "/chollian/cgi/pury/icon/",
@@ -621,82 +591,112 @@
           "count": 24
         },
         {
-          "path": "/zero/skin/kissofgod_pink/t.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 23
-        },
-        {
-          "path": "/zero/skin/yony_b2_pi/a2.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 21
-        },
-        {
-          "path": "/chollian/cgi/pury/icon/sample3.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 19
-        },
-        {
           "path": "/zero/view_info.php",
           "query": "?to=&id=Mybbs&member_no=1",
           "treatment": "notice-script-literal",
           "count": 18
         },
         {
-          "path": "/zero/skin/yony_b2_pi/old_head.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 18
+          "path": "/zero/view_info.php",
+          "query": "?to=fstory@mail.co.kr&id=Mybbs&member_no=1",
+          "treatment": "notice-script-literal",
+          "count": 10
         },
         {
-          "path": "/chollian/cgi/pury/icon/basket59.jpg",
+          "path": "/~fstory/gallery/gallery2/gallery2.html",
           "query": "",
-          "treatment": "placeholder-image",
-          "count": 16
+          "treatment": "notice-link",
+          "count": 9
         },
         {
-          "path": "/chollian/cgi/pury/icon/arima.jpg",
+          "path": "/zero/list_all.php",
           "query": "",
-          "treatment": "placeholder-image",
-          "count": 14
+          "treatment": "notice-script-literal",
+          "count": 9
         },
         {
-          "path": "/zero/skin/kissofgod_gray/old_head.gif",
+          "path": "/zero/zboard.php",
           "query": "",
-          "treatment": "placeholder-image",
-          "count": 14
+          "treatment": "notice-script-literal",
+          "count": 8
         },
         {
-          "path": "/chollian/cgi/pury/icon/banjang.jpg",
+          "path": "\"+homepage+\"",
           "query": "",
-          "treatment": "placeholder-image",
-          "count": 13
+          "treatment": "notice-script-template",
+          "count": 7
         },
         {
-          "path": "/chollian/cgi/pury/icon/shadow59.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 13
+          "path": "/zero/open_window.php",
+          "query": "?mode=m&str=%22+mail+%22",
+          "treatment": "notice-script-literal",
+          "count": 7
         },
         {
-          "path": "/chollian/cgi/pury/icon/card6.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 13
+          "path": "/zero/view_info.php",
+          "query": "?member_no=%22+member_no+%22",
+          "treatment": "notice-script-literal",
+          "count": 7
         },
         {
-          "path": "/chollian/cgi/pury/icon/bakgu.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 12
+          "path": "/zero/view_info2.php",
+          "query": "?member_no=%22+member_no+%22",
+          "treatment": "notice-script-literal",
+          "count": 7
         },
         {
-          "path": "/chollian/cgi/pury/back.jpg",
+          "path": "/zero/zboard.php",
+          "query": "?id=%22+boardID+%22&sn1=on&sn=on&ss=off&sc=off&keyword=%22+writer+%22",
+          "treatment": "notice-script-literal",
+          "count": 7
+        },
+        {
+          "path": "/zero/open_window.php",
+          "query": "?mode=i&str=%22+member_no+%22",
+          "treatment": "notice-script-literal",
+          "count": 7
+        },
+        {
+          "path": "/zero/open_window.php",
+          "query": "?mode=%22+traceType+%22&str=%22+traceID+%22",
+          "treatment": "notice-script-literal",
+          "count": 7
+        },
+        {
+          "path": "/zero/skin/kissofgod_green/comment.gif",
           "query": "",
-          "treatment": "background-dropped",
-          "count": 12
+          "treatment": "placeholder-image",
+          "count": 5
+        },
+        {
+          "path": "/zero/comment_ok.php",
+          "query": "",
+          "treatment": "notice-script-literal",
+          "count": 5
+        },
+        {
+          "path": "/zero/skin/kissofgod_gray/dot.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 4
+        },
+        {
+          "path": "/zero/skin/kissofgod_green/dot.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 4
+        },
+        {
+          "path": "/zero/skin/kissofgod_pink/dot.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 4
+        },
+        {
+          "path": "/chollian/cgi/pury/document.location='purybbs.cgi",
+          "query": "?mode=msg_del&num=95%27",
+          "treatment": "notice-script-literal",
+          "count": 3
         }
       ]
     },
@@ -713,13 +713,13 @@
         }
       ],
       "originalFiles": 886,
-      "publishedFiles": 1008,
+      "publishedFiles": 1171,
       "rewrittenReferences": 498,
       "restoredFromArchive": 17,
       "aliasResolved": 322,
       "caseResolved": 0,
-      "placeholderImages": 1682,
-      "droppedBackgrounds": 222,
+      "placeholderImages": 331,
+      "droppedBackgrounds": 2,
       "disabledDownloads": 8,
       "disabledMedia": 348,
       "disabledForms": 120,
@@ -729,72 +729,18 @@
       "staticised": 106,
       "guestbookMerged": 1,
       "curatedRestored": 94,
-      "reconstructedAssets": 10,
+      "reconstructedAssets": 173,
       "externalImages": 47,
       "externalAssets": 9,
       "externalFrames": 5,
       "externalLinks": 104,
-      "unresolvedUniquePaths": 1976,
+      "unresolvedUniquePaths": 1812,
       "unresolvedTopPaths": [
         {
           "path": "\"+name+\"",
           "query": "",
           "treatment": "notice-script-template",
           "count": 414
-        },
-        {
-          "path": "/zero/skin/gallery_huni_gray/images/dot_.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 110
-        },
-        {
-          "path": "/zero/skin/kissofgod_gray/t.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 96
-        },
-        {
-          "path": "/zero/skin/kissofgod_pink/t.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 78
-        },
-        {
-          "path": "/zero/images/n_homepage.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 69
-        },
-        {
-          "path": "/zero/images/n_mail.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 69
-        },
-        {
-          "path": "/zero/images/n_memo.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 69
-        },
-        {
-          "path": "/zero/images/n_information.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 69
-        },
-        {
-          "path": "/zero/images/n_search.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 69
-        },
-        {
-          "path": "/zero/images/n_modify.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 69
         },
         {
           "path": "\"+homepage+\"",
@@ -839,22 +785,76 @@
           "count": 69
         },
         {
-          "path": "/chollian/cgi/pury/icon/blank.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 50
-        },
-        {
           "path": "/zero/comment_ok.php",
           "query": "",
           "treatment": "notice-script-literal",
           "count": 46
         },
         {
-          "path": "/chollian/cgi/pury/icon/dare.jpg",
+          "path": "/chollian/cgi/pury/icon/",
+          "query": "",
+          "treatment": "placeholder-script-image",
+          "count": 24
+        },
+        {
+          "path": "/zero/member_memo3.php",
+          "query": "",
+          "treatment": "notice-script-literal",
+          "count": 22
+        },
+        {
+          "path": "/zero/view_info.php",
+          "query": "?to=&id=Mybbs&member_no=1",
+          "treatment": "notice-script-literal",
+          "count": 18
+        },
+        {
+          "path": "/zero/list_all.php",
+          "query": "",
+          "treatment": "notice-script-literal",
+          "count": 16
+        },
+        {
+          "path": "/zero/zboard.php",
+          "query": "",
+          "treatment": "notice-script-literal",
+          "count": 15
+        },
+        {
+          "path": "/zero/view_info.php",
+          "query": "?to=fstory@mail.co.kr&id=Mybbs&member_no=1",
+          "treatment": "notice-script-literal",
+          "count": 10
+        },
+        {
+          "path": "/~fstory/gallery/gallery2/gallery2.html",
+          "query": "",
+          "treatment": "notice-link",
+          "count": 9
+        },
+        {
+          "path": "/gallery/noimg.jpg",
           "query": "",
           "treatment": "placeholder-image",
-          "count": 41
+          "count": 5
+        },
+        {
+          "path": "/zero/skin/kissofgod_green/comment.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 5
+        },
+        {
+          "path": "/zero/skin/kissofgod_gray/dot.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 4
+        },
+        {
+          "path": "/zero/skin/kissofgod_green/dot.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 4
         }
       ]
     },
@@ -871,13 +871,13 @@
         }
       ],
       "originalFiles": 903,
-      "publishedFiles": 1009,
+      "publishedFiles": 1171,
       "rewrittenReferences": 501,
       "restoredFromArchive": 0,
       "aliasResolved": 322,
       "caseResolved": 0,
-      "placeholderImages": 1682,
-      "droppedBackgrounds": 222,
+      "placeholderImages": 331,
+      "droppedBackgrounds": 3,
       "disabledDownloads": 8,
       "disabledMedia": 349,
       "disabledForms": 120,
@@ -887,72 +887,18 @@
       "staticised": 106,
       "guestbookMerged": 1,
       "curatedRestored": 94,
-      "reconstructedAssets": 10,
+      "reconstructedAssets": 172,
       "externalImages": 52,
       "externalAssets": 9,
       "externalFrames": 5,
       "externalLinks": 102,
-      "unresolvedUniquePaths": 1980,
+      "unresolvedUniquePaths": 1817,
       "unresolvedTopPaths": [
         {
           "path": "\"+name+\"",
           "query": "",
           "treatment": "notice-script-template",
           "count": 414
-        },
-        {
-          "path": "/zero/skin/gallery_huni_gray/images/dot_.gif",
-          "query": "",
-          "treatment": "background-dropped",
-          "count": 110
-        },
-        {
-          "path": "/zero/skin/kissofgod_gray/t.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 96
-        },
-        {
-          "path": "/zero/skin/kissofgod_pink/t.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 78
-        },
-        {
-          "path": "/zero/images/n_homepage.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 69
-        },
-        {
-          "path": "/zero/images/n_mail.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 69
-        },
-        {
-          "path": "/zero/images/n_memo.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 69
-        },
-        {
-          "path": "/zero/images/n_information.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 69
-        },
-        {
-          "path": "/zero/images/n_search.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 69
-        },
-        {
-          "path": "/zero/images/n_modify.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 69
         },
         {
           "path": "\"+homepage+\"",
@@ -997,22 +943,76 @@
           "count": 69
         },
         {
-          "path": "/chollian/cgi/pury/icon/blank.gif",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 50
-        },
-        {
           "path": "/zero/comment_ok.php",
           "query": "",
           "treatment": "notice-script-literal",
           "count": 46
         },
         {
-          "path": "/chollian/cgi/pury/icon/dare.jpg",
+          "path": "/chollian/cgi/pury/icon/",
+          "query": "",
+          "treatment": "placeholder-script-image",
+          "count": 24
+        },
+        {
+          "path": "/zero/member_memo3.php",
+          "query": "",
+          "treatment": "notice-script-literal",
+          "count": 22
+        },
+        {
+          "path": "/zero/view_info.php",
+          "query": "?to=&id=Mybbs&member_no=1",
+          "treatment": "notice-script-literal",
+          "count": 18
+        },
+        {
+          "path": "/zero/list_all.php",
+          "query": "",
+          "treatment": "notice-script-literal",
+          "count": 16
+        },
+        {
+          "path": "/zero/zboard.php",
+          "query": "",
+          "treatment": "notice-script-literal",
+          "count": 15
+        },
+        {
+          "path": "/zero/view_info.php",
+          "query": "?to=fstory@mail.co.kr&id=Mybbs&member_no=1",
+          "treatment": "notice-script-literal",
+          "count": 10
+        },
+        {
+          "path": "/~fstory/gallery/gallery2/gallery2.html",
+          "query": "",
+          "treatment": "notice-link",
+          "count": 9
+        },
+        {
+          "path": "/gallery/noimg.jpg",
           "query": "",
           "treatment": "placeholder-image",
-          "count": 41
+          "count": 5
+        },
+        {
+          "path": "/zero/skin/kissofgod_green/comment.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 5
+        },
+        {
+          "path": "/zero/zboard.php",
+          "query": "?id=Mybbs",
+          "treatment": "notice-script-literal",
+          "count": 4
+        },
+        {
+          "path": "/zero/skin/kissofgod_gray/dot.gif",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 4
         }
       ]
     }

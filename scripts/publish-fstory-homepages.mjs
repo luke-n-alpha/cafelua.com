@@ -200,17 +200,20 @@ for (const { root, label } of curatedRoots) {
 // are reconstructed from what did survive, and they are counted separately in
 // every report so the distinction never blurs. See the script named in each
 // folder's README for the evidence behind one.
-const reconstructedRoots = [
-  { label: 'menu-buttons', root: path.join(dataRoot, 'manual/menu-buttons'), by: 'scripts/make-fstory-menu-buttons.py' },
-];
-const reconstructedByName = new Map();
-for (const { root, label, by } of reconstructedRoots) {
-  if (!existsSync(root)) continue;
-  for (const entry of await readdir(root, { withFileTypes: true })) {
-    if (entry.isDirectory()) continue;
-    reconstructedByName.set(entry.name.toLowerCase(), { label, by, file: path.join(root, entry.name) });
+// Keyed by the site path each file belongs to, because the skins deliberately
+// reuse one filename across colour variants: `kissofgod_pink/t.gif` and
+// `kissofgod_gray/t.gif` are different files and must stay that way.
+const reconstructedRoot = path.join(dataRoot, 'manual/rebuilt');
+const reconstructedByPath = new Map();
+const indexReconstructed = async (directory = reconstructedRoot) => {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const file = path.join(directory, entry.name);
+    if (entry.isDirectory()) { await indexReconstructed(file); continue; }
+    const site = path.relative(reconstructedRoot, file).replaceAll('\\', '/');
+    reconstructedByPath.set(site.toLowerCase(), { file, site });
   }
-}
+};
+if (existsSync(reconstructedRoot)) await indexReconstructed();
 
 // A colour-variant skin folder is the one place filenames genuinely lie, so the
 // curated lookup never applies inside one.
@@ -600,10 +603,13 @@ const publishEdition = async ({ lineage, captures }) => {
       }
     }
 
-    // Last resort before giving up on a picture: Luke's own kept copies.
+    // Last resort before giving up on a picture: Luke's own kept copies, then
+    // anything that has been deliberately rebuilt. A rebuilt file is addressed
+    // by full path, so the skin exclusion that guards the filename lookup does
+    // not apply to it.
     const extension = path.extname(relative).toLowerCase();
-    if (imageExtensions.has(extension) && !isSkinPath(relative)) {
-      const candidates = curatedByName.get(path.basename(relative).toLowerCase());
+    if (imageExtensions.has(extension)) {
+      const candidates = isSkinPath(relative) ? null : curatedByName.get(path.basename(relative).toLowerCase());
       if (candidates?.length) {
         const pick = closestCurated(candidates, relative);
         const output = path.join(destination, relative);
@@ -618,7 +624,7 @@ const publishEdition = async ({ lineage, captures }) => {
         return { kind: 'local', relative, url, curated: pick };
       }
 
-      const rebuilt = reconstructedByName.get(path.basename(relative).toLowerCase());
+      const rebuilt = reconstructedByPath.get(relative.toLowerCase());
       if (rebuilt) {
         const output = path.join(destination, relative);
         if (!existsSync(output)) {
@@ -627,7 +633,7 @@ const publishEdition = async ({ lineage, captures }) => {
         }
         onDisk.set(relative.toLowerCase(), relative);
         occupied.add(relative.toLowerCase());
-        restored.push({ url: url.href, path: relative, from: rebuilt.by, source: 'reconstructed' });
+        restored.push({ url: url.href, path: relative, from: `manual/rebuilt/${rebuilt.site}`, source: 'reconstructed' });
         stats.reconstructedAssets += 1;
         return { kind: 'local', relative, url, reconstructed: rebuilt };
       }

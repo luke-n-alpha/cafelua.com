@@ -70,9 +70,9 @@
       "summary": "index.html 안의 800x600 iframe이 main.html(42/560 2분할 프레임)을 부른다. 메뉴에 ai·study 항목이 있다.",
       "entry": "/fstory-homepage/20011202212712/index.html",
       "representativeCapture": "20011202212712",
-      "publishedFileCount": 639,
+      "publishedFileCount": 701,
       "restoredFileCount": 142,
-      "unresolvedUniquePaths": 1196,
+      "unresolvedUniquePaths": 1134,
       "builtFrom": [
         {
           "timestamp": "20010925220320",
@@ -99,9 +99,9 @@
       "summary": "프레임 구조는 그대로이고 메뉴가 teatime·tech·zboard 중심으로 바뀐다. 본문 첫 화면이 diary/diary.html이다.",
       "entry": "/fstory-homepage/20021120053627/index.html",
       "representativeCapture": "20021120053627",
-      "publishedFileCount": 789,
+      "publishedFileCount": 905,
       "restoredFileCount": 63,
-      "unresolvedUniquePaths": 1417,
+      "unresolvedUniquePaths": 1300,
       "builtFrom": [
         {
           "timestamp": "20020325014505",
@@ -136,9 +136,9 @@
       "summary": "main.html이 topmenu·left·content·right·bottom 5분할 프레임으로 바뀌고 bgm 프레임이 붙는다. album·cartoon·media·insidece 메뉴가 새로 생기고 싸이월드 링크가 처음 등장한다.",
       "entry": "/fstory-homepage/20021128181318/index.html",
       "representativeCapture": "20021128181318",
-      "publishedFileCount": 1008,
+      "publishedFileCount": 1171,
       "restoredFileCount": 17,
-      "unresolvedUniquePaths": 1976,
+      "unresolvedUniquePaths": 1812,
       "builtFrom": [
         {
           "timestamp": "20021128181318",
@@ -157,9 +157,9 @@
       "summary": "프레임을 모두 걷어내고 단일 index.html로 돌아간 마지막 판. 본문 대부분을 싸이월드 미니홈피에 넘겼다.",
       "entry": "/fstory-homepage/20030726202839/index.html",
       "representativeCapture": "20030726202839",
-      "publishedFileCount": 1009,
+      "publishedFileCount": 1171,
       "restoredFileCount": 0,
-      "unresolvedUniquePaths": 1980,
+      "unresolvedUniquePaths": 1817,
       "builtFrom": [
         {
           "timestamp": "20030726202839",

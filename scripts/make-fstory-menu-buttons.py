@@ -12,8 +12,8 @@ five levels. Only the lettering is new, and the wording comes from the page
 itself — each button's filename is the word it carried (`dia_n` → Diary,
 `gal_n` → Gallery), and the `alt` text names it in Korean.
 
-Output goes to the archive's manual layer, beside the other hand-supplied
-asset, so the published tree stays generated and nothing here is mistaken for
+Output goes to the archive's manual layer under the site path it belongs to,
+so the published tree stays generated and nothing here is mistaken for
 something the archive held.
 
 Usage: python scripts/make-fstory-menu-buttons.py [--check]
@@ -29,7 +29,9 @@ from PIL import Image, ImageDraw, ImageFont
 
 APP_ROOT = Path(__file__).resolve().parent.parent
 SAMPLE = APP_ROOT / 'public/fstory-homepage/20021120053627/img/dia_n.gif'
-OUT_DIR = APP_ROOT.parent / 'data/fstory-net-wayback/manual/menu-buttons'
+# Rebuilt assets live under the site path they belong to, so the publisher can
+# place one without guessing which folder a filename came from.
+OUT_DIR = APP_ROOT.parent / 'data/fstory-net-wayback/manual/rebuilt/img'
 FONT_PATH = Path('/usr/share/fonts/liberation-sans-fonts/LiberationSans-Bold.ttf')
 
 # Filename → the word the button carried. The two that survive prove the rule:
