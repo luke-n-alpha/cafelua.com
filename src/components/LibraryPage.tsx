@@ -731,6 +731,7 @@ export default function LibraryPage({
                       data-reader-chapter
                       data-chapter-index={chapterIndex}
                       data-chapter-title={chapter.title}
+                      data-page-break-on={reader.edition.pageBreakOn}
                     >
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm]}

@@ -1672,9 +1672,13 @@ const mergedMenuNotes = [];
     if (reachable) mergedMenuNotes.push(`${label} → ${target}`);
   }
 
+  // The drawing at the foot of the menu was a mail link — javascript:mail(...) —
+  // and the function it calls lives on another page, so a click here only ever
+  // produced an error. The address it wrote to has been closed for twenty years
+  // in any case. The picture stays; the link goes.
   const characterArt = existsSync(path.join(merged, 'img/charic.gif'))
     ? `      <tr><td height="96" align="center">
-        <a href="javascript:mail('webmaster@fstory.net')"><img src="img/charic.gif" border="0" alt="주인장에게 편지"></a>
+        <img src="img/charic.gif" border="0" alt="주인장 그림">
       </td></tr>`
     : '';
 

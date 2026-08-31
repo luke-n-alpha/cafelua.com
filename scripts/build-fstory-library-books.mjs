@@ -86,7 +86,7 @@ const splitHeading = (writing) => {
     // The byline sits on the same line as the title and Luke signed it a
     // different way almost every time — 끄적인놈, 끄적인이, 지은이, 글쓴이 — so
     // the title is whatever comes before whichever one he used that day.
-    const named = /제목\s*[:：]\s*([^\s].*?)(?:\s*(?:끄적인놈|끄적인이|지은이|글쓴이|쓴이|글)\s*[:：].*)?$/.exec(line);
+    const named = /제목\s*[:：]\s*([^\s].*?)(?:\s*(?:끄적인놈|끄적인이|끄적인|지은이|글쓴이|쓴이|글)\s*[:：].*)?$/.exec(line);
     if (named) {
       title = named[1].trim();
       at += 1;
@@ -532,7 +532,7 @@ const BOOKS = [
     coverTone: 'moss',
     title: '작은 마녀 윈디',
     subtitle: '1998 ~ 2002 · 연재 판타지',
-    summary: '평범한 새벽의 골목에서 시작하는 연재 판타지입니다. 나우누리와 개인 홈페이지에 한 화씩 올리던 것을 인터넷 아카이브에서 되찾아 23화를 순서대로 묶었습니다.',
+    summary: '아침이면 앞치마를 두르고 밥을 짓고 낮에는 학교에 가는 고등학생 뚜리는, 밤이면 경보망을 뚫고 보석을 훔치는 마녀입니다. 자기가 남들과 다르다는 것이 알려지는 게 무엇보다 싫은 아이 앞에 자신을 흡혈귀라 하는 레이드가 나타나면서, 숨겨 온 것이 하나씩 드러납니다. 한 화씩 올리던 연재를 인터넷 아카이브에서 되찾아 23화를 순서대로 묶었습니다.',
     build: buildWindy,
     // The English cover exists; the English text does not. Rather than invent a
     // translation, the English edition is listed with its cover and marked as
@@ -559,15 +559,17 @@ const BOOKS = [
       summary: "숲속얘기 — Forest Story — was the pen name Luke wrote under on Nownuri and Chollian. This collects the short fiction he left under that name, from the first piece written at fifteen to one written twenty years later. These stories had never appeared in English before. Twenty of the twenty-one are here; 어른들을 위한 동화 survives only on the 2002 website and has not been translated.",
       build: buildShortStoriesEn,
     },
-    summary: '숲속얘기는 루크가 나우누리와 천리안 시절에 쓰던 필명입니다. 중학교 3학년에 쓴 첫 이야기부터 스무 해 뒤의 것까지, 그 이름으로 남긴 단편들을 한 권으로 모았습니다. 유리구슬 하나에 담긴 이야기, 소행성 B612, 22세기에서 걸려온 인사, 그리고 2030년의 재귀적 접촉. 쓴 순서대로 실었고, 웹페이지가 한 편을 두 쪽으로 나눠 싣던 것은 다시 한 편으로 붙였습니다.',
+    summary: '숲속얘기는 루크가 나우누리 시절부터 십여 년 전까지 쓰던 필명입니다. 중학교 3학년에 쓴 첫 이야기부터 직장을 다니며 단편에서 손을 놓기까지, 그 이름으로 남긴 스물한 편을 한 권으로 모았습니다. 유리구슬 하나에 담긴 이야기, 소행성 B612, 22세기에서 걸려온 인사, 그리고 2030년의 재귀적 접촉. 쓴 순서대로 실었고, 웹페이지가 한 편을 두 쪽으로 나눠 싣던 것은 다시 한 편으로 붙였습니다.',
     build: buildShortStories,
   },
   {
     id: 'fstory-thought-notes',
     slug: 'fstory-thought-notes',
     coverTone: 'dusk',
-    title: '나의 생각의 노트',
+    title: '나만의 생각의 노트',
     subtitle: '1993 ~ 2002 · 짧은 글',
+    // 한 장에 스무 편 남짓이 들어가므로, 편마다 쪽을 새로 시작한다.
+    pageBreakOn: 'h2',
     summary: '중학교 3학년부터 군 생활까지, 그때그때 적어 둔 짧은 글들입니다. 쓰던 시기를 따라 다섯 묶음으로 나뉘어 있고, 각 묶음의 제목 옆에 그 시절 자신이 무엇을 하고 있었는지가 적혀 있습니다.',
     build: buildThoughtNotes,
   },
@@ -634,6 +636,7 @@ for (const definition of BOOKS) {
       subtitle: definition.subtitle,
       summary: definition.summary,
       status: 'published',
+      ...(definition.pageBreakOn ? { pageBreakOn: definition.pageBreakOn } : {}),
       biblio: { author: AUTHOR, date: definition.subtitle.split(' · ')[0], edition: '복원판', license: 'CC BY-NC-SA 4.0' },
       links: { wikidocs: null, leanpub: null },
       chapters: [{ title: '표지와 서지 정보', path: 'cover.md', markdown: `${front}\n` }, ...chapters],

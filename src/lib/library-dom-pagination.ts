@@ -208,7 +208,11 @@ export function measureRenderedReaderPages(
     chapterIndex = Number(chapter.dataset.chapterIndex ?? 0);
     chapterTitle = chapter.dataset.chapterTitle ?? "";
     pageInChapter = 0;
+    // 한 장에 여러 편이 들어가는 책은 소제목에서 쪽을 새로 시작한다. 시 한 편이
+    // 앞 편의 꼬리에 붙어 시작하면 어디서 끝나고 어디서 시작하는지 읽히지 않는다.
+    const breakOn = chapter.dataset.pageBreakOn;
     for (const child of Array.from(chapter.children)) {
+      if (breakOn === "h2" && child.tagName === "H2" && content.childNodes.length) flush();
       if (child instanceof HTMLTableElement) appendTable(child);
       else appendBlock(child);
     }
