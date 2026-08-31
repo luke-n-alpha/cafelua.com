@@ -1,6 +1,6 @@
 {
  "reviewed": "2026-08-31",
- "typicalGrowth": 1.78,
+ "typicalGrowth": 1.83,
  "note": "통과한 것만 서재의 영어 판본에 실린다. 불합격분은 다시 번역해야 한다.",
  "stories": [
   {
@@ -126,16 +126,14 @@
   {
    "title": "소행성 B612",
    "year": "1998",
-   "verdict": "rejected",
-   "faults": [
-    "분량이 1.13배로, 통상 1.78배에 크게 못 미친다 — 요약되었을 가능성"
-   ],
+   "verdict": "passed",
+   "faults": [],
    "koreanLetters": 16283,
-   "englishLetters": 18354,
-   "growth": 1.13,
+   "englishLetters": 31547,
+   "growth": 1.94,
    "leftInKorean": 0,
    "koreanLines": 537,
-   "englishLines": 242
+   "englishLines": 518
   },
   {
    "title": "Illusion (part I)",
@@ -166,7 +164,7 @@
    "year": "2000",
    "verdict": "rejected",
    "faults": [
-    "분량이 0.68배로, 통상 1.78배에 크게 못 미친다 — 요약되었을 가능성"
+    "분량이 0.68배로, 통상 1.83배에 크게 못 미친다 — 요약되었을 가능성"
    ],
    "koreanLetters": 18086,
    "englishLetters": 12387,
@@ -202,8 +200,10 @@
   {
    "title": "메리크리스마스",
    "year": "2003",
-   "verdict": "passed",
-   "faults": [],
+   "verdict": "rejected",
+   "faults": [
+    "분량이 1.37배로, 통상 1.83배에 크게 못 미친다 — 요약되었을 가능성"
+   ],
    "koreanLetters": 12381,
    "englishLetters": 16944,
    "growth": 1.37,
