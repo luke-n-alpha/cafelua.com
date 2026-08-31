@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T08:45:00.992Z",
+  "generatedAt": "2026-08-31T09:00:50.730Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -50,7 +50,7 @@
     "guestbookMerged": 4,
     "curatedRestored": 670,
     "curatedPages": 2169,
-    "quietPanes": 1298,
+    "quietPanes": 4062,
     "groundedBodies": 299,
     "clearedPlaceholders": 583,
     "closedGalleryCells": 165,
@@ -431,7 +431,7 @@
       "thumbnailsMade": 18,
       "unpinnedBlocks": 0,
       "curatedPages": 345,
-      "quietPanes": 62,
+      "quietPanes": 753,
       "groundedBodies": 19,
       "clearedPlaceholders": 90,
       "closedGalleryCells": 25,
@@ -440,6 +440,7 @@
       "externalAssets": 9,
       "externalFrames": 9,
       "externalLinks": 47,
+      "inPlacePictures": 111,
       "unresolvedUniquePaths": 935,
       "unresolvedTopPaths": [
         {
@@ -607,7 +608,7 @@
       "thumbnailsMade": 18,
       "unpinnedBlocks": 0,
       "curatedPages": 345,
-      "quietPanes": 117,
+      "quietPanes": 808,
       "groundedBodies": 33,
       "clearedPlaceholders": 111,
       "closedGalleryCells": 28,
@@ -616,6 +617,7 @@
       "externalAssets": 8,
       "externalFrames": 9,
       "externalLinks": 101,
+      "inPlacePictures": 117,
       "unresolvedUniquePaths": 1096,
       "unresolvedTopPaths": [
         {
@@ -773,7 +775,7 @@
       "thumbnailsMade": 19,
       "unpinnedBlocks": 0,
       "curatedPages": 345,
-      "quietPanes": 553,
+      "quietPanes": 1244,
       "groundedBodies": 102,
       "clearedPlaceholders": 154,
       "closedGalleryCells": 43,
@@ -782,6 +784,7 @@
       "externalAssets": 9,
       "externalFrames": 9,
       "externalLinks": 104,
+      "inPlacePictures": 127,
       "unresolvedUniquePaths": 1589,
       "unresolvedTopPaths": [
         {
@@ -939,7 +942,7 @@
       "thumbnailsMade": 21,
       "unpinnedBlocks": 0,
       "curatedPages": 345,
-      "quietPanes": 559,
+      "quietPanes": 1250,
       "groundedBodies": 103,
       "clearedPlaceholders": 157,
       "closedGalleryCells": 41,
@@ -948,6 +951,7 @@
       "externalAssets": 9,
       "externalFrames": 9,
       "externalLinks": 102,
+      "inPlacePictures": 130,
       "unresolvedUniquePaths": 1592,
       "unresolvedTopPaths": [
         {
@@ -1089,9 +1093,9 @@
         "한국 에니메이션 음악 → kani/kani.html",
         "최신 애니 감상록 → media/media.html",
         "숲속얘기의 찻집 → teatime/teatime.html",
-        "방명록 → chollian/cgi/pury/purybbs.html",
         "링크 → link/index.html",
         "ai/ai.html 프레임 → ../tech/movie/movie.html",
+        "영화속의 AI 목록이 큰 화면으로 열리게 했다",
         "ai/ai.html 창 2개를 내용 높이에 맞춰 스크롤을 없앴다",
         "애니 감상록 8편에 오프닝을 걸었다",
         "첫 화면 배경을 인사말의 계절(autumn)에 맞췄다",
@@ -1101,7 +1105,7 @@
         "BGM 플레이어 3곳에 3곡을 걸었다",
         "일기 아래 빈 메모 칸을 걷어냈다",
         "20020210.html 의 다음 일기를 recent.html 로 이었다",
-        "링크 코너 상단 띠가 잘리지 않게 높였다",
+        "링크 코너 상단 안내 띠를 걷어냈다",
         "하단 시계 띠를 걷어냈다",
         "첫 화면 → diary/frame.html"
       ],

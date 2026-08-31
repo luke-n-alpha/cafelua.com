@@ -57,7 +57,7 @@ visibility : hidden;
                     onmouseout=kill() onmouseover="pop('노을','#FFFFFF')" ; 
                       onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery6/noel.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td><td align="center" valign="middle"><img src="cat_th.jpg" border=0 
                     onmouseout=kill() onmouseover="pop('바닷가의고양이','#FFFFFF')" ; 
-                      onClick="window.open('cat.jpg', 'new', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,copyhistory=no,width=750,height=480')">
+                      onClick="fsShow('cat.jpg')">
 
 
 <!--</td></tr></table></td></table>
@@ -137,5 +137,29 @@ skn.visibility = "hidden";
 </SCRIPT>
 
 
+<div id="fs-view" style="display:none;position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.72);z-index:9999;text-align:center" onclick="fsHide()">
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:94%;max-height:94%">
+<img id="fs-shot" src="" style="max-width:100%;max-height:88vh;border:3px solid #fff;background:#fff">
+<iframe id="fs-page" src="" style="display:none;width:86vw;height:86vh;border:3px solid #fff;background:#fff" onclick="event.stopPropagation()"></iframe>
+<div style="margin-top:6px;color:#fff;font-family:돋움,dotum,sans-serif;font-size:9pt">아무 곳이나 누르면 닫힙니다</div>
+</div></div>
+<script>
+function fsShow(src, asPage) {
+  var box = document.getElementById('fs-view');
+  var shot = document.getElementById('fs-shot');
+  var page = document.getElementById('fs-page');
+  if (asPage) { page.src = src; page.style.display = ''; shot.style.display = 'none'; }
+  else { shot.src = src; shot.style.display = ''; page.style.display = 'none'; }
+  box.style.display = '';
+  return false;
+}
+function fsHide() {
+  var box = document.getElementById('fs-view');
+  box.style.display = 'none';
+  document.getElementById('fs-shot').src = '';
+  document.getElementById('fs-page').src = '';
+}
+document.onkeydown = function (event) { if ((event || window.event).keyCode === 27) fsHide(); };
+</script>
 </body>
 </html>

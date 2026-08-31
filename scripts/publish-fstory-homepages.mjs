@@ -1179,6 +1179,13 @@ const publishEdition = async ({ lineage, captures }) => {
       if (!/_unrestored/i.test(text)) continue;
       let count = 0;
       const output = text.replace(
+        // 답글 / 수정 / 삭제 belonged to the CGI, not to the page. The server
+        // that answered them was switched off in 2003, so each one is a button
+        // whose only remaining behaviour is to say it cannot do anything. The
+        // writing beside them is the part that survived; the buttons go.
+        /\s*<input\s+type="button"\s+value="(?:답글|수정|삭제)"[^>]*>/gi,
+        () => { count += 1; return ''; },
+      ).replace(
         // A plain link to the notice page, left behind by a rewrite path that
         // predates the in-place alert. Same treatment as the rest.
         /href="([^"]*_unrestored[^"]*)"/gi,
@@ -1206,6 +1213,97 @@ const publishEdition = async ({ lineage, captures }) => {
     }
   };
   await quietenPopups(destination);
+
+  // The gallery opened every picture in a second browser window, because in
+  // 2002 that was the only way to show one at full size. This edition ends up
+  // inside the atelier's Win98 screen, where a second window is a window the
+  // visitor cannot see, so the picture is laid over the page instead: same
+  // click, same full size, no window. The overlay is plain DOM, no library,
+  // and it is only written into pages that actually link to a picture.
+  const OVERLAY = `<div id="fs-view" style="display:none;position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.72);z-index:9999;text-align:center" onclick="fsHide()">
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:94%;max-height:94%">
+<img id="fs-shot" src="" style="max-width:100%;max-height:88vh;border:3px solid #fff;background:#fff">
+<iframe id="fs-page" src="" style="display:none;width:86vw;height:86vh;border:3px solid #fff;background:#fff" onclick="event.stopPropagation()"></iframe>
+<div style="margin-top:6px;color:#fff;font-family:돋움,dotum,sans-serif;font-size:9pt">아무 곳이나 누르면 닫힙니다</div>
+</div></div>
+<script>
+function fsShow(src, asPage) {
+  var box = document.getElementById('fs-view');
+  var shot = document.getElementById('fs-shot');
+  var page = document.getElementById('fs-page');
+  if (asPage) { page.src = src; page.style.display = ''; shot.style.display = 'none'; }
+  else { shot.src = src; shot.style.display = ''; page.style.display = 'none'; }
+  box.style.display = '';
+  return false;
+}
+function fsHide() {
+  var box = document.getElementById('fs-view');
+  box.style.display = 'none';
+  document.getElementById('fs-shot').src = '';
+  document.getElementById('fs-page').src = '';
+}
+document.onkeydown = function (event) { if ((event || window.event).keyCode === 27) fsHide(); };
+</script>`;
+
+  const PICTURE = /\.(jpe?g|gif|png|bmp)$/i;
+  const openInPlace = async (directory) => {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) { await openInPlace(file); continue; }
+      if (!htmlExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+      const text = decode(await readFile(file));
+      let count = 0;
+      // Counted apart from `count`: aiming a link at a frame changes the page
+      // but needs no overlay, and the two must not be confused.
+      let aimed = 0;
+      const framed = /target\s*=\s*"content"/i.test(text);
+
+      let output = text
+        // window.open('Ybs10.jpg', 'new', 'width=660,height=500') — the gallery's
+        // own way of showing a picture.
+        .replace(/window\.open\(\s*'([^']+)'\s*,[^)]*\)/gi, (whole, address) => {
+          if (!PICTURE.test(address) || /^https?:/i.test(address)) return whole;
+          count += 1;
+          return `fsShow('${address}')`;
+        })
+        // <a href="sungdo.jpg" target=_blank>, and the two Christmas card pages
+        // that open the same way.
+        .replace(/<a\b([^>]*)>/gi, (whole, attributes) => {
+          if (/onclick=/i.test(attributes)) return whole;
+          if (!/target\s*=\s*"?_blank"?/i.test(attributes)) return whole;
+          const wanted = /href\s*=\s*"([^"]+)"/i.exec(attributes);
+          if (!wanted) return whole;
+          const address = wanted[1];
+          if (/^(https?:|#|mailto:)/i.test(address)) return whole;
+          const asPage = !PICTURE.test(address);
+          if (asPage && !/\.html?$/i.test(address)) return whole;
+          // A menu that writes into a named frame keeps writing into it. Only
+          // 링크 in the top menu ever carried _blank, and the other twenty-four
+          // entries beside it name the frame; that one is an oversight in the
+          // 2002 markup, not a picture waiting to be shown.
+          if (asPage && framed) {
+            aimed += 1;
+            return `<a${attributes.replace(/target\s*=\s*"?_blank"?/i, 'target="content"')}>`;
+          }
+          count += 1;
+          const stripped = attributes.replace(/\s*target\s*=\s*"?_blank"?/i, '');
+          return `<a${stripped} onclick="return fsShow('${address}'${asPage ? ', true' : ''})">`;
+        });
+
+      if (!count) {
+        if (aimed) await writeFile(file, output, 'utf8');
+        continue;
+      }
+      // The overlay goes in once per page, at the end, where it cannot disturb
+      // a 2002 table that counts on its own row order.
+      output = /<\/body>/i.test(output)
+        ? output.replace(/<\/body>/i, `${OVERLAY}\n</body>`)
+        : `${output}\n${OVERLAY}`;
+      await writeFile(file, output, 'utf8');
+      stats.inPlacePictures = (stats.inPlacePictures || 0) + count;
+    }
+  };
+  await openInPlace(destination);
 
   // Pages that hard-code a white body sit inside a frame tiled with the site's
   // own strip — #bce2eb blue and #8e7fb0 violet — so plain white reads as a
@@ -1424,8 +1522,10 @@ const mergedMenuNotes = [];
     ['kor', '한국 에니메이션 음악', 'kani/kani.html'],
     ['media', '최신 애니 감상록', 'media/media.html'],
     ['tea', '숲속얘기의 찻집', 'teatime/teatime.html'],
-    ['gue', '방명록', 'chollian/cgi/pury/purybbs.html'],
     ['lin', '링크', 'link/index.html'],
+    // 방명록 is dropped from the menu at Luke's request. The board it reached
+    // was 천리안's, from an address the ver 2.0 menu never carried, and its
+    // 91 recovered posts stay published and reachable under chollian/.
     // 크리스챤 and 내 게시판 are dropped too. The first lived at
     // fstory.com.ne.kr, of which the archive holds not one file; the second was
     // a Zeroboard the server drew on request. Neither can be reached, so the
@@ -1481,6 +1581,24 @@ const mergedMenuNotes = [];
     if (next !== text) {
       await writeFile(target, next, 'utf8');
       mergedMenuNotes.push(`${page} 프레임 → ${standin}`);
+    }
+  }
+
+  // movie.html is read through the AI corner's 300px window, so a link inside
+  // it that does not name a frame loads the whole review into that window —
+  // 투하트의 멀티 arriving as a column of text three words wide. Its sister pane,
+  // tech1.html, carries target="screen" in the 2002 markup itself; this one
+  // never did, because in 2002 it was only ever opened full width. Aim it at
+  // the same picture frame the rest of the site writes into.
+  {
+    const list = path.join(merged, 'tech/movie/movie.html');
+    if (existsSync(list)) {
+      const text = await readFile(list, 'utf8');
+      const next = text.replace(/<a href="((?!http|#)[^"]+\.html)"(?![^>]*target=)/gi, '<a href="$1" target="screen"');
+      if (next !== text) {
+        await writeFile(list, next, 'utf8');
+        mergedMenuNotes.push('영화속의 AI 목록이 큰 화면으로 열리게 했다');
+      }
     }
   }
 
@@ -1632,12 +1750,17 @@ ${chooser}
     let count = 0;
     const next = text.replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi, () => {
       count += 1;
-      // Sized so the paragraph above it and the picture together clear the
-      // 450px pane without scrolling.
-      return `<div style="text-align:center;margin:6px 0">
-  <img src="../${CYWORLD_IMAGE}" width="150" border="0" alt="숲속얘기의 싸이월드 미니홈피">
+      // Set against the left margin, with the writing beside it, and sized so
+      // the picture and the poem below it together clear the 450px pane
+      // without scrolling. 260px is the widest it goes before the picture is
+      // enlarged past the 400px screen Luke actually kept.
+      return `<div style="margin:6px 0">
+  <img src="../${CYWORLD_IMAGE}" width="260" border="0" alt="숲속얘기의 싸이월드 미니홈피">
 </div>`;
-    });
+    })
+      // [찻집방문] opened the Zeroboard the community actually met on. That
+      // board is gone, so the link led to the notice page and nowhere else.
+      .replace(/\s*<a href="frame\.html">\s*<font size=3><b>\[찻집방문\]\s*<\/a>/i, '');
     if (count) {
       await writeFile(teatime, next, 'utf8');
       mergedMenuNotes.push('찻집 아래 빈 프레임을 싸이월드 화면 그림으로 바꿨다');
@@ -1821,16 +1944,20 @@ ${chooser}
     }
   }
 
-  // The link corner's top strip is 13px and carries two lines — "숲속얘기의
-  // 링꾸(Link)세상 돌아가기" and the note about IE 6.0 frames and the Shift key.
-  // At 2002 font sizes that fit; here it is sliced in half.
+  // The link corner's top strip carried "숲속얘기의 링꾸(Link)세상 돌아가기"
+  // and a note telling the visitor to hold Shift so a login would not open
+  // inside an IE 6.0 frame. Neither still means anything — the browsers it
+  // spoke to are gone, and the strip is two lines of instructions for a
+  // problem no one has any more. Drop the pane and give the height back.
   const linkFrame = path.join(merged, 'link/index.html');
   if (existsSync(linkFrame)) {
     const text = await readFile(linkFrame, 'utf8');
-    const next = text.replace(/rows\s*=\s*"13,\s*\*"/i, 'rows="46,*"');
+    const next = text
+      .replace(/rows\s*=\s*"(?:13|46),\s*\*"/i, 'rows="*"')
+      .replace(/<frame[^>]*name\s*=\s*"?top"?[^>]*>\s*/i, '');
     if (next !== text) {
       await writeFile(linkFrame, next, 'utf8');
-      mergedMenuNotes.push('링크 코너 상단 띠가 잘리지 않게 높였다');
+      mergedMenuNotes.push('링크 코너 상단 안내 띠를 걷어냈다');
     }
   }
 

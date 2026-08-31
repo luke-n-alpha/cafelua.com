@@ -153,7 +153,7 @@ export const BGM_TRACKS = [
 // picture and the video agree.
 export const RECENT_ANIME = [
   { thumb: 'degi.jpg', page: 'recentani/degi/degiop.html', title: '파뇨파뇨 디지캐럿', video: 'DL70IyKEWdc' },
-  { thumb: 'abeno.jpg', page: 'recentani/abe/abenoop.html', title: '아베노교 마법상점', video: 'pLsE-QCw7tk' },
+  { thumb: 'abeno.jpg', page: 'recentani/abe/abenoop.html', title: '아베노교 마법상점', video: 'ZoKOy4YNVyw' },
   { thumb: 'chobit.jpg', page: 'recentani/cho/choop.html', title: '쵸비츠', video: 'O97zLf3OjUk' },
   { thumb: 'azmanga.jpg', page: 'recentani/azmanga/azop.html', title: '아즈망가대왕', video: 'xFL9mn2zX_U' },
   { thumb: 'she.jpg', page: 'recentani/she/sheop.html', title: '최종병기 그녀', video: 'WOZTvLBG-S0' },

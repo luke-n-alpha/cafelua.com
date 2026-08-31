@@ -99,7 +99,7 @@ http://fstory.com.ne.kr/christian/christian.html
  
  <td height=30>
  
- <a href="link/index.html" target="_blank">
+ <a href="link/index.html" onclick="return fsShow('link/index.html', true)">
  <img src="img/lin_n.gif" border=0 alt="링크" id="lin" onmouseover="lin.src='img/lin_y.gif'" onmouseout="lin.src='img/lin_n.gif'">
  
  </a>
@@ -116,5 +116,29 @@ http://fstory.com.ne.kr/christian/christian.html
 <embed data-unrestored-src="_unrestored.html?p=%2Fcount%2Fcount.swf%3Fcgi%3Dhttp%3A%2F%2Fwww.fstory.net%2Fcount%2Fcount.cgi%26&k=board" type="application/x-shockwave-flash" width="115" height="70" bgcolor="ffffee">
 </td></table>
 
- </body>
+ <div id="fs-view" style="display:none;position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.72);z-index:9999;text-align:center" onclick="fsHide()">
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:94%;max-height:94%">
+<img id="fs-shot" src="" style="max-width:100%;max-height:88vh;border:3px solid #fff;background:#fff">
+<iframe id="fs-page" src="" style="display:none;width:86vw;height:86vh;border:3px solid #fff;background:#fff" onclick="event.stopPropagation()"></iframe>
+<div style="margin-top:6px;color:#fff;font-family:돋움,dotum,sans-serif;font-size:9pt">아무 곳이나 누르면 닫힙니다</div>
+</div></div>
+<script>
+function fsShow(src, asPage) {
+  var box = document.getElementById('fs-view');
+  var shot = document.getElementById('fs-shot');
+  var page = document.getElementById('fs-page');
+  if (asPage) { page.src = src; page.style.display = ''; shot.style.display = 'none'; }
+  else { shot.src = src; shot.style.display = ''; page.style.display = 'none'; }
+  box.style.display = '';
+  return false;
+}
+function fsHide() {
+  var box = document.getElementById('fs-view');
+  box.style.display = 'none';
+  document.getElementById('fs-shot').src = '';
+  document.getElementById('fs-page').src = '';
+}
+document.onkeydown = function (event) { if ((event || window.event).keyCode === 27) fsHide(); };
+</script>
+</body>
 </html>

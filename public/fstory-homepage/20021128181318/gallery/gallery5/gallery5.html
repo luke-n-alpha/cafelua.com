@@ -47,15 +47,15 @@ visibility : hidden;
                     onmouseout=kill() onmouseover="pop('식인물고기 동아리 후배 성도에게 보낸 축전. 페인터.. 두장을 합친겁니다. 한장은 너무 날림이라서.. 결국 재생산.','#FFFFFF')" ; 
                       onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery5/cfish.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td><td align="center" valign="middle"><img src="mannerism_th.jpg" border=0 
                     onmouseout=kill() onmouseover="pop('동아리 후배 재현이에게 보낸 축전. 페인터.. 모노톤.','#FFFFFF')" ; 
-                      onClick="window.open('mannerism.jpg', 'new', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no,width=660,height=500')"></td><td align="center" valign="middle"><img src="charic_th.jpg" border=0 
+                      onClick="fsShow('mannerism.jpg')"></td><td align="center" valign="middle"><img src="charic_th.jpg" border=0 
                     onmouseout=kill() onmouseover="pop('케릭터디자인 수업레포트(자신의 이미지를 10가지로 도안해올것) / 옛날것까지 주어모아서 만듬  ','#FFFFFF')" ; 
                       onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery5/charic.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td></tr><tr><td align="center" valign="middle"><img src="ken_th.jpg" border=0 
                     onmouseout=kill() onmouseover="pop('남자는 주먹이다~! 열혈~~ ','#FFFFFF')" ; 
                       onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery5/ken.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td><td align="center" valign="middle"><img src="opera_th.jpg" border=0 
                     onmouseout=kill() onmouseover="pop('동아리 축제용 작품 맹근겁니다. 제목 : 여자는 믿지마라.^^ 퀄리티에 중심을 두고 그린 그림','#FFFFFF')" ; 
-                      onClick="window.open('opera.jpg', 'new', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no,width=700,height=650')"></td><td align="center" valign="middle"><img src="cityend_th.jpg" border=0 
+                      onClick="fsShow('opera.jpg')"></td><td align="center" valign="middle"><img src="cityend_th.jpg" border=0 
                     onmouseout=kill() onmouseover="pop('도시의 끝','#FFFFFF')" ; 
-                      onClick="window.open('cityend.jpg', 'new', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no,width=700,height=700')"></td><td align="center" valign="middle"><img src="skypaint_th.jpg" border=0 
+                      onClick="fsShow('cityend.jpg')"></td><td align="center" valign="middle"><img src="skypaint_th.jpg" border=0 
                     onmouseout=kill() onmouseover="pop('하늘을 보면 가끔 색깔을 바꿔보고 싶다는 생각을 할 때가 있습니다.','#FFFFFF')" ; 
                       onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery5/skypaint.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td></tr><tr><td align="center" valign="middle"><img src="dragon_th.jpg" border=0 
                     onmouseout=kill() onmouseover="pop('용의 계곡/용들이 지키는 크리스탈성 꼭대기에는 아름다운 공주님이 살고 있다는..','#FFFFFF')" ; 
@@ -135,5 +135,29 @@ skn.visibility = "hidden";
 </SCRIPT>
 
 
+<div id="fs-view" style="display:none;position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.72);z-index:9999;text-align:center" onclick="fsHide()">
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:94%;max-height:94%">
+<img id="fs-shot" src="" style="max-width:100%;max-height:88vh;border:3px solid #fff;background:#fff">
+<iframe id="fs-page" src="" style="display:none;width:86vw;height:86vh;border:3px solid #fff;background:#fff" onclick="event.stopPropagation()"></iframe>
+<div style="margin-top:6px;color:#fff;font-family:돋움,dotum,sans-serif;font-size:9pt">아무 곳이나 누르면 닫힙니다</div>
+</div></div>
+<script>
+function fsShow(src, asPage) {
+  var box = document.getElementById('fs-view');
+  var shot = document.getElementById('fs-shot');
+  var page = document.getElementById('fs-page');
+  if (asPage) { page.src = src; page.style.display = ''; shot.style.display = 'none'; }
+  else { shot.src = src; shot.style.display = ''; page.style.display = 'none'; }
+  box.style.display = '';
+  return false;
+}
+function fsHide() {
+  var box = document.getElementById('fs-view');
+  box.style.display = 'none';
+  document.getElementById('fs-shot').src = '';
+  document.getElementById('fs-page').src = '';
+}
+document.onkeydown = function (event) { if ((event || window.event).keyCode === 27) fsHide(); };
+</script>
 </body>
 </html>

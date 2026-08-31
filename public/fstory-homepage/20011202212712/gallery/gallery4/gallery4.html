@@ -27,7 +27,7 @@
 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 가장 최근.
 
-<table border=15 bordercolor=white><tr><td align="center" valign="middle"><img src="sadgirl_th.jpg" border=0 onClick="window.open('sadgirl.jpg', 'new', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no,width=660,height=500')"></td><td align="center" valign="middle"><img src="space_th.jpg" border=0 onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery4/spaceship.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td><td align="center" valign="middle"><img src="snowg_th.jpg" border=0 onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery4/snowgirl.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td><td align="center" valign="middle"><img src="sword_th.jpg" border=0 onClick="window.open('sword.jpg', 'new', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no,width=700,height=620')"></td></tr><tr><td align="center" valign="middle"><img src="witch_th.jpg" border=0 onClick="window.open('witch.jpg', 'new', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no,width=600,height=800')"></td><td align="center" valign="middle"><img src="spbear_th.jpg" border=0 onClick="window.open('spbear.jpg', 'new', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no,width=660,height=500')"></td><td align="center" valign="middle"><img src="santag_th.jpg" border=0 onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery4/santag.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td><td align="center" valign="middle"><img src="ricopr_th.jpg" border=0 onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery4/ricopr.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td></tr><tr><td align="center" valign="middle"><img src="game_th.jpg" border=0 onClick="window.open('game.jpg', 'new', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no,width=660,height=500')"></td></tr></table></td></table>
+<table border=15 bordercolor=white><tr><td align="center" valign="middle"><img src="sadgirl_th.jpg" border=0 onClick="fsShow('sadgirl.jpg')"></td><td align="center" valign="middle"><img src="space_th.jpg" border=0 onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery4/spaceship.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td><td align="center" valign="middle"><img src="snowg_th.jpg" border=0 onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery4/snowgirl.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td><td align="center" valign="middle"><img src="sword_th.jpg" border=0 onClick="fsShow('sword.jpg')"></td></tr><tr><td align="center" valign="middle"><img src="witch_th.jpg" border=0 onClick="fsShow('witch.jpg')"></td><td align="center" valign="middle"><img src="spbear_th.jpg" border=0 onClick="fsShow('spbear.jpg')"></td><td align="center" valign="middle"><img src="santag_th.jpg" border=0 onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery4/santag.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td><td align="center" valign="middle"><img src="ricopr_th.jpg" border=0 onClick="#" onclick="alert('복원되지 않은 자료입니다.\n\n/gallery/gallery4/ricopr.jpg\n\n제로보드가 그때그때 만들어 보여 주던 창입니다.');return false;"></td></tr><tr><td align="center" valign="middle"><img src="game_th.jpg" border=0 onClick="fsShow('game.jpg')"></td></tr></table></td></table>
 
 	<a href="../gallery1/gallery1.html">
  	  &nbsp &nbsp &nbsp &nbsp &nbsp<font face="arial black" color="777777" id="g1" onmouseover="g1.color='000000'" onmouseout="g1.color='777777'">
@@ -43,5 +43,29 @@
  	◆Gallery4</font></a>
 
  	</font>
+<div id="fs-view" style="display:none;position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.72);z-index:9999;text-align:center" onclick="fsHide()">
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:94%;max-height:94%">
+<img id="fs-shot" src="" style="max-width:100%;max-height:88vh;border:3px solid #fff;background:#fff">
+<iframe id="fs-page" src="" style="display:none;width:86vw;height:86vh;border:3px solid #fff;background:#fff" onclick="event.stopPropagation()"></iframe>
+<div style="margin-top:6px;color:#fff;font-family:돋움,dotum,sans-serif;font-size:9pt">아무 곳이나 누르면 닫힙니다</div>
+</div></div>
+<script>
+function fsShow(src, asPage) {
+  var box = document.getElementById('fs-view');
+  var shot = document.getElementById('fs-shot');
+  var page = document.getElementById('fs-page');
+  if (asPage) { page.src = src; page.style.display = ''; shot.style.display = 'none'; }
+  else { shot.src = src; shot.style.display = ''; page.style.display = 'none'; }
+  box.style.display = '';
+  return false;
+}
+function fsHide() {
+  var box = document.getElementById('fs-view');
+  box.style.display = 'none';
+  document.getElementById('fs-shot').src = '';
+  document.getElementById('fs-page').src = '';
+}
+document.onkeydown = function (event) { if ((event || window.event).keyCode === 27) fsHide(); };
+</script>
 </body>
 </html>
