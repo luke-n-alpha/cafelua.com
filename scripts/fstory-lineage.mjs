@@ -139,6 +139,15 @@ export const SNAPSHOTS = [
 // it read from (Chollian, Netian) have been gone for twenty years. Luke says it
 // mostly carried anime themes and named the ones he kept putting on, so the
 // player keeps its face and its controls and plays these instead.
+// Pages the archive kept that hold nothing of Luke's. This one is a Zeroboard
+// album listing whose nine entries are all advertising left by strangers in
+// 2002 — used cars, clothing stock, and four adult sites. Nothing in the
+// restored edition links to it; it survives only because the crawler happened to
+// fetch it. Luke asked for the spam to go, so it goes.
+export const SPAM_PAGES = [
+  { path: 'zero/zboard__q_5b2b0d885f.html', why: '2002년 게시판에 남은 광고 글만 아홉 건' },
+];
+
 export const BGM_TRACKS = [
   { id: 'ThBGx26Mjog', title: '보노보노 - 지름길로 가고파' },
   { id: 'xWWUNYqQ2XA', title: '아즈망가 대왕 - 소녀의 로망' },

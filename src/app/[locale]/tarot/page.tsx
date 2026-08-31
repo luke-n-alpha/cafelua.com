@@ -402,14 +402,6 @@ export default function TarotPage() {
         }
     }, [cardInterpretations, drawnCards, getCardName, getPositionName, isEnglish, preferredLanguage, readingTopic, t]);
 
-    // 카드 영역 클릭 - 다음 카드 뒤집기 (순서대로)
-    const handleCardAreaClick = useCallback(() => {
-        if (isLoading) return;
-        const flippedCount = drawnCards.filter(c => c.isFlipped).length;
-        if (flippedCount >= 10) return; // 모든 카드 뒤집음
-        handleCardClick(flippedCount);
-    }, [isLoading, drawnCards, handleCardClick]);
-
     // 개별 카드 선택 (뒤집힌 카드 선택 가능)
     const handleIndividualCardClick = useCallback((index: number) => {
         if (isLoading) return;

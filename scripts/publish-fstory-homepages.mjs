@@ -15,7 +15,7 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ANNEXES, BGM_TRACKS, GALLERY_MATCHES, RECENT_ANIME, CURATED_EDITIONS, LINEAGES, MERGED_EDITION, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS } from './fstory-lineage.mjs';
+import { ANNEXES, BGM_TRACKS, GALLERY_MATCHES, RECENT_ANIME, CURATED_EDITIONS, LINEAGES, MERGED_EDITION, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS, SPAM_PAGES } from './fstory-lineage.mjs';
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dataRoot = path.resolve(appRoot, '../data/fstory-net-wayback');
@@ -1263,6 +1263,9 @@ document.onkeydown = function (event) { if ((event || window.event).keyCode === 
         // own way of showing a picture.
         .replace(/window\.open\(\s*'([^']+)'\s*,[^)]*\)/gi, (whole, address) => {
           if (!PICTURE.test(address) || /^https?:/i.test(address)) return whole;
+          // Opening a picture that is not there lays an empty sheet over the
+          // page. If it is gone, it stays unopened.
+          if (!existsSync(path.join(path.dirname(file), address))) return whole;
           count += 1;
           return `fsShow('${address}')`;
         })
@@ -1277,6 +1280,7 @@ document.onkeydown = function (event) { if ((event || window.event).keyCode === 
           if (/^(https?:|#|mailto:)/i.test(address)) return whole;
           const asPage = !PICTURE.test(address);
           if (asPage && !/\.html?$/i.test(address)) return whole;
+          if (!existsSync(path.join(path.dirname(file), address.split('?')[0]))) return whole;
           // A menu that writes into a named frame keeps writing into it. Only
           // 링크 in the top menu ever carried _blank, and the other twenty-four
           // entries beside it name the frame; that one is an oversight in the
@@ -1304,6 +1308,52 @@ document.onkeydown = function (event) { if ((event || window.event).keyCode === 
     }
   };
   await openInPlace(destination);
+
+  // A picture the archive never kept used to answer a click with a message
+  // saying so. Luke's instruction is plainer than that: if it is lost, the link
+  // goes. The artwork that did survive — the thumbnail — stays on the page as a
+  // picture, and nothing about it invites a click that leads nowhere.
+  //
+  // One of these was worse than doing nothing. The gallery ran its picture
+  // through onClick, so quietening it wrote a second onclick beside the first;
+  // browsers obey the first, which by then held only "#". Those cells did not
+  // even manage to say no.
+  const LOST = /alert\('복원되지 않은 자료입니다[^']*'\)\s*;?\s*return false;?/i;
+  let killed = 0;
+  const dropLostClicks = async (directory) => {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) { await dropLostClicks(file); continue; }
+      if (!htmlExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+      const text = decode(await readFile(file));
+      if (!/onClick="#"/i.test(text) && !/data-unrestored-target/i.test(text)) continue;
+      let count = 0;
+
+      let output = text
+        // The picture cells: onClick="#" plus the message that followed it.
+        .replace(/\s*onClick="#"\s*onclick="[^"]*"/gi, () => { count += 1; return ''; })
+        .replace(/\s*onClick="#"/gi, () => { count += 1; return ''; });
+
+      // A link wrapping a picture that is gone: keep what is inside it, drop
+      // the link. Galleries never nest one anchor inside another.
+      output = output.replace(
+        /<a\b[^>]*onclick="[^"]*"[^>]*>([\s\S]*?)<\/a>/gi,
+        (whole, inner) => {
+          if (!LOST.test(whole) || /<a\b/i.test(inner)) return whole;
+          const wanted = /data-unrestored-target\s*=\s*"([^"]+)"/i.exec(whole);
+          if (!wanted || !PICTURE.test(wanted[1].split('?')[0])) return whole;
+          count += 1;
+          return inner;
+        },
+      );
+
+      if (!count) continue;
+      await writeFile(file, output, 'utf8');
+      killed += count;
+    }
+  };
+  await dropLostClicks(destination);
+  if (killed) stats.lostClicksDropped = (stats.lostClicksDropped || 0) + killed;
 
   // Pages that hard-code a white body sit inside a frame tiled with the site's
   // own strip — #bce2eb blue and #8e7fb0 violet — so plain white reads as a
@@ -2397,6 +2447,71 @@ for (const edition of curatedEditions) {
     unresolved: [...missing.entries()].map(([target, count]) => ({ target, count })).sort((a, b) => b.count - a.count),
   });
 }
+
+// ------------------------------------- 바깥으로 나가는 링크와 광고 글
+
+// The pages link to 247 addresses outside the site, written between 1997 and
+// 2003. scripts/check-fstory-external-links.mjs asks each one whether it still
+// answers and records the verdict; that file is the argument, this is only the
+// part that acts on it. A host is treated as closed when every address checked
+// on it was lost, so a page in a later edition that links to the same host is
+// covered too even though the check only walked the merged edition.
+const externalRecord = JSON.parse(
+  await readFile(path.join(appRoot, 'scripts/fstory-external-links.json'), 'utf8'),
+);
+const seenByHost = new Map();
+for (const [address, verdict] of Object.entries(externalRecord.links)) {
+  let host;
+  try { host = new URL(address).hostname.toLowerCase(); } catch { continue; }
+  const tally = seenByHost.get(host) ?? { lost: 0, answers: 0 };
+  tally[verdict.verdict === 'lost' ? 'lost' : 'answers'] += 1;
+  seenByHost.set(host, tally);
+}
+const closedHosts = new Set(
+  [...seenByHost].filter(([, tally]) => tally.lost > 0 && tally.answers === 0).map(([host]) => host),
+);
+
+let closedOutside = 0;
+const quietenOutside = async (directory) => {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const file = path.join(directory, entry.name);
+    if (entry.isDirectory()) { await quietenOutside(file); continue; }
+    if (!htmlExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+    const text = await readFile(file, 'utf8');
+    if (!/href\s*=\s*"https?:/i.test(text)) continue;
+    let count = 0;
+    const output = text.replace(/<a\b[^>]*>/gi, (whole) => {
+      const wanted = /href\s*=\s*"(https?:\/\/[^"]+)"/i.exec(whole);
+      if (!wanted || /onclick=/i.test(whole)) return whole;
+      let host;
+      try { host = new URL(wanted[1]).hostname.toLowerCase(); } catch { return whole; }
+      if (!closedHosts.has(host)) return whole;
+      count += 1;
+      // The address stays visible on the page, because it is part of what Luke
+      // wrote. Only the going-there stops, and the click says why.
+      const said = `이 주소는 지금 닫혀 있습니다.\\n\\n${wanted[1].replace(/'/g, "\\\\'")}\\n\\n${externalRecord.checked} 확인.`;
+      return whole
+        .replace(/href\s*=\s*"[^"]*"/i, `href="#" onclick="alert('${said}');return false;"`)
+        .replace(/\s*target\s*=\s*"?_blank"?/i, '');
+    });
+    if (count) { await writeFile(file, output, 'utf8'); closedOutside += count; }
+  }
+};
+await quietenOutside(destinationRoot);
+if (closedOutside) console.log(`닫힌 바깥 주소 ${closedOutside}곳의 링크를 안내로 바꿨다`);
+
+// Advertising strangers left on the 2002 board. Nothing links to it.
+let spamRemoved = 0;
+for (const page of SPAM_PAGES) {
+  for (const edition of await readdir(destinationRoot, { withFileTypes: true })) {
+    if (!edition.isDirectory()) continue;
+    const file = path.join(destinationRoot, edition.name, page.path);
+    if (!existsSync(file)) continue;
+    await rm(file);
+    spamRemoved += 1;
+  }
+}
+if (spamRemoved) console.log(`광고 글 페이지 ${spamRemoved}개를 지웠다 (${SPAM_PAGES.map((page) => page.why).join(', ')})`);
 
 // ------------------------------------- 짧은글: EUC-KR 로 저장된 파일명 되찾기
 

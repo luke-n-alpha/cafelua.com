@@ -62,7 +62,7 @@ describe('GuestbookService', () => {
             expect(global.fetch).toHaveBeenCalledWith('/api/guestbook/entries', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nickname: 'testUser', message: 'hello', password: 'pass12', isSecret: false }),
+                body: JSON.stringify({ nickname: 'testUser', message: 'hello', password: 'pass12', isSecret: false, parentId: null }),
             });
             expect(result.id).toBe('new-doc');
         });
@@ -82,7 +82,10 @@ describe('GuestbookService', () => {
 
     describe('deleteEntry', () => {
         it('should call DELETE API with password', async () => {
-            (global.fetch as jest.Mock).mockResolvedValue({ ok: true });
+            (global.fetch as jest.Mock).mockResolvedValue({
+                ok: true,
+                json: async () => ({ success: true }),
+            });
 
             const result = await deleteEntry('doc1', 'mypass1');
 
@@ -91,19 +94,22 @@ describe('GuestbookService', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: 'doc1', password: 'mypass1' }),
             });
-            expect(result).toBe(true);
+            expect(result).toEqual({ success: true });
         });
 
         it('should return false when server rejects', async () => {
             (global.fetch as jest.Mock).mockResolvedValue({ ok: false });
 
-            expect(await deleteEntry('doc1', 'wrong')).toBe(false);
+            expect(await deleteEntry('doc1', 'wrong')).toEqual({ success: false });
         });
     });
 
     describe('adminDeleteEntry', () => {
         it('should call DELETE API with admin credentials', async () => {
-            (global.fetch as jest.Mock).mockResolvedValue({ ok: true });
+            (global.fetch as jest.Mock).mockResolvedValue({
+                ok: true,
+                json: async () => ({ success: true }),
+            });
 
             const result = await adminDeleteEntry('doc1', 'luke', 'adminpass');
 
@@ -112,7 +118,7 @@ describe('GuestbookService', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: 'doc1', adminNickname: 'luke', adminPassword: 'adminpass' }),
             });
-            expect(result).toBe(true);
+            expect(result).toEqual({ success: true });
         });
     });
 

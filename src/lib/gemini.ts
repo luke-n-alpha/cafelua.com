@@ -1,16 +1,14 @@
-import { getVercelOidcToken } from '@vercel/oidc';
-
 export interface ChatMessage {
     role: 'user' | 'model';
     content: string;
 }
 
-// Vercel AI Gateway 모델 슬러그 (provider/model). 회사(nextain) 팀 크레딧으로 라우팅됨.
-export const DEFAULT_MODEL = 'google/gemini-3.1-flash-lite';
+// Gemini API의 안정 모델 코드. 특정 배포 플랫폼에 종속되지 않는다.
+export const DEFAULT_MODEL = 'gemini-3.1-flash-lite';
 export const DEFAULT_MAX_TOKENS = 4096;
 
-// Vercel AI Gateway OpenAI 호환 엔드포인트
-const GATEWAY_URL = 'https://ai-gateway.vercel.sh/v1/chat/completions';
+// Gemini API OpenAI 호환 엔드포인트
+const GATEWAY_URL = 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions';
 
 interface OpenAIMessage {
     role: string;
@@ -50,22 +48,15 @@ export async function callGemini(
     contents: GeminiContent[],
     options: CallGeminiOptions = {}
 ): Promise<CallGeminiResult> {
-    // Vercel AI Gateway 인증.
-    // - 프로덕션: OIDC 토큰은 요청 스코프 헤더(x-vercel-oidc-token)로 전달되므로
-    //   getVercelOidcToken()으로 읽어야 함 (process.env 에는 없음).
-    // - 로컬/CI: getVercelOidcToken()이 process.env.VERCEL_OIDC_TOKEN fallback,
-    //   또는 정적 AI_GATEWAY_API_KEY 우선 사용.
-    let apiKey = process.env.AI_GATEWAY_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-        try {
-            apiKey = await getVercelOidcToken();
-        } catch (err) {
-            console.error('AI Gateway OIDC token error:', err);
-            throw new GeminiApiError('AI Gateway credentials are not configured', 500);
-        }
+        throw new GeminiApiError('Gemini API credentials are not configured', 500);
     }
 
-    const model = options.model || DEFAULT_MODEL;
+    // Vercel AI Gateway used provider-prefixed model IDs (for example,
+    // `google/gemini-*`). Google's OpenAI-compatible endpoint expects the
+    // native Gemini model ID.
+    const model = (options.model || DEFAULT_MODEL).replace(/^google\//, '');
     const maxOutputTokens = options.maxOutputTokens || DEFAULT_MAX_TOKENS;
     const temperature = options.temperature ?? 0.8;
 
@@ -85,7 +76,7 @@ export async function callGemini(
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error('AI Gateway error:', errorData);
+        console.error('Gemini API error:', errorData);
         throw new GeminiApiError(`API request failed: ${response.status}`, response.status);
     }
 

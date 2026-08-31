@@ -10,7 +10,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
     const isEn = locale === 'en';
 
-    const title = isEn ? 'Entrance' : '현관';
     const description = isEn
         ? 'A small virtual cafe run by Luke and Alpha, with coffee chat, tarot stories, and rooms that change with the season and weather.'
         : '루크와 알파가 함께 운영하는 작은 가상 카페. 계절과 날씨에 따라 달라지는 공간에서 커피챗, 타로, 기록을 만납니다.';

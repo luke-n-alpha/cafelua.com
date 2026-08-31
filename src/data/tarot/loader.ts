@@ -3,7 +3,7 @@
 
 import { promises as fs } from 'fs';
 import path from 'path';
-import type { TarotCardMeta, DrawnCard, SpreadPosition } from './types';
+import type { TarotCardMeta, DrawnCard } from './types';
 import { SPREAD_POSITIONS } from './types';
 import {
   FALLBACK_DECK_SUMMARY,

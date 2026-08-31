@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import type { TarotCardMeta } from '@/data/tarot/types';
 import {
     FALLBACK_DECK_SUMMARY,
     FALLBACK_SPREAD_GUIDE,
@@ -42,13 +43,13 @@ export async function loadSpreadGuide(): Promise<string> {
     }
 }
 
-export async function loadCardMeta(cardId: number): Promise<any | null> {
+export async function loadCardMeta(cardId: number): Promise<TarotCardMeta | null> {
     try {
         const folder = CARD_FOLDERS[cardId];
         if (!folder) return null;
         const metaPath = path.join(getBasePath(), 'cards', folder, 'meta.json');
         const content = await fs.readFile(metaPath, 'utf-8');
-        return JSON.parse(content);
+        return JSON.parse(content) as TarotCardMeta;
     } catch {
         return getFallbackCardMeta(cardId);
     }

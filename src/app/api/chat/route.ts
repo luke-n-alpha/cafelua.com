@@ -3,7 +3,7 @@ import { ChatMessage, callGemini, GeminiApiError, toGeminiContents, parseExpress
 import { getAlphaBasePrompt, getExpressionRules, getConversationRules, checkSecretPhrase, normalizeLanguageCode } from '@/lib/alpha-prompt';
 import { getRuntimeEnvironmentPrompt, type RuntimeEnvironmentContext } from '@/lib/environmentContext';
 
-const COFFEE_CHAT_MODEL = process.env.CAFELUA_COFFEE_CHAT_MODEL || 'google/gemini-3.1-flash-lite';
+const COFFEE_CHAT_MODEL = process.env.CAFELUA_COFFEE_CHAT_MODEL || 'gemini-3.1-flash-lite';
 
 const getCoffeeChatPrompt = (
     language: 'ko' | 'en',

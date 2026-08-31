@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const objectsText = cardMeta.objects?.map((o: any) =>
+        const objectsText = cardMeta.objects?.map((o) =>
             `- ${o.traditional} → ${o.cafelua}: ${o.meaning}`
         ).join('\n') || '';
 

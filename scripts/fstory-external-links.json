@@ -1,0 +1,1242 @@
+{
+ "checked": "2026-08-31",
+ "edition": "ver2-merged",
+ "note": "lost = the address no longer answers, or answers with something other than what it was linked for. Regenerate with scripts/check-fstory-external-links.mjs.",
+ "links": {
+  "http://109.sbs.co.kr": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://165.132.121.144/bb.html": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://anipox.wo.to": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 18
+  },
+  "http://bbs.para.co.kr/~termi7/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://bburn.net/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://beautiful-days.com": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 39
+  },
+  "http://bible.taegu.ac.kr/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://brtnt.net/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://brtnt.wo.to": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 1
+  },
+  "http://bysus.wo.to/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://cafe.daum.net/com9744": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://cafe.daum.net/loveverything": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://cafe.daum.net/papepopo": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://cfish.nalove.cc": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 3
+  },
+  "http://cfish.nalove.cc/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 3
+  },
+  "http://clothdumping.netian.com/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://compute.cafe24.com/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://computer.soongsil.ac.kr/": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://cracks.am": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://cuttihoney.ce.ro": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://dateinfo.net/": {
+   "verdict": "answers",
+   "reason": "403",
+   "references": 1
+  },
+  "http://ddanji.netsgo.com": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://developer.netscape.com/one/dynhtml l": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://dnd3.wo.to": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 3
+  },
+  "http://doolynara.co.kr": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 1
+  },
+  "http://ellije.pe.kr/~interlude": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 12
+  },
+  "http://enter.soongsil.ac.kr/~c9844149/": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://firstduke.nayana.org": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 6
+  },
+  "http://free.soranet.com/~luciel/pldbbs/": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 12
+  },
+  "http://fstory.net/kani/아/[한Ani]-아기공룡둘리(라면).mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-아기공룡둘리.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-아기공룡둘리_이박사.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-아따아따.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-아마게돈.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-아즈망가대왕ed.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-아즈망가대왕op.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-애꾸눈선장.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-엄마찾아삼만리.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-에반게리온.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-에스카플로네.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-에스카플로네_반지.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-엔젤릭 레이어op.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-영혼기병라젠카.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-옛날옛적에.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-오나의여신.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-요리왕비룡.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-요술공주밍키.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-요술공주세리.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-요술소녀.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-우리는챔피언ed.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-우리는챔피언op.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-우주삼총사.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-우주소년아톰.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-원시소년돌치.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-웨딩피치ed.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-웨딩피치op.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-유성가면피터.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-은하철도999.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-은하함대지구호.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-이겨라승리호.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/아/[한Ani]-이상한나라폴.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/타/[한Ani]-태권왕강태풍_날개.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/타/[한Ani]-태권왕강태풍삽입곡.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/타/[한Ani]-태양소년에스테반.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/타/[한Ani]-태풍소년.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/타/[한Ani]-탱구와울라숑.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/타/[한Ani]-톰소여의모험.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/타/[한Ani]-투하트.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/타/[한Ani]-트랙시티.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/파/[한Ani]-파이팅대운동회.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/파/[한Ani]-팬시라라ed.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/파/[한Ani]-포켓몬스터op.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/파/[한Ani]-플란다스의개op.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/파/[한Ani]-피구왕통키op.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/파/[한Ani]-피노키오.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/하/[한Ani]-골드런_소찬휘.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/하/[한Ani]-하얀마음백구.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/하/[한Ani]-학교괴담.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/하/[한Ani]-호빵맨.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/하/[한Ani]-호호아줌마.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/하/[한Ani]-환상게임ed.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/하/[한Ani]-환상게임op.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://fstory.net/kani/하/[한Ani]-황금로봇골드런.mp3": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://gammaru.ssu.ac.kr": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://gazami.wo.to/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 3
+  },
+  "http://goemul.com/": {
+   "verdict": "lost",
+   "reason": "444",
+   "references": 2
+  },
+  "http://grapery.net/server4u/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://gshp.gsnu.ac.kr/~yoseong/": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://heybuba.id.ro": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://hj0831@hihome.com": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://home7961.ce.ro": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://hongmsz.net/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://hosting.cafe24.com/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://huniv.hongik.ac.kr/~hicat/": {
+   "verdict": "answers",
+   "reason": "403",
+   "references": 2
+  },
+  "http://japan.hanmir.com/jtk.cgi?url=http://www.mahoro-matic.com/index2.html": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://jupiter.kaist.ac.kr/~snoopy/aod01.ks.html": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 4
+  },
+  "http://k2760.nayana.org": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 1
+  },
+  "http://k2760.nayana.org/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://karekano.7.co.kr": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://kissofgod.net": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 17
+  },
+  "http://marineblues.net/": {
+   "verdict": "lost",
+   "reason": "410",
+   "references": 2
+  },
+  "http://may23th.new21.net": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://may23th.new21.net/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://members.tripod.co.kr/stonewat": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://members.tripod.com/~mp3rules/mp3songs3.htm": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://miscellany.wo.to/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://mssus.yi.org": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://mulmi.ml.org": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 1
+  },
+  "http://mulmi.ml.org/neomulmi": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 5
+  },
+  "http://mulmi.ml.org/~fstory": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 2
+  },
+  "http://mulmi.ml.org/~jokun": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 1
+  },
+  "http://mulmi.sarang.net": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://mulmi.sarang.net/neomulmi": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://mulmi.sarang.net/~fox": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://mulmi.sarang.net/~jokun": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://mulmi.sarang.net/~jwpark": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://mulmi.sarang.net/~spbear": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://mulmi.sarang.net/~wizhyun": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://my.dreamwiz.com/disutel": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://my.netian.com/~fstory/kani/[한Ani]-영심이.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://my.netian.com/~fstory/kani/[한Ani]-쥐라기월드컵.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://myfolder.net/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://myhome.hananet.net/~bnurihan": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://myhome.hananet.net/~digipop": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 3
+  },
+  "http://myhome.hananet.net/~forestor/차/[한ani]-천년여왕.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~forestor/차/[한ani]-천방지축하니.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~forestor/차/[한ani]-천사소녀네티.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~forestor/차/[한ani]-철인28호fx.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~forestor/차/[한ani]-축구왕슛돌이.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~forestor/카/[한Ani]-카드캡터체리.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~forestor/카/[한ani]-카드캡터체리.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~forestor/카/[한ani]-카우보이비밥ed.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~forestor/카/[한ani]-쾌걸조로.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~forestor/카/[한ani]-큐티하니.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~forestor/카/[한ani]-클램프학원탐정단ed.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~forestor/카/[한ani]-클램프학원탐정단op.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~fstory97/자/[한ani]-전자인간337.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~fstory97/자/[한ani]-지구방위대후뢰쉬맨.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~fstory97/자/[한ani]-지구용사썬가드.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~fstory97/자/[한ani]-짱가.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.hananet.net/~fstory97/자/[한ani]-짱구는못말려.mp3": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://myhome.netsgo.com/azyui": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 3
+  },
+  "http://myhome.netsgo.com/cdoctor/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://nani.ce.ro": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://nature.dongeui.ac.kr/~93kc007": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://nudein.net": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://nudein.net/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://nzeo.com/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://onesung.wo.to/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://punsoo.nahome.org/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://purewhite.new21.net/white/": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://purewhite.new21.net/white//": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "http://radio.mbc.co.kr": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 2
+  },
+  "http://rose0.kyungpook.ac.kr/~z9564015/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://sachiel.new21.net": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://scienceall.com/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://serepy.prettywitch.net": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 12
+  },
+  "http://sexhari.rg.ro": {
+   "verdict": "lost",
+   "reason": "spam",
+   "references": 1
+  },
+  "http://sexmart.infomaster.co.kr": {
+   "verdict": "lost",
+   "reason": "spam",
+   "references": 2
+  },
+  "http://sexying.infomaster.co.kr": {
+   "verdict": "lost",
+   "reason": "spam",
+   "references": 1
+  },
+  "http://shttl.hihome.com": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 3
+  },
+  "http://sinost.pe.ky": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://snowcat.co.kr": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://soback.kornet.nm.kr/~heartily ": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://soback.kornet.nm.kr/~saints": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://soback.kornet21.net/~ihaa/layer3 ": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://sseri.pe.kr": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 1
+  },
+  "http://tentcar.hihome.com": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://ujoa.com/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://vibra.hanyang.ac.kr/aries000/AOD/index.asp": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://village.infoweb.ne.jp/~fwhf2602/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 12
+  },
+  "http://www.3dcafe.com": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.anipike.com": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.art.co.kr/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.artmedia.org": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://www.battle.net": {
+   "verdict": "answers",
+   "reason": "401",
+   "references": 2
+  },
+  "http://www.beautynet.co.kr/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.benchbee.co.kr": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.bestanime.co.kr/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.blizzard.com": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.carjun.com": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 1
+  },
+  "http://www.cbs.co.kr/radio/mfm/fmmgzin/rest.asp?pn=0": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 2
+  },
+  "http://www.cellvian.com/": {
+   "verdict": "answers",
+   "reason": "409",
+   "references": 2
+  },
+  "http://www.chiruki.com/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.chosun.co.kr": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.chosun.com/bin/prelist?dir=p&code=hr_&id=000000000000": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 2
+  },
+  "http://www.clamp.f-2.co.jp": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://www.cupidm.com/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://www.danawa.co.kr": {
+   "verdict": "answers",
+   "reason": "400",
+   "references": 1
+  },
+  "http://www.danawa.co.kr/": {
+   "verdict": "answers",
+   "reason": "400",
+   "references": 1
+  },
+  "http://www.ddangi.com/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.ddanzi.com/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.designnews.co.kr/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.deta.co.kr/": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 2
+  },
+  "http://www.donga.com/fbin/cartoon?&n=darck": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 2
+  },
+  "http://www.dongascience.com/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.ezne.net/": {
+   "verdict": "lost",
+   "reason": "444",
+   "references": 2
+  },
+  "http://www.gainax.co.jp": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://www.gammakerz.net/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://www.guworld.net/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://www.inote.com/~jyq/onlinesg/onlinesg.htm": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.inote.com/~king/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.itv.co.kr": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://www.kbench.com/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.kbs.co.kr": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.kcug.net/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://www.kent-web.com/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 12
+  },
+  "http://www.maxmp3.co.kr/": {
+   "verdict": "lost",
+   "reason": "410",
+   "references": 1
+  },
+  "http://www.mbc.co.kr": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.militaryreview.com/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.new21.com": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.ntv.co.jp/ghibli/": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 2
+  },
+  "http://www.nzeo.com/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://www.ohmynews.com/": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.onenglish.com": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 1
+  },
+  "http://www.prw.ko.ky": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 13
+  },
+  "http://www.pungjang.net/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://www.rni21.wo.to": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 1
+  },
+  "http://www.sbs.co.kr": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www.shinbiro.com/~pluu/index.htm": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://www.sing.co.kr/htm/mp3box.htm": {
+   "verdict": "answers",
+   "reason": "403",
+   "references": 2
+  },
+  "http://www.spbear.pe.kr": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 5
+  },
+  "http://www.spbear.pe.kr/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://www.teamclover.net/sachiel": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 2
+  },
+  "http://www.teamclover.net/sachiel/": {
+   "verdict": "lost",
+   "reason": "404",
+   "references": 2
+  },
+  "http://www.tezuka.co.jp": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://www.wise09.x-y.net/": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 2
+  },
+  "http://www.yongsan.co.kr/ddart/aod/aod.htm": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://www.zeroboard.com": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 60
+  },
+  "http://www.zingaz.com/index2.html": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://www2.disney.com/_index.html": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://yahoo.co.kr": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://yajava.com": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 2
+  },
+  "http://yony.yezzang.com/": {
+   "verdict": "lost",
+   "reason": "no such host",
+   "references": 1
+  },
+  "http://yukihome.com": {
+   "verdict": "answers",
+   "reason": "403",
+   "references": 15
+  },
+  "http://zingaz.com": {
+   "verdict": "answers",
+   "reason": "200",
+   "references": 2
+  },
+  "http://★민지의 홈★": {
+   "verdict": "lost",
+   "reason": "unreadable address",
+   "references": 28
+  },
+  "http://이런거 읍시요": {
+   "verdict": "lost",
+   "reason": "unreadable address",
+   "references": 1
+  },
+  "https://jokun.sarang.net": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 7
+  },
+  "https://jokun.sarang.net/support/photoshop/1.htm": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "https://jokun.sarang.net/support/photoshop/2.htm": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "https://jokun.sarang.net/support/photoshop/3.htm": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "https://jokun.sarang.net/support/photoshop/4.htm": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "https://jokun.sarang.net/support/photoshop/5.htm": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "https://jokun.sarang.net/support/photoshop/6.htm": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "https://jokun.sarang.net/support/photoshop/7.htm": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  },
+  "https://jokun.sarang.net/support/photoshop/8.htm": {
+   "verdict": "lost",
+   "reason": "nothing answered",
+   "references": 1
+  }
+ }
+}

@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T10:02:21.442Z",
+  "generatedAt": "2026-08-31T10:14:36.201Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -441,6 +441,7 @@
       "externalFrames": 9,
       "externalLinks": 47,
       "inPlacePictures": 111,
+      "lostClicksDropped": 13,
       "unresolvedUniquePaths": 935,
       "unresolvedTopPaths": [
         {
@@ -618,6 +619,7 @@
       "externalFrames": 9,
       "externalLinks": 101,
       "inPlacePictures": 117,
+      "lostClicksDropped": 18,
       "unresolvedUniquePaths": 1096,
       "unresolvedTopPaths": [
         {
@@ -785,6 +787,7 @@
       "externalFrames": 9,
       "externalLinks": 104,
       "inPlacePictures": 127,
+      "lostClicksDropped": 31,
       "unresolvedUniquePaths": 1589,
       "unresolvedTopPaths": [
         {
@@ -952,6 +955,7 @@
       "externalFrames": 9,
       "externalLinks": 102,
       "inPlacePictures": 130,
+      "lostClicksDropped": 37,
       "unresolvedUniquePaths": 1592,
       "unresolvedTopPaths": [
         {
