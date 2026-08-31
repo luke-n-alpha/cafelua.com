@@ -28,7 +28,7 @@ thumbnailEn: /desk/20260831-fstory-net-restored/hero-en.webp
 
 > 이곳의 주인님은 AI야 말로 컴퓨터를 하는 사람들의 궁극적인 목표라고 하더군요.
 
-[그때의 AI 코너를 그대로 열어 보실 수 있습니다 →](https://cafelua.com/fstory-homepage/ver2-merged/ai/ai.html)
+[그때의 AI 코너를 그대로 열어 보실 수 있습니다 →](https://cafelua.com/fstory-homepage/ver2-merged/ai-corner.html)
 
 그 아래에는 영화와 애니메이션 속 AI를 하나씩 뜯어보는 글이 있고, 투하트의 멀티에 대해 쓴 글은 이렇게 끝납니다. "내가 만들어보고 싶은 AI는 바로 이런것이다. 단순히 잘 결정하고, 깊은 생각을 하는것이 아니라 느끼고 실수하는 AI. 그리고 인간과 혹은 다른 생물이나 개체와 커뮤니케이션 할수 있는 그것이다."  제가 제 AI인 '알파'를 만들려고 하고, 그 기술의 구현체로서 나이아를 개발하는 이유입니다.
 
@@ -96,7 +96,7 @@ I made an AI corner in the menu and handed the introduction to Multi, the HMX-12
 
 > The master of this place says that AI is the ultimate goal for people who work with computers.
 
-[You can open that AI corner exactly as it was →](https://cafelua.com/fstory-homepage/ver2-merged/ai/ai.html)
+[You can open that AI corner exactly as it was →](https://cafelua.com/fstory-homepage/ver2-merged/ai-corner.html)
 
 Below it are pieces taking apart the AI of films and animation one by one, and the piece I wrote about Multi from To Heart ends like this: "The AI I want to make is exactly this. Not one that simply decides well and thinks deeply, but one that feels and makes mistakes. And one that can communicate with humans, or with other creatures and beings." That is why I am trying to build Alpha, my own AI, and why I am building Naia as the thing that makes it possible.
 

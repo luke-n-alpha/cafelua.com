@@ -2167,6 +2167,47 @@ ${chooser}
   }
 
 
+  // A way to link into one corner from outside.
+  //
+  // The site is a frameset: index → main → frame2 → frame3 → content, and only
+  // the innermost pane changes as you move around. So an address that names a
+  // corner directly — ai/ai.html — hands a visitor the bare inside of a pane:
+  // no menu, no top strip, no way back, and the page bleeding into white
+  // because it was never meant to be seen on its own. Anyone following a link
+  // from outside lands there.
+  //
+  // This builds a parallel entrance for such a corner. Same chrome, same menu,
+  // same season behind it; only the innermost pane starts somewhere else. The
+  // original pages are untouched — the copies live beside them under their own
+  // names, so a link can point at a corner and still arrive at the site.
+  const DEEP_LINKS = [
+    { at: 'ai/ai.html', name: 'ai-corner', title: '숲속얘기 — 인공지능' },
+  ];
+  let deepLinks = 0;
+  for (const link of DEEP_LINKS) {
+    if (!existsSync(path.join(merged, link.at))) continue;
+    const read = async (name) => decode(await readFile(path.join(merged, name)));
+    const index = await read('index.html');
+    const main = await read('main.html');
+    const frame2 = await read('frame2.html');
+    const frame3 = await read('frame3.html');
+    const content = await read('content.html');
+
+    const files = [
+      [`${link.name}.html`, index
+        .replace('src="main.html"', `src="${link.name}-main.html"`)
+        .replace(/<title>[^<]*<\/title>/i, `<title> ${link.title} </title>`)],
+      [`${link.name}-main.html`, main.replace('src = "frame2.html"', `src = "${link.name}-frame2.html"`)],
+      [`${link.name}-frame2.html`, frame2.replace('src = "frame3.html"', `src = "${link.name}-frame3.html"`)],
+      [`${link.name}-frame3.html`, frame3.replace('src = "content.html"', `src = "${link.name}-content.html"`)],
+      [`${link.name}-content.html`, content.replace(/src="[^"]*"(\s+topmargin)/, `src="${link.at}"$1`)],
+    ];
+    for (const [name, text] of files) await writeFile(path.join(merged, name), text, 'utf8');
+    deepLinks += 1;
+    mergedMenuNotes.push(`${link.at} 로 바로 들어오는 입구 ${link.name}.html`);
+  }
+  if (deepLinks) console.log(`코너로 바로 들어오는 입구 ${deepLinks}개를 만들었다`);
+
   // The opening pane has to follow the same choice the menu made, or the
   // edition greets a visitor with the empty Zeroboard frame.
   const contentPath = path.join(merged, 'content.html');

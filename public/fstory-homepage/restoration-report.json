@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T13:29:50.811Z",
+  "generatedAt": "2026-08-31T16:02:56.956Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -31,7 +31,7 @@
     }
   ],
   "totals": {
-    "publishedFiles": 8733,
+    "publishedFiles": 8738,
     "restoredFromArchive": 318,
     "aliasResolved": 1484,
     "caseResolved": 58,
@@ -1090,7 +1090,7 @@
       "timestamp": "ver2-merged",
       "date": "2001-09 ~ 2003-07",
       "lineage": "M2",
-      "publishedFiles": 1627,
+      "publishedFiles": 1632,
       "menuNotes": [
         "일기 → diary/frame.html",
         "프로필 → profile/profile.html",
@@ -1118,6 +1118,7 @@
         "20020210.html 의 다음 일기를 recent.html 로 이었다",
         "링크 코너 상단 안내 띠를 걷어냈다",
         "하단 시계 띠를 걷어냈다",
+        "ai/ai.html 로 바로 들어오는 입구 ai-corner.html",
         "첫 화면 → diary/frame.html"
       ],
       "mergedFrom": [
