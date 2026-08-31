@@ -14,7 +14,7 @@ Luke와 AI 동반자 Alpha의 개인 웹사이트. 현실과 이세계의 경계
 | Framework | Next.js 16 (App Router) + React 19 |
 | Language | TypeScript |
 | UI | shadcn/ui + custom CSS |
-| Hosting | Vercel (SSR) |
+| Hosting | Azure Container Apps — `ca-cafelua-prod` (SSR), Cloudflare → Caddy 앞단 |
 | Analytics | Google Analytics 4 |
 | Backend | Firebase (guestbook), Gemini API (chat/tarot), GA4 Data API |
 | i18n | react-i18next (ko/en) |
@@ -165,7 +165,20 @@ COMMENT_NOTIFY_FROM                   # Reply notification sender (optional)
 
 ## Deployment
 
-Vercel (SSR). Push to main → auto-deploy.
+배포는 Azure Container Apps 로 합니다. 앱은 `ca-cafelua-prod`(리소스 그룹 `rg-nextain-koreacentral`)이고, 이미지는 `acrnextainpolicylab.azurecr.io` 레지스트리의 `cafelua/web` 입니다. 태그는 `<용도>-<YYYYMMDD>-<public-home 짧은 커밋>` 규칙을 따릅니다. 앞단은 Cloudflare → Caddy 입니다.
+
+순서는 이렇습니다. 이 레포를 먼저 푸시하고, **그 커밋으로 이미지를 구워 앱을 갱신**합니다.
+
+```bash
+git push origin main
+az acr build --registry acrnextainpolicylab \
+  --resource-group rg-nextain-koreacentral \
+  --image cafelua/web:<태그> --file Dockerfile .
+az containerapp update -n ca-cafelua-prod -g rg-nextain-koreacentral \
+  --image acrnextainpolicylab.azurecr.io/cafelua/web:<태그>
+```
+
+푸시만으로는 아무것도 배포되지 않습니다. 자동 배포는 없습니다. 작업 트리에 남아 있는 `.vercel/`(git 추적 밖)과 Private 레포의 `.github/workflows/deploy.yml`(GitHub Pages)은 둘 다 죽은 흔적입니다.
 
 이 레포는 Private 레포(`luke-n-alpha/cafelua-private`)의 `public-home/` 서브모듈입니다.
 동기화: `src/scripts/sync-public-home.sh`

@@ -51,7 +51,7 @@ The site works without any API keys (AI chat, guestbook, and weather features wi
 | AI | Vercel AI Gateway + Google Gemini Flash 3.1 Lite |
 | Backend | Firebase (guestbook/comments), GA4 Data API |
 | i18n | react-i18next (ko/en) |
-| Deployment | Vercel |
+| Deployment | Azure Container Apps (`ca-cafelua-prod`), Cloudflare → Caddy in front |
 
 ---
 
@@ -105,7 +105,7 @@ Write the English body here.
 
 **Categories**: `cafelua` · `ai` · `it` · `believer` · `xrcloud` · `review` · `art` · `private`
 
-Then commit and push → Vercel auto-deploys.
+Then commit and push. Pushing alone publishes nothing — build an image from that commit and update the app, as described under **Deploy to Azure Container Apps** below.
 
 ---
 
@@ -157,11 +157,24 @@ npm run lint         # ESLint
 npx tsc --noEmit     # TypeScript type check
 ```
 
-### Deploy to Vercel
+### Deploy to Azure Container Apps
 
-1. Connect `https://github.com/luke-n-alpha/cafelua.com` to [Vercel](https://vercel.com)
-2. Add environment variables in Project Settings
-3. Push to `main` → auto-deploy
+The site runs as the container app `ca-cafelua-prod` in the resource group `rg-nextain-koreacentral`. Images live in the `acrnextainpolicylab.azurecr.io` registry under `cafelua/web`, tagged `<purpose>-<YYYYMMDD>-<short public-home commit>`. Cloudflare sits in front of Caddy.
+
+There is no auto-deploy. Push this repo first, then build an image from that commit and point the app at it.
+
+```bash
+git push origin main
+az acr build --registry acrnextainpolicylab \
+  --resource-group rg-nextain-koreacentral \
+  --image cafelua/web:<tag> --file Dockerfile .
+az containerapp update -n ca-cafelua-prod -g rg-nextain-koreacentral \
+  --image acrnextainpolicylab.azurecr.io/cafelua/web:<tag>
+```
+
+Environment variables are set on the container app, not in a hosting dashboard.
+
+The untracked `.vercel/` directory left in the working tree and the private repo's `.github/workflows/deploy.yml` (GitHub Pages) are both dead leftovers.
 
 ---
 

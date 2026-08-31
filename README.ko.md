@@ -51,7 +51,7 @@ API 키 없이도 사이트는 동작합니다 (AI 채팅, 방명록, 날씨 기
 | AI | Vercel AI Gateway + Google Gemini Flash 3.1 Lite |
 | Backend | Firebase (방명록/댓글), GA4 Data API |
 | i18n | react-i18next (ko/en) |
-| Deployment | Vercel |
+| Deployment | Azure Container Apps (`ca-cafelua-prod`), 앞단 Cloudflare → Caddy |
 
 ---
 
@@ -105,7 +105,7 @@ Write the English body here.
 
 **카테고리**: `cafelua` · `ai` · `it` · `believer` · `xrcloud` · `review` · `art` · `private`
 
-파일 추가 후 `git commit → push` 하면 Vercel이 자동 배포합니다.
+파일을 추가하고 `git commit → push` 합니다. 푸시만으로는 게시되지 않습니다. 아래 **Azure Container Apps 배포** 절차대로 그 커밋으로 이미지를 굽고 앱을 갱신해야 반영됩니다.
 
 ---
 
@@ -157,11 +157,24 @@ npm run lint         # ESLint
 npx tsc --noEmit     # TypeScript 타입 체크
 ```
 
-### Vercel 배포
+### Azure Container Apps 배포
 
-1. [Vercel](https://vercel.com)에 `https://github.com/luke-n-alpha/cafelua.com` 연결
-2. Project Settings에서 환경변수 추가
-3. `main` 브랜치에 push → 자동 배포
+사이트는 리소스 그룹 `rg-nextain-koreacentral` 의 컨테이너 앱 `ca-cafelua-prod` 로 돕니다. 이미지는 `acrnextainpolicylab.azurecr.io` 레지스트리의 `cafelua/web` 이고, 태그는 `<용도>-<YYYYMMDD>-<public-home 짧은 커밋>` 규칙을 씁니다. 앞단은 Cloudflare → Caddy 입니다.
+
+자동 배포는 없습니다. 이 레포를 먼저 푸시하고, 그 커밋으로 이미지를 구워 앱을 갱신합니다.
+
+```bash
+git push origin main
+az acr build --registry acrnextainpolicylab \
+  --resource-group rg-nextain-koreacentral \
+  --image cafelua/web:<태그> --file Dockerfile .
+az containerapp update -n ca-cafelua-prod -g rg-nextain-koreacentral \
+  --image acrnextainpolicylab.azurecr.io/cafelua/web:<태그>
+```
+
+환경변수는 호스팅 대시보드가 아니라 컨테이너 앱에 설정합니다.
+
+작업 트리에 남아 있는 `.vercel/`(git 추적 밖)과 Private 레포의 `.github/workflows/deploy.yml`(GitHub Pages)은 둘 다 죽은 흔적입니다.
 
 ---
 
