@@ -2480,18 +2480,30 @@ const quietenOutside = async (directory) => {
     const text = await readFile(file, 'utf8');
     if (!/href\s*=\s*"https?:/i.test(text)) continue;
     let count = 0;
-    const output = text.replace(/<a\b[^>]*>/gi, (whole) => {
+    // <area> as well as <a>: the link corner drew its outside links on an image
+    // map, so half of them are not anchors at all.
+    const output = text.replace(/<(?:a|area)\b[^>]*>/gi, (whole) => {
       const wanted = /href\s*=\s*"(https?:\/\/[^"]+)"/i.exec(whole);
       if (!wanted || /onclick=/i.test(whole)) return whole;
       let host;
-      try { host = new URL(wanted[1]).hostname.toLowerCase(); } catch { return whole; }
-      if (!closedHosts.has(host)) return whole;
+      try { host = new URL(wanted[1]).hostname.toLowerCase(); } catch { host = null; }
+      // Some guestbook entries put a name where the browser asked for a home
+      // page — http://★민지의 홈★ — so the link never went anywhere, not even
+      // in 2002. It is treated like any other address that leads nowhere.
+      const unreadable = !host || !/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(host);
+      if (!unreadable && !closedHosts.has(host)) return whole;
       count += 1;
       // The address stays visible on the page, because it is part of what Luke
       // wrote. Only the going-there stops, and the click says why.
-      const said = `이 주소는 지금 닫혀 있습니다.\\n\\n${wanted[1].replace(/'/g, "\\\\'")}\\n\\n${externalRecord.checked} 확인.`;
+      const said = unreadable
+        ? `주소가 아닙니다.\\n\\n${wanted[1].replace(/'/g, "\\\\'")}\\n\\n방명록에 홈페이지 자리를 이름으로 채운 글입니다.`
+        : `이 주소는 지금 닫혀 있습니다.\\n\\n${wanted[1].replace(/'/g, "\\\\'")}\\n\\n${externalRecord.checked} 확인.`;
+      // The address is kept on the tag as well as in the message, so the check
+      // that decided this can read its own earlier work on the next run instead
+      // of seeing a page with no outside links left and concluding there were
+      // none. Without it the judgement would undo itself every rebuild.
       return whole
-        .replace(/href\s*=\s*"[^"]*"/i, `href="#" onclick="alert('${said}');return false;"`)
+        .replace(/href\s*=\s*"[^"]*"/i, `href="#" data-closed-outside="${wanted[1]}" onclick="alert('${said}');return false;"`)
         .replace(/\s*target\s*=\s*"?_blank"?/i, '');
     });
     if (count) { await writeFile(file, output, 'utf8'); closedOutside += count; }
