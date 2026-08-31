@@ -242,6 +242,14 @@ const unwrapColumns = (body) => {
   return out.map((line) => line.replace(/[ \t]+$/, '')).join('\n');
 };
 
+// 소개문에 들어갈 편수. 문장 안에서는 숫자보다 우리말 수사가 읽힌다.
+const KOREAN_NUMBERS = [
+  '', '한', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉', '열',
+  '열한', '열두', '열세', '열네', '열다섯', '열여섯', '열일곱', '열여덟', '열아홉', '스무',
+  '스물한', '스물두', '스물세', '스물네', '스물다섯', '스물여섯', '스물일곱', '스물여덟', '스물아홉', '서른',
+];
+const inWords = (count) => KOREAN_NUMBERS[count] ?? String(count);
+
 const chapterOf = (title, body, source) => ({
   title,
   path: `${source.replace(/[/.]/g, '-')}.md`,
@@ -668,10 +676,12 @@ const BOOKS = [
       slug: 'fstory-short-stories-en',
       title: "Forest Story's Collected Short Fiction",
       subtitle: '1993 – 2015 · Short fiction',
-      summary: "숲속얘기 — Forest Story — was the pen name Luke wrote under on Nownuri and Chollian. This collects the short fiction he left under that name, from the first piece written at fifteen to one written twenty years later. These stories had never appeared in English before. Twenty of the twenty-one are here; 어른들을 위한 동화 survives only on the 2002 website and has not been translated.",
+      summary: (count) => `숲속얘기 — Forest Story — was the pen name Luke wrote under from the Nownuri years until about a decade ago. This collects the ${count} short stories he left under that name, from the first one written at fifteen to one written twenty years later. None of them had appeared in English before.`,
       build: buildShortStoriesEn,
     },
-    summary: '숲속얘기는 루크가 나우누리 시절부터 십여 년 전까지 쓰던 필명입니다. 중학교 3학년에 쓴 첫 이야기부터 직장을 다니며 단편에서 손을 놓기까지, 그 이름으로 남긴 스물한 편을 한 권으로 모았습니다. 유리구슬 하나에 담긴 이야기, 소행성 B612, 22세기에서 걸려온 인사, 그리고 2030년의 재귀적 접촉. 쓴 순서대로 실었고, 웹페이지가 한 편을 두 쪽으로 나눠 싣던 것은 다시 한 편으로 붙였습니다.',
+    // 편수는 실제로 실린 장 수에서 받는다. 빼거나 더할 때마다 소개문의 숫자가
+    // 따로 놀아서, 스물한 편이라고 적힌 채로 열아홉 편이 실려 있었다.
+    summary: (count) => `숲속얘기는 루크가 나우누리 시절부터 십여 년 전까지 쓰던 필명입니다. 중학교 3학년에 쓴 첫 이야기부터 직장을 다니며 단편에서 손을 놓기까지, 그 이름으로 남긴 ${inWords(count)} 편을 한 권으로 모았습니다. 유리구슬 하나에 담긴 이야기, 소행성 B612, 22세기에서 걸려온 인사, 그리고 2030년의 재귀적 접촉. 쓴 순서대로 실었고, 웹페이지가 한 편을 두 쪽으로 나눠 싣던 것은 다시 한 편으로 붙였습니다.`,
     build: buildShortStories,
   },
   {
@@ -698,10 +708,13 @@ for (const definition of BOOKS) {
     continue;
   }
   const cover = await placeCover(definition.slug);
+  const summary = typeof definition.summary === 'function'
+    ? definition.summary(chapters.length)
+    : definition.summary;
   const front = [
     `# ${definition.title}`,
     cover ? `\n![${definition.title} 표지](${cover})` : null,
-    `\n${definition.summary}`,
+    `\n${summary}`,
     `\n지은이 ${AUTHOR}. ${definition.subtitle}.`,
     '\n인터넷 아카이브에 남아 있던 fstory.net 의 글을 옮긴 것입니다. 맞춤법과 문장은 그때 쓴 그대로 두었습니다.',
   ].filter(Boolean).join('\n');
@@ -710,12 +723,15 @@ for (const definition of BOOKS) {
   if (definition.english) {
     const englishCover = await placeCover(definition.english.slug);
     const englishChapters = definition.english.build ? await definition.english.build() : [];
+    const englishSummary = typeof definition.english.summary === 'function'
+      ? definition.english.summary(englishChapters.length)
+      : definition.english.summary;
     editions.push({
       lang: 'en',
       sourceSlug: definition.english.slug,
       title: definition.english.title,
       subtitle: definition.english.subtitle,
-      summary: definition.english.summary,
+      summary: englishSummary,
       status: englishChapters.length ? 'published' : 'draft',
       biblio: { author: AUTHOR, date: definition.subtitle.split(' · ')[0], license: 'CC BY-NC-SA 4.0' },
       links: { wikidocs: null, leanpub: null },
@@ -727,7 +743,7 @@ for (const definition of BOOKS) {
             markdown: [
               `# ${definition.english.title}`,
               englishCover ? `\n![${definition.english.title}](${englishCover})` : null,
-              `\n${definition.english.summary}`,
+              `\n${englishSummary}`,
               `\nWritten by ${AUTHOR}. ${definition.english.subtitle}.`,
               '\nRecovered from pages archived at fstory.net. The Korean is as it was written; the English is a translation made for this edition.',
             ].filter(Boolean).join('\n') + '\n',
@@ -746,7 +762,7 @@ for (const definition of BOOKS) {
       sourceSlug: definition.slug,
       title: definition.title,
       subtitle: definition.subtitle,
-      summary: definition.summary,
+      summary,
       status: 'published',
       ...(definition.pageBreakOn ? { pageBreakOn: definition.pageBreakOn } : {}),
       biblio: { author: AUTHOR, date: definition.subtitle.split(' · ')[0], edition: '복원판', license: 'CC BY-NC-SA 4.0' },
