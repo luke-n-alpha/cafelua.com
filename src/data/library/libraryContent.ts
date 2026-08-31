@@ -11,7 +11,7 @@ export type LibraryEdition = {
   // 스냅샷에 함께 담는다. 없는 판본은 libraryCopy 의 기존 문구로 돌아간다.
   summary?: string;
   // 한 장 안에 여러 편이 들어가는 책. 'h2' 면 소제목마다 쪽을 새로 시작한다.
-  // 짧은 글 156편이 다섯 장에 나뉘어 담긴 《나만의 생각의 노트》 같은 경우다.
+  // 짧은 글 156편이 다섯 장에 나뉘어 담긴 《나만의 생각 노트》 같은 경우다.
   pageBreakOn?: 'h2';
   biblio: { author?: string; publisher?: string; date?: string; edition?: string; license?: string };
   links: { wikidocs: string | null; leanpub: string | null };

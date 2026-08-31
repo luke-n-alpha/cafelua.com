@@ -688,7 +688,7 @@ const BOOKS = [
     id: 'fstory-thought-notes',
     slug: 'fstory-thought-notes',
     coverTone: 'dusk',
-    title: '나만의 생각의 노트',
+    title: '나만의 생각 노트',
     subtitle: '1993 ~ 2002 · 짧은 글',
     // 한 장에 스무 편 남짓이 들어가므로, 편마다 쪽을 새로 시작한다.
     pageBreakOn: 'h2',
