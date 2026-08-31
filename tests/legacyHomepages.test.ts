@@ -69,16 +69,17 @@ describe('Legacy homepage bundles', () => {
         }
     });
 
-    test('publishes the six merged fstory.net editions', () => {
+    // 여섯 판본은 복원을 검증하던 단위였고, 그 일이 끝난 지금 공개 저장소에
+    // 남는 것은 통합본 하나다. 나머지는 원본 캡처 옆 비공개 보관소로 옮겼다.
+    // 기록은 그대로 남으므로 계보가 여섯이라는 사실은 여기서 계속 확인한다.
+    test('records six design generations and publishes the merged edition of them', () => {
         const archiveRoot = path.join(legacyRoot, 'fstory-homepage');
         const manifest = JSON.parse(fs.readFileSync(path.join(archiveRoot, 'snapshots.json'), 'utf8'));
 
         expect(manifest.editions).toHaveLength(6);
-        for (const edition of manifest.editions) {
-            const entryPath = path.join(archiveRoot, edition.representativeCapture, 'index.html');
-            expect(fs.existsSync(entryPath)).toBe(true);
-            expect(fs.readFileSync(entryPath, 'utf8')).toMatch(/charset\s*=\s*["']?utf-8/i);
-        }
+        const entryPath = path.join(archiveRoot, manifest.mergedEdition.directory, 'index.html');
+        expect(fs.existsSync(entryPath)).toBe(true);
+        expect(fs.readFileSync(entryPath, 'utf8')).toMatch(/charset\s*=\s*["']?utf-8/i);
     });
 
     test('builds every edition from the captures that share its design', () => {
@@ -111,8 +112,12 @@ describe('Legacy homepage bundles', () => {
         // one edition.
         expect(editionOf('20021120053627')).not.toBe(editionOf('20021128181318'));
 
-        const older = fs.readFileSync(path.join(archiveRoot, '20021120053627', 'main.html'), 'utf8');
-        const newer = fs.readFileSync(path.join(archiveRoot, '20021128181318', 'main.html'), 'utf8');
+        // 두 캡처의 실물은 비공개 보관소에 있다. 공개 저장소만 클론한 곳에서는
+        // 기록만 확인하고 넘어간다.
+        const stored = path.join(legacyRoot, '../../data/fstory-net-wayback/versions/editions');
+        if (!fs.existsSync(stored)) return;
+        const older = fs.readFileSync(path.join(stored, '20021120053627', 'main.html'), 'utf8');
+        const newer = fs.readFileSync(path.join(stored, '20021128181318', 'main.html'), 'utf8');
         expect(older).toContain('frame1.html');
         expect(newer).toContain('topmenu.html');
         expect(newer).toContain('bgm/bgm.html');
@@ -122,11 +127,9 @@ describe('Legacy homepage bundles', () => {
         const archiveRoot = path.join(legacyRoot, 'fstory-homepage');
         const manifest = JSON.parse(fs.readFileSync(path.join(archiveRoot, 'snapshots.json'), 'utf8'));
 
-        for (const edition of manifest.editions) {
-            const root = path.join(archiveRoot, edition.representativeCapture);
-            expect(fs.existsSync(path.join(root, '_unrestored.html'))).toBe(true);
-            expect(fs.existsSync(path.join(root, '_missing-image.svg'))).toBe(true);
-        }
+        const root = path.join(archiveRoot, manifest.mergedEdition.directory);
+        expect(fs.existsSync(path.join(root, '_unrestored.html'))).toBe(true);
+        expect(fs.existsSync(path.join(root, '_missing-image.svg'))).toBe(true);
     });
 
     test('leaves no live form, download link or unresolved picture in the published captures', () => {
@@ -167,20 +170,15 @@ describe('Legacy homepage bundles', () => {
         }
     });
 
-    test('publishes one folder per design generation, not one per capture', () => {
+    test('publishes the merged edition alone, and accounts for every capture', () => {
         const archiveRoot = path.join(legacyRoot, 'fstory-homepage');
         const manifest = JSON.parse(fs.readFileSync(path.join(archiveRoot, 'snapshots.json'), 'utf8'));
         const published = fs
             .readdirSync(archiveRoot, { withFileTypes: true })
             .filter((entry) => entry.isDirectory())
-            .map((entry) => entry.name)
-            .sort();
-        const expected = [
-            ...manifest.editions.map((edition: { representativeCapture: string }) => edition.representativeCapture),
-            manifest.mergedEdition.directory,
-        ].sort();
+            .map((entry) => entry.name);
 
-        expect(published).toEqual(expected);
+        expect(published).toEqual([manifest.mergedEdition.directory]);
 
         // Every capture the archive holds is accounted for by exactly one edition,
         // so merging never silently drops one.
@@ -188,7 +186,7 @@ describe('Legacy homepage bundles', () => {
             edition.builtFrom.map((item) => item.timestamp),
         );
         expect(new Set(merged).size).toBe(merged.length);
-        expect(merged.length).toBeGreaterThan(published.length);
+        expect(merged.length).toBeGreaterThan(manifest.editions.length);
     });
 
     test('restores the 1997 poems whose bodies survived in a later edition', () => {
@@ -259,14 +257,17 @@ describe('Legacy homepage bundles', () => {
     });
 
     test('keeps the final Cyworld-linked edition usable without the retired service', () => {
-        const finalRoot = path.join(legacyRoot, 'fstory-homepage', '20030726202839');
+        const manifest = JSON.parse(
+            fs.readFileSync(path.join(legacyRoot, 'fstory-homepage', 'snapshots.json'), 'utf8'),
+        );
+        const finalRoot = path.join(legacyRoot, 'fstory-homepage', manifest.mergedEdition.directory);
         const notice = fs.readFileSync(path.join(finalRoot, 'cyworld-unrestored.html'), 'utf8');
 
         expect(fs.existsSync(path.join(finalRoot, 'cycomeback_fstory97.jpg'))).toBe(true);
         expect(notice).toContain('http://www.cyworld.com/fstory');
         expect(notice).toContain('cycomeback_fstory97.jpg');
 
-        for (const relative of ['index.html', 'topmenu.html', 'tech/menu.html', 'teatime/teatime.html']) {
+        for (const relative of ['topmenu.html', 'tech/menu.html']) {
             const html = fs.readFileSync(path.join(finalRoot, relative), 'utf8');
             expect(html).toContain('cyworld-unrestored.html');
             expect(html).not.toMatch(/cyworld\.com\/[^"'<>\s]*tid=16159007/i);

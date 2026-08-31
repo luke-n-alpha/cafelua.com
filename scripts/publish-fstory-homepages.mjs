@@ -2686,6 +2686,31 @@ async function replaceAsync(text, pattern, make) {
 await reopenEucNames(destinationRoot);
 if (reopened) console.log(`EUC-KR 이름으로 저장된 글 ${reopened}편의 링크를 되살렸다`);
 
+// ------------------------------------- 공개 저장소에는 통합본만 둔다
+
+// The six capture editions were how the restoration was checked: one directory
+// per design generation, each openable on its own. That work is done, and the
+// merged edition holds everything they held — 네티앙 시절과 천리안 방명록까지.
+// Keeping six more copies of the same site in a public repository is 122MB of
+// noise, so they move into the private archive beside the raw captures they
+// were built from. Nothing is lost: rerunning this script rebuilds them.
+const KEPT_PUBLIC = new Set([MERGED_EDITION.directory]);
+const editionStore = path.join(archiveRoot, 'editions');
+let movedEditions = 0;
+for (const entry of await readdir(destinationRoot, { withFileTypes: true })) {
+  if (!entry.isDirectory() || KEPT_PUBLIC.has(entry.name)) continue;
+  const from = path.join(destinationRoot, entry.name);
+  const to = path.join(editionStore, entry.name);
+  await mkdir(editionStore, { recursive: true });
+  await rm(to, { recursive: true, force: true });
+  await cp(from, to, { recursive: true });
+  await rm(from, { recursive: true, force: true });
+  movedEditions += 1;
+}
+if (movedEditions) {
+  console.log(`캡처 판본 ${movedEditions}개를 비공개 보관소로 옮겼다 → ${path.relative(appRoot, editionStore)}`);
+}
+
 // ------------------------------------------------------------------------ reports
 
 const versionSummary = JSON.parse(await readFile(path.join(archiveRoot, 'summary.json'), 'utf8'));
@@ -2874,7 +2899,8 @@ export type FstoryAnnex = {
     id: string;
     label: string;
     period: string;
-    snapshot: FstoryCaptureId;
+    // 부속 판본은 통합본 안에서 열린다. 캡처 판본은 공개하지 않는다.
+    snapshot: FstoryCaptureId | '${MERGED_EDITION.directory}';
     entry: string;
     summary: string;
 };

@@ -46,7 +46,9 @@
 .library-panel {
   position: relative;
   width: 94%;
-  max-width: 1080px;
+  /* 책 다섯 권(202px)과 사이 간격(22px)이면 1098px 이 필요하다. 안쪽 여백까지
+     더해 넓은 화면에서 한 줄로 서게 한다. 좁아지면 알아서 줄을 바꾼다. */
+  max-width: 1160px;
   max-height: 95vh;
   margin: 1.5vh auto;
   padding: 1.5rem;
@@ -111,17 +113,20 @@
   cursor: pointer;
   font-size: 0.8rem;
 }
+/* 다섯 권이 한 줄에 들어가되, 좁아지면 옆으로 밀리지 않고 아래로 접힌다.
+   책꽂이를 가로로 긁어야 나머지가 보이는 것은 서가처럼 보이지 않는다. */
 .library-book-rail {
   display: flex;
-  gap: 25px;
-  overflow-x: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px;
   padding: 8px 5px 22px;
-  scroll-snap-type: x mandatory;
-  scrollbar-color: rgba(232, 201, 157, 0.65) transparent;
 }
 .library-book-card {
   position: relative;
-  flex: 0 0 202px;
+  /* 폭이 모자라면 책이 조금씩 좁아지고, 그래도 모자라면 줄을 바꾼다. */
+  flex: 0 1 202px;
+  min-width: 148px;
   min-height: 286px;
   border: 0;
   border-radius: 3px 9px 9px 3px;
@@ -131,7 +136,6 @@
   cursor: pointer;
   overflow: hidden;
   box-shadow: 10px 12px 21px rgba(0, 0, 0, 0.42);
-  scroll-snap-align: start;
   transition: transform 0.2s;
 }
 .library-book-card > img {

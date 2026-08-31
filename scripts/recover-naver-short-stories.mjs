@@ -23,7 +23,7 @@
  * Usage: node scripts/recover-naver-short-stories.mjs
  */
 
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -47,6 +47,31 @@ if (!existsSync(BACKUP)) {
 }
 
 const blob = await readFile(BACKUP, 'utf8');
+
+/**
+ * These stories were never published in English. The translation pipeline that
+ * ran over the whole desk translated them anyway, and its results are still in
+ * .tmp — one JSON object per post, with an English title and body. That is the
+ * only English these stories have, so it is collected here alongside the Korean
+ * and travels with it into the committed file.
+ */
+const englishByslug = new Map();
+for (const folder of await readdir(path.join(appRoot, '.tmp'), { withFileTypes: true })) {
+  if (!folder.isDirectory() || !folder.name.startsWith('translate-results')) continue;
+  for (const shard of await readdir(path.join(appRoot, '.tmp', folder.name))) {
+    if (!shard.endsWith('.jsonl')) continue;
+    const lines = await readFile(path.join(appRoot, '.tmp', folder.name, shard), 'utf8');
+    for (const line of lines.split('\n')) {
+      if (!line.trim()) continue;
+      try {
+        const record = JSON.parse(line);
+        if (record?.slug && record.contentEn) {
+          englishByslug.set(record.slug, { title: record.titleEn ?? null, text: record.contentEn });
+        }
+      } catch { /* 잘린 줄 */ }
+    }
+  }
+}
 
 const deskText = async (slug) => {
   const file = path.join(appRoot, 'public/desk-posts', `${slug}.md`);
@@ -97,6 +122,7 @@ for (const record of blob.split('\n    {\n')) {
     from: slug in ON_THE_DESK ? 'desk' : 'naver-backup',
     externalUrl: readField(record, 'externalUrl'),
     text: text.replace(/ /g, ' ').replace(/\r\n?/g, '\n').replace(/[ \t]+$/gm, '').trim(),
+    english: englishByslug.get(slug) ?? null,
   });
 }
 

@@ -7,11 +7,16 @@ type Edition = { id: string; label: string; period: string; representativeCaptur
 
 const specDir = path.dirname(fileURLToPath(import.meta.url));
 const archiveRoot = path.resolve(specDir, '../../public/fstory-homepage');
-// One entry per design generation. Every capture that shares a design is merged
-// into it, so crawling the editions covers the whole published archive.
-const editions: Edition[] = JSON.parse(
-    fs.readFileSync(path.join(archiveRoot, 'snapshots.json'), 'utf8'),
-).editions;
+// 공개되는 것은 통합본 하나다. 여섯 판본은 복원을 검증하던 단위였고, 그 일이
+// 끝난 뒤 원본 캡처 옆 비공개 보관소로 옮겼다. 통합본이 그 전부를 담고 있으므로
+// 여기를 훑는 것이 곧 공개된 아카이브 전체를 훑는 것이다.
+const manifest = JSON.parse(fs.readFileSync(path.join(archiveRoot, 'snapshots.json'), 'utf8'));
+const editions: Edition[] = [{
+    id: manifest.mergedEdition.id,
+    label: manifest.mergedEdition.label,
+    period: manifest.mergedEdition.period,
+    representativeCapture: manifest.mergedEdition.directory,
+}];
 
 const CRAWL_TIMEOUT_MS = 900000;
 const PAGE_EXTENSIONS = /\.(html?|php|cgi)$/i;
@@ -210,7 +215,7 @@ test.describe('restored fstory.net captures', () => {
     });
 
     test('the Cyworld hand-off shows the real address instead of a dead link', async ({ page }) => {
-        await page.goto('/fstory-homepage/20030726202839/cyworld-unrestored.html');
+        await page.goto(`/fstory-homepage/${manifest.mergedEdition.directory}/cyworld-unrestored.html`);
         await expect(page.locator('.address')).toHaveText('http://www.cyworld.com/fstory');
         const picture = page.locator('.content img');
         await expect(picture).toBeVisible();

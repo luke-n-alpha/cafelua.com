@@ -675,7 +675,7 @@ const AtelierPage: React.FC = () => {
                             }}
                         >
                             <div className="win98-icon-image" aria-hidden="true" />
-                            <div className="win98-icon-label">{t('library.folder2002')}</div>
+                            <div className="win98-icon-label">{t('library.folderVer2')}</div>
                         </button>
                     </div>
 
@@ -730,44 +730,6 @@ const AtelierPage: React.FC = () => {
                                     >
                                         ◀ {t('library.ieBack')}
                                     </button>
-                                    {isFstorySnapshot(ieTarget) && (
-                                        <label className="ie-snapshot-picker">
-                                            <span>{t('library.restorePoint')}</span>
-                                            <select
-                                                aria-label={t('library.restorePoint')}
-                                                value={TARGET_TO_CURATED[ieTarget] ?? ieTarget}
-                                                onChange={(event) => {
-                                                    const chosen = event.target.value;
-                                                    setIeTarget((CURATED_TARGET[chosen] ?? chosen) as IeTarget);
-                                                }}
-                                            >
-                                                <optgroup label="루크가 보관해 온 판">
-                                                    {FSTORY_CURATED_EDITIONS.map((edition) => (
-                                                        <option key={edition.id} value={edition.id}>
-                                                            {edition.label} · {edition.period}
-                                                        </option>
-                                                    ))}
-                                                </optgroup>
-                                                <optgroup label="fstory.net">
-                                                    <option value={FSTORY_MERGED_EDITION.directory}>
-                                                        {FSTORY_MERGED_EDITION.label} · {FSTORY_MERGED_EDITION.period}
-                                                    </option>
-                                                    {FSTORY_EDITIONS.map((edition) => (
-                                                        <option key={edition.id} value={edition.directory}>
-                                                            {edition.label} · {edition.period}
-                                                        </option>
-                                                    ))}
-                                                </optgroup>
-                                                <optgroup label="fstory.net 이전 주소">
-                                                    {FSTORY_ANNEXES.map((annex) => (
-                                                        <option key={annex.id} value={`annex:${annex.id}`}>
-                                                            {annex.label} · {annex.period}
-                                                        </option>
-                                                    ))}
-                                                </optgroup>
-                                            </select>
-                                        </label>
-                                    )}
                                     <div className="ie-address-label">Address</div>
                                     <input
                                         className="ie-address"

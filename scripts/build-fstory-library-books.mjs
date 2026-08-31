@@ -62,9 +62,12 @@ const writingOf = (html) => {
     const body = /<body\b[^>]*>([\s\S]*?)(?:<\/body>|$)/i.exec(withoutCode);
     inner = (body ? body[1] : withoutCode).replace(/<br\s*\/?>/gi, '\n').replace(/<\/(p|div|tr)>/gi, '\n');
   }
+  // Trailing spaces are kept here on purpose. A hand-wrapped line that ends on
+  // a word boundary ends with a space, and that space is the only record that
+  // the two lines are separate words. It is trimmed after the wrapping is
+  // undone, not before.
   return unescapeText(inner.replace(/<[^>]*>/g, ''))
     .replace(/\r\n?/g, '\n')
-    .replace(/[ \t]+$/gm, '')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 };
@@ -93,6 +96,33 @@ const splitHeading = (writing) => {
     break;
   }
   return { title, body: lines.slice(at).join('\n').trim() };
+};
+
+/**
+ * The short pieces are saved under the Korean titles Luke gave them, written
+ * into the filename as percent-escaped EUC-KR bytes: p%bc%bc%bb%f3%c0%ba.html
+ * is p세상은.html. For most of them the filename is the only place the title
+ * survives, so it has to be read back the way it was written — decoding it as
+ * UTF-8, or not at all, leaves a heading of hex.
+ */
+const titleFromFilename = (name) => {
+  // Not decodeURIComponent: these escapes are EUC-KR bytes, not UTF-8, and
+  // asking for a UTF-8 decode of them throws.
+  const stem = name.replace(/\.html?$/i, '').replace(/^p/, '');
+  if (!/%[0-9a-f]{2}/i.test(stem)) return stem.replace(/_/g, ' ').trim();
+  const bytes = [];
+  for (let at = 0; at < stem.length; at += 1) {
+    const escaped = stem[at] === '%' && /^[0-9a-f]{2}$/i.test(stem.slice(at + 1, at + 3));
+    if (escaped) { bytes.push(parseInt(stem.slice(at + 1, at + 3), 16)); at += 2; continue; }
+    const code = stem.charCodeAt(at);
+    if (code > 0x7f) return stem.replace(/_/g, ' ').trim();
+    bytes.push(code);
+  }
+  try {
+    return new TextDecoder('euc-kr', { fatal: true }).decode(Uint8Array.from(bytes)).replace(/_/g, ' ').trim();
+  } catch {
+    return stem.replace(/_/g, ' ').trim();
+  }
 };
 
 const readPage = async (relative) => {
@@ -125,10 +155,97 @@ const indexLinks = async (relative) => {
 
 // -------------------------------------------------------------------- 책 세 권
 
+/**
+ * These were typed for a fixed-width web page, where a line ends where Luke
+ * pressed return. Markdown joins such lines into one paragraph, which runs a
+ * poem and a page of dialogue together into a single block. Every line break
+ * he typed is kept as a line break; the blank lines between paragraphs are
+ * left alone.
+ */
+/**
+ * These are plain text, not Markdown, and the reader renders Markdown. Left
+ * alone, a row of dashes under a line turns that line into a heading — which is
+ * what made a page of 작은 마녀 윈디 come out big and bold — a dialogue dash
+ * becomes a bullet, a date at the start of a line becomes a numbered list, and
+ * an indented verse becomes a code block. So every character that Markdown
+ * would read as an instruction is escaped back into the character it is.
+ *
+ * Indentation is the one that cannot be escaped: four leading spaces mean a
+ * code block no matter what follows. Those spaces become non-breaking ones, so
+ * the line still sits where Luke put it.
+ */
+const asPlainText = (body) => body
+  .split('\n')
+  .map((line) => {
+    let text = line
+      .replace(/\\/g, '\\\\')
+      .replace(/([*_`~|[\]])/g, '\\$1');
+    // Line openers: heading, quote, bullet, rule, numbered list.
+    text = text
+      .replace(/^(\s{0,3})([#>+-])/, '$1\\$2')
+      .replace(/^(\s{0,3})(=+)\s*$/, '$1\\$2')
+      .replace(/^(\s{0,3}\d{1,9})([.)])(\s)/, '$1\\$2$3');
+    // Four spaces or a tab at the start is a code block; keep the look, drop
+    // the meaning.
+    return text.replace(/^[ \t]+/, (indent) => '\u00a0'.repeat(indent.replace(/\t/g, '    ').length));
+  })
+  .join('\n');
+
+const keepLineBreaks = (body) => asPlainText(body.replace(/[ \t]+$/gm, ''))
+  .replace(/(?<!\n)\n(?!\n)/g, '  \n');
+
+/**
+ * Prose from these pages was typed into a fixed-width column and wrapped by
+ * hand: a line ends at the 43rd or 44th character whether or not the sentence
+ * or even the word does. Kept as line breaks, a paragraph reads as a ladder.
+ *
+ * The wrap is found rather than assumed. Line lengths in a hand-wrapped text
+ * pile up at one number — 43 here, 44 there — so the column is the length that
+ * the most lines reach, and a line reaching it was cut by the column rather
+ * than by the writer. Those lines are joined to the next with nothing between
+ * them, because the cut fell mid-word. Every shorter line ends where Luke
+ * meant it to and is left alone.
+ *
+ * Poems are not put through this. There the short line is the point.
+ */
+const unwrapColumns = (body) => {
+  const lines = body.split('\n');
+  const lengths = lines.filter((line) => line.trim()).map((line) => line.length);
+  if (lengths.length < 20) return body;
+
+  const tally = new Map();
+  for (const length of lengths) {
+    if (length >= 28) tally.set(length, (tally.get(length) ?? 0) + 1);
+  }
+  if (!tally.size) return body;
+  const near = (length) => (tally.get(length) ?? 0) + (tally.get(length - 1) ?? 0) + (tally.get(length - 2) ?? 0);
+  const column = [...tally.keys()].reduce((best, length) => (near(length) > near(best) ? length : best));
+  // Too few lines reaching it means the text was not wrapped to a column at
+  // all — the blog postings break at the ends of sentences instead.
+  if (near(column) / lengths.length < 0.10) return body;
+
+  const out = [];
+  // Whether the line just read — not the joined result — reached the column.
+  // Measuring the accumulated line instead stops the joining after one step,
+  // and a paragraph of five wrapped lines comes out as two.
+  let carried = false;
+  for (const line of lines) {
+    const reaches = line.length >= column - 2 && line.length <= column + 2;
+    if (carried && out.length && line.trim()) {
+      out[out.length - 1] += line;
+      carried = reaches;
+      continue;
+    }
+    out.push(line);
+    carried = reaches;
+  }
+  return out.map((line) => line.replace(/[ \t]+$/, '')).join('\n');
+};
+
 const chapterOf = (title, body, source) => ({
   title,
   path: `${source.replace(/[/.]/g, '-')}.md`,
-  markdown: `# ${title}\n\n${body}\n`,
+  markdown: `# ${title}\n\n${keepLineBreaks(unwrapColumns(body))}\n`,
 });
 
 /** 작은 마녀 윈디 — 23화가 순서대로 남아 있다. */
@@ -178,6 +295,56 @@ const looseTitle = (title) => title
   .replace(/[[\]()（）?？!！.,·:：\s]/g, '')
   .replace(/fantasy/i, '판타지')
   .toLowerCase();
+
+const TRANSLATION_REVIEW = path.join(appRoot, 'scripts/fstory-translation-review.json');
+
+/**
+ * 영어 판본. 한국어와 같은 순서, 같은 연도 표기.
+ *
+ * Only the translations that pass scripts/review-short-story-translations.mjs
+ * go in. Four of the twenty do not: two leave paragraphs in Korean and two are
+ * summaries wearing a translation's ending. Publishing those under an English
+ * title would say the story is here in English when it is not, so they wait for
+ * a translation that is one.
+ */
+const buildShortStoriesEn = async () => {
+  const recovered = existsSync(SHORT_STORY_FILE)
+    ? JSON.parse(await readFile(SHORT_STORY_FILE, 'utf8')).stories
+    : [];
+  const review = existsSync(TRANSLATION_REVIEW)
+    ? new Map(JSON.parse(await readFile(TRANSLATION_REVIEW, 'utf8')).stories.map((item) => [item.title, item]))
+    : new Map();
+
+  const chapters = [];
+  const held = [];
+  for (const story of recovered) {
+    if (!story.english?.text?.trim()) continue;
+    if (review.get(story.title)?.verdict === 'rejected') { held.push(story); continue; }
+    // The pipeline kept the Korean title's parenthetical year in the English
+    // one too, and repeated the blog's category words after it. The year is
+    // already the chapter's, so the title is trimmed back to the story's name.
+    const named = (story.english.title ?? story.title)
+      .replace(/\s*\((?:19|20)\d{2}[^)]*\)\s*/g, ' ')
+      .replace(/\s*(?:Short Story|Creative Work|Creative Writing)\s*\/?\s*/gi, ' ')
+      .replace(/\s{2,}/g, ' ')
+      .replace(/[\s/·-]+$/, '')
+      .trim() || story.title;
+    const heading = story.year ? `${named} (${story.year})` : named;
+    chapters.push(chapterOf(heading, story.english.text, `${story.slug}-en`));
+  }
+
+  // Say what is not here, rather than let a reader wonder why the Korean
+  // edition has twenty stories and this one has sixteen.
+  if (held.length) {
+    const list = held.map((story) => `- ${story.title} (${story.year})`).join('\n');
+    chapters.push({
+      title: 'Not yet in English',
+      path: 'pending.md',
+      markdown: `# Not yet in English\n\nFour of these stories are in the Korean edition but not here. The translations that exist for them are not good enough to publish — two leave paragraphs untranslated, and two are summaries rather than translations. They will be added when they have been translated properly.\n\n${list}\n`,
+    });
+  }
+  return chapters;
+};
 
 const buildShortStories = async () => {
   const recovered = existsSync(SHORT_STORY_FILE)
@@ -288,18 +455,17 @@ const buildThoughtNotes = async () => {
       const { title, body } = splitHeading(writing);
       // The filename is the title Luke gave it — p세상은.html is 세상은 — and it
       // is the only place the title survives for most of these.
-      const named = title
-        ?? decodeURIComponent(path.basename(href, path.extname(href))).replace(/^p/, '').replace(/_/g, ' ').trim();
+      const named = title ?? titleFromFilename(path.basename(at));
       const writingBody = body || writing;
       if (!writingBody) continue;
-      parts.push(`## ${named}\n\n${writingBody}`);
+      parts.push(`## ${named}\n\n${keepLineBreaks(writingBody)}`);
     }
     if (!parts.length) continue;
     const title = section.note ? `${section.title} — ${section.note}` : section.title;
     chapters.push({
       title,
       path: `poem-${section.title.replace(/[^0-9A-Za-z가-힣]+/g, '-')}.md`,
-      markdown: `# ${title}\n\n${parts.join('\n\n***\n\n')}\n`,
+      markdown: `# ${title}\n\n${parts.join('\n\n')}\n`,
     });
   }
   return chapters;
@@ -314,7 +480,7 @@ const buildThoughtNotes = async () => {
  * falls back to its plain coloured cover.
  */
 const COVER_SOURCES = {
-  'fstory-thought-notes': '/var/home/luke/다운로드/ChatGPT Image 2026년 8월 31일 오후 07_36_37.png',
+  'fstory-thought-notes': '/var/home/luke/다운로드/945f6913-ed3b-4ed7-84cd-01a0462e2dc0.png',
   'fstory-windy': '/var/home/luke/다운로드/ChatGPT Image 2026년 8월 31일 오후 08_37_46.png',
   'fstory-windy-en': '/var/home/luke/다운로드/ChatGPT Image 2026년 8월 31일 오후 08_39_49.png',
   'fstory-short-stories': '/var/home/luke/다운로드/1c332f26-a886-4d1a-b65a-783ae42396fd.png',
@@ -323,13 +489,18 @@ const COVER_SOURCES = {
 const placeCover = async (slug) => {
   const target = path.join(BOOK_ASSETS, slug, 'assets');
   const webp = path.join(target, 'cover.webp');
-  if (existsSync(webp)) return 'assets/cover.webp';
   const source = COVER_SOURCES[slug];
-  if (!source || !existsSync(source)) return null;
+  // The named source is the truth. When Luke replaces a cover the file here has
+  // to change with it, so an existing cover.webp is only kept when there is no
+  // source to make it from.
+  if (!source || !existsSync(source)) return existsSync(webp) ? 'assets/cover.webp' : null;
   if (check) return 'assets/cover.webp';
   await mkdir(target, { recursive: true });
   const { default: sharp } = await import('sharp');
-  await sharp(source).webp({ quality: 86, effort: 6 }).toFile(webp);
+  // Some of these arrive as a picture of a book on a plain ground. The ground
+  // is not part of the cover, so it is trimmed off; `trim` is a no-op on an
+  // image whose edges are already the artwork.
+  await sharp(source).trim({ threshold: 12 }).webp({ quality: 86, effort: 6 }).toFile(webp);
   return 'assets/cover.webp';
 };
 
@@ -362,6 +533,13 @@ const BOOKS = [
     coverTone: 'plum',
     title: '숲속얘기의 단편소설집',
     subtitle: '1993 ~ 2015 · 단편소설',
+    english: {
+      slug: 'fstory-short-stories-en',
+      title: "Forest Story's Collected Short Fiction",
+      subtitle: '1993 – 2015 · Short fiction',
+      summary: "숲속얘기 — Forest Story — was the pen name Luke wrote under on Nownuri and Chollian. This collects the short fiction he left under that name, from the first piece written at fifteen to one written twenty years later. These stories had never appeared in English before.",
+      build: buildShortStoriesEn,
+    },
     summary: '숲속얘기는 루크가 나우누리와 천리안 시절에 쓰던 필명입니다. 중학교 3학년에 쓴 첫 이야기부터 스무 해 뒤의 것까지, 그 이름으로 남긴 단편들을 한 권으로 모았습니다. 유리구슬 하나에 담긴 이야기, 소행성 B612, 22세기에서 걸려온 인사, 그리고 2030년의 재귀적 접촉. 쓴 순서대로 실었고, 웹페이지가 한 편을 두 쪽으로 나눠 싣던 것은 다시 한 편으로 붙였습니다.',
     build: buildShortStories,
   },
@@ -398,18 +576,32 @@ for (const definition of BOOKS) {
   const editions = [];
   if (definition.english) {
     const englishCover = await placeCover(definition.english.slug);
+    const englishChapters = definition.english.build ? await definition.english.build() : [];
     editions.push({
       lang: 'en',
       sourceSlug: definition.english.slug,
       title: definition.english.title,
       subtitle: definition.english.subtitle,
       summary: definition.english.summary,
-      status: 'draft',
+      status: englishChapters.length ? 'published' : 'draft',
       biblio: { author: AUTHOR, date: definition.subtitle.split(' · ')[0], license: 'CC BY-NC-SA 4.0' },
       links: { wikidocs: null, leanpub: null },
-      chapters: englishCover
-        ? [{ title: 'Cover', path: 'cover.md', markdown: `# ${definition.english.title}\n\n![${definition.english.title}](${englishCover})\n` }]
-        : [],
+      chapters: [
+        ...(englishCover || englishChapters.length
+          ? [{
+            title: 'Cover',
+            path: 'cover.md',
+            markdown: [
+              `# ${definition.english.title}`,
+              englishCover ? `\n![${definition.english.title}](${englishCover})` : null,
+              `\n${definition.english.summary}`,
+              `\nWritten by ${AUTHOR}. ${definition.english.subtitle}.`,
+              '\nRecovered from pages archived at fstory.net. The Korean is as it was written; the English is a translation made for this edition.',
+            ].filter(Boolean).join('\n') + '\n',
+          }]
+          : []),
+        ...englishChapters,
+      ],
     });
   }
 

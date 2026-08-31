@@ -73,7 +73,8 @@ export type FstoryAnnex = {
     id: string;
     label: string;
     period: string;
-    snapshot: FstoryCaptureId;
+    // 부속 판본은 통합본 안에서 열린다. 캡처 판본은 공개하지 않는다.
+    snapshot: FstoryCaptureId | 'ver2-merged';
     entry: string;
     summary: string;
 };
@@ -85,7 +86,7 @@ export const FSTORY_ANNEXES: FstoryAnnex[] = [
         "id": "netian",
         "label": "네티앙 시절",
         "period": "1999-03 ~ 2001",
-        "snapshot": "20011202212712",
+        "snapshot": "ver2-merged",
         "entry": "netian/index__e97a8fd3.html",
         "summary": "fstory.net 도메인을 쓰기 전, my.netian.com/~fstory 에 있던 홈페이지. 첫 화면에 \"1999.3.17부터 방문자\"와 \"100% 메모장 노가다\" 라고 적혀 있다. L1 클래식 계보와 같은 title1~4.gif 이미지맵 메뉴를 쓴다."
     },
@@ -93,7 +94,7 @@ export const FSTORY_ANNEXES: FstoryAnnex[] = [
         "id": "chollian-guestbook",
         "label": "천리안 방명록",
         "period": "2001 ~ 2002",
-        "snapshot": "20021128181318",
+        "snapshot": "ver2-merged",
         "entry": "chollian/cgi/pury/purybbs.html",
         "summary": "cgi.chollian.net/~foreststory 에 있던 PURY BBS 방명록. 목록 화면에 글 본문이 그대로 실리는 형식이라 오간 글과 답글이 남아 있다. 캡처마다 다른 쪽이 잡혀서 한 캡처만으로는 일부만 보이므로, 모든 캡처의 글을 번호로 합쳐 한 페이지로 다시 세웠다."
     }
