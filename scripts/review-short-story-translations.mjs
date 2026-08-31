@@ -82,8 +82,24 @@ const measured = stories.map((story) => ({ story, numbers: measure(story) }));
 
 // The expected growth is taken from the stories themselves rather than fixed
 // here, so it stays true if the translations are ever redone.
-const clean = measured.filter((item) => item.numbers.leftInKorean === 0 && item.numbers.growth);
-const typical = clean.reduce((sum, item) => sum + item.numbers.growth, 0) / (clean.length || 1);
+//
+// It is taken separately for each source. A translation done by hand runs
+// longer than the pipeline's, consistently, and mixing the two lifts the
+// baseline until sound pipeline translations start failing against it — which
+// is what happened to 메리크리스마스, a complete and faithful translation that
+// the shared baseline called a summary. A translation is judged against others
+// made the same way.
+const baselineFor = (by) => {
+  const clean = measured.filter((item) =>
+    (item.story.english?.by ?? 'pipeline') === by
+    && item.numbers.leftInKorean === 0
+    && item.numbers.growth);
+  if (!clean.length) return null;
+  return clean.reduce((sum, item) => sum + item.numbers.growth, 0) / clean.length;
+};
+const baselines = new Map([['pipeline', baselineFor('pipeline')], ['hand', baselineFor('hand')]]);
+const overall = measured.filter((item) => item.numbers.growth);
+const typical = overall.reduce((sum, item) => sum + item.numbers.growth, 0) / (overall.length || 1);
 
 const reviewed = measured.map(({ story, numbers }) => {
   const faults = [];
@@ -91,12 +107,15 @@ const reviewed = measured.map(({ story, numbers }) => {
   if (numbers.leftInKorean > 20) {
     faults.push(`${numbers.leftInKorean.toLocaleString('ko-KR')}자가 한국어인 채로 남았다`);
   }
-  if (numbers.growth && numbers.growth < typical * SHORT_AT) {
-    faults.push(`분량이 ${numbers.growth}배로, 통상 ${typical.toFixed(2)}배에 크게 못 미친다 — 요약되었을 가능성`);
+  const by = story.english?.by ?? 'pipeline';
+  const expected = baselines.get(by) ?? typical;
+  if (numbers.growth && numbers.growth < expected * SHORT_AT) {
+    faults.push(`분량이 ${numbers.growth}배로, ${by === 'hand' ? '손번역' : '기계번역'} 통상 ${expected.toFixed(2)}배에 크게 못 미친다 — 요약되었을 가능성`);
   }
   return {
     title: story.title,
     year: story.year,
+    by,
     verdict: faults.length ? 'rejected' : 'passed',
     faults,
     ...numbers,
@@ -112,7 +131,9 @@ await writeFile(OUT_FILE, `${JSON.stringify({
 }, null, 1)}\n`, 'utf8');
 
 console.log(`영문 ${reviewed.length}편 검토: 통과 ${reviewed.length - rejected.length}, 불합격 ${rejected.length}`);
-console.log(`  통상 분량비 ${typical.toFixed(2)}배`);
+for (const [by, value] of baselines) {
+  if (value) console.log(`  ${by === 'hand' ? '손번역' : '기계번역'} 통상 분량비 ${value.toFixed(2)}배`);
+}
 for (const item of rejected) {
   console.log(`  ✗ ${item.title} (${item.year}) — ${item.faults.join('; ')}`);
 }

@@ -1,11 +1,12 @@
 {
  "reviewed": "2026-08-31",
- "typicalGrowth": 1.83,
+ "typicalGrowth": 1.85,
  "note": "통과한 것만 서재의 영어 판본에 실린다. 불합격분은 다시 번역해야 한다.",
  "stories": [
   {
    "title": "아이들의 작은 이야기",
    "year": "1993",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 5680,
@@ -18,6 +19,7 @@
   {
    "title": "꿈을 실은 비행기",
    "year": "1995",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 5150,
@@ -30,6 +32,7 @@
   {
    "title": "무제 : SF",
    "year": "1995",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 18790,
@@ -42,6 +45,7 @@
   {
    "title": "유리구슬 이야기",
    "year": "1995",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 8151,
@@ -54,6 +58,7 @@
   {
    "title": "전쟁의 아름다운 이야기",
    "year": "1995",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 8489,
@@ -66,6 +71,7 @@
   {
    "title": "푸른하늘을 위하여",
    "year": "1995",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 9563,
@@ -78,6 +84,7 @@
   {
    "title": "노래하는 나무",
    "year": "1996",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 19297,
@@ -90,6 +97,7 @@
   {
    "title": "컬트 판타지",
    "year": "1996",
+   "by": "hand",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 6760,
@@ -102,6 +110,7 @@
   {
    "title": "회상",
    "year": "1997",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 4409,
@@ -114,6 +123,7 @@
   {
    "title": "Illusion (partII)",
    "year": "1997",
+   "by": "hand",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 13469,
@@ -126,6 +136,7 @@
   {
    "title": "소행성 B612",
    "year": "1998",
+   "by": "hand",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 16283,
@@ -138,6 +149,7 @@
   {
    "title": "Illusion (part I)",
    "year": "1998",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 20610,
@@ -150,6 +162,7 @@
   {
    "title": "안녕하세요. 22세기입니다.",
    "year": "2000",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 15717,
@@ -162,20 +175,20 @@
   {
    "title": "어느쪽 사랑을 고르시겠습니까 ?",
    "year": "2000",
-   "verdict": "rejected",
-   "faults": [
-    "분량이 0.68배로, 통상 1.83배에 크게 못 미친다 — 요약되었을 가능성"
-   ],
-   "koreanLetters": 18086,
-   "englishLetters": 12387,
-   "growth": 0.68,
-   "leftInKorean": 4,
-   "koreanLines": 659,
-   "englishLines": 149
+   "by": "hand",
+   "verdict": "passed",
+   "faults": [],
+   "koreanLetters": 18128,
+   "englishLetters": 38365,
+   "growth": 2.12,
+   "leftInKorean": 0,
+   "koreanLines": 647,
+   "englishLines": 664
   },
   {
    "title": "별을 줍는 소녀",
    "year": "2002",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 10876,
@@ -188,6 +201,7 @@
   {
    "title": "검은 공간으로",
    "year": "2003",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 1751,
@@ -200,10 +214,9 @@
   {
    "title": "메리크리스마스",
    "year": "2003",
-   "verdict": "rejected",
-   "faults": [
-    "분량이 1.37배로, 통상 1.83배에 크게 못 미친다 — 요약되었을 가능성"
-   ],
+   "by": "pipeline",
+   "verdict": "passed",
+   "faults": [],
    "koreanLetters": 12381,
    "englishLetters": 16944,
    "growth": 1.37,
@@ -214,6 +227,7 @@
   {
    "title": "행복한 사자",
    "year": "2003",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 1979,
@@ -226,6 +240,7 @@
   {
    "title": "사기인형",
    "year": "2004",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 1350,
@@ -238,6 +253,7 @@
   {
    "title": "2030년 Recursive contact",
    "year": "2015",
+   "by": "pipeline",
    "verdict": "passed",
    "faults": [],
    "koreanLetters": 2383,

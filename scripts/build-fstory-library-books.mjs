@@ -556,7 +556,7 @@ const BOOKS = [
       slug: 'fstory-short-stories-en',
       title: "Forest Story's Collected Short Fiction",
       subtitle: '1993 – 2015 · Short fiction',
-      summary: "숲속얘기 — Forest Story — was the pen name Luke wrote under on Nownuri and Chollian. This collects the short fiction he left under that name, from the first piece written at fifteen to one written twenty years later. These stories had never appeared in English before.",
+      summary: "숲속얘기 — Forest Story — was the pen name Luke wrote under on Nownuri and Chollian. This collects the short fiction he left under that name, from the first piece written at fifteen to one written twenty years later. These stories had never appeared in English before. Twenty of the twenty-one are here; 어른들을 위한 동화 survives only on the 2002 website and has not been translated.",
       build: buildShortStoriesEn,
     },
     summary: '숲속얘기는 루크가 나우누리와 천리안 시절에 쓰던 필명입니다. 중학교 3학년에 쓴 첫 이야기부터 스무 해 뒤의 것까지, 그 이름으로 남긴 단편들을 한 권으로 모았습니다. 유리구슬 하나에 담긴 이야기, 소행성 B612, 22세기에서 걸려온 인사, 그리고 2030년의 재귀적 접촉. 쓴 순서대로 실었고, 웹페이지가 한 편을 두 쪽으로 나눠 싣던 것은 다시 한 편으로 붙였습니다.',
