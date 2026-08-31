@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T04:35:40.494Z",
+  "generatedAt": "2026-08-31T05:22:24.118Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -31,7 +31,7 @@
     }
   ],
   "totals": {
-    "publishedFiles": 5994,
+    "publishedFiles": 6004,
     "restoredFromArchive": 293,
     "aliasResolved": 1287,
     "caseResolved": 0,
@@ -1027,10 +1027,25 @@
       "timestamp": "ver2-merged",
       "date": "2001-09 ~ 2003-07",
       "lineage": "M2",
-      "publishedFiles": 1216,
+      "publishedFiles": 1226,
       "menuNotes": [
-        "2001년 판의 인공지능 항목을 되살렸다",
-        "신기술 항목을 그 코너의 살아 있는 첫 화면으로 이었다"
+        "일기 → diary/frame.html",
+        "프로필 → profile/profile.html",
+        "겔러리 → gallery/gallery.html",
+        "앨범 → album/album.html",
+        "축전 → gallery/present/present.html",
+        "여행기·관람기 → album/history.html",
+        "내 글 → myletter/myletter.html",
+        "공부 → study/study.html",
+        "인공지능 → ai/ai.html",
+        "신기술 → tech/menu.html",
+        "WinCE → insidece/wince.html",
+        "한국 에니메이션 음악 → kani/kani.html",
+        "최신 애니 감상록 → media/media.html",
+        "숲속얘기의 찻집 → teatime/teatime.html",
+        "방명록 → chollian/cgi/pury/purybbs.html",
+        "링크 → link/index.html",
+        "첫 화면 → diary/frame.html"
       ],
       "mergedFrom": [
         {

@@ -1033,42 +1033,112 @@ const mergedMenuNotes = [];
   }
   await cp(path.join(chrome, 'img'), path.join(merged, 'img'), { recursive: true, force: true, preserveTimestamps: true });
 
-  // The side menu changed between captures, dropping entries as it gained
-  // others. A merged edition should carry every entry that still leads
-  // somewhere, so the two menus are combined.
-  const menuPath = path.join(merged, 'menu.html');
-  let menu = await readFile(menuPath, 'utf8');
-
-  // The 2001 menu had an 인공지능 button that the 2002 menu dropped. The corner
-  // it opened is fully restored — ai/ai.html and nine articles under it — so
-  // without this entry the whole of it is unreachable from the merged edition.
-  const aiEntry = `<td height=30>
- <a href="ai/ai.html" target="screen">
- <img src="img/ai_n.gif" border=0 alt="인공지능" id="ai" onmouseover="ai.src='img/ai_y.gif'" onmouseout="ai.src='img/ai_n.gif'">
- </a> <tr>
- 
- `;
-  // Whitespace inside the cell varies between captures, so match the cell that
-  // opens the guestbook rather than an exact string.
-  const guestbookCell = /<td height=30>\s*<a href="chollian\/cgi\/pury\/purybbs\.html"/.exec(menu);
-  if (!menu.includes('ai/ai.html') && guestbookCell) {
-    menu = menu.slice(0, guestbookCell.index) + aiEntry + menu.slice(guestbookCell.index);
-    mergedMenuNotes.push('2001년 판의 인공지능 항목을 되살렸다');
+  // Buttons drawn for corners that never had one in this menu. The rendering
+  // capture cannot supply them because its menu never carried those entries.
+  const rebuiltButtons = path.join(reconstructedRoot, 'img');
+  if (existsSync(rebuiltButtons)) {
+    for (const entry of await readdir(rebuiltButtons, { withFileTypes: true })) {
+      if (!entry.isFile()) continue;
+      const target = path.join(merged, 'img', entry.name);
+      if (existsSync(target)) continue;
+      await cp(path.join(rebuiltButtons, entry.name), target, { force: true, preserveTimestamps: true });
+    }
   }
 
-  // `tech/frame.html` was the frameset that held this corner; it was never
-  // archived, but the menu it framed survives and reaches every page under it,
-  // including the AI writing. Point the button at the corner's real entrance
-  // rather than leaving it dead.
-  const techEntrance = 'tech/menu.html';
-  if (existsSync(path.join(merged, techEntrance)) && menu.includes('./tech/frame.html')) {
-    menu = menu.replace(
-      /<a href="#" onclick="alert\([^"]*\);return false;" data-unrestored-target="\.\/tech\/frame\.html"/,
-      `<a href="${techEntrance}" data-restored-entrance="./tech/frame.html"`,
-    );
-    mergedMenuNotes.push('신기술 항목을 그 코너의 살아 있는 첫 화면으로 이었다');
+  // The side menu is rewritten rather than patched. The original hard-codes
+  // `rowspan=13` against a twelve-entry list and opens rows with a bare <tr>
+  // after each <td>, so adding one entry collapses the whole column. Luke wrote
+  // that markup by hand and has said it need not be preserved literally, so the
+  // merged edition gets the same menu in markup that holds its shape.
+  //
+  // Every entry that still leads somewhere is here, gathered from all three
+  // captures: the 2001 menu's 인공지능, the 2002 menu's 찻집, and the corners the
+  // 5-pane redesign carried in its top bar. Entries whose target is genuinely
+  // gone keep their place and say so when clicked, the way they do elsewhere.
+  // Where an entry points is chosen per corner, not per capture. The 2002 menu
+  // aimed 일기 at diary/diary.html, which by then was a Zeroboard frame and is
+  // therefore empty; the 2001 menu aimed it at diary/frame.html, which still
+  // holds the actual diary — "2002_02_16 요즘 중고부품들을 모아 제 컴퓨터를 만드느라
+  // 좀 바쁩니다" and the memo pane beside it.
+  const MENU = [
+    ['dia', '일기', 'diary/frame.html'],
+    ['pro', '프로필', 'profile/profile.html'],
+    ['gal', '겔러리', 'gallery/gallery.html'],
+    ['album', '앨범', 'album/album.html'],
+    ['present', '축전', 'gallery/present/present.html'],
+    ['trip', '여행기·관람기', 'album/history.html'],
+    ['let', '내 글', 'myletter/myletter.html'],
+    ['stu', '공부', 'study/study.html'],
+    ['ai', '인공지능', 'ai/ai.html'],
+    ['tech', '신기술', 'tech/menu.html'],
+    ['wince', 'WinCE', 'insidece/wince.html'],
+    ['kor', '한국 에니메이션 음악', 'kani/kani.html'],
+    ['media', '최신 애니 감상록', 'media/media.html'],
+    ['tea', '숲속얘기의 찻집', 'teatime/teatime.html'],
+    ['gue', '방명록', 'chollian/cgi/pury/purybbs.html'],
+    ['lin', '링크', 'link/index.html'],
+    ['chr', '크리스챤', null, 'http://fstory.com.ne.kr/christian/christian.html'],
+    ['mybbs', '내 게시판', null, '/zero/zboard.php?id=Mybbs'],
+  ];
+
+  const rows = [];
+  for (const [stem, label, target, goneAddress] of MENU) {
+    const button = `img/${stem}_n.gif`;
+    const hover = `img/${stem}_y.gif`;
+    if (!existsSync(path.join(merged, button))) continue;
+    const reachable = target && existsSync(path.join(merged, target));
+    if (!reachable && !goneAddress) continue;
+    const anchor = reachable
+      ? `<a href="${target}" target="screen">`
+      : `<a href="#" onclick="alert('복원되지 않은 자료입니다.\\n\\n${goneAddress}\\n\\n당시 인터넷 아카이브가 저장하지 않았거나, 서버가 그때그때 만들어 보여 주던 화면입니다.');return false;" data-unrestored-target="${goneAddress}">`;
+    rows.push(`      <tr><td height="30" align="center">
+        ${anchor}<img src="${button}" width="84" height="28" border="0" alt="${label}"
+          onmouseover="this.src='${hover}'" onmouseout="this.src='${button}'"></a>
+      </td></tr>`);
+    if (reachable) mergedMenuNotes.push(`${label} → ${target}`);
   }
-  await writeFile(menuPath, menu, 'utf8');
+
+  const characterArt = existsSync(path.join(merged, 'img/charic.gif'))
+    ? `      <tr><td height="96" align="center">
+        <a href="javascript:mail('webmaster@fstory.net')"><img src="img/charic.gif" border="0" alt="주인장에게 편지"></a>
+      </td></tr>`
+    : '';
+
+  // The opening pane has to follow the same choice the menu made, or the
+  // edition greets a visitor with the empty Zeroboard frame.
+  const contentPath = path.join(merged, 'content.html');
+  if (existsSync(contentPath) && existsSync(path.join(merged, 'diary/frame.html'))) {
+    const content = await readFile(contentPath, 'utf8');
+    const aimed = content.replace(/src="diary\/diary\.html"/g, 'src="diary/frame.html"');
+    if (aimed !== content) {
+      await writeFile(contentPath, aimed, 'utf8');
+      mergedMenuNotes.push('첫 화면 → diary/frame.html');
+    }
+  }
+
+  await writeFile(path.join(merged, 'menu.html'), `<html>
+<head>
+<meta charset="utf-8">
+<title>Fstory's Homepage ver 2.0</title>
+<script language="JavaScript">
+function mail(address) { location.href = 'mailto:' + address; }
+</script>
+<style type="text/css">
+  body { margin: 0; background: #ffffff; }
+  table { border-collapse: collapse; }
+</style>
+</head>
+<body>
+  <table width="95" cellspacing="0" cellpadding="0">
+    <tbody>
+      <tr><td height="10"></td></tr>
+${rows.join('\n')}
+${characterArt}
+    </tbody>
+  </table>
+</body>
+</html>
+`, 'utf8');
 
   const mergedFileCount = await countFiles(merged);
   reports.push({

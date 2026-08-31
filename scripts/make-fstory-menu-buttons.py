@@ -58,6 +58,14 @@ BUTTONS = {
     'lin_n.gif': ('Link', '링크'),
     'ai_n.gif': ('AI', '인공지능'),
     'upl_n.gif': ('Upload', '자료실'),
+    # Corners the 5-pane redesign carried in its top bar. They never had a pill
+    # of their own, but the merged edition reaches them through this menu, so
+    # they get one in the same style.
+    'album_n.gif': ('Album', '앨범'),
+    'media_n.gif': ('Media', '최신 애니 감상록'),
+    'wince_n.gif': ('WinCE', 'WinCE'),
+    'present_n.gif': ('Present', '축전'),
+    'trip_n.gif': ('Trip', '여행기·관람기'),
 }
 
 
