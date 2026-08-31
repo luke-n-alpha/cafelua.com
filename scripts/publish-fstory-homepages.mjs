@@ -469,6 +469,7 @@ const publishEdition = async ({ lineage, captures }) => {
     placeholderImages: 0, droppedBackgrounds: 0, disabledDownloads: 0, disabledMedia: 0,
     disabledForms: 0, noticeLinks: 0, unresolvedKept: 0, extensionsAdded: 0,
     staticised: 0, guestbookMerged: 0, curatedRestored: 0, reconstructedAssets: 0, thumbnailsMade: 0,
+    unpinnedBlocks: 0, unpinnedBlocks: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
   };
 
@@ -968,6 +969,48 @@ const publishEdition = async ({ lineage, captures }) => {
     }
   }
 
+  // A block positioned at a fixed offset was placed against a picture that sat
+  // beside it. Where that picture is gone, the offset points at nothing and the
+  // block lands on top of the rest of the page — on the AI corner, Multi's
+  // dialogue ends up over the headings below it.
+  //
+  // Only blocks inside a table cell whose own table lost a picture are touched.
+  // Zeroboard's absolutely positioned layers sit directly under <body> and are
+  // left alone, so this reaches the two pages that actually break.
+  const unpinFloatingText = async (directory) => {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) { await unpinFloatingText(file); continue; }
+      if (!htmlExtensions.has(path.extname(entry.name).toLowerCase())) continue;
+      const text = decode(await readFile(file));
+      if (!/position\s*:\s*absolute/i.test(text) || !text.includes(PLACEHOLDER_IMAGE)) continue;
+
+      let changed = false;
+      const output = text.replace(
+        /<(span|div)([^>]*?)style\s*=\s*"([^"]*position\s*:\s*absolute[^"]*)"([^>]*)>/gi,
+        (whole, tag, head, style, tail, at) => {
+          const before = text.slice(0, at);
+          if (before.lastIndexOf('<td') <= before.lastIndexOf('</table>')) return whole;
+          const tableAt = before.lastIndexOf('<table');
+          if (tableAt < 0) return whole;
+          if (!text.slice(tableAt, at + 1500).includes(PLACEHOLDER_IMAGE)) return whole;
+          const relaxed = style
+            .replace(/position\s*:\s*absolute\s*;?/gi, '')
+            .replace(/(?:left|top|height)\s*:\s*[^;"]*;?/gi, '')
+            .replace(/;\s*;/g, ';')
+            .trim();
+          changed = true;
+          return `<${tag}${head}style="${relaxed}" data-unpinned="${style.replace(/"/g, '&quot;')}"${tail}>`;
+        },
+      );
+      if (changed) {
+        await writeFile(file, output, 'utf8');
+        stats.unpinnedBlocks += 1;
+      }
+    }
+  };
+  await unpinFloatingText(destination);
+
   const paletteSource = onDisk.get('index.html') ? decode(await readFile(path.join(destination, 'index.html'))) : '';
   const bodyColour = /<body[^>]*bgcolor\s*=\s*["']?([^"'\s>]+)/i.exec(paletteSource)?.[1];
   const palette = `background: ${bodyColour && /^#?[0-9a-z]+$/i.test(bodyColour) ? (bodyColour.startsWith('#') ? bodyColour : `#${bodyColour}`.replace(/^#(white|black)$/i, '#ffffff')) : '#ffffff'}`;
@@ -1152,7 +1195,7 @@ ${characterArt}
     rewrittenReferences: 0, placeholderImages: 0, droppedBackgrounds: 0,
     disabledDownloads: 0, disabledMedia: 0, disabledForms: 0, noticeLinks: 0,
     unresolvedKept: 0, extensionsAdded: 0, staticised: 0, guestbookMerged: 0,
-    curatedRestored: 0, reconstructedAssets: 0, thumbnailsMade: 0,
+    curatedRestored: 0, reconstructedAssets: 0, thumbnailsMade: 0, unpinnedBlocks: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
     cyworldRewrites: 0, unresolvedUniquePaths: 0, unresolved: [], restored: [],
   });
@@ -1471,6 +1514,7 @@ await writeFile(path.join(destinationRoot, 'restoration-report.json'), `${JSON.s
     curatedRestored: totals('curatedRestored'),
     reconstructedAssets: totals('reconstructedAssets'),
     thumbnailsMade: totals('thumbnailsMade'),
+    unpinnedBlocks: totals('unpinnedBlocks'),
     cyworldRewrites,
   },
   // The served report stays a summary. The full per-reference detail is large
@@ -1657,6 +1701,7 @@ console.log(JSON.stringify({
   curatedRestored: totals('curatedRestored'),
   reconstructedAssets: totals('reconstructedAssets'),
   thumbnailsMade: totals('thumbnailsMade'),
+  unpinnedBlocks: totals('unpinnedBlocks'),
   cyworldRewrites,
   destinationRoot,
 }, null, 2));

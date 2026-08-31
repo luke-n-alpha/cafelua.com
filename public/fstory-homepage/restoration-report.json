@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T05:22:24.118Z",
+  "generatedAt": "2026-08-31T06:18:22.991Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -51,6 +51,7 @@
     "curatedRestored": 544,
     "reconstructedAssets": 587,
     "thumbnailsMade": 96,
+    "unpinnedBlocks": 7,
     "cyworldRewrites": 11
   },
   "snapshots": [
@@ -85,6 +86,7 @@
       "curatedRestored": 73,
       "reconstructedAssets": 0,
       "thumbnailsMade": 10,
+      "unpinnedBlocks": 0,
       "externalImages": 1,
       "externalAssets": 6,
       "externalFrames": 2,
@@ -244,6 +246,7 @@
       "curatedRestored": 82,
       "reconstructedAssets": 0,
       "thumbnailsMade": 10,
+      "unpinnedBlocks": 0,
       "externalImages": 2,
       "externalAssets": 6,
       "externalFrames": 3,
@@ -408,6 +411,7 @@
       "curatedRestored": 96,
       "reconstructedAssets": 80,
       "thumbnailsMade": 18,
+      "unpinnedBlocks": 1,
       "externalImages": 45,
       "externalAssets": 9,
       "externalFrames": 5,
@@ -577,6 +581,7 @@
       "curatedRestored": 97,
       "reconstructedAssets": 138,
       "thumbnailsMade": 18,
+      "unpinnedBlocks": 2,
       "externalImages": 47,
       "externalAssets": 8,
       "externalFrames": 5,
@@ -736,6 +741,7 @@
       "curatedRestored": 98,
       "reconstructedAssets": 185,
       "thumbnailsMade": 19,
+      "unpinnedBlocks": 2,
       "externalImages": 47,
       "externalAssets": 9,
       "externalFrames": 5,
@@ -895,6 +901,7 @@
       "curatedRestored": 98,
       "reconstructedAssets": 184,
       "thumbnailsMade": 21,
+      "unpinnedBlocks": 2,
       "externalImages": 52,
       "externalAssets": 9,
       "externalFrames": 5,
@@ -1083,6 +1090,7 @@
       "curatedRestored": 0,
       "reconstructedAssets": 0,
       "thumbnailsMade": 0,
+      "unpinnedBlocks": 0,
       "externalImages": 0,
       "externalAssets": 0,
       "externalFrames": 0,
