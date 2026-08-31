@@ -15,7 +15,7 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ANNEXES, CURATED_EDITIONS, LINEAGES, MERGED_EDITION, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS } from './fstory-lineage.mjs';
+import { ANNEXES, BGM_TRACKS, CURATED_EDITIONS, LINEAGES, MERGED_EDITION, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS } from './fstory-lineage.mjs';
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dataRoot = path.resolve(appRoot, '../data/fstory-net-wayback');
@@ -1401,6 +1401,102 @@ const mergedMenuNotes = [];
       mergedMenuNotes.push('상단 띠 높이를 인사말이 잘리지 않게 늘렸다');
     }
   }
+
+  // Shinobu's BGM Player came back whole — the page, bgm_system.js, the five
+  // transport buttons, the copyleft notice from 2000. Only the music is gone:
+  // it streamed from Chollian and Netian accounts that closed two decades ago,
+  // and the archive kept none of the files.
+  //
+  // So the player keeps its face and plays from YouTube instead. Same strip,
+  // same title field and repeat box, same five buttons in the same order. The
+  // tracks are the ones Luke says he kept putting on. Autoplay is not attempted
+  // — a browser would refuse it, and a page that silently fails to play is
+  // worse than one that waits to be asked.
+  // Three copies of the same player: the site's own, the Chollian account it
+  // actually streamed from (which is the one the top strip loads), and the
+  // bgmp/ variant. All three get the same treatment.
+  const bgmPages = ['bgm/bgm.html', 'chollian/bgm/bgm.html', 'bgmp/bgm.html']
+    .map((relative) => path.join(merged, relative))
+    .filter((file) => existsSync(file));
+  for (const bgmPage of bgmPages) {
+    if (!BGM_TRACKS.length) break;
+    await writeFile(bgmPage, `<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>숲속얘기의 BGM Player</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden;
+    background: #ffffcc; font: 12px 돋움, Dotum, 굴림, sans-serif; color: #225577; }
+  .bar { display: flex; align-items: center; gap: 8px; padding: 5px 8px; white-space: nowrap; }
+  .title { flex: 1 1 auto; min-width: 120px; padding: 2px 6px;
+    border: 1px solid #9ab6c4; background: #fbfdfe; color: #225577;
+    overflow: hidden; text-overflow: ellipsis; }
+  button { border: 1px solid #9ab6c4; background: #eaf6fa; color: #225577;
+    font: inherit; padding: 1px 7px; cursor: pointer; }
+  button:hover { background: #d9edf5; }
+  label { display: inline-flex; align-items: center; gap: 3px; }
+  .who { color: #446677; }
+  #stage { position: absolute; left: -9999px; width: 1px; height: 1px; }
+</style>
+</head>
+<body>
+<!-- Shinobu's BGM Player 1.5 의 자리. 원본은 Windows Media Player 로 스트리밍했고
+     그 주소는 모두 닫혔습니다. 생김새와 조작은 그대로 두고 재생만 옮겼습니다. -->
+<div class="bar">
+  <span class="title" id="now">숲속얘기의 BGM Player</span>
+  <label><input type="checkbox" id="loop" checked>반복</label>
+  <button id="prev" title="이전 곡">◀◀</button>
+  <button id="play" title="재생">▶</button>
+  <button id="stop" title="정지">■</button>
+  <button id="next" title="다음 곡">▶▶</button>
+  <span class="who">숲속얘기의 BGM Player</span>
+</div>
+<div id="stage"></div>
+<script>
+  var TRACKS = ${JSON.stringify(BGM_TRACKS)};
+  var at = 0, player = null, ready = false;
+  var now = document.getElementById('now');
+  function label(text) { now.textContent = text; }
+  label(TRACKS[0].title + ' — ▶ 를 누르면 재생됩니다');
+
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player('stage', {
+      height: '1', width: '1', videoId: TRACKS[0].id,
+      playerVars: { playsinline: 1 },
+      events: {
+        onReady: function () { ready = true; },
+        onStateChange: function (event) {
+          if (event.data === YT.PlayerState.ENDED) {
+            if (document.getElementById('loop').checked) { go(at + 1); }
+          }
+        }
+      }
+    });
+  };
+  function go(index) {
+    if (!ready) return;
+    at = (index + TRACKS.length) % TRACKS.length;
+    player.loadVideoById(TRACKS[at].id);
+    label(TRACKS[at].title);
+  }
+  document.getElementById('play').onclick = function () {
+    if (!ready) return;
+    player.playVideo(); label(TRACKS[at].title);
+  };
+  document.getElementById('stop').onclick = function () { if (ready) player.stopVideo(); };
+  document.getElementById('prev').onclick = function () { go(at - 1); };
+  document.getElementById('next').onclick = function () { go(at + 1); };
+
+  var tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+</script>
+</body>
+</html>
+`, 'utf8');
+  }
+  if (bgmPages.length) mergedMenuNotes.push(`BGM 플레이어 ${bgmPages.length}곳에 ${BGM_TRACKS.length}곡을 걸었다`);
 
   // Panes sized to their content. The AI corner's two frames are 202 tall
   // against pages that fit exactly, so a scrollbar appearing means the frame is

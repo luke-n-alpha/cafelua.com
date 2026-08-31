@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T07:12:02.266Z",
+  "generatedAt": "2026-08-31T07:17:43.378Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -1080,6 +1080,7 @@
         "ai/ai.html 프레임 → ../tech/movie/movie.html",
         "싸이월드 안내에 당시 화면 그림을 실었다",
         "상단 띠 높이를 인사말이 잘리지 않게 늘렸다",
+        "BGM 플레이어 3곳에 3곡을 걸었다",
         "ai/ai.html 프레임 스크롤 제거",
         "첫 화면 → diary/frame.html"
       ],

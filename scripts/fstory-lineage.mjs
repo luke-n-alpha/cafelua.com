@@ -134,6 +134,17 @@ export const SNAPSHOTS = [
 // path pairs, spanning the windy/ and short/ subtrees). Colour-variant
 // Zeroboard skin folders also "match" by filename but are different artwork,
 // so they are deliberately not listed here.
+// The BGM player is restored in full — Shinobu's BGM Player 1.5, its script and
+// its buttons — but the music it streamed was never archived, and the addresses
+// it read from (Chollian, Netian) have been gone for twenty years. Luke says it
+// mostly carried anime themes and named the ones he kept putting on, so the
+// player keeps its face and its controls and plays these instead.
+export const BGM_TRACKS = [
+  { id: 'ThBGx26Mjog', title: '보노보노 - 지름길로 가고파' },
+  { id: 'xWWUNYqQ2XA', title: '아즈망가 대왕 - 소녀의 로망' },
+  { id: '5JnFzJNCT28', title: '그남자 그여자 - 야야야' },
+];
+
 export const PATH_ALIASES = [
   { from: 'mydoc/novel/', to: 'myletter/', corroborations: 32 },
 ];

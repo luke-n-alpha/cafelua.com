@@ -1,131 +1,74 @@
-<!--Shinobu's BGM Player 1.5 HTML File-->
-<!--Copyleft (C) 2000 - 2001 by Shinobu All Rights Unreversed-->
-<!--추신 : 위의 카피래프트 부분을 삭제하지 마십시오.-->
-<html>
-
+<!doctype html>
+<html lang="ko">
 <head>
-<meta charset=utf-8">
-<title>Shinobu's BGM Player 1</title>
-<meta name="generator" content="Namo WebEditor v4.0">
-<!--BGM Script Includes-->
-<script LANGUAGE=javascript src="bgm_system.js">
-</script>
-<script language=Javascript>
-//시노부 BGM 환경변수 설정
-//이곳은 여러분의 환경에 맞게 필히 수정해야 합니다
-
-//기본 재생 모드
-//0 -> 일반(순차) 재생모드 (기본값)
-//1 -> 랜덤 재생모드
-//즉, 처음에 이 페이지를 로딩할때에 랜덤으로 음악이 선택되고
-//다음, 이전트랙 버튼을 눌러도 임의의 곡으로 이동합니다
-var playMode = 1;
-
-//곡과 곡사이의 쉬는 시간
-//윈도우 미디어 콘트롤로 음악을 스트리밍 재생하기 때문에 설정해야 합니다
-//빠른 계정이나 고속통신 사용자는 4,5초 정도가,
-//외국 계정이나 모뎀 사용자는 7초 정도가 적당합니다
-var restLength = 6;
-
-
-//BGM 제목의 표시여부
-//현재 연주되고 있는 bgm의 제목을 <input> 박스에 표시하려면 1을
-//상태 표시줄에 표시하려면 2를
-//표시하지 않으려면 0을 선택하십시오.
-var showTitle = 1;
-
-//BGM Player 초기 로딩시 재생여부
-//BGM Player가 처음 로딩되었을 때 부터 음악이 재생되기를 원하시면 1,
-//그렇지 않으면 0을 넣으십시오.
-var doFirstPlay = 1;
-
-//연주할 곡 목록(즉, 플레이 리스트)를 작성합니다
-//addbgm('음악 파일의 전체(물리)경로', '음악 제목', 음악 연주시간(초)); 로 써주시면 됩니다.
-//(예) addbgm('http://www.server.com/folder/file.wma','Music',125);
-//만약에 음악 제목을 써주시지 않으면 자동으로 'Track 번호' 식으로 됩니다
-addbgm('bgm01.wma','Toheart OST중에서',110);
-addbgm('bgm02.wma','Toheart OST중에서',143);
-addbgm('bgm03.wma','눈의계절술사 Sugar OST중에서',115);
-addbgm('bgm04.wma','눈의계절술사 Sugar OST중에서',107);
-addbgm('bgm05.wma','눈의계절술사 Sugar OST중에서',118);
-addbgm('bgm06.wma','동화 - 박혜경',212);
-addbgm('bgm07.wma','boysbe',138);
-addbgm('bgm08.wma','Lord I Lift Your Name On High - Petra',183);
-addbgm('bgm09.wma','A winter story - 유키구라모토',204);
-addbgm('bgm10.wma','STING',183);
-
-
-</script>
-
-
-<!--End script-->
+<meta charset="utf-8">
+<title>숲속얘기의 BGM Player</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden;
+    background: #ffffcc; font: 12px 돋움, Dotum, 굴림, sans-serif; color: #225577; }
+  .bar { display: flex; align-items: center; gap: 8px; padding: 5px 8px; white-space: nowrap; }
+  .title { flex: 1 1 auto; min-width: 120px; padding: 2px 6px;
+    border: 1px solid #9ab6c4; background: #fbfdfe; color: #225577;
+    overflow: hidden; text-overflow: ellipsis; }
+  button { border: 1px solid #9ab6c4; background: #eaf6fa; color: #225577;
+    font: inherit; padding: 1px 7px; cursor: pointer; }
+  button:hover { background: #d9edf5; }
+  label { display: inline-flex; align-items: center; gap: 3px; }
+  .who { color: #446677; }
+  #stage { position: absolute; left: -9999px; width: 1px; height: 1px; }
+</style>
 </head>
+<body>
+<!-- Shinobu's BGM Player 1.5 의 자리. 원본은 Windows Media Player 로 스트리밍했고
+     그 주소는 모두 닫혔습니다. 생김새와 조작은 그대로 두고 재생만 옮겼습니다. -->
+<div class="bar">
+  <span class="title" id="now">숲속얘기의 BGM Player</span>
+  <label><input type="checkbox" id="loop" checked>반복</label>
+  <button id="prev" title="이전 곡">◀◀</button>
+  <button id="play" title="재생">▶</button>
+  <button id="stop" title="정지">■</button>
+  <button id="next" title="다음 곡">▶▶</button>
+  <span class="who">숲속얘기의 BGM Player</span>
+</div>
+<div id="stage"></div>
+<script>
+  var TRACKS = [{"id":"ThBGx26Mjog","title":"보노보노 - 지름길로 가고파"},{"id":"xWWUNYqQ2XA","title":"아즈망가 대왕 - 소녀의 로망"},{"id":"5JnFzJNCT28","title":"그남자 그여자 - 야야야"}];
+  var at = 0, player = null, ready = false;
+  var now = document.getElementById('now');
+  function label(text) { now.textContent = text; }
+  label(TRACKS[0].title + ' — ▶ 를 누르면 재생됩니다');
 
-<body OnLoad="init_bgm()" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" link="navy" vlink="navy" alink="navy" bgcolor="#fffa9d" text="navy">
-<!--BGM Script BODY Start-->
-<form name="form1" onsubmit="return false" data-unrestored="form">
-<p>
-<!--Beta 1.x에서는 Bgsound 태그를 사용했었다-->
-<!--그러나, bgsound 태그는 url을 제대로 먹지 않음이 밝혀저서 윈도우 미디어 컨트롤로 바꾸게 되었다-->
-<!--따라서, 아래의 오브젝트 태그를 바꾸거나 지우면 안된다-->
-<object classid="clsid:22D6F312-B0F6-11D0-94AB-0080C74C7E95" width="1" height="1" vspace="1" hspace="1" align="middle" id="Music" style="left:0px; top:0px;">
-<param name="AllowChangeDisplaySize" value="true">
-<param name="AllowScan" value="true">
-<param name="AnimationAtStart" value="true">
-<param name="AudioStream" value="-1">
-<param name="AutoRewind" value="true">
-<param name="AutoSize" value="false">
-<param name="AutoStart" value="true">
-<param name="Balance" value="0">
-<param name="BufferingTime" value="5">
-<param name="ClickToPlay" value="true">
-<param name="CurrentMarker" value="0">
-<param name="CurrentPosition" value="-1">
-<param name="CursorType" value="0">
-<param name="DisplayBackColor" value="0">
-<param name="DisplayForeColor" value="16777215">
-<param name="DisplayMode" value="0">
-<param name="DisplaySize" value="2">
-<param name="EnableContextMenu" value="true">
-<param name="Enabled" value="true">
-<param name="EnableFullScreenControls" value="false">
-<param name="EnablePositionControls" value="true">
-<param name="EnableTracker" value="true">
-<param name="InvokeURLs" value="true">
-<param name="Language" value="-1">
-<param name="Mute" value="false">
-<param name="PlayCount" value="1">
-<param name="PreviewMode" value="false">
-<param name="Rate" value="1">
-<param name="SelectionEnd" value="-1">
-<param name="SelectionStart" value="-1">
-<param name="SendErrorEvents" value="true">
-<param name="SendKeyboardEvents" value="false">
-<param name="SendMouseClickEvents" value="true">
-<param name="SendMouseMoveEvents" value="false">
-<param name="SendOpenStateChangeEvents" value="true">
-<param name="SendPlayStateChangeEvents" value="true">
-<param name="SendWarningEvents" value="true">
-<param name="ShowAudioControls" value="true">
-<param name="ShowCaptioning" value="false">
-<param name="ShowControls" value="true">
-<param name="ShowDisplay" value="false">
-<param name="ShowGotoBar" value="false">
-<param name="ShowPositionControls" value="true">
-<param name="ShowStatusBar" value="true">
-<param name="ShowTracker" value="true">
-<param name="TransparentAtStart" value="false">
-<param name="VideoBorder3D" value="true">
-<param name="VideoBorderColor" value="0">
-<param name="VideoBorderWidth" value="0">
-<param name="Volume" value="2000">
-<param name="WindowlessVideo" value="false"></object><span style="font-size:9pt;"><font color="navy"></font> <font color="white"><input type="text" name="stitle" size="50" value="Shinobu BGM Player 1.5 [ready]" style="font-family:굴림,sans-serif; font-size:9pt; color:navy; background-color:rgb(240,240,255); border-width:1px; border-color:rgb(153,153,255); border-style:solid;" readonly><input type="checkbox" name="loop" value="1" OnCLick = "chgLoop();"></font>반복<font color="navy">&nbsp;<a href="#" OnClick = "preTrack();" OnMouseOver="window.status=('Previous Track'); return true;" OnMouseOut="window.status=(''); return true;"><img src="button_b.gif" width="25" height="15" border="0" align="middle"></a> 
-        <a href="#" OnClick = "stopTrack();" OnMouseOver="window.status=('Stop BGM'); return true;" OnMouseOut="window.status=(''); return true;"><img src="button_s.gif" width="25" height="15" border="0" align="middle"></a> <a href="#" OnClick = "play();" OnMouseOver="window.status=('Play BGM'); return true;" OnMouseOut="window.status=(''); return true;"><img src="button_p.gif" width="25" height="15" border="0" align="middle"></a> 
-    <a href="#" OnCLick = "nextTrack();" OnMouseOver="window.status=('Next Track'); return true;" OnMouseOut="window.status=(''); return true;"><img src="button_f.gif" width="25" height="15" border="0" align="middle"></a> &nbsp;숲속얘기의 BGM Player  
-    &nbsp;<a href="#" OnClick = "m_list();" OnMouseOver="window.status=('Display the BGM List'); return true;" OnMouseOut="window.status=(''); return true;"><img src="button_o.gif" align="middle" width="80" height="15" border="0"></a></font></span></p>
-</form>
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player('stage', {
+      height: '1', width: '1', videoId: TRACKS[0].id,
+      playerVars: { playsinline: 1 },
+      events: {
+        onReady: function () { ready = true; },
+        onStateChange: function (event) {
+          if (event.data === YT.PlayerState.ENDED) {
+            if (document.getElementById('loop').checked) { go(at + 1); }
+          }
+        }
+      }
+    });
+  };
+  function go(index) {
+    if (!ready) return;
+    at = (index + TRACKS.length) % TRACKS.length;
+    player.loadVideoById(TRACKS[at].id);
+    label(TRACKS[at].title);
+  }
+  document.getElementById('play').onclick = function () {
+    if (!ready) return;
+    player.playVideo(); label(TRACKS[at].title);
+  };
+  document.getElementById('stop').onclick = function () { if (ready) player.stopVideo(); };
+  document.getElementById('prev').onclick = function () { go(at - 1); };
+  document.getElementById('next').onclick = function () { go(at + 1); };
+
+  var tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+</script>
 </body>
-<!--BGM Script BODY End-->
-
 </html>
-    </object>
