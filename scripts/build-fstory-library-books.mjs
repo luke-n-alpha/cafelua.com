@@ -294,7 +294,25 @@ const SHORT_STORY_FILE = path.join(appRoot, 'scripts/fstory-short-stories.json')
 // record rather than to the collection.
 const SET_ASIDE = new Map([
   ['컬트 판타지', '장난으로 쓴 글이라 루크가 뺐다'],
+  ['어른들을 위한 동화', '(1)에서 끊긴 미완성. 2편은 쓰이지 않았고 루크도 결말을 기억하지 못한다'],
 ]);
+
+/**
+ * The blog's own furniture, carried in by the scrape and left at the foot of a
+ * story: an image placeholder the export could not resolve, a "add me as a
+ * neighbour" link, and a mail-subscription box from a feed service that closed
+ * years ago. None of it is the story.
+ */
+const withoutBlogFurniture = (text) => text
+  .replace(/\{\{IMG:\d+\}\}/g, '')
+  // The blog's bold markers. Only one story carries them, and escaped for a
+  // plain-text reader they come out as rows of asterisks in the middle of a
+  // sentence. The emphasis was the blog editor's, not the writing's.
+  .replace(/\*\*/g, '')
+  .replace(/^.*(?:section\.blog\.naver\.com|feedburner|Email로 받아보기).*$/gm, '')
+  .replace(/[\u200b\s]*\*\*\s*\*\*[\u200b\s]*/g, '\n')
+  .replace(/\n{3,}/g, '\n\n')
+  .trimEnd();
 
 /**
  * When Luke posted these to his blog in 2006 he wrote a few lines above each
@@ -383,7 +401,7 @@ const buildShortStoriesEn = async () => {
       .replace(/[\s/·-]+$/, '')
       .trim() || story.title;
     const heading = story.year ? `${named} (${story.year})` : named;
-    chapters.push(chapterOf(heading, story.english.text, `${story.slug}-en`));
+    chapters.push(chapterOf(heading, withoutBlogFurniture(story.english.text), `${story.slug}-en`));
   }
 
   // Say what is not here, rather than let a reader wonder why the Korean
@@ -455,7 +473,7 @@ const buildShortStories = async () => {
     if (SET_ASIDE.has(story.title)) continue;
     const where = story.note ? ` · ${story.note}` : '';
     const heading = story.year ? `${story.title} (${story.year}${where})` : story.title;
-    chapters.push(chapterOf(heading, withoutBlogNote(story.text, story.title), story.slug));
+    chapters.push(chapterOf(heading, withoutBlogFurniture(withoutBlogNote(story.text, story.title)), story.slug));
   }
 
   // Then anything the website has that the blog does not.
