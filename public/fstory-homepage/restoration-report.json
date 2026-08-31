@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T02:37:57.656Z",
+  "generatedAt": "2026-08-31T03:13:07.679Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -31,12 +31,12 @@
     }
   ],
   "totals": {
-    "publishedFiles": 4612,
+    "publishedFiles": 4708,
     "restoredFromArchive": 293,
     "aliasResolved": 1287,
     "caseResolved": 0,
     "rewrittenReferences": 1970,
-    "placeholderImages": 1085,
+    "placeholderImages": 989,
     "droppedBackgrounds": 7,
     "disabledDownloads": 18,
     "disabledMedia": 1022,
@@ -50,6 +50,7 @@
     "guestbookMerged": 4,
     "curatedRestored": 520,
     "reconstructedAssets": 541,
+    "thumbnailsMade": 96,
     "cyworldRewrites": 11
   },
   "snapshots": [
@@ -66,12 +67,12 @@
         }
       ],
       "originalFiles": 211,
-      "publishedFiles": 312,
+      "publishedFiles": 322,
       "rewrittenReferences": 20,
       "restoredFromArchive": 32,
       "aliasResolved": 9,
       "caseResolved": 0,
-      "placeholderImages": 48,
+      "placeholderImages": 38,
       "droppedBackgrounds": 0,
       "disabledDownloads": 0,
       "disabledMedia": 10,
@@ -83,11 +84,12 @@
       "guestbookMerged": 0,
       "curatedRestored": 69,
       "reconstructedAssets": 0,
+      "thumbnailsMade": 10,
       "externalImages": 1,
       "externalAssets": 6,
       "externalFrames": 2,
       "externalLinks": 0,
-      "unresolvedUniquePaths": 194,
+      "unresolvedUniquePaths": 184,
       "unresolvedTopPaths": [
         {
           "path": "/~fstory/gallery/gallery2/gallery2.html",
@@ -168,43 +170,43 @@
           "count": 1
         },
         {
-          "path": "/~fstory/gallery/gallery1/Ybs1_th.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 1
-        },
-        {
-          "path": "/~fstory/gallery/gallery1/Ybs2_th.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 1
-        },
-        {
-          "path": "/~fstory/gallery/gallery1/Ybs3_th.jpg",
-          "query": "",
-          "treatment": "placeholder-image",
-          "count": 1
-        },
-        {
           "path": "/~fstory/gallery/gallery1/Pic4.html",
           "query": "",
           "treatment": "notice-link",
           "count": 1
         },
         {
-          "path": "/~fstory/gallery/gallery1/Ybs4_th.jpg",
+          "path": "/~fstory/gallery/gallery1/Pic9.html",
+          "query": "",
+          "treatment": "notice-link",
+          "count": 1
+        },
+        {
+          "path": "/~fstory/gallery/gallery1/imfy_th.jpg",
           "query": "",
           "treatment": "placeholder-image",
           "count": 1
         },
         {
-          "path": "/~fstory/gallery/gallery1/Ybs5_th.jpg",
+          "path": "/~fstory/gallery/gallery1/Pic12.html",
+          "query": "",
+          "treatment": "notice-link",
+          "count": 1
+        },
+        {
+          "path": "/~fstory/gallery/gallery1/Dragon_th.jpg",
           "query": "",
           "treatment": "placeholder-image",
           "count": 1
         },
         {
-          "path": "/~fstory/gallery/gallery1/Ybs6_th.jpg",
+          "path": "/~fstory/gallery/gallery2/girl_by.jpg",
+          "query": "",
+          "treatment": "placeholder-image",
+          "count": 1
+        },
+        {
+          "path": "/~fstory/gallery/gallery2/spring2.jpg",
           "query": "",
           "treatment": "placeholder-image",
           "count": 1
@@ -224,12 +226,12 @@
         }
       ],
       "originalFiles": 235,
-      "publishedFiles": 352,
+      "publishedFiles": 362,
       "rewrittenReferences": 66,
       "restoredFromArchive": 39,
       "aliasResolved": 32,
       "caseResolved": 0,
-      "placeholderImages": 48,
+      "placeholderImages": 38,
       "droppedBackgrounds": 0,
       "disabledDownloads": 0,
       "disabledMedia": 10,
@@ -241,11 +243,12 @@
       "guestbookMerged": 0,
       "curatedRestored": 78,
       "reconstructedAssets": 0,
+      "thumbnailsMade": 10,
       "externalImages": 2,
       "externalAssets": 6,
       "externalFrames": 3,
       "externalLinks": 0,
-      "unresolvedUniquePaths": 246,
+      "unresolvedUniquePaths": 236,
       "unresolvedTopPaths": [
         {
           "path": "/~fstory/gallery/gallery2/gallery2.html",
@@ -387,12 +390,12 @@
         }
       ],
       "originalFiles": 670,
-      "publishedFiles": 701,
+      "publishedFiles": 719,
       "rewrittenReferences": 431,
       "restoredFromArchive": 142,
       "aliasResolved": 291,
       "caseResolved": 0,
-      "placeholderImages": 129,
+      "placeholderImages": 111,
       "droppedBackgrounds": 0,
       "disabledDownloads": 1,
       "disabledMedia": 168,
@@ -404,11 +407,12 @@
       "guestbookMerged": 1,
       "curatedRestored": 92,
       "reconstructedAssets": 70,
+      "thumbnailsMade": 18,
       "externalImages": 45,
       "externalAssets": 9,
       "externalFrames": 5,
       "externalLinks": 47,
-      "unresolvedUniquePaths": 1134,
+      "unresolvedUniquePaths": 1116,
       "unresolvedTopPaths": [
         {
           "path": "/zero/view_info.php",
@@ -555,12 +559,12 @@
         }
       ],
       "originalFiles": 1848,
-      "publishedFiles": 905,
+      "publishedFiles": 923,
       "rewrittenReferences": 454,
       "restoredFromArchive": 63,
       "aliasResolved": 311,
       "caseResolved": 0,
-      "placeholderImages": 198,
+      "placeholderImages": 180,
       "droppedBackgrounds": 2,
       "disabledDownloads": 1,
       "disabledMedia": 137,
@@ -572,11 +576,12 @@
       "guestbookMerged": 1,
       "curatedRestored": 93,
       "reconstructedAssets": 126,
+      "thumbnailsMade": 18,
       "externalImages": 47,
       "externalAssets": 8,
       "externalFrames": 5,
       "externalLinks": 101,
-      "unresolvedUniquePaths": 1300,
+      "unresolvedUniquePaths": 1282,
       "unresolvedTopPaths": [
         {
           "path": "\"+name+\"",
@@ -713,12 +718,12 @@
         }
       ],
       "originalFiles": 886,
-      "publishedFiles": 1171,
+      "publishedFiles": 1190,
       "rewrittenReferences": 498,
       "restoredFromArchive": 17,
       "aliasResolved": 322,
       "caseResolved": 0,
-      "placeholderImages": 331,
+      "placeholderImages": 312,
       "droppedBackgrounds": 2,
       "disabledDownloads": 8,
       "disabledMedia": 348,
@@ -730,11 +735,12 @@
       "guestbookMerged": 1,
       "curatedRestored": 94,
       "reconstructedAssets": 173,
+      "thumbnailsMade": 19,
       "externalImages": 47,
       "externalAssets": 9,
       "externalFrames": 5,
       "externalLinks": 104,
-      "unresolvedUniquePaths": 1812,
+      "unresolvedUniquePaths": 1793,
       "unresolvedTopPaths": [
         {
           "path": "\"+name+\"",
@@ -871,12 +877,12 @@
         }
       ],
       "originalFiles": 903,
-      "publishedFiles": 1171,
+      "publishedFiles": 1192,
       "rewrittenReferences": 501,
       "restoredFromArchive": 0,
       "aliasResolved": 322,
       "caseResolved": 0,
-      "placeholderImages": 331,
+      "placeholderImages": 310,
       "droppedBackgrounds": 3,
       "disabledDownloads": 8,
       "disabledMedia": 349,
@@ -888,11 +894,12 @@
       "guestbookMerged": 1,
       "curatedRestored": 94,
       "reconstructedAssets": 172,
+      "thumbnailsMade": 21,
       "externalImages": 52,
       "externalAssets": 9,
       "externalFrames": 5,
       "externalLinks": 102,
-      "unresolvedUniquePaths": 1817,
+      "unresolvedUniquePaths": 1796,
       "unresolvedTopPaths": [
         {
           "path": "\"+name+\"",

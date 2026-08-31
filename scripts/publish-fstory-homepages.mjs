@@ -374,6 +374,24 @@ const placeholderDocument = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 
 </svg>
 `;
 
+// Scaling a JPEG needs a decoder, and the repository has one in the Python
+// imaging library the sibling asset scripts already use. Shelling out keeps this
+// script free of a new npm dependency for six files.
+const makeThumbnail = async (source, output) => {
+  const { execFile } = await import('node:child_process');
+  const { promisify } = await import('node:util');
+  await promisify(execFile)('python3', ['-c', `
+from PIL import Image
+import sys
+source, output = sys.argv[1], sys.argv[2]
+with Image.open(source) as image:
+    picture = image.convert('RGB')
+    height = 90
+    width = max(1, round(picture.width * height / picture.height))
+    picture.resize((width, height), Image.LANCZOS).save(output, quality=88)
+`, source, output]);
+};
+
 const countFiles = async (directory) => {
   if (!existsSync(directory)) return 0;
   let total = 0;
@@ -450,7 +468,7 @@ const publishEdition = async ({ lineage, captures }) => {
     rewrittenReferences: 0, restoredFromArchive: 0, aliasResolved: 0, caseResolved: 0,
     placeholderImages: 0, droppedBackgrounds: 0, disabledDownloads: 0, disabledMedia: 0,
     disabledForms: 0, noticeLinks: 0, unresolvedKept: 0, extensionsAdded: 0,
-    staticised: 0, guestbookMerged: 0, curatedRestored: 0, reconstructedAssets: 0,
+    staticised: 0, guestbookMerged: 0, curatedRestored: 0, reconstructedAssets: 0, thumbnailsMade: 0,
     externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
   };
 
@@ -622,6 +640,34 @@ const publishEdition = async ({ lineage, captures }) => {
         restored.push({ url: url.href, path: relative, from: `${pick.label}/${pick.relative}`, source: 'luke-kept-copy' });
         stats.curatedRestored += 1;
         return { kind: 'local', relative, url, curated: pick };
+      }
+
+      // A gallery index asks for `X_th.jpg`, the thumbnail of `X.jpg`. Where the
+      // full picture survives and only its thumbnail is gone, the thumbnail is
+      // not missing information — it is the same picture, smaller. Every
+      // surviving thumbnail in this archive is 90 pixels tall, so that is the
+      // size used.
+      const thumbnailOf = /^(.*)_th(\.[a-z]+)$/i.exec(path.basename(relative));
+      if (thumbnailOf) {
+        const fullName = `${thumbnailOf[1]}${thumbnailOf[2]}`.toLowerCase();
+        const directory = path.posix.dirname(relative);
+        const sameFolder = onDisk.get(path.posix.join(directory, fullName).toLowerCase());
+        const kept = curatedByName.get(fullName);
+        const origin = sameFolder
+          ? path.join(destination, sameFolder)
+          : kept?.length ? closestCurated(kept, relative).file : null;
+        if (origin) {
+          const output = path.join(destination, relative);
+          if (!existsSync(output)) {
+            await mkdir(path.dirname(output), { recursive: true });
+            await makeThumbnail(origin, output);
+          }
+          onDisk.set(relative.toLowerCase(), relative);
+          occupied.add(relative.toLowerCase());
+          restored.push({ url: url.href, path: relative, from: sameFolder || 'curated', source: 'thumbnail-of-surviving-original' });
+          stats.thumbnailsMade += 1;
+          return { kind: 'local', relative, url };
+        }
       }
 
       const rebuilt = reconstructedByPath.get(relative.toLowerCase());
@@ -1236,6 +1282,7 @@ await writeFile(path.join(destinationRoot, 'restoration-report.json'), `${JSON.s
     guestbookMerged: totals('guestbookMerged'),
     curatedRestored: totals('curatedRestored'),
     reconstructedAssets: totals('reconstructedAssets'),
+    thumbnailsMade: totals('thumbnailsMade'),
     cyworldRewrites,
   },
   // The served report stays a summary. The full per-reference detail is large
@@ -1377,6 +1424,7 @@ console.log(JSON.stringify({
   guestbookMerged: totals('guestbookMerged'),
   curatedRestored: totals('curatedRestored'),
   reconstructedAssets: totals('reconstructedAssets'),
+  thumbnailsMade: totals('thumbnailsMade'),
   cyworldRewrites,
   destinationRoot,
 }, null, 2));
