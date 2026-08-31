@@ -145,6 +145,23 @@ export const BGM_TRACKS = [
   { id: '5JnFzJNCT28', title: '그남자 그여자 - 야야야' },
 ];
 
+// The 최신 애니 감상록 corner listed what Luke had just watched, each with a
+// thumbnail and a page that played the opening through Windows Media Player.
+// Every thumbnail is gone and the video it streamed with it, but the corner
+// names its eight titles outright and they are all 2002. Openings come from
+// YouTube now, and each thumbnail is a still from that same opening, so the
+// picture and the video agree.
+export const RECENT_ANIME = [
+  { thumb: 'degi.jpg', page: 'recentani/degi/degiop.html', title: '파뇨파뇨 디지캐럿', video: 'DL70IyKEWdc' },
+  { thumb: 'abeno.jpg', page: 'recentani/abe/abenoop.html', title: '아베노교 마법상점', video: 'pLsE-QCw7tk' },
+  { thumb: 'chobit.jpg', page: 'recentani/cho/choop.html', title: '쵸비츠', video: 'O97zLf3OjUk' },
+  { thumb: 'azmanga.jpg', page: 'recentani/azmanga/azop.html', title: '아즈망가대왕', video: 'xFL9mn2zX_U' },
+  { thumb: 'she.jpg', page: 'recentani/she/sheop.html', title: '최종병기 그녀', video: 'WOZTvLBG-S0' },
+  { thumb: 'hare.jpg', page: 'recentani/hare/hareop.html', title: '정글은 언제나 OVA', video: 'h-iTW2vJ_F4' },
+  { thumb: 'mahoro.jpg', page: 'recentani/mahoro/mahoroop.html', title: '마호로매틱2기', video: 'bw00bY0VlFs' },
+  { thumb: 'yusi.jpg', page: 'recentani/yusi/yusiop.html', title: '쁘티프리 유시', video: '13V8C6yL2i8' },
+];
+
 export const PATH_ALIASES = [
   { from: 'mydoc/novel/', to: 'myletter/', corroborations: 32 },
 ];

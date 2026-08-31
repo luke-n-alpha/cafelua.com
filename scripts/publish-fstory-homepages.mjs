@@ -15,7 +15,7 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ANNEXES, BGM_TRACKS, CURATED_EDITIONS, LINEAGES, MERGED_EDITION, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS } from './fstory-lineage.mjs';
+import { ANNEXES, BGM_TRACKS, RECENT_ANIME, CURATED_EDITIONS, LINEAGES, MERGED_EDITION, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS } from './fstory-lineage.mjs';
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dataRoot = path.resolve(appRoot, '../data/fstory-net-wayback');
@@ -1434,6 +1434,53 @@ const mergedMenuNotes = [];
         mergedMenuNotes.push(`ai/ai.html 창 ${count}개를 내용 높이에 맞춰 스크롤을 없앴다`);
       }
     }
+  }
+
+  // 최신 애니 감상록 played each opening through a Windows Media Player object.
+  // The video it streamed is gone and no browser runs that control any more, so
+  // the pages show the opening from YouTube instead — same title, same single
+  // purpose. Four of the eight had no page left at all; those are written to
+  // match the four that survived.
+  for (const anime of RECENT_ANIME) {
+    const target = path.join(merged, 'media', anime.page);
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, `<html>
+<head>
+<meta charset="utf-8">
+<title>${anime.title}</title>
+<style>
+  body { margin: 0; background: #f0f9fb; text-align: center;
+    font: 12px 돋움, Dotum, 굴림, sans-serif; color: #225577; }
+  h1 { margin: 10px 0 8px; font-size: 15px; }
+  .screen { width: 320px; margin: 0 auto; }
+  iframe { border: 1px solid #9ab6c4; }
+  p { margin: 8px 12px; color: #4a6b7a; }
+</style>
+</head>
+<body>
+<h1>${anime.title}</h1>
+<div class="screen">
+  <iframe width="320" height="180" src="https://www.youtube.com/embed/${anime.video}"
+    title="${anime.title} 오프닝" frameborder="0" allowfullscreen></iframe>
+</div>
+<p>오프닝 영상. 원본은 이 자리에서 미디어 플레이어로 재생됐습니다.</p>
+</body>
+</html>
+`, 'utf8');
+  }
+  mergedMenuNotes.push(`애니 감상록 ${RECENT_ANIME.length}편에 오프닝을 걸었다`);
+
+  // The corner's list points at all eight now, not the four that kept a page,
+  // and each thumbnail is a still from the opening it opens.
+  const mediaIndex = path.join(merged, 'media/media.html');
+  if (existsSync(mediaIndex)) {
+    let list = await readFile(mediaIndex, 'utf8');
+    for (const anime of RECENT_ANIME) {
+      const escaped = anime.thumb.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const cell = new RegExp(`<a[^>]*href="#"[^>]*>((?:(?!</a>)[\\s\\S])*?${escaped}(?:(?!</a>)[\\s\\S])*?)</a>`, 'i');
+      list = list.replace(cell, (whole, inner) => `<a href="${anime.page}" target="screen">${inner}</a>`);
+    }
+    await writeFile(mediaIndex, list, 'utf8');
   }
 
   // The Cyworld notice carries the picture wherever the picture exists. Only
