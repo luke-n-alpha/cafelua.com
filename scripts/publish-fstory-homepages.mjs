@@ -1483,6 +1483,43 @@ const mergedMenuNotes = [];
     await writeFile(mediaIndex, list, 'utf8');
   }
 
+  // The outermost frame carried a photograph that changed with the season and
+  // the weather — Luke swapped it by hand, which is the thing cafelua.com now
+  // does automatically. The photographs themselves are gone. Four seasonal
+  // landscapes stand in, washed out and blurred so they read as a backdrop and
+  // not as a picture, and the page picks the one that matches the month it is
+  // opened in.
+  const seasonsFrom = path.join(reconstructedRoot, 'seasons');
+  if (existsSync(seasonsFrom)) {
+    const into = path.join(merged, 'seasons');
+    await mkdir(into, { recursive: true });
+    for (const entry of await readdir(seasonsFrom, { withFileTypes: true })) {
+      if (entry.isFile()) await cp(path.join(seasonsFrom, entry.name), path.join(into, entry.name), { force: true, preserveTimestamps: true });
+    }
+    const frontDoor = path.join(merged, 'index.html');
+    if (existsSync(frontDoor)) {
+      const text = await readFile(frontDoor, 'utf8');
+      if (!text.includes('seasons/back_')) {
+        const next = text.replace('</body>', `<script>
+// 계절에 맞는 배경. 원래는 루크가 철마다 사진을 바꿔 걸었습니다.
+(function () {
+  var month = new Date().getMonth() + 1;
+  var season = month <= 2 || month === 12 ? 'winter'
+    : month <= 5 ? 'spring'
+    : month <= 8 ? 'summer'
+    : 'autumn';
+  document.body.background = 'seasons/back_' + season + '.jpg';
+})();
+</script>
+</body>`);
+        if (next !== text) {
+          await writeFile(frontDoor, next, 'utf8');
+          mergedMenuNotes.push('첫 화면 배경을 계절에 맞춰 바꾸게 했다');
+        }
+      }
+    }
+  }
+
   // The Cyworld notice carries the picture wherever the picture exists. Only
   // the 2003 edition shipped it originally, but the merged edition holds that
   // file too, and the notice is the one place a visitor is told where the

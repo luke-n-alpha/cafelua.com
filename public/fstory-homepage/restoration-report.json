@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T08:03:41.059Z",
+  "generatedAt": "2026-08-31T08:08:08.766Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -31,7 +31,7 @@
     }
   ],
   "totals": {
-    "publishedFiles": 8670,
+    "publishedFiles": 8674,
     "restoredFromArchive": 318,
     "aliasResolved": 1484,
     "caseResolved": 58,
@@ -1069,7 +1069,7 @@
       "timestamp": "ver2-merged",
       "date": "2001-09 ~ 2003-07",
       "lineage": "M2",
-      "publishedFiles": 1596,
+      "publishedFiles": 1600,
       "menuNotes": [
         "일기 → diary/frame.html",
         "프로필 → profile/profile.html",
@@ -1087,6 +1087,7 @@
         "ai/ai.html 프레임 → ../tech/movie/movie.html",
         "ai/ai.html 창 2개를 내용 높이에 맞춰 스크롤을 없앴다",
         "애니 감상록 8편에 오프닝을 걸었다",
+        "첫 화면 배경을 계절에 맞춰 바꾸게 했다",
         "싸이월드 안내에 당시 화면 그림을 실었다",
         "상단 띠 높이를 인사말이 잘리지 않게 늘렸다",
         "BGM 플레이어 3곳에 3곡을 걸었다",

@@ -8,5 +8,16 @@
  	<iframe color=black width=800 height='600' marginheight='0' leftmargin=0 marginwidth='0' 
       cellspacing=0 cellpadding=0 scrolling='yes' src="main.html" topmargin='0'></iframe> 
 	</td></table>
-	</body>
+	<script>
+// 계절에 맞는 배경. 원래는 루크가 철마다 사진을 바꿔 걸었습니다.
+(function () {
+  var month = new Date().getMonth() + 1;
+  var season = month <= 2 || month === 12 ? 'winter'
+    : month <= 5 ? 'spring'
+    : month <= 8 ? 'summer'
+    : 'autumn';
+  document.body.background = 'seasons/back_' + season + '.jpg';
+})();
+</script>
+</body>
 </html>
