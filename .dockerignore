@@ -6,4 +6,7 @@ node_modules
 coverage
 test-results
 playwright-report
+# Root-level docs only. Docker's '*' does not cross '/', so the 2,100 posts
+# under public/desk-posts/ still go into the image — and they must, the desk
+# reads them from disk at request time. Never widen this to **/*.md.
 *.md
