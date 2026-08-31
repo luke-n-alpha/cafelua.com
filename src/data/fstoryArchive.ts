@@ -22,90 +22,7 @@ export type FstoryEdition = {
     builtFrom: FstoryCapture[];
 };
 
-export const FSTORY_EDITIONS: FstoryEdition[] = [
-    {
-        "id": "L0",
-        "label": "도메인 호스팅 안내",
-        "period": "2001-07-15",
-        "summary": "도메인 등록 대행사의 기본 안내 화면. 홈페이지 본체가 아니다.",
-        "directory": "20010715123146",
-        "date": "2001-07-15",
-        "builtFrom": [
-            {
-                "timestamp": "20010715123146",
-                "date": "2001-07-15"
-            }
-        ]
-    },
-    {
-        "id": "L2.0",
-        "label": "ver 2.0 최초판",
-        "period": "2001-09 ~ 2002-03",
-        "summary": "index.html 안의 800x600 iframe이 main.html(42/560 2분할 프레임)을 부른다. 메뉴에 ai·study 항목이 있다.",
-        "directory": "20011202212712",
-        "date": "2001-12-02",
-        "builtFrom": [
-            {
-                "timestamp": "20010925220320",
-                "date": "2001-09-25"
-            },
-            {
-                "timestamp": "20011202212712",
-                "date": "2001-12-02"
-            }
-        ]
-    },
-    {
-        "id": "L2.1",
-        "label": "ver 2.0 메뉴 개편판",
-        "period": "2002-03 ~ 2002-11-20",
-        "summary": "프레임 구조는 그대로이고 메뉴가 teatime·tech·zboard 중심으로 바뀐다. 본문 첫 화면이 diary/diary.html이다.",
-        "directory": "20021120053627",
-        "date": "2002-11-20",
-        "builtFrom": [
-            {
-                "timestamp": "20020325014505",
-                "date": "2002-03-25"
-            },
-            {
-                "timestamp": "20020924164928",
-                "date": "2002-09-24"
-            },
-            {
-                "timestamp": "20021120053627",
-                "date": "2002-11-20"
-            }
-        ]
-    },
-    {
-        "id": "L2.2",
-        "label": "ver 2.0 5분할 재설계판",
-        "period": "2002-11-28 ~ 2003-07",
-        "summary": "main.html이 topmenu·left·content·right·bottom 5분할 프레임으로 바뀌고 bgm 프레임이 붙는다. album·cartoon·media·insidece 메뉴가 새로 생기고 싸이월드 링크가 처음 등장한다.",
-        "directory": "20021128181318",
-        "date": "2002-11-28",
-        "builtFrom": [
-            {
-                "timestamp": "20021128181318",
-                "date": "2002-11-28"
-            }
-        ]
-    },
-    {
-        "id": "L3",
-        "label": "ver 3.0 싸이월드 연동판",
-        "period": "2003-07-26",
-        "summary": "프레임을 모두 걷어내고 단일 index.html로 돌아간 마지막 판. 본문 대부분을 싸이월드 미니홈피에 넘겼다.",
-        "directory": "20030726202839",
-        "date": "2003-07-26",
-        "builtFrom": [
-            {
-                "timestamp": "20030726202839",
-                "date": "2003-07-26"
-            }
-        ]
-    }
-];
+export const FSTORY_EDITIONS: FstoryEdition[] = [];
 
 // Editions restored from Luke's own kept files rather than from the archive.
 // They open the same timeline and belong in the same list.
@@ -116,6 +33,21 @@ export type FstoryCuratedEdition = {
     summary: string;
     base: string;
     entry: string;
+};
+
+// The ver 2.0 era, published once from every capture that caught it.
+export const FSTORY_MERGED_EDITION = {
+    "id": "M2",
+    "label": "ver 2.0 통합본",
+    "period": "2001-09 ~ 2003-07",
+    "directory": "ver2-merged",
+    "summary": "ver 2.0 시대의 세 캡처를 하나로 합친 편집본. 화면은 2002년 11월 20일 판을 쓰고, 내용은 세 캡처가 가진 것을 모두 담았다. 어느 시점에도 이대로 존재한 적은 없다.",
+    "builtFrom": [
+        "20011202212712",
+        "20021120053627",
+        "20021128181318",
+        "20030726202839"
+    ]
 };
 
 export const FSTORY_CURATED_EDITIONS: FstoryCuratedEdition[] = [

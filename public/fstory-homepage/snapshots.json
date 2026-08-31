@@ -1,7 +1,7 @@
 {
   "source": "Internet Archive Wayback Machine captures of fstory.net",
   "generatedFrom": "../data/fstory-net-wayback/versions/reconstructed",
-  "note": "One entry per design generation, each merged from every capture that belongs to it. The captures are listed under builtFrom as evidence, not as separate restore points.",
+  "note": "One entry per design generation, each merged from every capture that belongs to it. The captures are listed under builtFrom as evidence, not as separate restore points. An edition whose offeredAs names another edition is published as the source of that merge rather than offered on its own.",
   "annexes": [
     {
       "id": "netian",
@@ -20,12 +20,45 @@
       "summary": "cgi.chollian.net/~foreststory 에 있던 PURY BBS 방명록. 목록 화면에 글 본문이 그대로 실리는 형식이라 오간 글과 답글이 남아 있다. 캡처마다 다른 쪽이 잡혀서 한 캡처만으로는 일부만 보이므로, 모든 캡처의 글을 번호로 합쳐 한 페이지로 다시 세웠다."
     }
   ],
+  "mergedEdition": {
+    "id": "M2",
+    "label": "ver 2.0 통합본",
+    "period": "2001-09 ~ 2003-07",
+    "directory": "ver2-merged",
+    "chrome": "20021120053627",
+    "builtFrom": [
+      "20011202212712",
+      "20021120053627",
+      "20021128181318",
+      "20030726202839"
+    ],
+    "summary": "ver 2.0 시대의 세 캡처를 하나로 합친 편집본. 화면은 2002년 11월 20일 판을 쓰고, 내용은 세 캡처가 가진 것을 모두 담았다. 어느 시점에도 이대로 존재한 적은 없다."
+  },
+  "curatedEditions": [
+    {
+      "id": "C1997",
+      "label": "1997년 판",
+      "period": "1997",
+      "base": "/1997-homepage",
+      "entry": "index.html",
+      "summary": "가장 이른 판. 루크가 직접 보관해 온 파일이고, 목록에만 남아 본문을 잃었던 시 27편을 뒷날 판에서 되찾아 채웠다."
+    },
+    {
+      "id": "C1998",
+      "label": "클래식 (1998 ~ 2001.07)",
+      "period": "1998 ~ 2001-07",
+      "base": "/1998-homepage",
+      "entry": "index.html",
+      "summary": "title1~4.gif 메뉴 그림을 세로로 늘어놓은 초기 계보. 루크의 보관본을 바탕으로, 2001년 7월 캡처에만 남아 있던 자료를 더해 완성했다."
+    }
+  ],
   "editions": [
     {
       "id": "L0",
       "label": "도메인 호스팅 안내",
       "period": "2001-07-15",
       "summary": "도메인 등록 대행사의 기본 안내 화면. 홈페이지 본체가 아니다.",
+      "offeredAs": null,
       "entry": "/fstory-homepage/20010715123146/index.html",
       "representativeCapture": "20010715123146",
       "publishedFileCount": 326,
@@ -47,7 +80,7 @@
       "label": "클래식 (1998 ~ 2001-07)",
       "period": "1998 ~ 2001-07-23",
       "summary": "프레임 없이 title1~4.gif 메뉴 그림을 세로로 늘어놓은 초기 계보. Wayback에 남은 마지막 상태가 2001-07-23이다.",
-      "mergedInto": "C1998",
+      "offeredAs": "C1998",
       "entry": "/fstory-homepage/20010723051951/index.html",
       "representativeCapture": "20010723051951",
       "publishedFileCount": 366,
@@ -69,6 +102,7 @@
       "label": "ver 2.0 최초판",
       "period": "2001-09 ~ 2002-03",
       "summary": "index.html 안의 800x600 iframe이 main.html(42/560 2분할 프레임)을 부른다. 메뉴에 ai·study 항목이 있다.",
+      "offeredAs": "M2",
       "entry": "/fstory-homepage/20011202212712/index.html",
       "representativeCapture": "20011202212712",
       "publishedFileCount": 733,
@@ -98,6 +132,7 @@
       "label": "ver 2.0 메뉴 개편판",
       "period": "2002-03 ~ 2002-11-20",
       "summary": "프레임 구조는 그대로이고 메뉴가 teatime·tech·zboard 중심으로 바뀐다. 본문 첫 화면이 diary/diary.html이다.",
+      "offeredAs": "M2",
       "entry": "/fstory-homepage/20021120053627/index.html",
       "representativeCapture": "20021120053627",
       "publishedFileCount": 939,
@@ -135,6 +170,7 @@
       "label": "ver 2.0 5분할 재설계판",
       "period": "2002-11-28 ~ 2003-07",
       "summary": "main.html이 topmenu·left·content·right·bottom 5분할 프레임으로 바뀌고 bgm 프레임이 붙는다. album·cartoon·media·insidece 메뉴가 새로 생기고 싸이월드 링크가 처음 등장한다.",
+      "offeredAs": "M2",
       "entry": "/fstory-homepage/20021128181318/index.html",
       "representativeCapture": "20021128181318",
       "publishedFileCount": 1206,
@@ -156,6 +192,7 @@
       "label": "ver 3.0 싸이월드 연동판",
       "period": "2003-07-26",
       "summary": "프레임을 모두 걷어내고 단일 index.html로 돌아간 마지막 판. 본문 대부분을 싸이월드 미니홈피에 넘겼다.",
+      "offeredAs": "M2",
       "entry": "/fstory-homepage/20030726202839/index.html",
       "representativeCapture": "20030726202839",
       "publishedFileCount": 1208,

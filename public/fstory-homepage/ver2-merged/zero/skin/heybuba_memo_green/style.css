@@ -1,0 +1,43 @@
+body {
+	scrollbar-face-color: #ffffff;
+	scrollbar-shadow-color: #A9D46D;
+	scrollbar-highlight-color: #A9D46D;
+	scrollbar-3dlight-color: #ffffff;
+	scrollbar-darkshadow-color: #ffffff;
+	scrollbar-track-color: #ffffff;
+	scrollbar-arrow-color: #A9D46D;
+}
+
+body {background-image: url('../../../_missing-image.svg'); background-repeat: no-repeat; background-attachment: fixed; background-position: right bottom}
+body,td,select,div,form,textarea,center,option,pre,blockquote {font-size:9pt; color:#437200;}
+input {font-size:9pt; color:#437200;}
+
+A:link    {color:#437200; text-decoration:none;}
+A:visited {color:#437200; text-decoration:none;}
+A:active  {color:#437200; text-decoration:none;}
+A:hover  {color:#437200; text-decoration:underline;}
+
+.t {font-size:9px; font-family:tahoma; color:#437200; line-height:140%; !important}
+.d {font-size:9px; font-family:tahoma; color:#437200; line-height:140%; !important}
+.p {background-repeat:repeat-y;}
+.input {background:; border:solid 0; border-color:gray; font-family:Tahoma,Verdana; font-size:9pt; color:#437200;}
+.input2 {background:; border:solid 0 #437200; font-family:돋움,굴림; color:#437200; height:13px; line-height:100%;}
+.submit {background:gray; border:solid 1 437200; font-family:Tahoma,Vernada; font-size:9px; font-color:#437200; color:white; height:16px;}
+.submit1 {background-color:ffffff; border:solid 1 #7BA83A; font-color:7BA83A; font-family:tahoma,Verdana; font-size:8pt; width=32; height=17px}
+
+
+
+.line1 {
+background:#7BA83A;
+}
+.line2 {
+background:#EEF6E1;
+}
+.bg1 {
+background:#EEF6E1;
+}
+.bg2 {
+background:;
+}
+
+

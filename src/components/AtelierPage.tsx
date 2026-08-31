@@ -20,13 +20,14 @@ import {
     FSTORY_ANNEXES,
     FSTORY_CURATED_EDITIONS,
     FSTORY_EDITIONS,
+    FSTORY_MERGED_EDITION,
     type FstoryCaptureId,
 } from '@/data/fstoryArchive';
 
 type LibraryMode = 'menu' | 'booting' | 'desktop' | 'shutdown';
 // An edition is addressed by the folder it is published in, which is its
 // representative capture. The picker offers editions, never individual captures.
-type FstoryEditionDirectory = FstoryCaptureId;
+type FstoryEditionDirectory = FstoryCaptureId | typeof FSTORY_MERGED_EDITION.directory;
 type IeTarget = '1997' | '1998' | FstoryEditionDirectory | `annex:${string}`;
 
 type IeHistoryContext = 'iframe' | 'frame2';
@@ -45,15 +46,17 @@ const IE_VIEWPORTS: Partial<Record<IeTarget, { width: number; height: number }>>
 // The desktop opens by year and lands on the edition that was current then.
 // Every capture of that design is already merged into it, so the picker offers
 // six editions of the site rather than nine visits by the crawler.
+// The ver 2.0 era is one edition now, so every year of it opens the same place.
 const FSTORY_YEAR_ENTRY: Record<'2001' | '2002' | '2003', FstoryEditionDirectory> = {
-    '2001': '20011202212712',
-    '2002': '20021128181318',
-    '2003': '20030726202839',
+    '2001': FSTORY_MERGED_EDITION.directory,
+    '2002': FSTORY_MERGED_EDITION.directory,
+    '2003': FSTORY_MERGED_EDITION.directory,
 };
 
-const FSTORY_EDITION_BY_DIRECTORY = new Map<string, (typeof FSTORY_EDITIONS)[number]>(
-    FSTORY_EDITIONS.map((edition) => [edition.directory as string, edition])
-);
+const FSTORY_EDITION_BY_DIRECTORY = new Map<string, { label: string; period: string }>([
+    ...FSTORY_EDITIONS.map((edition) => [edition.directory as string, edition] as const),
+    [FSTORY_MERGED_EDITION.directory, FSTORY_MERGED_EDITION] as const,
+]);
 
 // Annexes are the addresses the site lived at before fstory.net. Nothing on the
 // later pages links back to them, so they get their own entry in the picker.
@@ -749,6 +752,9 @@ const AtelierPage: React.FC = () => {
                                                     ))}
                                                 </optgroup>
                                                 <optgroup label="fstory.net">
+                                                    <option value={FSTORY_MERGED_EDITION.directory}>
+                                                        {FSTORY_MERGED_EDITION.label} · {FSTORY_MERGED_EDITION.period}
+                                                    </option>
                                                     {FSTORY_EDITIONS.map((edition) => (
                                                         <option key={edition.id} value={edition.directory}>
                                                             {edition.label} · {edition.period}

@@ -161,9 +161,9 @@ describe('Legacy homepage bundles', () => {
 
         for (const edition of manifest.editions) {
             expect(generated).toContain(edition.representativeCapture);
-            // An edition folded into a curated one is still published and still
-            // in the manifest, but the picker offers the curated edition instead.
-            if (!edition.mergedInto) expect(generated).toContain(edition.label);
+            // An edition folded into another is still published and still in the
+            // manifest, but the picker offers the edition it was folded into.
+            if (edition.offeredAs === edition.id) expect(generated).toContain(edition.label);
         }
     });
 
@@ -175,9 +175,10 @@ describe('Legacy homepage bundles', () => {
             .filter((entry) => entry.isDirectory())
             .map((entry) => entry.name)
             .sort();
-        const expected = manifest.editions
-            .map((edition: { representativeCapture: string }) => edition.representativeCapture)
-            .sort();
+        const expected = [
+            ...manifest.editions.map((edition: { representativeCapture: string }) => edition.representativeCapture),
+            manifest.mergedEdition.directory,
+        ].sort();
 
         expect(published).toEqual(expected);
 

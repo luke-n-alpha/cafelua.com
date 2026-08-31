@@ -10,6 +10,8 @@ export const LINEAGES = [
     period: '2001-07-15',
     representative: '20010715123146',
     summary: '도메인 등록 대행사의 기본 안내 화면. 홈페이지 본체가 아니다.',
+    // Not the homepage, so it is not offered as one. Published as evidence.
+    offeredAs: null,
   },
   {
     id: 'L1',
@@ -22,7 +24,7 @@ export const LINEAGES = [
     // capture is still published so the merge has a source and the archive keeps
     // its own record, but the Atelier offers the curated 1998 edition instead of
     // listing a second, thinner copy of the same site.
-    mergedInto: 'C1998',
+    offeredAs: 'C1998',
   },
   {
     id: 'L2.0',
@@ -31,6 +33,7 @@ export const LINEAGES = [
     representative: '20011202212712',
     summary:
       'index.html 안의 800x600 iframe이 main.html(42/560 2분할 프레임)을 부른다. 메뉴에 ai·study 항목이 있다.',
+    offeredAs: 'M2',
   },
   {
     id: 'L2.1',
@@ -39,6 +42,7 @@ export const LINEAGES = [
     representative: '20021120053627',
     summary:
       '프레임 구조는 그대로이고 메뉴가 teatime·tech·zboard 중심으로 바뀐다. 본문 첫 화면이 diary/diary.html이다.',
+    offeredAs: 'M2',
   },
   {
     id: 'L2.2',
@@ -47,6 +51,7 @@ export const LINEAGES = [
     representative: '20021128181318',
     summary:
       'main.html이 topmenu·left·content·right·bottom 5분할 프레임으로 바뀌고 bgm 프레임이 붙는다. album·cartoon·media·insidece 메뉴가 새로 생기고 싸이월드 링크가 처음 등장한다.',
+    offeredAs: 'M2',
   },
   {
     id: 'L3',
@@ -55,6 +60,11 @@ export const LINEAGES = [
     representative: '20030726202839',
     summary:
       '프레임을 모두 걷어내고 단일 index.html로 돌아간 마지막 판. 본문 대부분을 싸이월드 미니홈피에 넘겼다.',
+    // Not a redesign but a backup and a bridge: by 2003 Cyworld was the home and
+    // this page pointed at it. It carries no corner of its own — three files the
+    // earlier captures lack, and a menu aimed back at them — so its files go into
+    // the merged edition and the page itself is not offered separately.
+    offeredAs: 'M2',
   },
 ];
 
@@ -81,6 +91,31 @@ export const CURATED_EDITIONS = [
     summary: 'title1~4.gif 메뉴 그림을 세로로 늘어놓은 초기 계보. 루크의 보관본을 바탕으로, 2001년 7월 캡처에만 남아 있던 자료를 더해 완성했다.',
   },
 ];
+
+// The ver 2.0 era ran from 2001-09 to 2003-07 and the archive caught it three
+// times, each catching a different amount. Rather than offer three partial
+// copies of one site, they are published once as a merged edition: every file
+// any of them holds, wearing the chrome of the one that still renders.
+//
+// This is an edited edition, not a moment in time. It never existed exactly
+// like this, and the three captures it is built from stay published beside it.
+export const MERGED_EDITION = {
+  id: 'M2',
+  label: 'ver 2.0 통합본',
+  period: '2001-09 ~ 2003-07',
+  directory: 'ver2-merged',
+  // The 2002-11-20 capture is the one whose chrome survives intact: its side
+  // menu, its background and its character art all render. The 5-pane redesign
+  // carries more menu entries but lost its backdrop, so it reads as a black page.
+  chrome: '20021120053627',
+  // Oldest first; later captures win a collision because the site only grew.
+  // The 2003 edition is in here for its files, not its design: it was a backup
+  // and a bridge to Cyworld rather than a redesign, and it carries no corner of
+  // its own — three files and a menu that points back at what came before.
+  contributors: ['20011202212712', '20021120053627', '20021128181318', '20030726202839'],
+  summary:
+    'ver 2.0 시대의 세 캡처를 하나로 합친 편집본. 화면은 2002년 11월 20일 판을 쓰고, 내용은 세 캡처가 가진 것을 모두 담았다. 어느 시점에도 이대로 존재한 적은 없다.',
+};
 
 export const SNAPSHOTS = [
   ['20010715123146', '2001-07-15', 'L0', '도메인 호스팅 초기 화면'],

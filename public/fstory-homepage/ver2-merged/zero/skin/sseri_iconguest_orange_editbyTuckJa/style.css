@@ -1,0 +1,29 @@
+BODY,TD,SELECT,input,DIV,form,TEXTAREA,center,option,pre,blockquote {font-size:9pt; font-family:굴림; color:#000000;line-height:130%}
+
+A:link    {color:#000000;text-decoration:none;}
+A:visited {color:#000000;text-decoration:none;}
+A:active  {color:#000000;text-decoration:none;}
+A:hover  {color:#000000;text-decoration:none;}
+
+BODY
+{scrollbar-face-color:FDEFC2; scrollbar-shadow-color:#FFB000 ;scrollbar-highlight-color: #FFFFFF;
+scrollbar-3dlight-color: #FFFFFF;scrollbar-darkshadow-color: #FFFFFF;
+scrollbar-track-color: #FFFFFF;scrollbar-arrow-color: #FFB000;
+margin-left: 1em; 
+background-image: url('../../../_missing-image.svg');
+background-position: top left;
+background-attachment: fixed;
+background-repeat: no-repeat;
+);
+}
+
+.head {border:solid 1 black;font-family:verdana;font-size:9pt;color:black;background-color:white;height:19px}
+.textarea {color:#FFB000;border:solid 1 #FDEFC2; width:100%; height:70;}
+.input {color:#FFB000;border-width:0px;border-bottom: dotted #FDEFC2 1px;}
+.submit {border:solid 0 #FFB000;font-family:verdana;font-size:7pt;color:white;background-color:#FFB000;}
+.small {font-family:verdana;font-size:10px;}
+.reply {background-color:#FDF5D8;color:#FFB000}
+.notice {border:dotted 1 #FDEFC2;width:350;}
+.writewidth {width:350;}
+.icon {width:75}
+.iconprev {border:dotted 1 #FDEFC2;width:100%;}

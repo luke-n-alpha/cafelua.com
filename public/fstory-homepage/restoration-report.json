@@ -1,6 +1,6 @@
 {
   "method": "Exact canonical fstory.net URL matches recovered from another archived timestamp, plus one archive-corroborated directory rename. No filename-only guesses and no invented artwork.",
-  "generatedAt": "2026-08-31T04:24:10.738Z",
+  "generatedAt": "2026-08-31T04:35:40.494Z",
   "pathAliases": [
     {
       "from": "mydoc/novel/",
@@ -31,7 +31,7 @@
     }
   ],
   "totals": {
-    "publishedFiles": 4778,
+    "publishedFiles": 5994,
     "restoredFromArchive": 293,
     "aliasResolved": 1287,
     "caseResolved": 0,
@@ -1022,6 +1022,59 @@
           "count": 4
         }
       ]
+    },
+    {
+      "timestamp": "ver2-merged",
+      "date": "2001-09 ~ 2003-07",
+      "lineage": "M2",
+      "publishedFiles": 1216,
+      "menuNotes": [
+        "2001년 판의 인공지능 항목을 되살렸다",
+        "신기술 항목을 그 코너의 살아 있는 첫 화면으로 이었다"
+      ],
+      "mergedFrom": [
+        {
+          "capture": "20011202212712",
+          "representative": false
+        },
+        {
+          "capture": "20021120053627",
+          "representative": true
+        },
+        {
+          "capture": "20021128181318",
+          "representative": false
+        },
+        {
+          "capture": "20030726202839",
+          "representative": false
+        }
+      ],
+      "originalFiles": 0,
+      "restoredFromArchive": 0,
+      "aliasResolved": 0,
+      "caseResolved": 0,
+      "rewrittenReferences": 0,
+      "placeholderImages": 0,
+      "droppedBackgrounds": 0,
+      "disabledDownloads": 0,
+      "disabledMedia": 0,
+      "disabledForms": 0,
+      "noticeLinks": 0,
+      "unresolvedKept": 0,
+      "extensionsAdded": 0,
+      "staticised": 0,
+      "guestbookMerged": 0,
+      "curatedRestored": 0,
+      "reconstructedAssets": 0,
+      "thumbnailsMade": 0,
+      "externalImages": 0,
+      "externalAssets": 0,
+      "externalFrames": 0,
+      "externalLinks": 0,
+      "cyworldRewrites": 0,
+      "unresolvedUniquePaths": 0,
+      "unresolvedTopPaths": []
     }
   ],
   "curatedEditions": [

@@ -1,0 +1,410 @@
+<!-- PURYBBS EX ver 1.6 -->
+<!-- Script Work by JH (CERBERUS@hitel.net) -->
+<!-- Script Modified by Serepy (serepy@hanmail.net) -->
+
+<html>
+<head>
+<title>PURY BULLETIN BOARD SYSTEM EX [MAIN MODE]</title>
+<style type="text/css">
+<!--
+A:link, A:visited { text-decoration: none }
+A:hover { color:red }
+-->
+</style>
+
+<style type="text/css">
+BODY 
+{scrollbar-face-color: #FFFFFF; scrollbar-shadow-color: #99CCFF; 
+scrollbar-highlight-color: #99CCFF; scrollbar-3dlight-color: #FFFFFF; 
+scrollbar-darkshadow-color: #FFFFFF; scrollbar-track-color: #FFFFFF;
+scrollbar-arrow-color: #FFFFFF;
+font-size:9pt; font-family:돋움;}
+</style>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body background="back.jpg" link=334477 vlink=a04080 alink=a04080 topmargine=0 bgproperties=fixed>
+<a name="#top"></a>
+
+<center>
+<font size=2 color=000033 face=tahoma>PURY BBS EX</font>&nbsp;
+<font size=1 face=verdana color=404080> [MAIN MODE]</font>
+<table border=0 cellpadding=3 width=500><tr>
+<td><font size=1 face=verdana color=000033>[ Recent Article Number : <font color=black><b>124</b></font> ]</font></td>
+</table>
+
+<hr color=6060a0 width=500>
+	
+	<font size=2>
+<a href="purybbs.html?page=0">◁◁</a>&nbsp;&nbsp;
+<a href="purybbs.html?page=42"><b>[Backward]</b></a>&nbsp;&nbsp;
+<a href="purybbs.html?page=28"><b>[5]</b></a>
+<a href="purybbs.html?page=35"><b>[6]</b></a>
+<a href="purybbs.html?page=42"><b>[7]</b></a>
+<font color=404080><b>[8]</b>
+<a href="purybbs.html?page=56"><b>[9]</b></a>
+<a href="purybbs.html?page=63"><b>[10]</b></a>
+<a href="purybbs.html?page=70"><b>[11]</b></a>
+&nbsp;&nbsp;<a href="purybbs.html?page=56"><b>[Forward]</b></a>
+&nbsp;&nbsp;<a href="purybbs.html?page=119">▷▷</a>
+	<!--link-->
+<form method=POST data-unrestored-action="purybbs.cgi" name=frmwrite onsubmit="return false" data-unrestored="form">
+<input type=hidden name=mode value=msg>
+<input type=hidden name=replyflag value=off>
+<script language="JavaScript">
+<!--
+function chicon() {
+	var iconsel=this.frmwrite.icon;
+	var colorsel=this.frmwrite.color;
+	if (!colorsel || !colorsel[colorsel.selectedIndex].icon) {
+		var isel=iconsel[iconsel.selectedIndex].value;
+		if (isel.substring(0, 7) == "http://") document.images.picicon.src = isel;
+		else document.images.picicon.src = "../../../_missing-image.svg";
+	} else {
+		var csel=colorsel[colorsel.selectedIndex].icon;
+		if (csel.substring(0, 7) == "http://") document.images.picicon.src = csel;
+		else document.images.picicon.src = "../../../_missing-image.svg";
+	}
+}
+//-->
+</script>
+<table cellspacing=0 border=0 cellpadding=0>
+<tr>
+
+<td bgcolor=EECCBB  align=center  width=80><font size=2> 제목</b></td>
+<!--title--><td bgcolor="#EECCBB"><input type=text name="sub" value="" size="35"></td>
+ <td bgcolor=FFDDBB align=center><font size=2> Fstory의 방명록 </td><tr>
+
+
+<td bgcolor=FFEEAA align=center><font size=2>닉네임</b></td>
+<td bgcolor=FFF9F0>
+<!--login--><input type=text name="name" value="" size="15">
+<td  bgcolor=FFEECC align=center rowspan=3><img name=picicon hspace=10></td><tr>
+         
+
+<td align=center bgcolor=FFEEAA><font size=2>E-Mail</b></td>
+<td  bgcolor=FFF9F0><input type=text name="email" value="" size="24"></td><tr>
+
+
+<td align=center bgcolor=FFEEAA><font size=2>홈 주소</b></td>
+<td bgcolor=FFF9F0><input type=text name="url" value="http://" size="35"></td><tr>
+
+
+<td align=center bgcolor=FFEEAA><font size=2>캐릭터선택</b></td>
+<td  bgcolor=FFF9F0><select name=icon onchange="chicon();"><!--icon_include-->
+<option value=blank.gif>No icon
+<option value=cherry.jpg>체리
+<option value=cherry2.jpg>체리2
+<option value=sample2.gif>지수
+<option value=sample3.gif>소랑
+<option value=sample4.gif>케로
+<option value=shadow59.jpg>셰도우
+<option value=piyoko.jpg>삐요코
+<option value=dejiko.jpg>데지코
+<option value=nadia.gif>나디아
+<option value=king.jpg>킹
+<option value=jang.jpg>쟝
+<option value=shinobu.jpg>시노부
+<option value=naru.jpg>나루
+<option value=akari.jpg>아카리
+<option value=multy.jpg>멀티
+<option value=avalon.jpg>영화아발론
+<option value=vector.jpg>벡터맨
+<option value=majing.jpg>마징가
+<option value=tkv.jpg>태권V
+<option value=joe.jpg>허리케인죠
+<option value=asura.gif>아수라백작
+<option value=duli.jpg>둘리
+<option value=yrabit.jpg>엽기토끼
+<option value=pika.jpg>피카츄
+<option value=bakgu.gif>백구
+<option value=card5.gif>플라우워(card)
+<option value=z.jpg>제트
+<option value=spike.jpg>스파이크
+<option value=pei.jpg>페이
+<option value=card6.gif>대쉬(card)
+<option value=card7.gif>파워(card)
+<option value=kenshin.jpg>켄신
+<option value=basket59.jpg>농구공
+<option value=muyul.jpg>무휼왕
+<option value=yun.jpg>연이
+<option value=banjang.jpg>???
+<option value=arima.jpg>아리마
+<option value=yukino.jpg>유키노
+<option value=dare.jpg>타래팬더
+</select></td>
+
+<th  bgcolor=FFDDBB><input type="button" value="아이콘 선택" onclick="open('purybbs.cgi?mode=iconview','icon','width=550,height=400,scrollbars=1,resizable=0');return false"
+	style="background-color:FFF9F0; color:000000; font-size:12; font-weight:bold; width:110; height:20"></th>
+<tr>
+
+<td bgcolor=FFEEAA align=center><font size=2>글 내용</b></td>
+<td colspan=2  bgcolor=FFF9F0><font size=2 color=red>[경고]</font><font size=2 color="#333333">&nbsp;태그는 쓰실수 없습니다. &nbsp;<input type=checkbox name=cook value="on" checked><font color=0033aa>쿠키사용</font><br>
+<textarea name=comment COLS=48 ROWS=4 wrap=soft></textarea></td>
+</td>
+
+<!--login--><tr>
+<!--login--><td  bgcolor=CCaa88 align=center><FONT SIZE=-1>패스워드</b></FONT></td>
+<!--login--><td colspan=2 bgcolor="#CCaa88"><input type=password name=pwd size=8 maxlength=8 value=""><font size=2 color=black><!--blank password--> (글 삭제시 사용 영수 8문자 내)</td>
+<tr>
+<td colspan=3 align=center height=30><input type=submit value="&nbsp 보내기 &nbsp" style="height=20;font-size=11;color:000000;border-width:1px; border-color=ffcc00;border-style:dotted;background:clean">
+<input type=reset value="&nbsp 취소 &nbsp" style="height=20;font-size=11;color:000000;border-width:1px; border-color=ffcc00;border-style:dotted;background:clean"></td>
+
+</table>
+<br>
+
+<script language="JavaScript">
+<!--
+	chicon();
+//-->
+</script>
+</form>
+<a name=text></a>
+<table width=600>
+<tr><td align=left>
+<table border=1 cellpadding=0 cellspacing=0 width=550 bordercolor=006644><td>
+	<table cellpadding=1 cellspacing=0 width=550>
+	<tr>
+	<td width=410 valign=top nowrap><font size=2 color=000070 face=verdana>&nbsp;[No. 75]&nbsp;<b>ㄱ</font></b></td>
+	<td align=right width=140 nowrap>
+			<input type="button" value="답글" style="background-color:#00aaee; font-size:12; height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dres_msg%26resno%3D75%26page%3D49%2527&k=board">
+			<input type="button" value="수정" style="background-color:#00aaee; font-size:12;  height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_edit%26num%3D75%26page%3D49%2527&k=board">
+			<input type="button" value="삭제" style="background-color:#00aaee; font-size:12; height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_del%26num%3D75%2527&k=board">
+		</td>
+	<tr>	<td><font color=333333 size=2>&nbsp;&nbsp;&nbsp;&nbsp; <font color=333333 size=2>&nbsp; 2002/01/01(Tue) 14:49:24</font>에 <b><font color=black> 김민지 </font></b>님이..</td>
+		<td align=right><font size=2><a href="mailto:godk1093@hanmir.com">E-MAIL</a>&nbsp;&nbsp;<a href="http://★민지의 홈★" target="_blank">URL</a>&nbsp;&nbsp;</font></td>
+	<tr>	<td valign=top colspan=2 align=center>
+			<table width=99% border=0 cellpadding=3>
+			<tr>	<td valign=top><img src=icon/basket59.jpg width=70 height=70></td>
+				<td width=100% valign=top><font size=2 color=black>왠<p>
+					</font>
+				</td>
+			</table>
+	<p>
+	<!--replyfile-->
+	<p>
+	</td></table></td></table>
+</td></table>
+<br>
+<table width=600>
+<tr><td align=left>
+<table border=1 cellpadding=0 cellspacing=0 width=550 bordercolor==006644><td>
+	<table cellpadding=1 cellspacing=0 width=550>
+	<tr>
+	<td width=410 valign=top nowrap><font size=2 color=000070 face=verdana>&nbsp;[No. 74]<b>&nbsp;ㅈ</font></b></td>
+	<td align=right width=140 nowrap>
+			<input type="button" value="답글" style="background-color:#00aaee; font-size:12; height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dres_msg%26resno%3D74%26page%3D49%2527&k=board">
+			<input type="button" value="수정" style="background-color:#00aaee; font-size:12;  height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_edit%26num%3D74%26page%3D49%2527&k=board">
+			<input type="button" value="삭제" style="background-color:#00aaee; font-size:12;  height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_del%26num%3D74%2527&k=board">
+		</td>
+	<tr>	<td><font color=333333 size=2>&nbsp;&nbsp;&nbsp;&nbsp; 2002/01/01(Tue) 14:49:03</font><font size=2>에 <b><font color=black>김민지</font></b>님이 쓰셨습니다.</td>
+		<td align=right><font size=2><a href="mailto:godk1093@hanmir.com">E-MAIL</a>&nbsp;&nbsp;<a href="http://★민지의 홈★" target="_blank">URL</a>&nbsp;&nbsp;</font></td>
+	<tr>	<td valign=top colspan=2 align=center>
+			<table width=99% border=0 cellpadding=3>
+			<tr>	<td valign=top><img src=icon/kenshin.jpg width=70 height=70></td>
+				<td width=100% valign=top><font size=2 color=black>,.,.,.,.,.,
+					
+				</td>
+			</table>
+	<p>
+	<!--replyfile-->
+	<p>
+	</td></table></td></table>
+</td></table>
+<br>
+<table width=600>
+<tr><td align=left>
+<table border=1 cellpadding=0 cellspacing=0 width=550 bordercolor=006644><td>
+	<table cellpadding=1 cellspacing=0 width=550>
+	<tr>
+	<td width=410 valign=top nowrap><font size=2 color=000070 face=verdana>&nbsp;[No. 73]&nbsp;<b>ㄴ</font></b></td>
+	<td align=right width=140 nowrap>
+			<input type="button" value="답글" style="background-color:#00aaee; font-size:12; height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dres_msg%26resno%3D73%26page%3D49%2527&k=board">
+			<input type="button" value="수정" style="background-color:#00aaee; font-size:12;  height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_edit%26num%3D73%26page%3D49%2527&k=board">
+			<input type="button" value="삭제" style="background-color:#00aaee; font-size:12; height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_del%26num%3D73%2527&k=board">
+		</td>
+	<tr>	<td><font color=333333 size=2>&nbsp;&nbsp;&nbsp;&nbsp; <font color=333333 size=2>&nbsp; 2002/01/01(Tue) 14:48:48</font>에 <b><font color=black> 김민지 </font></b>님이..</td>
+		<td align=right><font size=2><a href="mailto:godk1093@hanmir.com">E-MAIL</a>&nbsp;&nbsp;<a href="http://★민지의 홈★" target="_blank">URL</a>&nbsp;&nbsp;</font></td>
+	<tr>	<td valign=top colspan=2 align=center>
+			<table width=99% border=0 cellpadding=3>
+			<tr>	<td valign=top><img src=icon/card7.gif width=70 height=70></td>
+				<td width=100% valign=top><font size=2 color=black>카드<p>
+					</font>
+				</td>
+			</table>
+	<p>
+	<!--replyfile-->
+	<p>
+	</td></table></td></table>
+</td></table>
+<br>
+<table width=600>
+<tr><td align=left>
+<table border=1 cellpadding=0 cellspacing=0 width=550 bordercolor==006644><td>
+	<table cellpadding=1 cellspacing=0 width=550>
+	<tr>
+	<td width=410 valign=top nowrap><font size=2 color=000070 face=verdana>&nbsp;[No. 72]<b>&nbsp;아</font></b></td>
+	<td align=right width=140 nowrap>
+			<input type="button" value="답글" style="background-color:#00aaee; font-size:12; height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dres_msg%26resno%3D72%26page%3D49%2527&k=board">
+			<input type="button" value="수정" style="background-color:#00aaee; font-size:12;  height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_edit%26num%3D72%26page%3D49%2527&k=board">
+			<input type="button" value="삭제" style="background-color:#00aaee; font-size:12;  height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_del%26num%3D72%2527&k=board">
+		</td>
+	<tr>	<td><font color=333333 size=2>&nbsp;&nbsp;&nbsp;&nbsp; 2002/01/01(Tue) 14:48:19</font><font size=2>에 <b><font color=black>김민지</font></b>님이 쓰셨습니다.</td>
+		<td align=right><font size=2><a href="mailto:godk1093@hanmir.com">E-MAIL</a>&nbsp;&nbsp;<a href="http://★민지의 홈★" target="_blank">URL</a>&nbsp;&nbsp;</font></td>
+	<tr>	<td valign=top colspan=2 align=center>
+			<table width=99% border=0 cellpadding=3>
+			<tr>	<td valign=top><img src=icon/card6.gif width=70 height=70></td>
+				<td width=100% valign=top><font size=2 color=black>크로으카드
+					
+				</td>
+			</table>
+	<p>
+	<!--replyfile-->
+	<p>
+	</td></table></td></table>
+</td></table>
+<br>
+<table width=600>
+<tr><td align=left>
+<table border=1 cellpadding=0 cellspacing=0 width=550 bordercolor=006644><td>
+	<table cellpadding=1 cellspacing=0 width=550>
+	<tr>
+	<td width=410 valign=top nowrap><font size=2 color=000070 face=verdana>&nbsp;[No. 71]&nbsp;<b>이ㅓ</font></b></td>
+	<td align=right width=140 nowrap>
+			<input type="button" value="답글" style="background-color:#00aaee; font-size:12; height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dres_msg%26resno%3D71%26page%3D49%2527&k=board">
+			<input type="button" value="수정" style="background-color:#00aaee; font-size:12;  height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_edit%26num%3D71%26page%3D49%2527&k=board">
+			<input type="button" value="삭제" style="background-color:#00aaee; font-size:12; height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_del%26num%3D71%2527&k=board">
+		</td>
+	<tr>	<td><font color=333333 size=2>&nbsp;&nbsp;&nbsp;&nbsp; <font color=333333 size=2>&nbsp; 2002/01/01(Tue) 14:47:43</font>에 <b><font color=black> 김민지 </font></b>님이..</td>
+		<td align=right><font size=2><a href="mailto:godk1093@hanmir.com">E-MAIL</a>&nbsp;&nbsp;<a href="http://★민지의 홈★" target="_blank">URL</a>&nbsp;&nbsp;</font></td>
+	<tr>	<td valign=top colspan=2 align=center>
+			<table width=99% border=0 cellpadding=3>
+			<tr>	<td valign=top><img src=icon/pei.jpg width=70 height=70></td>
+				<td width=100% valign=top><font size=2 color=black>어휴<p>
+					</font>
+				</td>
+			</table>
+	<p>
+	<!--replyfile-->
+	<p>
+	</td></table></td></table>
+</td></table>
+<br>
+<table width=600>
+<tr><td align=left>
+<table border=1 cellpadding=0 cellspacing=0 width=550 bordercolor==006644><td>
+	<table cellpadding=1 cellspacing=0 width=550>
+	<tr>
+	<td width=410 valign=top nowrap><font size=2 color=000070 face=verdana>&nbsp;[No. 70]<b>&nbsp;ㄴㅇ</font></b></td>
+	<td align=right width=140 nowrap>
+			<input type="button" value="답글" style="background-color:#00aaee; font-size:12; height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dres_msg%26resno%3D70%26page%3D49%2527&k=board">
+			<input type="button" value="수정" style="background-color:#00aaee; font-size:12;  height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_edit%26num%3D70%26page%3D49%2527&k=board">
+			<input type="button" value="삭제" style="background-color:#00aaee; font-size:12;  height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_del%26num%3D70%2527&k=board">
+		</td>
+	<tr>	<td><font color=333333 size=2>&nbsp;&nbsp;&nbsp;&nbsp; 2002/01/01(Tue) 14:47:15</font><font size=2>에 <b><font color=black>김민지</font></b>님이 쓰셨습니다.</td>
+		<td align=right><font size=2><a href="mailto:godk1093@hanmir.com">E-MAIL</a>&nbsp;&nbsp;<a href="http://★민지의 홈★" target="_blank">URL</a>&nbsp;&nbsp;</font></td>
+	<tr>	<td valign=top colspan=2 align=center>
+			<table width=99% border=0 cellpadding=3>
+			<tr>	<td valign=top><img src=icon/spike.jpg width=70 height=70></td>
+				<td width=100% valign=top><font size=2 color=black>그림이잘안보여
+					
+				</td>
+			</table>
+	<p>
+	<!--replyfile-->
+	<p>
+	</td></table></td></table>
+</td></table>
+<br>
+<table width=600>
+<tr><td align=left>
+<table border=1 cellpadding=0 cellspacing=0 width=550 bordercolor=006644><td>
+	<table cellpadding=1 cellspacing=0 width=550>
+	<tr>
+	<td width=410 valign=top nowrap><font size=2 color=000070 face=verdana>&nbsp;[No. 69]&nbsp;<b>ㄴㅇ</font></b></td>
+	<td align=right width=140 nowrap>
+			<input type="button" value="답글" style="background-color:#00aaee; font-size:12; height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dres_msg%26resno%3D69%26page%3D49%2527&k=board">
+			<input type="button" value="수정" style="background-color:#00aaee; font-size:12;  height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_edit%26num%3D69%26page%3D49%2527&k=board">
+			<input type="button" value="삭제" style="background-color:#00aaee; font-size:12; height:20"
+				onclick="../../../_unrestored.html?p=%2Fchollian%2Fcgi%2Fpury%2Fdocument.location%3D'purybbs.cgi%3Fmode%3Dmsg_del%26num%3D69%2527&k=board">
+		</td>
+	<tr>	<td><font color=333333 size=2>&nbsp;&nbsp;&nbsp;&nbsp; <font color=333333 size=2>&nbsp; 2002/01/01(Tue) 14:46:52</font>에 <b><font color=black> 김민지 </font></b>님이..</td>
+		<td align=right><font size=2><a href="mailto:godk1093@hanmir.com">E-MAIL</a>&nbsp;&nbsp;<a href="http://★민지의 홈★" target="_blank">URL</a>&nbsp;&nbsp;</font></td>
+	<tr>	<td valign=top colspan=2 align=center>
+			<table width=99% border=0 cellpadding=3>
+			<tr>	<td valign=top><img src=icon/z.jpg width=70 height=70></td>
+				<td width=100% valign=top><font size=2 color=black>장사<p>
+					</font>
+				</td>
+			</table>
+	<p>
+	<!--replyfile-->
+	<p>
+	</td></table></td></table>
+</td></table>
+<br>
+	<!--data_include-->
+<a href="purybbs.html?page=0">◁◁</a>&nbsp;&nbsp;
+<a href="purybbs.html?page=42"><b>[Backward]</b></a>&nbsp;&nbsp;
+<a href="purybbs.html?page=28"><b>[5]</b></a>
+<a href="purybbs.html?page=35"><b>[6]</b></a>
+<a href="purybbs.html?page=42"><b>[7]</b></a>
+<font color=404080><b>[8]</b>
+<a href="purybbs.html?page=56"><b>[9]</b></a>
+<a href="purybbs.html?page=63"><b>[10]</b></a>
+<a href="purybbs.html?page=70"><b>[11]</b></a>
+&nbsp;&nbsp;<a href="purybbs.html?page=56"><b>[Forward]</b></a>
+&nbsp;&nbsp;<a href="purybbs.html?page=119">▷▷</a>
+	<!--link-->
+
+<p>
+<font size=1 face=verdana color=000033>ARTICLE COUNT ( PURYBBS.LOG )
+<font size=2 color=black>&nbsp;&nbsp;<b>122/500</b>&nbsp;&nbsp;
+<font size=1 face=verdana color=000033>ARTICLE COUNT ( BACKUP.LOG )
+<font size=2 color=black>&nbsp;&nbsp;<b>0</b>
+<p>
+
+<form data-unrestored-action="purybbs.cgi" method=POST onsubmit="return false" data-unrestored="form">
+<table bgcolor="#66aa55">
+<td> <input type=hidden name=mode value="find"> <font size=2 color=404080><b>찾아보기</b></font>
+       <input type=text name=word size=13 value=""></td>
+<td> <input type=radio name=cond value="n" checked><font size=2 color=404080 face=verdana>이름으로
+        <input type=radio name=cond value="w">단어로 </font>
+</td>
+<td rowspan=2> <input type=submit value="확인" target=new style="width=40; height=23; color:black; background-color=8080ff; border-width:1px; border-color:505080;">
+</td><tr>
+ <td align=right  bgcolor="#88cc66"><font size=2>[<a href="purystat.html" target=new><font color=4040a0> 이름 통계 </font></a>]
+ <td bgcolor="#88cc66"><font size=2>[<a href="purystat.html?mode=1" target=new><font color=4040a0> 아이콘 통계 </font></a>]</font></td>
+
+</table>
+</form>
+
+<hr width=500>
+<table border=0 width=480><th align=right><font size=2><a href=#top><font face=verdana color=green>Top</font></a></font></th></table>
+<font face=verdana color=000033>Script modified by Serepy [<a href="http://serepy.prettywitch.net" target="_blank">ELYSIUM</A>]</font><BR>
+<font face=verdana color=000033>Script originally worked by JH [<a href="http://ellije.pe.kr/~interlude" target="_blank">Interlude</A>]</font><BR>
+<font size=1 face=verdana color=000033>Reference : YY Board [<a href="http://www.kent-web.com/" target="_blank">KENT</A>][<a href="http://village.infoweb.ne.jp/~fwhf2602/" target="_blank">MakiMaki</A>]</font>
+<font size=1 face=verdana color=000033>& Pure Life Dream &nbsp;[<a href="http://free.soranet.com/~luciel/pldbbs/" target="_blank">Russie</A>]</font></b>
+
+</body></html>

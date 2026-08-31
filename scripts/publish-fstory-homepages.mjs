@@ -15,7 +15,7 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ANNEXES, CURATED_EDITIONS, LINEAGES, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS } from './fstory-lineage.mjs';
+import { ANNEXES, CURATED_EDITIONS, LINEAGES, MERGED_EDITION, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS } from './fstory-lineage.mjs';
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dataRoot = path.resolve(appRoot, '../data/fstory-net-wayback');
@@ -1002,6 +1002,92 @@ for (const lineage of LINEAGES) {
   reports.push(await publishEdition({ lineage, captures }));
 }
 
+// ------------------------------------------------------- merged ver 2.0 edition
+//
+// The archive caught this era three times and each catch was partial. Offering
+// three thin copies of one site serves nobody, so they are published once more
+// as a single edition: every file any capture holds, wearing the chrome of the
+// capture that still renders.
+//
+// Two rules, in this order. Content: later wins, because the site only grew.
+// Chrome: the 2002-11-20 capture wins outright, because its side menu, its
+// background and its character art all survive, while the 5-pane redesign lost
+// its backdrop and reads as a black page.
+const mergedMenuNotes = [];
+{
+  const merged = path.join(destinationRoot, MERGED_EDITION.directory);
+  await rm(merged, { recursive: true, force: true });
+  await mkdir(merged, { recursive: true });
+  for (const capture of MERGED_EDITION.contributors) {
+    await cp(path.join(destinationRoot, capture), merged, { recursive: true, force: true, preserveTimestamps: true });
+  }
+
+  // The frame chrome, put back the way the rendering capture had it. Every other
+  // file keeps whatever the newest capture contributed.
+  const chrome = path.join(destinationRoot, MERGED_EDITION.chrome);
+  const chromeFiles = (await readdir(chrome, { withFileTypes: true }))
+    .filter((entry) => entry.isFile() && /\.(html?|gif|jpg|css|js)$/i.test(entry.name))
+    .map((entry) => entry.name);
+  for (const name of chromeFiles) {
+    await cp(path.join(chrome, name), path.join(merged, name), { force: true, preserveTimestamps: true });
+  }
+  await cp(path.join(chrome, 'img'), path.join(merged, 'img'), { recursive: true, force: true, preserveTimestamps: true });
+
+  // The side menu changed between captures, dropping entries as it gained
+  // others. A merged edition should carry every entry that still leads
+  // somewhere, so the two menus are combined.
+  const menuPath = path.join(merged, 'menu.html');
+  let menu = await readFile(menuPath, 'utf8');
+
+  // The 2001 menu had an 인공지능 button that the 2002 menu dropped. The corner
+  // it opened is fully restored — ai/ai.html and nine articles under it — so
+  // without this entry the whole of it is unreachable from the merged edition.
+  const aiEntry = `<td height=30>
+ <a href="ai/ai.html" target="screen">
+ <img src="img/ai_n.gif" border=0 alt="인공지능" id="ai" onmouseover="ai.src='img/ai_y.gif'" onmouseout="ai.src='img/ai_n.gif'">
+ </a> <tr>
+ 
+ `;
+  // Whitespace inside the cell varies between captures, so match the cell that
+  // opens the guestbook rather than an exact string.
+  const guestbookCell = /<td height=30>\s*<a href="chollian\/cgi\/pury\/purybbs\.html"/.exec(menu);
+  if (!menu.includes('ai/ai.html') && guestbookCell) {
+    menu = menu.slice(0, guestbookCell.index) + aiEntry + menu.slice(guestbookCell.index);
+    mergedMenuNotes.push('2001년 판의 인공지능 항목을 되살렸다');
+  }
+
+  // `tech/frame.html` was the frameset that held this corner; it was never
+  // archived, but the menu it framed survives and reaches every page under it,
+  // including the AI writing. Point the button at the corner's real entrance
+  // rather than leaving it dead.
+  const techEntrance = 'tech/menu.html';
+  if (existsSync(path.join(merged, techEntrance)) && menu.includes('./tech/frame.html')) {
+    menu = menu.replace(
+      /<a href="#" onclick="alert\([^"]*\);return false;" data-unrestored-target="\.\/tech\/frame\.html"/,
+      `<a href="${techEntrance}" data-restored-entrance="./tech/frame.html"`,
+    );
+    mergedMenuNotes.push('신기술 항목을 그 코너의 살아 있는 첫 화면으로 이었다');
+  }
+  await writeFile(menuPath, menu, 'utf8');
+
+  const mergedFileCount = await countFiles(merged);
+  reports.push({
+    timestamp: MERGED_EDITION.directory,
+    date: MERGED_EDITION.period,
+    lineage: MERGED_EDITION.id,
+    publishedFiles: mergedFileCount,
+    menuNotes: mergedMenuNotes,
+    mergedFrom: MERGED_EDITION.contributors.map((capture) => ({ capture, representative: capture === MERGED_EDITION.chrome })),
+    originalFiles: 0, restoredFromArchive: 0, aliasResolved: 0, caseResolved: 0,
+    rewrittenReferences: 0, placeholderImages: 0, droppedBackgrounds: 0,
+    disabledDownloads: 0, disabledMedia: 0, disabledForms: 0, noticeLinks: 0,
+    unresolvedKept: 0, extensionsAdded: 0, staticised: 0, guestbookMerged: 0,
+    curatedRestored: 0, reconstructedAssets: 0, thumbnailsMade: 0,
+    externalImages: 0, externalAssets: 0, externalFrames: 0, externalLinks: 0,
+    cyworldRewrites: 0, unresolvedUniquePaths: 0, unresolved: [], restored: [],
+  });
+}
+
 // ------------------------------------------------ domain parking capture (L0)
 //
 // The July 2001 capture is the registrar's parking page. Its onload script
@@ -1338,8 +1424,18 @@ await writeFile(path.join(archiveRoot, 'restoration-detail.json'), `${JSON.strin
 await writeFile(path.join(destinationRoot, 'snapshots.json'), `${JSON.stringify({
   source: 'Internet Archive Wayback Machine captures of fstory.net',
   generatedFrom: '../data/fstory-net-wayback/versions/reconstructed',
-  note: 'One entry per design generation, each merged from every capture that belongs to it. The captures are listed under builtFrom as evidence, not as separate restore points.',
+  note: 'One entry per design generation, each merged from every capture that belongs to it. The captures are listed under builtFrom as evidence, not as separate restore points. An edition whose offeredAs names another edition is published as the source of that merge rather than offered on its own.',
   annexes: ANNEXES,
+  mergedEdition: {
+    id: MERGED_EDITION.id,
+    label: MERGED_EDITION.label,
+    period: MERGED_EDITION.period,
+    directory: MERGED_EDITION.directory,
+    chrome: MERGED_EDITION.chrome,
+    builtFrom: MERGED_EDITION.contributors,
+    summary: MERGED_EDITION.summary,
+  },
+  curatedEditions: CURATED_EDITIONS,
   editions: LINEAGES.map((lineage) => {
     const report = reports.find((item) => item.lineage === lineage.id);
     const captures = SNAPSHOTS.filter(([, , id]) => id === lineage.id);
@@ -1350,7 +1446,10 @@ await writeFile(path.join(destinationRoot, 'snapshots.json'), `${JSON.stringify(
       summary: lineage.summary,
       // Published so the merge has a source and the archive keeps its record,
       // but offered to visitors through the curated edition named here.
-      ...(lineage.mergedInto ? { mergedInto: lineage.mergedInto } : {}),
+      // Where a visitor actually meets this material. `null` means it is
+      // published as evidence but not offered; a string names the edition that
+      // carries it.
+      offeredAs: lineage.offeredAs === undefined ? lineage.id : lineage.offeredAs,
       entry: `/fstory-homepage/${lineage.representative}/index.html`,
       representativeCapture: lineage.representative,
       publishedFileCount: report?.publishedFiles ?? 0,
@@ -1378,7 +1477,10 @@ for (const annex of ANNEXES) {
 
 // The Atelier restore-point picker reads this generated module, so the UI can
 // never drift from the lineage analysis that produced the snapshots.
-const uiEditions = LINEAGES.filter((lineage) => !lineage.mergedInto).map((lineage) => {
+// Only editions offered in their own right. A capture folded into the merged
+// or curated edition is still published, but the picker names the edition it
+// was folded into instead.
+const uiEditions = LINEAGES.filter((lineage) => lineage.offeredAs === undefined).map((lineage) => {
   const captures = SNAPSHOTS.filter(([, , id]) => id === lineage.id);
   const representative = captures.find(([timestamp]) => timestamp === lineage.representative);
   return {
@@ -1429,6 +1531,16 @@ export type FstoryCuratedEdition = {
     base: string;
     entry: string;
 };
+
+// The ver 2.0 era, published once from every capture that caught it.
+export const FSTORY_MERGED_EDITION = ${JSON.stringify({
+  id: MERGED_EDITION.id,
+  label: MERGED_EDITION.label,
+  period: MERGED_EDITION.period,
+  directory: MERGED_EDITION.directory,
+  summary: MERGED_EDITION.summary,
+  builtFrom: MERGED_EDITION.contributors,
+}, null, 4)};
 
 export const FSTORY_CURATED_EDITIONS: FstoryCuratedEdition[] = ${JSON.stringify(
   CURATED_EDITIONS.map(({ id, label, period, summary, base, entry }) => ({ id, label, period, summary, base, entry })),

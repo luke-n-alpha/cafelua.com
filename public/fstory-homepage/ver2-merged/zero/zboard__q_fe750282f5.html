@@ -1,0 +1,863 @@
+<!--
+ZeroBoard에 대한 라이센스 명시입니다.
+
+아래 라이센스에 동의하시는 분만 제로보드를 사용할수 있습니다.
+    
+프로그램명 : Zeroboard
+배포버젼 : 4.1 pl 1 (2002. 02. 25)
+개발자 : zero 
+Homepage : http://zeroboard.com
+
+1. 제로보드의 배포권은 ZEROBOARD.COM에서 허용한 곳에만 있습니다.
+   (허락 맡지 않은 재배포는 허용하지 않습니다.)
+
+2. 제로보드는 저작권을 아래 3번항목에 의해 표기하는 한도내에서
+   개인홈페이지 및 학교나 교회등의 비영리단체, 기업이나 기타 영리단체에서 사용할수 있습니다.
+   (반국가 단체나 불법 싸이트에서의 사용은 금지합니다)
+
+3. 제로보드 사용시 저작권 명시부분을 훼손하면 안됩니다.
+   프로그램 소스, html소스상의 라이센스 및 웹상 출력물 하단에 있는 카피라이트와 링크를 수정하지 마십시요.
+   (저작권 표시는 게시판 배포시 작성된 형식만을 허용합니다. 임의 수정은 금지합니다)
+
+4. 단, 정식 등록버젼은 저작권 표시를 삭제할수 있습니다.
+   정식 등록버젼에 대한 문의는 http://zeroboard.com 에서 문의 방법을 찾아주시기 바랍니다.
+
+5. 링크서비스등의 기본 용도에 맞지 않는 사용은 금지합니다.
+
+6. 제로보드의 사용으로 인한 데이타 손실 및 기타 손해등 어떠한 사고나 문제에 대해서 ZEROBOARD.COM은 절대 책임을 지지 않습니다.
+
+7. 제로보드에 대해 ZEROBOARD.COM은 유지/ 보수의 의무가 없습니다.
+
+8. 제로보드 소스는 개인적으로 사용시 수정하여 사용할수 있지만 수정된 프로그램의 재배포는 금지합니다.
+   (저작권 관련 부분은 수정금지입니다)
+
+9. 제로보드에 쓰인 스킨의 저작권은 스킨 제작자에게 있으며 제작자의 동의하에 수정배포가 가능합니다.
+
+10. 기타 의문사항은 http://zeroboard.com 에서 제로보드 채널을 이용해주십시요.
+    (질문등에 대한 내용은 메일로 받지 않습니다)
+
+-->
+<html> 
+<head>
+	<title>공부게시판</title>
+	<meta http-equiv=Content-Type content=text/html; charset=utf-8>
+	<link rel=StyleSheet HREF=skin/kissofgod_navy/style.css type=text/css title=style>
+	<script language='JavaScript'>
+	var select_obj;
+	function ZB_layerAction(name,status) { 
+		var obj=document.all[name];
+		var _tmpx,_tmpy, marginx, marginy;
+		_tmpx = event.clientX + parseInt(obj.offsetWidth);
+		_tmpy = event.clientY + parseInt(obj.offsetHeight);
+		_marginx = document.body.clientWidth - _tmpx;
+		_marginy = document.body.clientHeight - _tmpy ;
+		if(_marginx < 0)
+			_tmpx = event.clientX + document.body.scrollLeft + _marginx ;
+		else
+			_tmpx = event.clientX + document.body.scrollLeft ;
+		if(_marginy < 0)
+			_tmpy = event.clientY + document.body.scrollTop + _marginy +20;
+		else
+			_tmpy = event.clientY + document.body.scrollTop ;
+		obj.style.posLeft=_tmpx-13;
+		obj.style.posTop=_tmpy-12;
+		if(status=='visible') {
+			if(select_obj) {
+				select_obj.style.visibility='hidden';
+				select_obj=null;
+			}
+			select_obj=obj;
+		}else{
+			select_obj=null;
+		}
+		obj.style.visibility=status; 
+	}
+
+
+	function print_ZBlayer(name, homepage, mail, member_no, boardID, writer, traceID, traceType, isAdmin, isMember) {
+		var printHeight = 0;
+		var printMain="";
+	
+		if(homepage) {
+			printMain = "<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%22%2Bhomepage%2B%22&k=board');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_homepage.gif border=0 align=absmiddle>&nbsp;&nbsp;홈페이지&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(mail) {
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3Dm%26str%3D%2522%2Bmail%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_mail.gif border=0 align=absmiddle>&nbsp;&nbsp;메일 보내기&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(member_no) {
+			if(isMember) {
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fview_info.php%3Fmember_no%3D%2522%2Bmember_no%2B%2522&k=board','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_memo.gif border=0 align=absmiddle>&nbsp;&nbsp;쪽지 보내기&nbsp;&nbsp;</td></tr>";
+				printHeight = printHeight + 16;
+			}
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fview_info2.php%3Fmember_no%3D%2522%2Bmember_no%2B%2522&k=board','view_info','width=400,height=510,toolbar=no,scrollbars=yes');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_information.gif border=0 align=absmiddle>&nbsp;&nbsp;회원정보 보기&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(writer) {
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=location.href='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3D%2522%2BboardID%2B%2522%26sn1%3Don%26sn%3Don%26ss%3Doff%26sc%3Doff%26keyword%3D%2522%2Bwriter%2B%2522&k=board';><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_search.gif border=0 align=absmiddle>&nbsp;&nbsp;이름으로 검색&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		}
+		if(isAdmin) {
+			if(member_no) {
+				printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3Di%26str%3D%2522%2Bmember_no%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_modify.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>회원정보 변경&nbsp;&nbsp;</td></tr>";
+				printHeight = printHeight + 16;
+			}
+			printMain = printMain +	"<tr onMouseOver=this.style.backgroundColor='#bbbbbb' onMouseOut=this.style.backgroundColor='' onMousedown=window.open('../_unrestored.html?p=%2Fzero%2Fopen_window.php%3Fmode%3D%2522%2BtraceType%2B%2522%26str%3D%2522%2BtraceID%2B%2522&k=board','ZBremote','width=1,height=1,left=1,top=1');><td style=font-family:굴림;font-size:9pt height=18 nowrap>&nbsp;<img src=images/n_relationlist.gif border=0 align=absmiddle>&nbsp;&nbsp;<font color=darkred>관련글 추적</font>&nbsp;&nbsp;</td></tr>";
+			printHeight = printHeight + 16;
+		
+		}
+		var printHeader = "<div id='../_unrestored.html?p=%22%2Bname%2B%22&k=board' style='position:absolute; left:10px; top:25px; width:127; height: "+printHeight+"; z-index:1; visibility: hidden' onMousedown=ZB_layerAction('../_unrestored.html?p=%22%2Bname%2B%22&k=board','hidden')><table border=0><tr><td colspan=3 onMouseover=ZB_layerAction('../_unrestored.html?p=%22%2Bname%2B%22&k=board','hidden') height=3></td></tr><tr><td width=5 onMouseover=ZB_layerAction('../_unrestored.html?p=%22%2Bname%2B%22&k=board','hidden') rowspan=2>&nbsp;</td><td height=5></td></tr><tr><td><table style=cursor:hand border='0' cellspacing='1' cellpadding='0' bgcolor='black' width=100% height=100%><tr><td valign=top bgcolor=white><table border=0 cellspacing=0 cellpadding=3 width=100% height=100%>";
+		var printFooter = "</table></td></tr></table></td><td width=5 rowspan=2 onMouseover=ZB_layerAction('../_unrestored.html?p=%22%2Bname%2B%22&k=board','hidden')>&nbsp;</td></tr><tr><td colspan=3 height=10 onMouseover=ZB_layerAction('../_unrestored.html?p=%22%2Bname%2B%22&k=board','hidden')></td></tr></table></div>";
+	
+		document.writeln(printHeader+printMain+printFooter);
+	}
+</script>
+	
+<script language="javascript">
+browserName = navigator.appName;
+browserVer = parseInt(navigator.appVersion);
+if(browserName == "Netscape" && browserVer >= 3){ init = "net"; }
+else { init = "ie"; }
+
+
+if(((init == "net")&&(browserVer >=3))||((init == "ie")&&(browserVer >= 4))){
+
+ sn_on=new Image;
+ sn_off=new Image;
+ sn_on.src= "../_missing-image.svg";
+ sn_off.src= "skin/kissofgod_navy/name_off.gif";
+
+ ss_on=new Image;
+ ss_off=new Image;
+ ss_on.src= "skin/kissofgod_navy/subject_on.gif";
+ ss_off.src= "skin/kissofgod_navy/subject_off.gif";
+
+ sc_on=new Image;
+ sc_off=new Image;
+ sc_on.src= "skin/kissofgod_navy/content_on.gif";
+ sc_off.src= "../_missing-image.svg";
+
+}
+
+function OnOff(name) {
+if(((init == "net")&&(browserVer >=3))||((init == "ie")&&(browserVer >= 4))) {
+  if(document.search[name].value=='on')
+  {
+   document.search[name].value='off';
+   ImgSrc=eval(name+"_off.src");
+   document[name].src=ImgSrc;
+  }
+  else
+  {
+   document.search[name].value='on';
+   ImgSrc=eval(name+"_on.src");
+   document[name].src=ImgSrc;
+  }
+ }
+}
+</script>
+
+<script language="javascript">
+  function reverse() {
+   var i, chked=0;
+   if(confirm('목록을 반전하시겠습니까?\n\n반전을 원하지 않는다면 취소를 누르시면 다음으로 넘어갑니다'))
+   {
+    for(i=0;i<document.list.length;i++)
+    {
+     if(document.list[i].type=='checkbox')
+     {
+      if(document.list[i].checked) { document.list[i].checked=false; }
+      else { document.list[i].checked=true; }
+     }
+    }
+   }
+   for(i=0;i<document.list.length;i++)
+   {
+    if(document.list[i].type=='checkbox')
+    {
+     if(document.list[i].checked) chked=1;
+    }
+   }
+   if(chked) {
+    if(confirm('선택된 항목을 보시겠습니까?'))
+     {
+      document.list.selected.value='';
+      document.list.exec.value='view_all';
+      for(i=0;i<document.list.length;i++)
+      {
+       if(document.list[i].type=='checkbox')
+       {
+        if(document.list[i].checked)
+        {
+         document.list.selected.value=document.list[i].value+';'+document.list.selected.value;
+        }
+       }
+      }
+      document.list.submit();
+      return true;
+     }
+    }
+   }
+
+ function delete_all() {
+  var i, chked=0;
+  for(i=0;i<document.list.length;i++)
+  {
+   if(document.list[i].type=='checkbox')
+   {
+    if(document.list[i].checked) chked=1;
+    }
+   }
+  if(chked)
+  {
+    document.list.selected.value='';
+    document.list.exec.value='delete_all';
+    for(i=0;i<document.list.length;i++)
+    {
+     if(document.list[i].type=='checkbox')
+     {
+      if(document.list[i].checked)
+      {
+       document.list.selected.value=document.list[i].value+';'+document.list.selected.value;
+      }
+     }
+    }
+    window.open("../_unrestored.html?p=%2Fzero%2Fselect_list_all.php%3Fid%3Dstudy%26selected%3D&k=board"+document.list.selected.value,"게시물정리","width=260,height=180,toolbars=no,resize=no,scrollbars=no");
+  }
+  else {alert('정리할 게시물을 선택하여 주십시요');}
+ }
+
+ function category_change() {
+  var myindex=list.category.selectedIndex;
+  document.search.category.value=list.category.options[myindex].value;
+  document.search.submit();
+  return true;
+ }
+
+//-->
+</script>
+</head>
+<body topmargin='0'  leftmargin='0' marginwidth='0' marginheight='0'  bgcolor=white ><div align=center><table border=0 cellspacing=0 cellpadding=0 width=95%>
+<tr>
+  <td align=right style='font-family:Tahoma; font-size:8pt'>
+    <a onfocus=blur() href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/login.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&s_url=%2Fzero%2Fzboard.php%3Fid%3Dstudy&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Flogin.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26s_url%3D%252Fzero%252Fzboard.php%253Fid%253Dstudy%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'>&nbsp;Login&nbsp;</a>
+    <Zeroboard &nbsp;Join&nbsp;</a>
+    <Zeroboard &nbsp;modifyINFO&nbsp;</a>
+    	<Zeroboard &nbsp;memobox&nbsp;</a>
+    <Zeroboard &nbsp;logout&nbsp;</a>
+    <Zeroboard &nbsp;setup&nbsp;</a>
+    &nbsp;
+  </td>
+</tr>
+</table>
+  
+<table border=0 width=95% cellspacing=0 cellpadding=0>
+<tr valign=top>
+  <td><div align=center>
+
+<img src=images/t.gif border=0 width=100 height=1><br>
+<Table border=0 width=100% cellspacing=0 cellpadding=0>
+<tr>
+  <td nowrap valign=top align=center width=100%><a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?&id=study&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fzboard.php%3F%26id%3Dstudy%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"><font style=font-family:tahoma;font-size:8pt>Category (71)</font></a></td>
+</tr>
+</table>
+
+<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?category=1&id=study&page=1&page_num=20&sn=off&ss=on&sc=on&keyword=&select_arrange=headnum&desc=asc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D1%26id%3Dstudy%26page%3D1%26page_num%3D20%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'>윈2000서버 (19)</a></b><br>
+<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?category=2&id=study&page=1&page_num=20&sn=off&ss=on&sc=on&keyword=&select_arrange=headnum&desc=asc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D2%26id%3Dstudy%26page%3D1%26page_num%3D20%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'>MS-SQL (16)</a></b><br>
+<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?category=3&id=study&page=1&page_num=20&sn=off&ss=on&sc=on&keyword=&select_arrange=headnum&desc=asc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D3%26id%3Dstudy%26page%3D1%26page_num%3D20%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'>공지/잡설 (2)</a></b><br>
+<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?category=4&id=study&page=1&page_num=20&sn=off&ss=on&sc=on&keyword=&select_arrange=headnum&desc=asc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D4%26id%3Dstudy%26page%3D1%26page_num%3D20%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'>WinAPI (10)</a></b><br>
+<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?category=5&id=study&page=1&page_num=20&sn=off&ss=on&sc=on&keyword=&select_arrange=headnum&desc=asc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D5%26id%3Dstudy%26page%3D1%26page_num%3D20%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'>화일처리 (2)</a></b><br>
+<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?category=6&id=study&page=1&page_num=20&sn=off&ss=on&sc=on&keyword=&select_arrange=headnum&desc=asc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D6%26id%3Dstudy%26page%3D1%26page_num%3D20%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'>Win CE (13)</a></b><br>
+<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?category=7&id=study&page=1&page_num=20&sn=off&ss=on&sc=on&keyword=&select_arrange=headnum&desc=asc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D7%26id%3Dstudy%26page%3D1%26page_num%3D20%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'>프로그래밍 (2)</a></b><br>
+<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?category=8&id=study&page=1&page_num=20&sn=off&ss=on&sc=on&keyword=&select_arrange=headnum&desc=asc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D8%26id%3Dstudy%26page%3D1%26page_num%3D20%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'>하드웨어 (1)</a></b><br>
+<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?category=9&id=study&page=1&page_num=20&sn=off&ss=on&sc=on&keyword=&select_arrange=headnum&desc=asc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D9%26id%3Dstudy%26page%3D1%26page_num%3D20%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'>기타 팁 (2)</a></b><br>
+<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?category=10&id=study&page=1&page_num=20&sn=off&ss=on&sc=on&keyword=&select_arrange=headnum&desc=asc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fcategory%3D10%26id%3Dstudy%26page%3D1%26page_num%3D20%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26select_arrange%3Dheadnum%26desc%3Dasc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'>프로젝트 (4)</a></b><br>
+</td>
+  <td align=right>
+
+
+<table border=0 cellspacing=0 cellpadding=0 width=98%>
+
+<col width=1></col><!--<col width=20></col>--><col width=50></col>
+<col width=></col><col width=90></col><col width=70></col><col width=40></col>
+<col width=1></col>
+
+<tr align=center>
+   <td width=1 class=kissofgod-list-head-td></td>
+   <!--   <td width=20 class=kissofgod-list-head-td><span class=kissofgod-list-head-title>v</span></a></td>
+   -->   <td width=50 class=kissofgod-list-head-td><a onfocus=blur() href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=desc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Ddesc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'><span class=kissofgod-list-head-title>no</span></a></td>
+   <td class=kissofgod-list-head-td><a onfocus=blur() href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=subject&desc=desc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dsubject%26desc%3Ddesc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'><span class=kissofgod-list-head-title>subject</span></a></td>
+   <td width=90 class=kissofgod-list-head-td><a onfocus=blur() href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=name&desc=desc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dname%26desc%3Ddesc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'><span class=kissofgod-list-head-title>name</span></a></td>
+   <td width=70 class=kissofgod-list-head-td><a onfocus=blur() href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=reg_date&desc=desc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dreg_date%26desc%3Ddesc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'><span class=kissofgod-list-head-title>date</span></a></td>
+   <td width=40 class=kissofgod-list-head-td><a onfocus=blur() href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=hit&desc=desc&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dhit%26desc%3Ddesc%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'><span class=kissofgod-list-head-title>read</span></a></td>
+   <td width=1 class=kissofgod-list-head-td></td>
+</tr>
+
+<tr><td colspan=10 class=kissofgod-base-listline></td></tr>
+
+<form method=post name=list data-unrestored-action="../_unrestored.html?p=%2Fzero%2Flist_all.php&k=board" onsubmit="return false" data-unrestored="form"><input type="hidden" name="PHPSESSID" value="3a5c8e4c30cdd66ef5d950bf892c67c9" /><input type=hidden name=page value=1><input type=hidden name=id value=study><input type=hidden name=select_arrange value=headnum><input type=hidden name=desc value=asc><input type=hidden name=page_num value=20><input type=hidden name=selected><input type=hidden name=exec><input type=hidden name=keyword value=""><input type=hidden name=sn value="off"><input type=hidden name=ss value="on"><input type=hidden name=sc value="on">
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor='' class=kissofgod-list-notice-tr>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="51"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>71</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/notice_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=51&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D51%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  ><font color="ff0000">txt파일을 다운 받고 싶으실때</font></a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer1','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 04월 30일 16시 39분 14초'>2003/04/30</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>9</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor='' class=kissofgod-list-notice-tr>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="2"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>70</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/notice_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=2&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D2%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  ><font color="ff0000">이곳의 자료들에 관해</font></a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer2','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2002년 12월 30일 14시 57분 49초'>2002/12/30</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>22</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="98"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>69</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=98&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D98%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >MFC로 만든 스크린메이트</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer3','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 07월 10일 20시 19분 03초'>2003/07/10</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>5</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="97"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>68</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=97&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D97%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >에니메이션 클래스 설계</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer4','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 07월 10일 14시 07분 55초'>2003/07/10</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>4</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="96"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>67</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=96&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D96%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >메신져 통신 설계 해본겁니다..</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer5','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 07월 10일 12시 55분 11초'>2003/07/10</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>6</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="94"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>66</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=94&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D94%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >스크린 메이트 API테스트 (수정판)</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer6','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 07월 08일 22시 39분 08초'>2003/07/08</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>9</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="93"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>65</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=93&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D93%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >MFC를 이용한 그래픽 클래스 만들기</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer7','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 05월 28일 16시 54분 17초'>2003/05/28</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>7</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="92"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>64</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=92&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D92%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >GDI 해상도 가져오기 투명처리</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer8','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 05월 28일 16시 52분 39초'>2003/05/28</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>5</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="91"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>63</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=91&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D91%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >컨트롤(일반.공통대화상자/Property)</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer9','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 05월 16일 14시 34분 54초'>2003/05/16</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>7</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="90"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>62</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=90&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D90%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >컨트롤(버튼/에디트/리스트/스테틱)</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer10','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 05월 14일 14시 47분 55초'>2003/05/14</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>9</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="89"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>61</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=89&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D89%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >서브클래싱과 메시지 크래커</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer11','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 05월 14일 12시 14분 41초'>2003/05/14</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>6</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="88"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>60</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=88&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D88%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >윈도우</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer12','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 05월 12일 11시 41분 56초'>2003/05/12</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>3</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="87"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>59</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=87&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D87%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >동영상 삽입하는 태그</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer13','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 05월 07일 10시 30분 10초'>2003/05/07</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>9</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="86"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>58</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=86&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D86%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >인수조작 메크로</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer14','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 05월 06일 11시 51분 55초'>2003/05/06</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>4</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="85"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>57</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=85&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D85%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >대화상자</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer15','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 05월 06일 11시 24분 43초'>2003/05/06</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>3</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="84"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>56</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=84&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D84%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >스타일러스 입력</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer16','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 05월 02일 14시 49분 57초'>2003/05/02</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>8</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="83"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>55</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=83&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D83%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >키보드입력+키보드입력값 확인소스</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer17','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 05월 01일 15시 56분 36초'>2003/05/01</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>5</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="82"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>54</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=82&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D82%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >컨트롤</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer18','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 05월 01일 13시 56분 35초'>2003/05/01</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>4</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="81"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>53</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=81&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D81%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >서버 정리 (네임서버/FTP/웹)</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer19','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 04월 30일 23시 58분 22초'>2003/04/30</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>4</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr align=center height=20 onMouseOver=this.style.backgroundColor='#F1F1F9' onMouseOut=this.style.backgroundColor=''>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+  <!--<td><input type=checkbox name=cart value="80"></td>-->  <td nowrap><font style=font-size:8pt;font-family:tahoma>52</font></td>
+  <td align=left style='word-break:break-all;'><img src=skin/kissofgod_navy/old_head.gif border=0 align=absmiddle>&nbsp;<a href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/view.php?id=study&page=1&sn1=&divpage=1&sn=off&ss=on&sc=on&select_arrange=headnum&desc=asc&no=80&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target="../_unrestored.html?p=%2Fzero%2Fview.php%3Fid%3Dstudy%26page%3D1%26sn1%3D%26divpage%3D1%26sn%3Doff%26ss%3Don%26sc%3Don%26select_arrange%3Dheadnum%26desc%3Dasc%26no%3D80%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board"  >그래픽 출력 (Hatch그물무늬 브러시)</a> <font style=font-family:tahoma;font-size:7pt></font></td> 
+  <td nowrap><b>&nbsp;<font style='font-weight:normal'><span onMousedown="ZB_layerAction('zbLayer20','visible')" style=cursor:hand>숲속얘기</span></font>&nbsp;</div></td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>&nbsp;<span title='2003년 04월 30일 17시 55분 57초'>2003/04/30</span>&nbsp;</td>
+  <td nowrap><font style=font-family:tahoma;font-size:8pt>8</td>
+  <td><img src=skin/kissofgod_navy/t.gif border=0 width=1></td>
+</tr>
+
+<tr>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td height=1 colspan=5 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td width=1 class=kissofgod-line><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+</table>
+
+<table border=0 width=98% cellspacing=0 cellpadding=0>
+<tr><td colspan=10 class=kissofgod-base-listline></td></tr>
+</table>
+
+
+<table border=0 cellpadding=0 cellspacing=0 width=98%>
+<tr>
+  <td width=1><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td class=kissofgod-button-font>
+    <a onfocus=blur() href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?id=study&page=1&category=&sn=off&ss=on&sc=on&keyword=&prev_no=&sn1=&divpage=1&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3Dstudy%26page%3D1%26category%3D%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26prev_no%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'>&nbsp;List&nbsp;</a>
+    <Zeroboard &nbsp;Order&nbsp;</a>
+    <img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1>
+  </td>
+  <td align=right class=kissofgod-button-font>
+    <Zeroboard &nbsp;Write&nbsp;</a>
+    <img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1>
+  </td>
+  <td width=1><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+<tr>
+  <td width=1><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+  <td align=center colspan=2>
+    <Zeroboard [PREV]</a>  <font style=font-size:8pt><b>1</b> <a onfocus=blur() href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?id=study&page=2&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3Dstudy%26page%3D2%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'><font style=font-size:8pt>[2]</a><a onfocus=blur() href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?id=study&page=3&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3Dstudy%26page%3D3%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'><font style=font-size:8pt>[3]</a><a onfocus=blur() href="#" onclick="alert('복원되지 않은 자료입니다.
+
+/zero/zboard.php?id=study&page=4&select_arrange=headnum&desc=asc&category=&sn=off&ss=on&sc=on&keyword=&sn1=&divpage=1&PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9
+
+제로보드 게시판의 이 글은 서버가 그때그때 만들어 보여 주던 화면이라 정적 보관본에 남아 있지 않습니다.');return false;" data-unrestored-target='../_unrestored.html?p=%2Fzero%2Fzboard.php%3Fid%3Dstudy%26page%3D4%26select_arrange%3Dheadnum%26desc%3Dasc%26category%3D%26sn%3Doff%26ss%3Don%26sc%3Don%26keyword%3D%26sn1%3D%26divpage%3D1%26PHPSESSID%3D3a5c8e4c30cdd66ef5d950bf892c67c9&k=board'><font style=font-size:8pt>[4]</a> <Zeroboard [NEXT]</a>  
+  </td>
+  <td width=1><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+</form>
+</table>
+
+<img src=skin/kissofgod_navy/t.gif border=0 height=10><br>
+
+<table border=0 cellpadding=0 cellspacing=0 width=98%>
+
+<form method=post name=search data-unrestored-action="../_unrestored.html?p=%2Fzero%2Fzboard.php&k=board" onsubmit="return false" data-unrestored="form"><input type="hidden" name="PHPSESSID" value="3a5c8e4c30cdd66ef5d950bf892c67c9" /><input type=hidden name=page value=1><input type=hidden name=id value=study><input type=hidden name=select_arrange value=headnum><input type=hidden name=desc value=asc><input type=hidden name=page_num value=20><input type=hidden name=selected><input type=hidden name=exec><input type=hidden name=sn value="off"><input type=hidden name=ss value="on"><input type=hidden name=sc value="on"><input type=hidden name=category value="">
+
+<tr>
+  <td align=center>
+  <table border=0 cellspacing=0 cellpadding=0>
+  <tr>
+     <td valign=bottom>
+       <a href="javascript:OnOff('sn')" onfocus=blur()><img src=skin/kissofgod_navy/name_off.gif border=0 name=sn></a><a href="javascript:OnOff('ss')" onfocus=blur()><img src=skin/kissofgod_navy/subject_on.gif border=0 name=ss></a><a href="javascript:OnOff('sc')" onfocus=blur()><img src=skin/kissofgod_navy/content_on.gif border=0 name=sc></a></td>
+     <td><input type=text name=keyword value="" class=input-search size=15></td>
+     <td valign=bottom><input type=image src="../_missing-image.svg" data-unrestored-src="skin/kissofgod_navy/search.gif?PHPSESSID=3a5c8e4c30cdd66ef5d950bf892c67c9" border=0 width=56 height=11 onfocus=blur()></td>
+  </tr>
+  </table>
+
+  </td>
+</tr>
+<tr>
+  <td height=15><img src=skin/kissofgod_navy/t.gif border=0 width=1 height=1></td>
+</tr>
+</form>
+</table>
+
+  </td>
+</tr>
+</table>
+
+<script>
+print_ZBlayer('zbLayer1', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer2', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer3', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer4', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer5', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer6', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer7', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer8', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer9', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer10', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer11', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer12', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer13', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer14', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer15', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer16', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer17', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer18', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer19', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+print_ZBlayer('zbLayer20', 'http://www.fstory.net', 'ZnN0b3J5OTdAbmF0ZS5jb20=', '1', 'study', '숲속얘기', '', '', '', '');
+</script>			<table border=0 cellpadding=0 cellspacing=0 height=20 width=98%>
+			<tr>
+				<td align=right style=font-family:tahoma,굴림;font-size:8pt;line-height:150%;letter-spacing:0px>
+					<font style=font-size:7pt>Copyright 1999-2003</font> <a href=http://www.zeroboard.com target=_blank onfocus=blur()><font tyle=font-family:tahoma,굴림;font-size:5pt;>Zeroboard</a> / skin by <font style="font-family:돋움; font-size:8pt; color:navy"><a href=http://kissofgod.net target=_blank>신의키스</a></font>				</td>   
+			</tr>
+			</table>
+			</div>			</body>
+			</html>
+			
+
+<!--
+ Session Excuted  : 0.0005
+ Connect Checked  : 0.0011
+ Query Excuted  : 0.646
+ PHP Excuted  : 0.049
+ Check Lists : 0.027
+ Skins Excuted  : 0.168
+ Total Excuted Time : 0.865
+-->
