@@ -245,6 +245,11 @@ const AtelierPage: React.FC = () => {
         return null;
     }, [ieTarget]);
 
+    // ver 2.0 통합본은 자기 BGM 플레이어를 들고 있다. 1997·1998년판은 미디를
+    // 이 쪽에서 틀어 주므로 이미 사이트 음악이 멈추지만, 통합본은 옛 페이지가
+    // 직접 소리를 내는 터라 그대로 두면 두 음악이 겹친다.
+    const legacyPageHasOwnAudio = ieTarget === FSTORY_MERGED_EDITION.directory;
+
     const ieViewport = useMemo(() => {
         if (!ieTarget) return DEFAULT_IE_VIEWPORT;
         return IE_VIEWPORTS[ieTarget] ?? DEFAULT_IE_VIEWPORT;
@@ -576,7 +581,7 @@ const AtelierPage: React.FC = () => {
             <BackgroundMusic
                 src="/sounds/atelier.mp3"
                 hideUi={mode !== 'menu'}
-                suspended={isLegacyMidiActive}
+                suspended={isLegacyMidiActive || legacyPageHasOwnAudio}
             />
             <audio ref={startupAudioRef} src="/sounds/windows-startup.mp3" preload="auto" />
             <audio ref={shutdownAudioRef} src="/sounds/windows-shutdown.mp3" preload="auto" />
