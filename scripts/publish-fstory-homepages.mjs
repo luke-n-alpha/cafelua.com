@@ -15,6 +15,7 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import iconv from 'iconv-lite';
 import { ANNEXES, BGM_TRACKS, GALLERY_MATCHES, RECENT_ANIME, CURATED_EDITIONS, LINEAGES, MERGED_EDITION, PATH_ALIASES, RETIRED_HOSTS, SNAPSHOTS, SPAM_PAGES } from './fstory-lineage.mjs';
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -107,8 +108,12 @@ const SCRIPT_URL_PATTERN = /((?:window\.open|location\.replace|location\.href\s*
 const SCRIPT_IMAGE_PATTERN = /(\.src\s*=\s*)(["'])([^"'<>\s]*)\2((?:\s*\+\s*[\w.$[\]'"]+)*)/gi;
 
 const utf8 = new TextDecoder('utf-8', { fatal: true });
-const cp949 = new TextDecoder('euc-kr');
-const decode = (bytes) => { try { return utf8.decode(bytes); } catch { return cp949.decode(bytes); } };
+// Not TextDecoder('euc-kr'). Node follows the WHATWG index, which turns a
+// handful of CP949 syllables into U+FFFD — 됬, among others, which Luke typed
+// often. That silently ate a word every few chapters of 작은 마녀 윈디: 시작됬던
+// came out as 시작 followed by rubble. iconv-lite reads the whole of CP949.
+const cp949 = (bytes) => iconv.decode(Buffer.from(bytes), 'cp949');
+const decode = (bytes) => { try { return utf8.decode(bytes); } catch { return cp949(bytes); } };
 
 const withCharset = (text, extension) => {
   if (!htmlExtensions.has(extension)) return text;
