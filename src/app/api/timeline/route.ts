@@ -11,6 +11,7 @@ type Item = {
     createdAt: string | null;
     href: string;
     where: string;
+    isOwner: boolean;
 };
 
 /** Remove the date prefix a migrated slug carries and space out the hyphens. */
@@ -48,6 +49,7 @@ export async function GET(request: NextRequest) {
                 createdAt: entry.createdAt?.toISOString() ?? null,
                 href: '/guestbook',
                 where: '방명록',
+                isOwner: entry.isOwner,
             });
         }
 
@@ -64,6 +66,7 @@ export async function GET(request: NextRequest) {
                 createdAt: comment.createdAt?.toISOString() ?? null,
                 href: path,
                 where: titleFromSlug(comment.postSlug),
+                isOwner: comment.isOwner,
             });
         }
 

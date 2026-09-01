@@ -4,7 +4,7 @@ import {
     listGuestbookEntries,
     readGuestbookEntry,
 } from '@/lib/guest-store';
-import { hashPassword, checkRateLimit, getClientIp } from '@/lib/server-utils';
+import { hashPassword, checkRateLimit, getClientIp, isAdmin, claimsOwnerName } from '@/lib/server-utils';
 import { sendEmail, buildGuestbookReplyNotificationEmail, buildOwnerNotificationEmail, ownerAddress } from '@/lib/email';
 
 const ENTRY_ID_RE = /^[a-zA-Z0-9]{10,30}$/;
@@ -32,6 +32,7 @@ export async function GET(request: NextRequest) {
             createdAt: entry.createdAt?.toISOString() ?? null,
             parentId: entry.parentId,
             deleted: entry.deleted,
+            isOwner: entry.isOwner,
         }));
 
         const lastEntry = entries.length > 0 ? entries[entries.length - 1] : null;
@@ -48,11 +49,6 @@ export async function GET(request: NextRequest) {
 
 /** POST /api/guestbook/entries — create a new entry or reply */
 export async function POST(request: NextRequest) {
-    const ip = getClientIp(request);
-    if (!checkRateLimit(`create:${ip}`, 2, 30_000)) {
-        return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
-    }
-
     try {
         const { nickname, message, password, isSecret, parentId, email } = (await request.json()) as {
             nickname?: string;
@@ -82,6 +78,20 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
         }
 
+        // The master signs in with the same credentials the guestbook already
+        // uses for admin mode. Signing with that name and the wrong password is
+        // refused outright — otherwise the badge means nothing.
+        const owner = isAdmin(trimNick, trimPass);
+        if (!owner && claimsOwnerName(trimNick)) {
+            return NextResponse.json({ error: 'That name is taken' }, { status: 403 });
+        }
+
+        // The master is not throttled; the limit is there for strangers.
+        const ip = getClientIp(request);
+        if (!owner && !checkRateLimit(`create:${ip}`, 5, 60_000)) {
+            return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+        }
+
         // If reply, verify parent exists and enforce 1-level nesting
         let parent = null;
         if (parentId) {
@@ -104,6 +114,7 @@ export async function POST(request: NextRequest) {
             isSecret: isSecret ?? false,
             parentId: parentId || null,
             email: trimEmail,
+            isOwner: owner,
         });
 
         const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.cafelua.com';
@@ -120,9 +131,10 @@ export async function POST(request: NextRequest) {
             sendEmail({ to: parent.email, ...emailData }).catch(() => {});
         }
 
-        // And the master's own copy, for every entry — not only replies.
-        // A secret entry is announced without its text.
-        sendEmail({
+        // And the master's own copy, for every entry — not only replies, and
+        // not when the master is the one writing. A secret entry is announced
+        // without its text.
+        if (!owner) sendEmail({
             to: ownerAddress(),
             ...buildOwnerNotificationEmail({
                 kind: 'guestbook',

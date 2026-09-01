@@ -6,4 +6,6 @@ export interface GuestbookEntry {
     createdAt: string | null;
     parentId: string | null;
     deleted: boolean;
+    /** Written by the master, verified server-side against the admin credentials. */
+    isOwner?: boolean;
 }

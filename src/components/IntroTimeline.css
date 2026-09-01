@@ -166,3 +166,15 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+/* Marks the master's own writing. The server refuses that name to anyone who
+   cannot supply the password, so the badge means what it says. */
+.intro-timeline-owner {
+    padding: 0.05em 0.4em;
+    border-radius: 999px;
+    background: rgba(192, 57, 43, 0.9);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 700;
+    white-space: nowrap;
+}

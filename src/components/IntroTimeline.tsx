@@ -22,6 +22,7 @@ type TimelineItem = {
     createdAt: string | null;
     href: string;
     where: string;
+    isOwner: boolean;
 };
 
 interface IntroTimelineProps {
@@ -152,6 +153,11 @@ const IntroTimeline: React.FC<IntroTimelineProps> = ({ isKo, onNavigate }) => {
                                         : (isKo ? '댓글' : 'Comment')}
                                 </span>
                                 <span className="intro-timeline-nick">{item.nickname}</span>
+                                {item.isOwner && (
+                                    <span className="intro-timeline-owner">
+                                        {isKo ? '주인장' : 'Master'}
+                                    </span>
+                                )}
                                 <span className="intro-timeline-when">{howLongAgo(item.createdAt, isKo)}</span>
                             </span>
                             <span className="intro-timeline-text">

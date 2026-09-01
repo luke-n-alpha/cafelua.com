@@ -385,6 +385,7 @@ const GuestbookPage: React.FC = () => {
                         {isReply && <span className="guestbook-reply-arrow">&#8627;</span>}
                         {entry.isSecret && <span className="guestbook-secret-badge">{t('guestbook.secret')}</span>}
                         {entry.nickname}
+                        {entry.isOwner && <span className="guestbook-owner-badge">{t('guestbook.owner', { defaultValue: '주인장' })}</span>}
                     </span>
                     <span className="guestbook-entry-date">{formatDate(entry)}</span>
                 </div>

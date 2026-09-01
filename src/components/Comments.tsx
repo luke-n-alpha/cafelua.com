@@ -250,6 +250,7 @@ const Comments: React.FC<Props> = ({ postSlug, postType }) => {
                     <span className="comment-nickname">
                         {isReply && <span className="comment-reply-arrow">&#8627;</span>}
                         {c.nickname}
+                        {c.isOwner && <span className="comment-owner-badge">{t('comments.owner', { defaultValue: '주인장' })}</span>}
                     </span>
                     <span className="comment-date">{formatDate(c.createdAt)}</span>
                 </div>

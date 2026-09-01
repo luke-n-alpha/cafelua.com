@@ -27,6 +27,19 @@ export function isAdmin(nickname: string, password: string): boolean {
     return safeCompare(nickname, adminNickname) && safeCompare(password, adminPassword);
 }
 
+/**
+ * True when this nickname is the master's, whoever is typing it.
+ *
+ * The badge beside a message is only worth something if nobody else can wear
+ * it, so a message signed with the master's name and the wrong password is
+ * turned away rather than posted as an ordinary visitor's.
+ */
+export function claimsOwnerName(nickname: string): boolean {
+    const adminNickname = process.env.GUESTBOOK_ADMIN_NICKNAME;
+    if (!adminNickname) return false;
+    return safeCompare(nickname, adminNickname);
+}
+
 // --- Rate Limiting (in-memory, per-process) ---
 
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();

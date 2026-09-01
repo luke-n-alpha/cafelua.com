@@ -366,3 +366,16 @@
         margin-left: 16px;
     }
 }
+
+/* The master's own comment. The server refuses that name to anyone without the
+   password, so this is not decoration. */
+.comment-owner-badge {
+    margin-left: 0.4em;
+    padding: 0.05em 0.45em;
+    border-radius: 999px;
+    background: #c0392b;
+    color: #fff;
+    font-size: 0.68em;
+    font-weight: 700;
+    vertical-align: 0.1em;
+}

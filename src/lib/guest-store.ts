@@ -64,6 +64,7 @@ export type GuestbookRecord = {
     email: string | null;
     createdAt: Date | null;
     deleted: boolean;
+    isOwner: boolean;
 };
 
 export type CommentRecord = {
@@ -77,6 +78,7 @@ export type CommentRecord = {
     email: string | null;
     createdAt: Date | null;
     deleted: boolean;
+    isOwner: boolean;
 };
 
 type Row = TableEntity<Record<string, unknown>>;
@@ -92,6 +94,7 @@ function toGuestbook(row: Row): GuestbookRecord {
         email: optional(row.email),
         createdAt: moment(row.createdAt),
         deleted: flag(row.deleted),
+        isOwner: flag(row.isOwner),
     };
 }
 
@@ -107,6 +110,7 @@ function toComment(row: Row): CommentRecord {
         email: optional(row.email),
         createdAt: moment(row.createdAt),
         deleted: flag(row.deleted),
+        isOwner: flag(row.isOwner),
     };
 }
 
@@ -181,6 +185,7 @@ export async function addGuestbookEntry(entry: {
     isSecret: boolean;
     parentId: string | null;
     email: string | null;
+    isOwner: boolean;
 }): Promise<string> {
     const id = newId();
     await guestbookTable().createEntity(
@@ -250,6 +255,7 @@ export async function addComment(comment: {
     passwordHash: string;
     parentId: string | null;
     email: string | null;
+    isOwner: boolean;
 }): Promise<string> {
     const id = newId();
     await commentsTable().createEntity(

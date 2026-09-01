@@ -5,7 +5,7 @@ import {
     readComment,
     softDeleteComment,
 } from '@/lib/guest-store';
-import { hashPassword, checkRateLimit, getClientIp } from '@/lib/server-utils';
+import { hashPassword, checkRateLimit, getClientIp, isAdmin, claimsOwnerName } from '@/lib/server-utils';
 import { sendEmail, buildReplyNotificationEmail, buildOwnerNotificationEmail, ownerAddress } from '@/lib/email';
 
 const VALID_POST_TYPES = ['desk', 'diary'];
@@ -34,6 +34,7 @@ export async function GET(request: NextRequest) {
             content: comment.deleted ? '' : comment.content,
             createdAt: comment.createdAt?.toISOString() ?? null,
             deleted: comment.deleted,
+            isOwner: comment.isOwner,
         }));
 
         return NextResponse.json({ comments });
@@ -45,11 +46,6 @@ export async function GET(request: NextRequest) {
 
 /** POST /api/comments — create a new comment or reply */
 export async function POST(request: NextRequest) {
-    const ip = getClientIp(request);
-    if (!checkRateLimit(`comment:${ip}`, 3, 30_000)) {
-        return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
-    }
-
     try {
         const body = await request.json();
         const { postSlug, postType, parentId, nickname, email, password, content } = body as {
@@ -87,6 +83,21 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
         }
 
+        // The master signs with the same credentials as guestbook admin mode.
+        // That name with the wrong password is refused, or the badge is
+        // worthless.
+        const owner = isAdmin(trimNick, trimPass);
+        if (!owner && claimsOwnerName(trimNick)) {
+            return NextResponse.json({ error: 'That name is taken' }, { status: 403 });
+        }
+
+        // Answering several people in a row is normal for the master, so the
+        // limit applies to strangers only.
+        const ip = getClientIp(request);
+        if (!owner && !checkRateLimit(`comment:${ip}`, 8, 60_000)) {
+            return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+        }
+
         // If reply, verify parent exists and enforce 1-level nesting
         let parent = null;
         if (parentId) {
@@ -110,6 +121,7 @@ export async function POST(request: NextRequest) {
             passwordHash: hashPassword(trimPass),
             parentId: parentId || null,
             email: trimEmail,
+            isOwner: owner,
         });
 
         const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.cafelua.com';
@@ -129,8 +141,9 @@ export async function POST(request: NextRequest) {
             sendEmail({ to: parent.email, ...emailData }).catch(() => {});
         }
 
-        // And the master's own copy, for every comment — not only replies.
-        sendEmail({
+        // And the master's own copy, for every comment — not only replies, and
+        // not when the master is the one writing.
+        if (!owner) sendEmail({
             to: ownerAddress(),
             ...buildOwnerNotificationEmail({
                 kind: 'comment',

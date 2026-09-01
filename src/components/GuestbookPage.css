@@ -588,3 +588,16 @@
         margin-left: 16px;
     }
 }
+
+/* The master's own entry. The server turns that name away without the
+   password, so the badge cannot be worn by anyone else. */
+.guestbook-owner-badge {
+    margin-left: 0.4em;
+    padding: 0.05em 0.45em;
+    border-radius: 999px;
+    background: #c0392b;
+    color: #fff;
+    font-size: 0.68em;
+    font-weight: 700;
+    vertical-align: 0.1em;
+}
