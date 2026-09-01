@@ -7,16 +7,8 @@
     z-index: 30;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    width: auto;
-    padding: 0.5rem 0.8rem;
-    border-radius: 999px;
+    justify-content: center;
     cursor: pointer;
-}
-
-.intro-timeline-tab-label {
-    font-size: 0.82rem;
-    letter-spacing: 0.02em;
 }
 
 .intro-timeline-tab.open {
@@ -45,6 +37,11 @@
     transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
     border-radius: 0;
     overflow: hidden;
+    /* .glass alone is translucent and sets no text colour, so the writing sank
+       into whatever background image was behind it. The panel carries its own
+       ground and its own light text, and reads over any season. */
+    background: rgba(16, 19, 26, 0.94);
+    color: #f2ece0;
 }
 
 .intro-timeline-panel.open {
@@ -60,16 +57,12 @@
 .intro-timeline-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 1rem 1rem 0.6rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.intro-timeline-header h2 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
+    /* The close button sits on the left, where the tab itself was. The right
+       edge of the panel runs under the site's own top-right controls on a
+       narrow screen, and a close button hiding behind them is no close button. */
+    justify-content: flex-start;
+    padding: 0.7rem 0.8rem 0.6rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .intro-timeline-close {
@@ -143,6 +136,7 @@
 
 .intro-timeline-nick {
     font-weight: 600;
+    color: #f2ece0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -155,6 +149,7 @@
 }
 
 .intro-timeline-text {
+    color: #e6ddcc;
     font-size: 0.84rem;
     line-height: 1.45;
     /* Two lines is enough to recognise a message; the rest is behind the tap. */

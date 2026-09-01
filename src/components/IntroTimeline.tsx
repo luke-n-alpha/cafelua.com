@@ -90,6 +90,7 @@ const IntroTimeline: React.FC<IntroTimelineProps> = ({ isKo, onNavigate }) => {
         <>
             <button
                 className={`intro-timeline-tab ui-icon-button ${isOpen ? 'open' : ''}`}
+                aria-label={title}
                 onClick={() => setIsOpen((open) => !open)}
                 type="button"
                 title={title}
@@ -97,7 +98,6 @@ const IntroTimeline: React.FC<IntroTimelineProps> = ({ isKo, onNavigate }) => {
                 aria-controls="intro-timeline-panel"
             >
                 <Clock size={18} />
-                <span className="intro-timeline-tab-label">{title}</span>
             </button>
 
             {isOpen && (
@@ -114,7 +114,6 @@ const IntroTimeline: React.FC<IntroTimelineProps> = ({ isKo, onNavigate }) => {
                 aria-hidden={!isOpen}
             >
                 <div className="intro-timeline-header">
-                    <h2>{title}</h2>
                     <button
                         className="intro-timeline-close"
                         onClick={() => setIsOpen(false)}
