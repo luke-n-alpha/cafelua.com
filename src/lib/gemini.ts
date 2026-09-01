@@ -3,12 +3,39 @@ export interface ChatMessage {
     content: string;
 }
 
-// Gemini API의 안정 모델 코드. 특정 배포 플랫폼에 종속되지 않는다.
+// 안정 모델 코드. 특정 배포 플랫폼에 종속되지 않는다.
 export const DEFAULT_MODEL = 'gemini-3.1-flash-lite';
 export const DEFAULT_MAX_TOKENS = 4096;
 
-// Gemini API OpenAI 호환 엔드포인트
-const GATEWAY_URL = 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions';
+// 구글의 OpenAI 호환 엔드포인트. 나이아 게이트웨이가 없을 때만 쓴다.
+const GOOGLE_URL = 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions';
+
+/**
+ * 어디에 물어볼지 정한다.
+ *
+ * 카페루아는 나이아 게이트웨이를 거쳐 모델을 부른다. 게이트웨이가
+ * OpenAI 호환이라 요청 모양은 그대로이고, 모델 이름만 바꾸면 제미나이든
+ * 딥시크든 같은 자리에서 답한다. 그래서 이 파일은 제미나이 전용이 아니다.
+ *
+ * NAIA_KEY 가 없는 곳(로컬에서 게이트웨이 없이 띄울 때)에서는 구글
+ * 엔드포인트로 직접 간다. 둘 다 없으면 부르지 않고 멈춘다 — 조용히
+ * 넘어가면 화면에는 알파가 대답을 못 하는 이유가 남지 않는다.
+ */
+function resolveEndpoint(): { url: string; apiKey: string; via: string } {
+    const naiaKey = process.env.NAIA_KEY;
+    if (naiaKey) {
+        const base = (process.env.NAIA_BASE_URL || 'https://api.nextain.io/v1').replace(/\/+$/, '');
+        return { url: `${base}/chat/completions`, apiKey: naiaKey, via: 'naia' };
+    }
+    const geminiKey = process.env.GEMINI_API_KEY;
+    if (geminiKey) {
+        return { url: GOOGLE_URL, apiKey: geminiKey, via: 'google' };
+    }
+    throw new GeminiApiError(
+        'Model credentials are not configured. Set NAIA_KEY (and NAIA_BASE_URL), or GEMINI_API_KEY.',
+        500,
+    );
+}
 
 interface OpenAIMessage {
     role: string;
@@ -48,19 +75,16 @@ export async function callGemini(
     contents: GeminiContent[],
     options: CallGeminiOptions = {}
 ): Promise<CallGeminiResult> {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-        throw new GeminiApiError('Gemini API credentials are not configured', 500);
-    }
+    const { url, apiKey, via } = resolveEndpoint();
 
     // Vercel AI Gateway used provider-prefixed model IDs (for example,
-    // `google/gemini-*`). Google's OpenAI-compatible endpoint expects the
-    // native Gemini model ID.
+    // `google/gemini-*`). Neither the naia gateway nor Google's
+    // OpenAI-compatible endpoint wants that prefix.
     const model = (options.model || DEFAULT_MODEL).replace(/^google\//, '');
     const maxOutputTokens = options.maxOutputTokens || DEFAULT_MAX_TOKENS;
     const temperature = options.temperature ?? 0.8;
 
-    const response = await fetch(GATEWAY_URL, {
+    const response = await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -76,16 +100,18 @@ export async function callGemini(
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error('Gemini API error:', errorData);
+        // Which gateway and which model, or the next person reads "401" and has
+        // no idea whose key was refused.
+        console.error(`[chat] ${via} gateway refused model ${model}:`, response.status, errorData);
         throw new GeminiApiError(`API request failed: ${response.status}`, response.status);
     }
 
     const data = await response.json();
     const finishReason = data.choices?.[0]?.finish_reason;
     if (finishReason === 'length') {
-        console.warn('[Gemini] Response truncated by max_tokens. finishReason:', finishReason);
+        console.warn('[chat] Response truncated by max_tokens. finishReason:', finishReason);
     }
-    console.log('[Gemini] finishReason:', finishReason);
+    console.log(`[chat] via=${via} model=${model} finishReason=${finishReason}`);
 
     const text = data.choices?.[0]?.message?.content || '';
     return { text, finishReason };
