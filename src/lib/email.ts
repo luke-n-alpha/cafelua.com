@@ -1,9 +1,24 @@
 /**
- * Email utility using Resend API.
- * If RESEND_API_KEY is not set, emails are silently skipped.
+ * Sending mail from Cafe Lua.
+ *
+ * This used to go through Resend, chosen back when the site ran on Vercel.
+ * Everything else moved to Azure and the Resend key did not survive the move,
+ * so it now goes through Azure Communication Services instead — one fewer
+ * account to keep, and it sits beside the rest of the site's infrastructure.
+ *
+ * Mail leaves as noreply@notify.cafelua.com. The subdomain is deliberate: the
+ * apex carries the MX and SPF for the real cafelua.com mailboxes on Microsoft
+ * 365, and a sending service has no business editing those. notify. has its own
+ * SPF and DKIM and cannot disturb them.
+ *
+ * With no connection string configured, mail is skipped rather than thrown —
+ * a notification that cannot be sent must not take down the write that
+ * triggered it.
  */
 
-const RESEND_API = 'https://api.resend.com/emails';
+import { EmailClient } from '@azure/communication-email';
+
+const FROM = process.env.CAFELUA_MAIL_FROM || 'Cafe Lua <noreply@notify.cafelua.com>';
 
 interface EmailPayload {
     to: string;
@@ -15,27 +30,39 @@ function escapeHtml(s: string): string {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-export async function sendEmail(payload: EmailPayload): Promise<boolean> {
-    const apiKey = process.env.RESEND_API_KEY;
-    const from = process.env.COMMENT_NOTIFY_FROM || 'Cafe Lua <noreply@cafelua.com>';
+/** `Name <address>` 또는 그냥 주소를 받아 주소만 꺼낸다. */
+function bareAddress(from: string): string {
+    const angled = from.match(/<([^>]+)>/);
+    return (angled ? angled[1] : from).trim();
+}
 
-    if (!apiKey) {
-        console.warn('[email] RESEND_API_KEY not set — skipping email');
+let client: EmailClient | null = null;
+
+function emailClient(): EmailClient | null {
+    if (client) return client;
+    const connectionString = process.env.CAFELUA_ACS_EMAIL_CONNECTION;
+    if (!connectionString) return null;
+    client = new EmailClient(connectionString);
+    return client;
+}
+
+export async function sendEmail(payload: EmailPayload): Promise<boolean> {
+    const sender = emailClient();
+    if (!sender) {
+        console.warn('[email] CAFELUA_ACS_EMAIL_CONNECTION not set — skipping email');
         return false;
     }
 
     try {
-        const res = await fetch(RESEND_API, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${apiKey}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ from, to: [payload.to], subject: payload.subject, html: payload.html }),
+        const poller = await sender.beginSend({
+            senderAddress: bareAddress(FROM),
+            content: { subject: payload.subject, html: payload.html },
+            recipients: { to: [{ address: payload.to, displayName: undefined }] },
+            replyTo: [{ address: process.env.OWNER_NOTIFY_EMAIL || 'luke.yang@cafelua.com' }],
         });
-        if (!res.ok) {
-            const body = await res.text();
-            console.error('[email] Resend API error:', res.status, body);
+        const result = await poller.pollUntilDone();
+        if (result.status !== 'Succeeded') {
+            console.error('[email] send did not succeed:', result.status, result.error);
             return false;
         }
         return true;
@@ -45,11 +72,6 @@ export async function sendEmail(payload: EmailPayload): Promise<boolean> {
     }
 }
 
-/**
- * Where the master hears about anything new — a guestbook entry, a comment, a
- * reply. Set OWNER_NOTIFY_EMAIL to change it; the address below is the one
- * cafelua.com has always answered from.
- */
 export function ownerAddress(): string {
     return process.env.OWNER_NOTIFY_EMAIL || 'luke.yang@cafelua.com';
 }

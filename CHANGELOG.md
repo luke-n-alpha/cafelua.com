@@ -3,6 +3,10 @@
 # Changelog
 
 ### v0.2.1 (2026-09-01)
+- **Mail Moved to Azure**: Notification mail used to go through Resend, chosen when the site ran on Vercel; the key did not survive the move to Azure. It now goes through Azure Communication Services and leaves as noreply@notify.cafelua.com. The subdomain is deliberate — the apex carries the MX and SPF for the real cafelua.com mailboxes, and a sending service has no business editing those.
+- **Visitor Counter and Popular Posts Are Back**: Both read Google Analytics and had lost their credentials in the move. A new service account key is in place.
+- **The Master Signs In**: Writing with the master's name and password puts a badge beside the message, in the guestbook, on post comments, and in the timeline. That name is refused to anyone without the password, and the master is not rate limited.
+- **Room to Reply**: Posting several messages in a row no longer trips the limit — a guestbook entry every twelve seconds, a comment every eight.
 - **Timeline at the Front Door**: A tab at the top left of the entrance slides a panel in from the edge holding the most recent guestbook entries and post comments in one stream. Every line is a shortcut — it carries the visitor straight to the corner that writing lives in, with the season, time, and weather they picked still on.
 - **NEW Badges on the Map**: Each corner of the sitemap can now carry the date its contents last changed, and the map marks anything from the last three weeks. The badge follows the content and falls off on its own. The Library and the Old PC carry it today.
 - **The Old PC Holds 2001-2003**: The restored fstory.net homepage joined the 1997 and 1998 ones inside the atelier's old PC.

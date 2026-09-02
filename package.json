@@ -16,6 +16,7 @@
         "seo:generate": "tsx scripts/generate-seo-files.ts"
     },
     "dependencies": {
+        "@azure/communication-email": "^1.1.0",
         "@azure/data-tables": "^13.3.2",
         "@google-analytics/data": "^5.2.1",
         "i18next": "^25.6.3",
