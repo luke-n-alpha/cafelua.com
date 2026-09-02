@@ -33,7 +33,7 @@ The site works without any API keys (AI chat, guestbook, and weather features wi
 | **Counter** | VN-style coffee chat & Celtic Cross tarot (Gemini Flash 3.1 Lite) |
 | **Master's Desk** | Blog with 2,100+ posts — category/tag filter, infinite scroll |
 | **Gallery** | Photo gallery, Cafe Lua spaces, tarot story decks, BGM |
-| **Guestbook** | Firebase-backed guestbook with seasonal cafe backgrounds |
+| **Guestbook** | Guestbook on Azure Table Storage, with seasonal cafe backgrounds |
 | **2F Atelier** | Retro Win98 PC experience and seasonal atelier backgrounds |
 | **2F Library** | Korean/English ebook reader with auto-turn, browser read-aloud, mobile touch/swipe controls, shareable URLs, and WikiDocs/Leanpub editions |
 
@@ -49,7 +49,7 @@ The site works without any API keys (AI chat, guestbook, and weather features wi
 | Language | TypeScript |
 | Styling | CSS + design tokens |
 | AI | Vercel AI Gateway + Google Gemini Flash 3.1 Lite |
-| Backend | Firebase (guestbook/comments), GA4 Data API |
+| Backend | Azure Table Storage (guestbook/comments), naia gateway (chat/tarot), Azure Communication Services (mail), GA4 Data API |
 | i18n | react-i18next (ko/en) |
 | Deployment | Docker containers on the Azure VM `naia-home-prod-az`. Cloudflare → Azure Front Door → Caddy on the VM |
 
@@ -64,13 +64,9 @@ Copy `.env.example` to `.env`:
 | `GEMINI_API_KEY` | ✅ | Gemini API key used by server-side chat routes. |
 | `CAFELUA_COFFEE_CHAT_MODEL` | — | Coffee chat model override. Default: `gemini-3.1-flash-lite` |
 | `CAFELUA_TAROT_CHAT_MODEL` | — | Tarot chat model override. Default: `gemini-3.1-flash-lite` |
-| `FIREBASE_CLIENT_EMAIL` | ✅* | Firebase Admin SDK service account email |
-| `FIREBASE_PRIVATE_KEY` | ✅* | Firebase Admin SDK private key |
-| `NEXT_PUBLIC_FIREBASE_*` | ✅* | Firebase client config (apiKey, projectId, etc.) |
 | `GA4_PROPERTY_ID` | — | GA4 property ID for visitor counter |
 | `GA4_CLIENT_EMAIL` / `GA4_PRIVATE_KEY` | — | GA4 Data API auth (popular posts) |
 | `NEXT_PUBLIC_OPENWEATHER_API_KEY` | — | OpenWeather API key for real-time weather |
-| `RESEND_API_KEY` | — | Email reply notifications (comments/guestbook) |
 | `COMMENT_NOTIFY_FROM` | — | Sender address for reply notification emails |
 | `ALPHA_SECRET_PHRASE` | — | Secret phrase for master (Alpha's owner) recognition |
 | `DESK_PREBUILD_COUNT` | — | Posts pre-rendered at build time (default: `50`) |
@@ -129,7 +125,7 @@ src/
 ├── data/desk/
 │   ├── deskData.ts      # Types, constants, manualPosts (client-safe)
 │   └── deskLoader.ts    # Server-only: reads MD files via fs at build time
-└── lib/ services/       # Gemini, Firebase, MIDI synth, etc.
+└── lib/ services/       # naia gateway, Table Storage, MIDI synth, etc.
 ```
 
 ### How posts are loaded

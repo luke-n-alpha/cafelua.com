@@ -16,7 +16,7 @@ Luke와 AI 동반자 Alpha의 개인 웹사이트. 현실과 이세계의 경계
 | UI | shadcn/ui + custom CSS |
 | Hosting | Azure VM `naia-home-prod-az` 의 도커 컨테이너 (SSR). Cloudflare → Azure Front Door → VM 안 Caddy → 앱 `:3000` |
 | Analytics | Google Analytics 4 |
-| Backend | Firebase (guestbook), Gemini API (chat/tarot), GA4 Data API |
+| Backend | Azure Table Storage (방명록·댓글), 나이아 게이트웨이 (채팅·타로), Azure Communication Services (메일), GA4 Data API |
 | i18n | react-i18next (ko/en) |
 | Package | npm |
 
@@ -45,7 +45,7 @@ src/
 │   │   │   │   └── [slug]/          # Post detail
 │   │   │   ├── gallery/             # Gallery + diary
 │   │   │   │   └── diary/[slug]/    # Diary detail
-│   │   │   ├── guestbook/           # Guestbook (Firebase)
+│   │   │   ├── guestbook/           # Guestbook (Table Storage)
 │   │   │   └── about/[tab]/         # About (sitemap/alpha/luke)
 │   │   ├── atelier/                 # 2F Win98 experience
 │   │   ├── tarot/                   # AI tarot reading
@@ -53,8 +53,8 @@ src/
 │   └── api/
 │       ├── chat/                    # Alpha chat (Gemini)
 │       ├── desk/popular/            # GA4 popular posts
-│       ├── comments/                 # Post comments (Firebase Admin)
-│       ├── guestbook/               # Firebase guestbook
+│       ├── comments/                 # Post comments (Table Storage)
+│       ├── guestbook/               # Guestbook (Table Storage)
 │       ├── link-preview/            # OG metadata fetch
 │       ├── tarot/                   # Tarot cards/interpret
 │       └── visitors/count/          # GA4 visitor counter
@@ -67,17 +67,38 @@ src/
 │   ├── GeminiChatService.ts         # Gemini AI chat
 │   ├── ChatMemoryService.ts         # Chat memory
 │   ├── CommentService.ts            # Post comments API client
-│   ├── GuestbookService.ts          # Firebase guestbook
+│   ├── GuestbookService.ts          # Guestbook API client
 │   ├── WeatherService.ts            # OpenWeather API
 │   └── LegacyMidiSynth.ts          # MIDI synth for BGM
 ├── lib/                             # Utilities
 │   ├── alpha-prompt.ts              # Alpha persona prompt
-│   ├── firebase.ts / firebase-admin.ts
-│   ├── gemini.ts                    # Gemini client
+│   ├── guest-store.ts               # 방명록·댓글 (Azure Table Storage)
+│   ├── gemini.ts                    # 나이아 게이트웨이 클라이언트
 │   └── tarot-data.ts                # Tarot data loader
 ├── styles/                          # Global CSS
 └── middleware.ts                    # Locale detection + routing
 ```
+
+## 구조 한눈에
+
+사이트는 Azure 위에서만 돕니다. 예전에 쓰던 Vercel·Firebase·Resend 는 모두 걷어냈습니다.
+
+| 무엇 | 어디 |
+| --- | --- |
+| 호스팅 | Azure VM `naia-home-prod-az` 안의 도커 컨테이너 (`cafelua` + `caddy`), systemd `cafelua.service` |
+| 요청 경로 | Cloudflare → Azure Front Door(`afd-naia-global`) → `cafelua.naia.land` → Caddy → 앱 `:3000` |
+| 이미지 | `acrnaia83b29893.azurecr.io/cafelua/home` |
+| 방명록·댓글 | Azure Table Storage `stnaia83b29893` 의 `guestbook`, `comments` 테이블 |
+| 알림 메일 | Azure Communication Services (`acs-cafelua`), 발신 `noreply@notify.cafelua.com` |
+| 방문자 수·인기 글 | GA4 속성 `524679272`, 서비스 계정 `cafelua@cafelua-com` |
+| 알파 채팅·타로 | 나이아 게이트웨이 `api.nextain.io/v1`, 모델은 환경변수로 지정 |
+| 비밀값 | Key Vault `kv-naia-83b29893` → VM 의 `/usr/local/bin/cafelua-env.sh` → `/run/cafelua.env` |
+
+메일이 `notify.` 서브도메인에서 나가는 것은 의도한 것입니다. `cafelua.com` 의 MX 와 SPF 는
+실제 메일함(Microsoft 365)의 것이고, 발송 서비스가 건드릴 자리가 아닙니다.
+
+`src/middleware.ts` 는 `x-azure-fdid` 가 맞지 않으면 403 을 냅니다. Front Door 를 우회해
+오리진에 직접 붙으면 403 이 나는데, 이걸 모르면 오리진이 죽은 줄로 오해합니다.
 
 ## Feature Map
 
@@ -108,7 +129,7 @@ src/
 - `GalleryPage.tsx`, `DiaryPost.tsx`
 
 ### Guestbook (`/guestbook`)
-Firebase 기반 방명록. 대댓글(1단계), 이메일 답글 알림(Resend API).
+Azure Table Storage 기반 방명록. 대댓글(1단계), 답글 알림 메일, 주인장 인증 뱃지.
 - `GuestbookPage.tsx`, `GuestbookService.ts`
 - API: `/api/guestbook/*`
 
@@ -141,7 +162,7 @@ AI 타로 리딩. Celtic Cross 스프레드 + Gemini 해석.
 - **Data/Services**: camelCase (`deskData.ts`, `GeminiChatService.ts`)
 - **Imports**: External → internal → relative
 - **'use client'**: Only when hooks/browser APIs needed
-- **API routes**: Server-only (Firebase Admin, Gemini, GA4 Data API)
+- **API routes**: Server-only (Table Storage, 나이아 게이트웨이, ACS 메일, GA4 Data API)
 
 ## Page Metadata (OG / SEO) — 새 페이지 필수 규칙
 
@@ -156,16 +177,19 @@ AI 타로 리딩. Celtic Cross 스프레드 + Gemini 해석.
 ## Environment Variables
 
 ```
-GEMINI_TOKEN                          # Gemini API (chat/tarot)
+NAIA_KEY / NAIA_BASE_URL               # 나이아 게이트웨이 (알파 채팅·타로)
+CAFELUA_COFFEE_CHAT_MODEL             # 커피챗 모델
+CAFELUA_TAROT_CHAT_MODEL              # 타로 모델
+CAFELUA_TABLES_CONNECTION             # 방명록·댓글 (Azure Table Storage)
+CAFELUA_ACS_EMAIL_CONNECTION          # 알림 메일 (Azure Communication Services)
+CAFELUA_MAIL_FROM                     # 발신 주소 (기본 noreply@notify.cafelua.com)
+OWNER_NOTIFY_EMAIL                    # 주인장 알림 수신 주소
+GUESTBOOK_ADMIN_NICKNAME / _PASSWORD  # 주인장 인증
 GA4_PROPERTY_ID                       # GA4 visitor counter + popular posts
 GA4_CLIENT_EMAIL / GA4_PRIVATE_KEY    # GA4 Data API auth
-NEXT_PUBLIC_FIREBASE_*                # Firebase client (guestbook)
-FIREBASE_CLIENT_EMAIL / PRIVATE_KEY   # Firebase Admin
 ALPHA_SECRET_PHRASE                   # Master recognition
 ALPHA_FAMILY_MEMBERS                  # Family info (JSON)
 NEXT_PUBLIC_OPENWEATHER_API_KEY        # Weather API (optional)
-RESEND_API_KEY                        # Email notifications (Resend)
-COMMENT_NOTIFY_FROM                   # Reply notification sender (optional)
 ```
 
 ## Management Tool

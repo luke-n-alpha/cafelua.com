@@ -33,7 +33,7 @@ API 키 없이도 사이트는 동작합니다 (AI 채팅, 방명록, 날씨 기
 | **카운터** | VN 스타일 커피챗 & 켈틱 크로스 타로 (Gemini Flash 3.1 Lite) |
 | **마스터의 데스크** | 블로그 — 2,100+개 포스트, 카테고리/태그 필터, 무한 스크롤 |
 | **갤러리** | 사진 갤러리, 카페루아 공간, 타로 스토리 덱, BGM |
-| **방명록** | Firebase 기반 방명록, 계절형 카페 배경, 비밀글 기능 |
+| **방명록** | Azure Table Storage 기반 방명록, 계절형 카페 배경, 비밀글 기능 |
 | **2층 아틀리에** | 레트로 Win98 PC 체험과 계절형 아틀리에 배경 |
 | **2층 서재** | 한·영 전자책 뷰어, 모바일 터치·스와이프, 책별 공유 URL과 바로보기 링크, 위키독스·Leanpub 판본 연결 |
 
@@ -49,7 +49,7 @@ API 키 없이도 사이트는 동작합니다 (AI 채팅, 방명록, 날씨 기
 | Language | TypeScript |
 | Styling | CSS + 디자인 토큰 |
 | AI | Vercel AI Gateway + Google Gemini Flash 3.1 Lite |
-| Backend | Firebase (방명록/댓글), GA4 Data API |
+| Backend | Azure Table Storage (방명록/댓글), 나이아 게이트웨이 (채팅·타로), Azure Communication Services (메일), GA4 Data API |
 | i18n | react-i18next (ko/en) |
 | Deployment | Azure VM `naia-home-prod-az` 의 도커 컨테이너. Cloudflare → Azure Front Door → VM 안 Caddy |
 
@@ -64,13 +64,9 @@ API 키 없이도 사이트는 동작합니다 (AI 채팅, 방명록, 날씨 기
 | `GEMINI_API_KEY` | ✅ | 서버 측 채팅 경로에서 사용하는 Gemini API 키 |
 | `CAFELUA_COFFEE_CHAT_MODEL` | — | 커피챗 모델 override. 기본값: `gemini-3.1-flash-lite` |
 | `CAFELUA_TAROT_CHAT_MODEL` | — | 타로챗 모델 override. 기본값: `gemini-3.1-flash-lite` |
-| `FIREBASE_CLIENT_EMAIL` | ✅* | Firebase Admin SDK 서비스 계정 이메일 |
-| `FIREBASE_PRIVATE_KEY` | ✅* | Firebase Admin SDK 비공개 키 |
-| `NEXT_PUBLIC_FIREBASE_*` | ✅* | Firebase 클라이언트 설정 (apiKey, projectId 등) |
 | `GA4_PROPERTY_ID` | — | 방문자 카운터용 GA4 속성 ID |
 | `GA4_CLIENT_EMAIL` / `GA4_PRIVATE_KEY` | — | GA4 Data API 인증 (인기 포스트) |
 | `NEXT_PUBLIC_OPENWEATHER_API_KEY` | — | 실시간 날씨용 OpenWeather API 키 |
-| `RESEND_API_KEY` | — | 답글 이메일 알림 (댓글/방명록) |
 | `COMMENT_NOTIFY_FROM` | — | 답글 알림 발신자 이메일 주소 |
 | `ALPHA_SECRET_PHRASE` | — | 마스터 인식용 비밀 문구 |
 | `DESK_PREBUILD_COUNT` | — | 빌드 시 사전 생성할 포스트 수 (기본값: `50`) |
@@ -129,7 +125,7 @@ src/
 ├── data/desk/
 │   ├── deskData.ts      # 타입, 상수, manualPosts (클라이언트 safe)
 │   └── deskLoader.ts    # 서버 전용: 빌드 시 fs로 MD 파일 읽기
-└── lib/ services/       # Gemini, Firebase, MIDI 신시사이저 등
+└── lib/ services/       # 나이아 게이트웨이, Table Storage, MIDI 신시사이저 등
 ```
 
 ### 포스트 로딩 구조
