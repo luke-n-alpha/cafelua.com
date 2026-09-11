@@ -11,6 +11,7 @@ export interface Comment {
     content: string;
     createdAt: string | null;
     deleted: boolean;
+    isOwner?: boolean;
 }
 
 export async function getComments(
