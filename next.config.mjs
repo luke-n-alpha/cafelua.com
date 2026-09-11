@@ -7,6 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const nextConfig = {
     reactStrictMode: true,
     trailingSlash: true,
+    output: 'standalone',
     turbopack: {
         root: __dirname,
     },
