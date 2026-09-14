@@ -28,13 +28,11 @@ canonicalUrl: https://www.cafelua.com/{locale}/desk/20260914-aipol-democracy-res
 
 **한국정책학회 전문가들과 함께, AI가 사람들의 연금 정책 토론을 어떻게 도울 수 있는지 살펴보는 온라인 연구입니다.**
 
-<u>**사실, AI에게 정책 결정을 맡기는 실험은 아닙니다.**</u>
+**사실, AI에게 정책 결정을 맡기는 실험은 아닙니다.**
 
 ![YOU JUST ACTIVATED MY TRAP CARD - 나무위키](https://i.namu.wiki/i/mVbvSl2j-zdEzqQQgq8RX1Sv7TUUlzR41DjSQfdOzgVDdMLRQyZ2VtCXE2HyX1DW0lMOuE6BeUwzaW9ETAGT2g.webp) 전문가가 준비한 자료와 시민들의 토론을 바탕으로 AI가 의견을 정리하고 정책 초안 작성을 돕습니다. 그 안을 읽고, 토론하고, 판단하는 것은 여러분입니다.
 
-<div style="text-align: center; margin: 32px 0;">
-  <a href="https://session.aipol.kaps.or.kr/cases/pension/online/"><span style="display: inline-block; box-sizing: border-box; max-width: 100%; padding: 18px 28px; border-radius: 14px; background: #0f766e; color: #ffffff; font-size: 20px; font-weight: 700; line-height: 1.5; box-shadow: 0 4px 14px rgba(15, 118, 110, 0.22);"><span style="display: block; margin-bottom: 4px; font-size: 13px; font-weight: 400;">국민연금 개혁 · AI 토론 연구</span>지금 참여하고 내 생각 남기기 →</span></a>
-</div>
+[**국민연금 개혁 · AI 토론 연구 — 지금 참여하고 내 생각 남기기 →**](https://session.aipol.kaps.or.kr/cases/pension/online/)
 
 ## AI가 만든 안보다 중요한 것, 여러분이 선택한 이유
 
@@ -72,9 +70,7 @@ AI가 많은 것들을 변화시키고 있고 어떤 분들은 AI가 인류를 �
 
 **이 연구에 필요한 것은 AI의 답만이 아니라, 여러분의 생각입니다. 지금 바로 참여해보세요.**
 
-<div style="text-align: center; margin: 32px 0;">
-  <a href="https://session.aipol.kaps.or.kr/cases/pension/online/"><span style="display: inline-block; box-sizing: border-box; max-width: 100%; padding: 18px 28px; border-radius: 14px; background: #0f766e; color: #ffffff; font-size: 20px; font-weight: 700; line-height: 1.5; box-shadow: 0 4px 14px rgba(15, 118, 110, 0.22);"><span style="display: block; margin-bottom: 4px; font-size: 13px; font-weight: 400;">국민연금 개혁 · AI 토론 연구</span>지금 참여하고 내 생각 남기기 →</span></a>
-</div>
+[**국민연금 개혁 · AI 토론 연구 — 지금 참여하고 내 생각 남기기 →**](https://session.aipol.kaps.or.kr/cases/pension/online/)
 
 ![서로 다른 세대의 시민들이 원탁에서 의견을 나누고 AI가 의견의 연결을 돕는 모습을 표현한 일러스트](https://www.cafelua.com/desk/20260914-aipol-democracy-restart/aipol-democracy-hero.png)
 
@@ -87,13 +83,11 @@ Hello, I’m Luke, the creator of the AI agent Naia. If you know me for sharing 
 
 **This is an online study with experts from the Korean Association for Policy Studies, exploring how AI can help people deliberate on pension policy.**
 
-<u>**To be clear, this is not an experiment that hands policy decisions over to AI.**</u>
+**To be clear, this is not an experiment that hands policy decisions over to AI.**
 
 ![YOU JUST ACTIVATED MY TRAP CARD - Namuwiki](https://i.namu.wiki/i/mVbvSl2j-zdEzqQQgq8RX1Sv7TUUlzR41DjSQfdOzgVDdMLRQyZ2VtCXE2HyX1DW0lMOuE6BeUwzaW9ETAGT2g.webp) AI helps organize views and draft policy proposals based on materials prepared by experts and discussions among citizens. You will read the proposal, discuss it, and make your own judgment.
 
-<div style="text-align: center; margin: 32px 0;">
-  <a href="https://session.aipol.kaps.or.kr/cases/pension/online/"><span style="display: inline-block; box-sizing: border-box; max-width: 100%; padding: 18px 28px; border-radius: 14px; background: #0f766e; color: #ffffff; font-size: 20px; font-weight: 700; line-height: 1.5; box-shadow: 0 4px 14px rgba(15, 118, 110, 0.22);"><span style="display: block; margin-bottom: 4px; font-size: 13px; font-weight: 400;">National Pension Reform · AI Deliberation Study</span>Take part and leave your view →</span></a>
-</div>
+[**National Pension Reform · AI Deliberation Study — Take part and leave your view →**](https://session.aipol.kaps.or.kr/cases/pension/online/)
 
 ## More important than the AI proposal: why you made your choice
 
@@ -131,8 +125,6 @@ Would you take part in this experiment of that possibility?
 
 **This research needs not only AI’s answer, but also your thoughts. Take part now.**
 
-<div style="text-align: center; margin: 32px 0;">
-  <a href="https://session.aipol.kaps.or.kr/cases/pension/online/"><span style="display: inline-block; box-sizing: border-box; max-width: 100%; padding: 18px 28px; border-radius: 14px; background: #0f766e; color: #ffffff; font-size: 20px; font-weight: 700; line-height: 1.5; box-shadow: 0 4px 14px rgba(15, 118, 110, 0.22);"><span style="display: block; margin-bottom: 4px; font-size: 13px; font-weight: 400;">National Pension Reform · AI Deliberation Study</span>Take part and leave your view →</span></a>
-</div>
+[**National Pension Reform · AI Deliberation Study — Take part and leave your view →**](https://session.aipol.kaps.or.kr/cases/pension/online/)
 
 ![An illustration of citizens from different generations sharing views around a table while AI helps connect their perspectives](https://www.cafelua.com/desk/20260914-aipol-democracy-restart/aipol-democracy-hero.png)

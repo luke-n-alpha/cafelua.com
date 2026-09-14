@@ -156,6 +156,30 @@
     text-decoration-thickness: 2px;
 }
 
+.desk-post-text .desk-post-cta {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 2rem auto;
+    padding: 1rem 1.5rem;
+    border-radius: 14px;
+    background: #0f766e;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.5;
+    box-shadow: 0 4px 14px rgba(15, 118, 110, 0.22);
+}
+
+.desk-post-text .desk-post-cta:hover {
+    color: #fff;
+    background: #0d625b;
+    text-decoration: none;
+}
+
 .desk-post-text table {
     width: 100%;
     border-collapse: collapse;

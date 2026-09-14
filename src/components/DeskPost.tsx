@@ -439,8 +439,9 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
             return { markdown: dedupeNearbyLinks(normalizeMarkdown(toMarkdownLinks(out))), hasInlineImages: true };
         }
 
-        if (!text.trim() || imgs.length === 0) {
-            return { markdown: dedupeNearbyLinks(normalizeMarkdown(text)), hasInlineImages: false };
+        const hasMarkdownImages = /!\[[^\]]*\]\([^)]*\)/.test(text);
+        if (!text.trim() || imgs.length === 0 || hasMarkdownImages) {
+            return { markdown: dedupeNearbyLinks(normalizeMarkdown(text)), hasInlineImages: hasMarkdownImages };
         }
 
         const paras = text.split(/\n{2,}/);
@@ -637,6 +638,13 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
                                                             allowFullScreen
                                                         />
                                                     </div>
+                                                );
+                                            }
+                                            if (safeHref === 'https://session.aipol.kaps.or.kr/cases/pension/online/') {
+                                                return (
+                                                    <a href={safeHref} target="_blank" rel="noopener noreferrer" className="desk-post-cta" {...props}>
+                                                        {children}
+                                                    </a>
                                                 );
                                             }
                                             if (hasImageChild(children)) {
