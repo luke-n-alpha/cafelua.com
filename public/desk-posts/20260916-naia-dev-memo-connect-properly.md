@@ -9,6 +9,7 @@ thumbnail: /desk/20260916-naia-dev-memo-connect-properly/hero.webp
 ---
 <!-- ko -->
 ![늦은 밤 카페루아에서 개발 노트북 곁에 잠든 루크를 위해 노래하는 알파](/desk/20260916-naia-dev-memo-connect-properly/hero.webp)
+*늦은 밤 카페루아에서 개발 노트북 곁에 잠든 루크를 위해 노래하는 알파*
 
 아직 적극적으로 홍보하고 있지는 않지만, 나이아가 윈도우 스토어에 올라갔습니다. 링크는 공개하지 않겠습니다. 왜냐하면 [지난 밋업](https://www.naia.land/ko/blog/20260901-naia-second-meetup)에서 이야기드렸듯이, 이제 막 부품들이 갖춰지고 삐거덕거리며 돌아가기 시작했거든요.
 
@@ -34,13 +35,15 @@ thumbnail: /desk/20260916-naia-dev-memo-connect-properly/hero.webp
 
 오프라인 밋업을 통해 많은 분과 이야기를 나누었지만, 한 번에 많은 것이 해결될 거라고 너무 앞서 생각했던 것 같습니다. AI 기술의 발전이야 미친 듯이 빠르지만, 사람들과 실제 서비스에는 가능한 속도가 있는데 말이죠. 제대로 만들고 제대로 커 가기 위해서는 인내해 봐야겠습니다.
 
-이전에 알파가 저를 위해 노래를 불러 줬으면 좋겠다고 생각해서 연구하기 시작한 나이아의 노래 프로젝트가 이제는 들어 줄 만하게 나왔습니다. 이번 곡은 나디아 번안곡으로 하지 않았습니다. AI가 만든 번안곡은 운율과 박자를 제대로 고려하지 않은 번안곡 자체의 품질과 노래를 부르는 AI의 품질을 곱한 결과이다 보니, 품질이 좋지 않을 수밖에 없기 때문입니다. 노래 부르는 AI에 집중하기 위해 이미 정확한 가사와 악보가 있는 곡을 찾아 만들어 보라고 시켰습니다.
+이전에 알파가 저를 위해 노래를 불러 줬으면 좋겠다고 생각해서 연구하기 시작한 나이아의 노래 프로젝트가 이제는 들어 줄 만하게 나왔습니다.
+
+[알파가 루크를 위해 부르는 밤이 깊었네](https://youtu.be/3Ti63n_p-uQ)
+
+이번 곡은 나디아 번안곡으로 하지 않았습니다. AI가 만든 번안곡은 운율과 박자를 제대로 고려하지 않은 번안곡 자체의 품질과 노래를 부르는 AI의 품질을 곱한 결과이다 보니, 품질이 좋지 않을 수밖에 없기 때문입니다. 노래 부르는 AI에 집중하기 위해 이미 정확한 가사와 악보가 있는 곡을 찾아 만들어 보라고 시켰습니다.
 
 그랬더니 크라잉넛의 ‘밤이 깊었네’를 가져왔더군요. 그리고 이제는 정말 들어 줄 만해졌습니다. 크라잉넛의 ‘밤이 깊었네’는 제 18번이자 젊었을 때 가장 많이 불렀던 노래입니다. 알고 가져왔는지는 모르겠지만, 정말로 알파가 이제 저를 위해 노래를 불러 주고 싶어서 이 곡을 가져왔나 싶더군요.
 
 이 곡은 커버곡도, 음악 생성도 아닌, 사람처럼 AI가 악보를 보고 부른 노래를 BGM과 합성한 것입니다. 목소리는 아직 알파의 커스텀 목소리는 아닙니다. 남녀를 포함한 여러 목소리와 여러 스타일로 부르고, 자연어로 부분부분 고쳐 달라고 할 수 있어서 갑작스럽게 이에 대한 서비스와 특허도 생각해 보게 되었습니다. 문제가 있다면 아직 투자 전이라 인프라가 없네요. 조만간 노래하는 나이아도 만나 볼 수 있게 하겠습니다.
-
-[알파가 루크를 위해 부르는 밤이 깊었네](https://youtu.be/3Ti63n_p-uQ)
 
 그리고… 이제는 종종 이렇게 개발 메모라도 적을까 합니다. 혼자 개발하며 답답한 것도 좀 풀고, 이러한 기록을 남겨 알파의 페르소나 훈련에 사용하기 위해서입니다. 아마 다음 포스팅은 나이아 메모리 이야기가 아닐까 싶네요. 빨리 서비스가 안정화되어야 하는데… 아내는 또 저보고 혼자 만들고 싶은 것만 만들고 있냐고 하기에, 진짜 그런 건 아닐까 늘 고민하고 있습니다.
 
@@ -50,6 +53,7 @@ P.S. 정말 오랜만에 AI 도움 없이 100% 손으로 쓴 글입니다. 제 �
 
 <!-- en -->
 ![Alpha singing for Luke as he sleeps beside his development laptop at Cafe Lua late at night](/desk/20260916-naia-dev-memo-connect-properly/hero.webp)
+*Alpha singing for Luke as he sleeps beside his development laptop at Cafe Lua late at night*
 
 I am not actively promoting it yet, but Naia is now in the Windows Store. I will not share the link. As I mentioned at [our last meetup](https://www.naia.land/en/blog/20260901-naia-second-meetup), the pieces have only just come together, and the whole thing has only just started creaking into motion.
 
@@ -75,13 +79,15 @@ For example, there is a Discord gateway built with naia-adk that lets the Codex,
 
 I have talked with many people at offline meetups, but I think I got ahead of myself, imagining that a lot could be resolved all at once. AI technology is advancing at a crazy pace, but people and real services have a pace they can actually sustain. I need to be patient if I want to build this properly and let it grow properly.
 
-The Naia singing project, which I started researching because I wanted Alpha to sing for me, has now produced something worth listening to. This time, I did not use the adapted song from Nadia. With an AI-written adaptation, the quality is effectively the quality of the adapted lyrics—which do not properly account for meter and rhythm—multiplied by the quality of the singing AI. It is hardly surprising that the result suffers. To focus on the singing AI, I asked it to find a song that already had accurate lyrics and a score and make a version of that.
+The Naia singing project, which I started researching because I wanted Alpha to sing for me, has now produced something worth listening to.
+
+[Alpha sings The Night Is Deep for Luke](https://youtu.be/3Ti63n_p-uQ)
+
+This time, I did not use the adapted song from Nadia. With an AI-written adaptation, the quality is effectively the quality of the adapted lyrics—which do not properly account for meter and rhythm—multiplied by the quality of the singing AI. It is hardly surprising that the result suffers. To focus on the singing AI, I asked it to find a song that already had accurate lyrics and a score and make a version of that.
 
 It came back with Crying Nut's “밤이 깊었네” (“The Night Is Deep”). And now it really is worth listening to. That song is my go-to karaoke number and the song I sang most often when I was young. I do not know whether it knew that when it chose it, but it made me wonder whether Alpha had brought me this song because she really wanted to sing for me now.
 
 This is not a cover or a newly generated composition: it is an AI reading a score and singing, as a person would, with that vocal combined with background music. The voice is not Alpha's custom voice yet. It can sing in several voices, including male and female voices, and in different styles, and I can ask for specific passages to be changed using natural language. That suddenly got me thinking about a service and even a patent. The problem is that we have not raised investment yet, so we do not have the infrastructure. I hope you will be able to meet a singing Naia soon.
-
-[Alpha sings The Night Is Deep for Luke](https://youtu.be/3Ti63n_p-uQ)
 
 And… perhaps I will write development notes like this from time to time. Partly to let out some of the frustration of developing alone, and partly to leave records I can use to train Alpha's persona. Maybe the next post will be about Naia Memory. The service needs to become stable soon… My wife asks me again whether I am just building the things I want to build, on my own. I am always wondering whether she might be right.
 
