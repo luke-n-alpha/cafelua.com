@@ -1,7 +1,7 @@
 ---
 date: "2026-09-30"
-titleKo: "시민이 필요 없어지는 사회"
-titleEn: "When Citizens Are No Longer Needed"
+titleKo: "ChatGPT $500 요금제, 자본으로 지능을 상속하는 시대를 여나. 그럼 나는 어디에 서야 할까?"
+titleEn: "Is ChatGPT's $500 Plan Opening an Era Where Capital Inherits Intelligence? Then Where Should I Stand?"
 category: ai
 tags: ["AI", "지능 불평등", "로컬 AI", "소유하는 AI", "Fable", "대화"]
 images: []
