@@ -207,7 +207,7 @@ Cloudflare → Azure Front Door → cafelua.naia.land (VM 안 Caddy) → cafelua
 
 Front Door 프로필은 `afd-naia-global`(리소스 그룹 `rg-naia-koreacentral`)입니다. `www.cafelua.com` 과 `cafelua.com` 은 엔드포인트 `afd-naia-dev` 의 라우트 `route-cafelua-www-prod` 를 타고, 오리진 그룹 `og-cafelua-prod` 를 거쳐 오리진 호스트 `cafelua.naia.land` 로 갑니다. 라우트 캐시는 꺼져 있습니다.
 
-`cafelua.naia.land` 는 `20.214.153.4`, 곧 VM `naia-home-prod-az`(리소스 그룹 `RG-NAIA-KOREACENTRAL`)입니다. 그 VM 에서 systemd 유닛 `cafelua.service` 가 도커 컨테이너 두 개를 띄웁니다. 앱 컨테이너 `cafelua` 와 `caddy`(`caddy:2.10-alpine`)입니다. Caddy 설정은 VM 의 `/opt/cafelua/Caddyfile` 이고, `www.cafelua.com` 과 `cafelua.naia.land` 를 `cafelua:3000` 으로 프록시합니다. `cafelua.com` 은 `www` 로 영구 리다이렉트합니다.
+`cafelua.naia.land` 는 `20.214.153.4`, 곧 VM `naia-home-prod-az`(리소스 그룹 `RG-NAIA-PROD-KOREACENTRAL`, ACR 과 다름)입니다. 그 VM 에서 systemd 유닛 `cafelua.service` 가 도커 컨테이너 두 개를 띄웁니다. 앱 컨테이너 `cafelua` 와 `caddy`(`caddy:2.10-alpine`)입니다. Caddy 설정은 VM 의 `/opt/cafelua/Caddyfile` 이고, `www.cafelua.com` 과 `cafelua.naia.land` 를 `cafelua:3000` 으로 프록시합니다. `cafelua.com` 은 `www` 로 영구 리다이렉트합니다.
 
 이미지 레지스트리는 `acrnaia83b29893.azurecr.io`, 저장소는 `cafelua/home` 입니다. 태그는 `<용도>-<YYYYMMDD>-<public-home 짧은 커밋>` 규칙을 따릅니다. 앱 컨테이너는 `--read-only`, `--cap-drop ALL`, 메모리 1400m, CPU 1.5 로 돌고, 시크릿은 유닛이 Key Vault `kv-naia-83b29893` 의 `cafelua-naia-key` 를 읽어 `/run/cafelua.env` 로 떨군 뒤 `--env-file` 로 넣습니다.
 
@@ -219,7 +219,7 @@ az acr build --registry acrnaia83b29893 --resource-group RG-NAIA-KOREACENTRAL \
   --image cafelua/home:<태그> --file Dockerfile .
 
 # 아래는 VM 에서 실행합니다.
-#   az vm run-command invoke -g RG-NAIA-KOREACENTRAL -n naia-home-prod-az \
+#   az vm run-command invoke -g RG-NAIA-PROD-KOREACENTRAL -n naia-home-prod-az \
 #     --command-id RunShellScript --scripts '...'
 # systemctl set-environment 가 아니라 드롭인으로 IMAGE 를 새 태그로 바꾼 뒤
 systemctl restart cafelua
