@@ -180,6 +180,19 @@
     text-decoration: none;
 }
 
+.desk-post-text blockquote {
+    margin: 2rem 0 1.2rem;
+    padding: 0.9rem 1.1rem 0.1rem;
+    border-left: 4px solid #ffc83d;
+    border-radius: 0 12px 12px 0;
+    background: rgba(255, 200, 61, 0.1);
+    color: #fff6dc;
+}
+
+.desk-post-text blockquote strong {
+    color: #ffc83d;
+}
+
 .desk-post-text table {
     width: 100%;
     border-collapse: collapse;
