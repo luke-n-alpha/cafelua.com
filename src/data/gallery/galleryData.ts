@@ -209,15 +209,15 @@ export const SPACE_IMAGES: Record<string, GalleryImage[]> = {
 export const TAROT_DECKS: GalleryDeck[] = [
   {
     key: 'current-major',
-    labelKo: '현재판 단편소설집',
-    labelEn: 'Current Illustrated Stories',
+    labelKo: 'v2.0 단편소설집',
+    labelEn: 'v2.0 Illustrated Stories',
     storyKo: '스물두 장의 타로 삽화로 읽는 카페루아의 하룻밤. 알파는 이름 없는 질문을 들고 들어온 손님과 마주 앉아, 침묵과 선택, 상실과 회복을 지나 아침까지 이어지는 작은 단편을 펼친다.',
     storyEn: 'A Cafe Lua night told through twenty-two tarot illustrations. Alpha sits with a visitor carrying an unnamed question, unfolding a short story through silence, choice, loss, repair, and morning light.',
   },
   {
     key: 'old-major',
-    labelKo: 'old판 단편소설집',
-    labelEn: 'Old Illustrated Stories',
+    labelKo: 'v1.0 단편소설집',
+    labelEn: 'v1.0 Illustrated Stories',
     storyKo: '같은 스물두 장면을 이전 old 삽화로 다시 읽는 단편소설집. 지금보다 낯선 알파와 오래된 카페루아의 결이 남아 있어, 같은 사건도 조금 다른 온도와 표정으로 이어진다.',
     storyEn: 'The same twenty-two scenes retold through the old illustrations. An earlier Alpha and an older Cafe Lua atmosphere remain, giving the same story a different temperature and expression.',
   },
