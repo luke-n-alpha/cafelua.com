@@ -345,6 +345,44 @@
     color: rgba(245, 242, 235, 0.7);
 }
 
+.tarot-deck-editions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+}
+
+.tarot-deck-edition {
+    min-width: 0;
+}
+
+.tarot-deck-edition-label {
+    margin-bottom: 0.2rem;
+    color: #d7c28c;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.tarot-deck-edition-title {
+    margin: 0 0 0.35rem;
+    color: #f5f2eb;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.tarot-deck-edition .tarot-deck-desc {
+    margin: 0;
+}
+
+.tarot-deck-collaboration-note {
+    margin: 0.8rem 0 0;
+    padding-top: 0.65rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(245, 242, 235, 0.58);
+    font-size: 0.7rem;
+    line-height: 1.5;
+}
+
 .tarot-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -747,6 +785,19 @@
 
     .tarot-deck-desc {
         font-size: 0.72rem;
+    }
+
+    .tarot-deck-editions {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.7rem;
+    }
+
+    .tarot-deck-edition-title {
+        font-size: 0.82rem;
+    }
+
+    .tarot-deck-collaboration-note {
+        font-size: 0.66rem;
     }
 
     .character-grid {

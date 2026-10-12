@@ -14,6 +14,7 @@ import {
     SPACE_SUBCATEGORIES,
     type GalleryImage,
 } from '@/data/gallery/galleryData';
+import { TAROT_STORY_EDITIONS, type TarotStoryEditionKey } from '@/data/gallery/tarotStories';
 import { DIARY_ENTRIES } from '@/data/gallery/diaryData';
 import { resolveEnvironmentBackgroundSrc, type Season, type TimeOfDay, type Weather } from '@/lib/environmentBackgrounds';
 import { buildLocalizedUrlWithQuery } from '@/lib/navigationQuery';
@@ -51,6 +52,7 @@ const GalleryPage: React.FC = () => {
     const [tarotDeck, setTarotDeck] = useState(initialTarotDeck);
     const [carouselIndex, setCarouselIndex] = useState(0);
     const [lightboxImage, setLightboxImage] = useState<GalleryImage | null>(null);
+    const [tarotStoryVersion, setTarotStoryVersion] = useState<TarotStoryEditionKey>('fable');
     const [viewCounts, setViewCounts] = useState<Record<string, number>>({});
     const selectedTarotDeck = TAROT_DECKS.find(deck => deck.key === tarotDeck) ?? TAROT_DECKS[0];
     const tarotCards = TAROT_CARDS.filter(card => card.deckIds?.includes(tarotDeck));
@@ -92,14 +94,13 @@ const GalleryPage: React.FC = () => {
     const touchDeltaX = useRef(0);
     const carouselRef = useRef<HTMLDivElement>(null);
 
-    const currentImages = SPACE_IMAGES[spaceSubcat] || [];
-    const storyParagraphs = (isKo ? lightboxImage?.storyKo : lightboxImage?.storyEn)
+    const currentImages = useMemo(() => SPACE_IMAGES[spaceSubcat] || [], [spaceSubcat]);
+    const selectedTarotStory = lightboxImage?.tarotStories?.[tarotStoryVersion];
+    const storyBody = selectedTarotStory && (isKo ? selectedTarotStory.bodyKo : selectedTarotStory.bodyEn);
+    const storyParagraphs = storyBody
         ?.split(/\n{2,}/)
         .map((paragraph) => paragraph.trim())
         .filter(Boolean) ?? [];
-    const cardMeaning = isKo
-        ? lightboxImage?.cardMeaningKo
-        : lightboxImage?.cardMeaningEn ?? lightboxImage?.cardMeaningKo;
 
     // Reset carousel index when subcategory changes
     useEffect(() => {
@@ -156,6 +157,7 @@ const GalleryPage: React.FC = () => {
 
     const closeLightbox = useCallback(() => {
         setLightboxImage(null);
+        setTarotStoryVersion('fable');
         updateUrl({ img: null });
     }, [updateUrl]);
 
@@ -166,6 +168,7 @@ const GalleryPage: React.FC = () => {
         const currentIndex = images.findIndex((img) => img.src === lightboxImage.src);
         const nextIndex = ((currentIndex + delta) % images.length + images.length) % images.length;
         setLightboxImage(images[nextIndex]);
+        if (category === 'tarot') setTarotStoryVersion('fable');
         if (category === 'spaces') setCarouselIndex(nextIndex);
         updateUrl({ img: String(nextIndex) });
     }, [category, getLightboxImages, lightboxImage, updateUrl]);
@@ -433,6 +436,7 @@ const GalleryPage: React.FC = () => {
                                         onClick={() => {
                                             setTarotDeck(deck.key);
                                             setLightboxImage(null);
+                                            setTarotStoryVersion('fable');
                                             updateUrl({ tab: 'tarot', deck: deck.key, img: null });
                                         }}
                                     >
@@ -441,19 +445,53 @@ const GalleryPage: React.FC = () => {
                                 ))}
                             </div>
                             <div className="tarot-deck-story">
-                                <div className="tarot-deck-title">
-                                    {isKo ? selectedTarotDeck.labelKo : selectedTarotDeck.labelEn}
-                                </div>
-                                <div className="tarot-deck-desc">
-                                    {isKo ? selectedTarotDeck.storyKo : selectedTarotDeck.storyEn}
-                                </div>
+                                {tarotDeck === 'current-major' ? (
+                                    <>
+                                        <div className="tarot-deck-editions">
+                                            {(['fable', 'astra'] as const).map((version) => {
+                                                const edition = TAROT_STORY_EDITIONS[version];
+                                                return (
+                                                    <section className="tarot-deck-edition" key={version}>
+                                                        <div className="tarot-deck-edition-label">
+                                                            {version === 'fable' ? 'Fable' : 'Astra'}
+                                                        </div>
+                                                        <h3 className="tarot-deck-edition-title">
+                                                            {isKo ? edition.titleKo : edition.titleEn}
+                                                        </h3>
+                                                        <p className="tarot-deck-desc">
+                                                            {isKo ? edition.introKo : edition.introEn}
+                                                        </p>
+                                                    </section>
+                                                );
+                                            })}
+                                        </div>
+                                        <p className="tarot-deck-collaboration-note">
+                                            {isKo
+                                                ? '같은 22장의 카드 그림과 같은 카페루아 설정을 두 AI 모델이 각자 읽고, 서로 다른 이야기 두 편을 썼습니다. Fable의 이야기는 Anthropic의 Claude Fable 5.1이, Astra의 이야기는 OpenAI의 GPT-6 Astra가 썼고, 두 모델이 서로의 글을 가볍게 다듬었습니다.'
+                                                : "Two AI models read the same 22 card illustrations and the same Cafe Lua setting, and each wrote its own story. Fable's story was written by Anthropic's Claude Fable 5.1 and Astra's story by OpenAI's GPT-6 Astra; each model lightly edited the other's text."}
+                                        </p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="tarot-deck-title">
+                                            {isKo ? selectedTarotDeck.labelKo : selectedTarotDeck.labelEn}
+                                        </div>
+                                        <div className="tarot-deck-desc">
+                                            {isKo ? selectedTarotDeck.introKo : selectedTarotDeck.introEn}
+                                        </div>
+                                    </>
+                                )}
                             </div>
                             <div className="tarot-grid">
                                 {tarotCards.map((card, i) => (
                                     <div
                                         key={card.src}
                                         className="tarot-card-item"
-                                        onClick={() => { setLightboxImage(card); updateUrl({ img: String(i) }); }}
+                                        onClick={() => {
+                                            setTarotStoryVersion('fable');
+                                            setLightboxImage(card);
+                                            updateUrl({ img: String(i) });
+                                        }}
                                     >
                                         <img
                                             src={card.src}
@@ -544,28 +582,60 @@ const GalleryPage: React.FC = () => {
                     <div className="lightbox-title">
                         {isKo ? lightboxImage.titleKo : lightboxImage.titleEn}
                     </div>
-                    <div className="lightbox-desc">
-                        {isKo ? lightboxImage.descKo : lightboxImage.descEn}
-                    </div>
-                    {lightboxImage.sceneKo && (
-                        <div className="lightbox-object-note">
-                            <span>{isKo ? '이미지 오브제' : 'Image Objects'}</span>{' '}
-                            {isKo ? lightboxImage.sceneKo : lightboxImage.sceneEn}
-                        </div>
-                    )}
-                    {(lightboxImage.storyKo || cardMeaning) && (
-                        <div className="lightbox-story">
-                            {storyParagraphs.map((paragraph, index) => (
-                                <p key={index}>{paragraph}</p>
-                            ))}
-                            {cardMeaning && (
+                    {selectedTarotStory ? (
+                        <div className="tarot-story-detail">
+                            <div className="tarot-story-switcher" role="tablist" aria-label={isKo ? '이야기 선택' : 'Choose a story'}>
+                                {(['fable', 'astra'] as const).map((version) => (
+                                    <button
+                                        key={version}
+                                        id={`tarot-story-tab-${version}`}
+                                        type="button"
+                                        role="tab"
+                                        aria-selected={tarotStoryVersion === version}
+                                        aria-controls="tarot-story-panel"
+                                        onClick={() => setTarotStoryVersion(version)}
+                                    >
+                                        {isKo
+                                            ? version === 'fable' ? 'Fable의 이야기' : 'Astra의 이야기'
+                                            : version === 'fable' ? "Fable's story" : "Astra's story"}
+                                    </button>
+                                ))}
+                            </div>
+                            <div
+                                className="tarot-story-content"
+                                id="tarot-story-panel"
+                                role="tabpanel"
+                                aria-labelledby={`tarot-story-tab-${tarotStoryVersion}`}
+                            >
+                                <div className="tarot-story-author">
+                                    {isKo
+                                        ? tarotStoryVersion === 'fable' ? '글 · Claude Fable 5.1' : '글 · GPT-6 Astra'
+                                        : tarotStoryVersion === 'fable' ? 'Written by Claude Fable 5.1' : 'Written by GPT-6 Astra'}
+                                </div>
+                                <h3 className="tarot-story-chapter-title">
+                                    {isKo ? selectedTarotStory.titleKo : selectedTarotStory.titleEn}
+                                </h3>
+                                <p className="tarot-story-summary">
+                                    {isKo ? selectedTarotStory.summaryKo : selectedTarotStory.summaryEn}
+                                </p>
+                                <div className="tarot-story-body">
+                                    {storyParagraphs.map((paragraph, index) => (
+                                        <p key={index}>{paragraph}</p>
+                                    ))}
+                                </div>
                                 <div className="lightbox-card-meaning">
                                     <div className="lightbox-card-meaning-title">
-                                        {isKo ? '카드 해석' : 'Card Reading'}
+                                        {isKo ? '카드 의미와 연결' : 'Card meaning'}
                                     </div>
-                                    <p>{cardMeaning}</p>
+                                    <p>
+                                        {isKo ? selectedTarotStory.cardMeaningKo : selectedTarotStory.cardMeaningEn}
+                                    </p>
                                 </div>
-                            )}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="lightbox-desc">
+                            {isKo ? lightboxImage.descKo : lightboxImage.descEn}
                         </div>
                     )}
                 </ImageLightbox>
