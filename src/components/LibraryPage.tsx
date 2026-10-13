@@ -40,6 +40,7 @@ import {
   type Weather,
 } from "@/lib/environmentBackgrounds";
 import {
+  alignChapterStartsToSpreads,
   measureRenderedReaderPages,
   type MeasuredReaderPage,
 } from "@/lib/library-dom-pagination";
@@ -146,7 +147,11 @@ export default function LibraryPage({
       cancelAnimationFrame(animationFrame);
       animationFrame = requestAnimationFrame(() => {
         if (cancelled) return;
-        const nextPages = measureRenderedReaderPages(source, template);
+        const spreadStep = isCompact ? 1 : 2;
+        const nextPages = alignChapterStartsToSpreads(
+          measureRenderedReaderPages(source, template),
+          spreadStep,
+        );
         if (!nextPages.length) return;
         const previousPages = documentPagesRef.current;
         documentPagesRef.current = nextPages;
@@ -168,7 +173,9 @@ export default function LibraryPage({
               page.chapterIndex === previous.chapterIndex &&
               page.pageInChapter === targetInChapter,
           );
-          return { ...current, pageIndex: Math.max(0, pageIndex) };
+          // 펼침은 늘 짝수 쪽(왼쪽)에서 시작한다.
+          const spreadStart = Math.floor(Math.max(0, pageIndex) / spreadStep) * spreadStep;
+          return { ...current, pageIndex: spreadStart };
         });
       });
     };
@@ -754,14 +761,14 @@ export default function LibraryPage({
                 {readerPages.map((page, spreadPageIndex) => {
                   return (
                     <article
-                      className="library-paper-page"
+                      className={`library-paper-page${page.blank ? " library-paper-blank" : ""}`}
                       key={`${page.chapterIndex}-${page.pageInChapter}`}
                       data-reader-page-index={
                         reader.pageIndex + spreadPageIndex
                       }
                     >
                       <header>
-                        <span>{page.chapterTitle}</span>
+                        <span>{page.blank ? "" : page.chapterTitle}</span>
                         <small>{reader.pageIndex + spreadPageIndex + 1}</small>
                       </header>
                       <div

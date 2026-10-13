@@ -5,7 +5,39 @@ export type MeasuredReaderPage = {
   html: string;
   usedHeight: number;
   availableHeight: number;
+  /** 펼침면 정렬을 위해 넣은 빈 쪽 */
+  blank?: boolean;
 };
+
+/**
+ * 두 쪽 펼침에서 장이 늘 펼침의 왼쪽 쪽에서 시작하도록, 앞 장이 왼쪽 쪽에서
+ * 끝나면 오른쪽에 빈 쪽을 하나 넣는다. 한 쪽 보기(step 1)에서는 그대로 둔다.
+ */
+export function alignChapterStartsToSpreads(
+  pages: MeasuredReaderPage[],
+  step: number,
+): MeasuredReaderPage[] {
+  if (step < 2) return pages;
+  const aligned: MeasuredReaderPage[] = [];
+  pages.forEach((page, index) => {
+    const previous = pages[index - 1];
+    const startsChapter = !previous || previous.chapterIndex !== page.chapterIndex;
+    if (startsChapter && aligned.length % step !== 0) {
+      const last = aligned[aligned.length - 1];
+      aligned.push({
+        chapterIndex: last.chapterIndex,
+        chapterTitle: last.chapterTitle,
+        pageInChapter: last.pageInChapter + 1,
+        html: "",
+        usedHeight: 0,
+        availableHeight: last.availableHeight,
+        blank: true,
+      });
+    }
+    aligned.push(page);
+  });
+  return aligned;
+}
 
 const FIT_TOLERANCE_PX = 1;
 
@@ -44,8 +76,14 @@ function measuredSplit(
   const text = source.textContent ?? "";
   if (text.length < 2) return null;
 
+  // 앞쪽 공백까지만 자르면 빈 인용 상자 같은 껍데기만 앞 쪽에 남으므로, 첫 글자가 들어가는 곳부터 자른다.
+  const firstVisible = text.search(/\S/u);
+  if (firstVisible < 0) return null;
   const boundaries = [0];
-  for (const match of text.matchAll(/\s+/gu)) boundaries.push(match.index + match[0].length);
+  for (const match of text.matchAll(/\s+/gu)) {
+    const boundary = match.index + match[0].length;
+    if (boundary > firstVisible) boundaries.push(boundary);
+  }
   if (boundaries.at(-1) !== text.length) boundaries.push(text.length);
 
   let low = 1;
