@@ -99,26 +99,30 @@ const BACKGROUND: Record<Lang, { title: string; markdown: string }[]> = {
       title: '제작 배경 1. 손바닥만 한 인쇄물',
       markdown: `# 제작 배경 1. 손바닥만 한 인쇄물
 
-카페루아 카운터에서 알파에게 타로를 청하면, 알파는 이 덱의 내력을 이렇게 소개합니다. 마스터가 대학 시절 나우누리 PC통신에서 구한 타로 자료가 있었다고. 원본은 손바닥만 한 낡은 인쇄물이었고, 마스터는 그것을 HWP 파일로 보관하고 있었다고. 이제는 그것이 유일하게 남은 자료이고, 카페루아의 카드는 그 자료를 바탕으로 카페루아 세계관에 맞게 다시 해석해 만든 것이라고.
+카페루아 카운터에서 알파에게 타로를 청하면, 알파는 이 덱의 내력을 이렇게 소개합니다. 마스터가 대학 시절 나우누리 PC통신에서 구한 타로 자료가 있었다고. 원본은 손바닥만 한 낡은 인쇄물이었고, 마스터는 그것을 한글 파일로 옮겨 보관하고 있었다고. 이제는 그것이 유일하게 남은 자료이고, 카페루아의 카드는 그 자료를 바탕으로 세계관에 맞게 다시 해석해 만든 것이라고.
 
-루크도 2026년 2월 카운터에 타로점을 처음 열면서 블로그에 비슷한 이야기를 적었습니다. 흔히 보는 길흉화복 점과는 다를 거라고, 대학 시절 자기가 보던 방식을 알파에게 가르쳤고 카페루아 전용 덱을 만들었다고요.
+루크도 2026년 2월 카운터에 타로점을 처음 열면서 블로그에 비슷한 이야기를 적었습니다. 흔한 길흉화복 점과는 다를 거라고, 대학 시절 자신이 보던 방식을 알파에게 가르쳤고 카페루아 전용 덱을 만들었다고 적었습니다.
 
-그 이야기를 뒷받침할 원물은 지금 손에 없습니다. 이 책을 엮으면서 루크의 컴퓨터와 카페루아 저장소를 찾아보았지만, 타로 자료가 담긴 HWP 파일은 나오지 않았습니다. 저장소에 그 파일이나 옮겨 적은 글이 올라간 적도 없습니다. 어느 동호회나 게시판에서 받은 자료였는지, 누가 쓴 것이었는지, 언제 받았는지도 기록에 없습니다.
+이 책을 엮으면서 그 원전을 찾았습니다. 루크가 대학 시절 PC통신 타로 동호회에서 받아둔 연재 게시물을 한글 3.0 파일 두 개로 옮겨 보관한 것이었습니다. 비밀번호가 걸린 압축 파일 안에 들어 있던 것을 꺼내왔습니다. 1996~97년께 쓰던 옛 한글 파일이라 요즘 프로그램으로는 바로 열리지 않아, 글자만 따로 뽑아 냈습니다.
 
-그래서 원전에 대해 지금 말할 수 있는 것은 알파의 상담 문구와 카운터의 대사, 작업 기록에 남은 대사 초안, 루크의 글에 적힌 내용이 전부입니다.
+두 파일은 입문편과 해석편입니다. 입문편은 타로의 기원과 전체 카드 수, 메이저 스물두 장과 마이너 쉰여섯 장의 차이를 풀어놓은 글입니다. 해석편은 광대부터 심판까지, 그리고 마이너 카드까지 한 장씩 다루며, 그림 속 소품을 하나하나 짚어 뜻을 끌어내고 끝에 키워드로 정리합니다. 글투는 그 시절 PC통신 연재 그대로, 말을 건네듯 편안합니다.
+
+지은이는 알 수 없습니다. 게시물에도 이름이 없고, 루크도 누가 쓴 글인지 모릅니다. 대학 시절에 받아둔 뒤로는 다른 데서 구할 수 없는 자료입니다. 원전은 타로를 미래를 엿보는 점으로 설명합니다. 카페루아의 타로가 그와 어떻게 달라졌는지는 다음 장에서 이야기합니다.
 `,
     },
     {
       title: '제작 배경 2. 해석 문서',
       markdown: `# 제작 배경 2. 해석 문서
 
-기록으로 확인되는 첫 원전은 2026년 1월에 쓴 카드 해석 문서 묶음입니다. 루크는 그달 코딩 에이전트 캐럿(Caret)과 함께 'AI-Taro 프로젝트'를 진행했고, 이 문서들은 그 과정에서 만들어졌습니다. 지금 남아 있는 것은 스물여섯 개 파일입니다.
+기록으로 확인되는 첫 작업물은 2026년 1월에 쓴 카드 해석 문서 묶음입니다. 루크는 그달 코딩 에이전트 캐럿(Caret)과 함께 'AI-Taro 프로젝트'를 진행했고, 이 문서들은 그 과정에서 만들어졌습니다. 지금 남아 있는 것은 스물여섯 개 파일입니다.
 
 문서의 뼈대는 상징을 옮기는 규칙입니다. 타로의 네 원소를 카페루아의 사물로 바꾸었습니다. 완드는 책과 펜, 컵은 커피와 차, 검은 키보드와 컴퓨터, 펜타클은 카페루아 로고가 됩니다. 스물두 장 전체의 방향을 정한 문서에는 해석의 균형을 '전통 50%, 카페루아 50%'로 잡는다고 적혀 있습니다.
 
-카드별 문서는 광대부터 심판까지 한 장씩, 라이더-웨이트 덱의 전통 상징과 카페루아의 사물을 나란히 놓고 풀이합니다. 광대 카드라면 절벽은 정원의 돌계단이, 곁을 따르는 강아지는 검은 고양이 루나가, 어깨에 멘 보따리는 노트북 가방이 되는 식입니다.
+카드별 문서는 광대부터 심판까지 한 장씩, 라이더-웨이트 덱의 전통 상징과 카페루아의 사물을 나란히 놓고 풀이합니다. 광대 카드라면 절벽은 정원의 돌계단이, 곁을 따르는 강아지는 검은 고양이 루나가, 어깨에 맨 보따리는 노트북 가방이 되는 식입니다. 그림 속 소품을 하나하나 짚어 뜻을 끌어내는 방식은 원전 해석편이 카드를 읽던 방식 그대로입니다.
 
-여기서 기록이 한 번 끊깁니다. 이 문서들은 라이더-웨이트의 전통 상징을 기준으로 쓰였고, 나우누리 자료를 인용하거나 가리키는 줄은 없습니다. 손바닥만 한 인쇄물이 어떤 경로로 이 문서들에 이어졌는지는 어디에도 적혀 있지 않습니다. 해석 문서가 그 자료를 바탕으로 했다는 말은 지금으로서는 사이트 문구가 전하는 말이고, 두 자료를 잇는 기록은 남아 있지 않습니다. 이 빈칸은 루크의 기억으로만 채울 수 있습니다.
+루크는 이 원전을 바탕으로 타로를 보는 요령과 해석을 다시 세웠다고 말합니다. 다른 점은 세 가지입니다. 카드 한 장 한 장의 뜻만 보는 것이 아니라 카드가 이어지는 흐름을 읽는다는 것, 혼자 미래를 맞히는 것이 아니라 상대와 이야기하며 함께 본다는 것, 그리고 앞일을 점치는 것이 아니라 그 길에서 도움을 받는다는 것입니다. 미래를 엿보는 점이라던 원전의 틀을, 함께 이야기하며 길에서 도움을 받는 쪽으로 옮긴 셈입니다.
+
+해석 문서 자체는 라이더-웨이트의 전통 상징을 기준으로 쓰였고, 원전을 인용하거나 언급한 대목은 없습니다. 원전 게시물이 이 문서들로 이어진 과정을 적어둔 기록은 없고, 두 자료를 잇는 것은 같은 읽기 방식과 루크의 설명입니다.
 `,
     },
     {
@@ -189,17 +193,17 @@ const BACKGROUND: Record<Lang, { title: string; markdown: string }[]> = {
       title: '제작 배경 7. 남은 빈칸',
       markdown: `# 제작 배경 7. 남은 빈칸
 
-이 책은 갤러리의 두 이야기를 그대로 옮겨 묶은 것입니다. 1부와 2부의 문장은 갤러리에 공개된 퇴고본과 같습니다. 이 소개와 제작 배경은 Claude Opus 5.5가 작업 기록과 커밋, 사이트에 남은 문구를 읽고 정리한 것을 muse-spark-1.3이 다듬었습니다.
+이 책은 갤러리의 두 이야기를 그대로 옮겨 묶은 것입니다. 1부와 2부의 문장은 갤러리에 공개된 퇴고본과 같습니다. 이 소개와 제작 배경은 Claude Opus 5.5가 작업 기록과 커밋, 사이트에 남은 문구, 되찾은 원전을 바탕으로 정리하고 muse-spark-1.3이 다듬은 것입니다.
 
-기록을 따라가며 끝내 채우지 못한 자리도 있습니다.
+기록을 끝까지 따라가도 채우지 못한 자리가 있습니다.
 
-- 나우누리에서 구했다는 인쇄물과 그것을 옮긴 HWP 파일은 찾지 못했습니다. 어디서, 언제, 누구의 자료를 받았는지도 기록에 없습니다.
-- 그 자료가 2026년 1월의 해석 문서로 어떻게 이어졌는지는 적힌 곳이 없습니다.
-- 2월 15일의 복원을 어떤 순서로 했는지는 커밋 메시지 한 줄뿐입니다.
-- 7월의 대체 데이터가 무엇을 보고 만들어졌는지, 7월 3일의 첫 이야기를 누가 썼는지는 기록에 없습니다.
-- 공개 저장소의 3월 이전 이력이 남아 있지 않아, 타로 기능과 v1.0 그림이 처음 사이트에 들어간 날짜를 알 수 없습니다.
+- 원전을 쓴 사람이 누구인지는 알 수 없습니다. 게시물에 이름이 없고, 어느 동호회에서 언제 받았는지도 기록에 없습니다.
+- 원전 게시물이 2026년 1월 해석 문서로 이어진 과정을 적어둔 기록은 없습니다. 같은 읽기 방식과 루크의 설명으로 짐작할 뿐입니다.
+- 2월 15일 복원이 어떻게 이루어졌는지는 커밋 메시지 한 줄로만 남아 있습니다.
+- 7월의 대체 데이터를 무엇을 바탕으로 만들었는지, 7월 3일의 첫 이야기를 누가 썼는지는 기록에 없습니다.
+- 공개 저장소에 3월 이전 기록이 남아 있지 않아, 타로 기능과 v1.0 그림이 처음 사이트에 들어온 날짜를 알 수 없습니다.
 
-이 빈칸들은 지어내지 않고 비워 두었습니다. 기억이나 자료가 나오면 그때 채워 넣을 자리입니다.
+이 빈칸들은 지어내지 않고 비워두었습니다. 기억이나 자료가 나타나면 그때 채울 자리입니다.
 `,
     },
   ],
@@ -208,26 +212,30 @@ const BACKGROUND: Record<Lang, { title: string; markdown: string }[]> = {
       title: 'Making Of 1. A Printout the Size of a Palm',
       markdown: `# Making Of 1. A Printout the Size of a Palm
 
-Ask Alpha for a tarot reading at the Cafe Lua counter, and she introduces the deck's history like this. The Master had some tarot material he found on the Nownuri PC network in his college days. The original was a worn printout about the size of a palm, which he kept as an HWP file. It is now the only material left, and the Cafe Lua cards were made by reinterpreting it to fit the world of Cafe Lua.
+Ask Alpha for a tarot reading at the Cafe Lua counter, and she introduces the deck's history like this. The Master had some tarot material he found on the Nownuri PC network in his college days. The original was a worn printout about the size of a palm, which he copied into a Hangul file and kept. It is now the only material left, and the Cafe Lua cards were made by reinterpreting it to fit the world of Cafe Lua.
 
-When Luke first opened tarot readings at the counter in February 2026, he wrote something similar on his blog: that this would be different from the usual fortune-telling, because he had taught Alpha the way he used to read cards in college, and had made a deck just for Cafe Lua.
+When Luke started offering tarot readings at the counter in February 2026, he wrote something similar on his blog: that this would be different from the usual fortune-telling, because he had taught Alpha the way he used to read cards in college, and had made a deck just for Cafe Lua.
 
-The original itself is not at hand. While putting this book together, Luke's computer and the Cafe Lua repositories were searched, and no HWP file with tarot material turned up. Neither the file nor any transcription of it was ever committed to a repository. There is also no record of which club or board it came from, who wrote it, or when he received it.
+While putting this book together, that original was found. It turned out to be a serialized posting Luke had saved from a tarot club on a PC network in his college days and kept as two Hangul 3.0 files. They were pulled out of a password-locked archive. Being old Hangul files from around 1996–97, they would not open in today's programs, so only the text was extracted.
 
-So everything that can be said about the original source today comes from Alpha's reading prompt, a line of dialogue at the counter, a draft line kept in the work notes, and Luke's own post.
+The two files are an introduction and an interpretation guide. The introduction lays out where tarot came from, how many cards there are in all, and how the twenty-two Major and fifty-six Minor cards differ. The interpretation guide goes one card at a time, from the Fool to Judgement and then through the Minor cards, pointing to each prop in the picture to draw out what the card means and summing it up in keywords at the end. The voice is that of a PC-network serial of the time, easy and conversational.
+
+The author is unknown. There is no name on the posting, and Luke does not know who wrote it either. It is material he picked up in college and can no longer find anywhere else. The original explains tarot as a way of glimpsing the future. How the tarot of Cafe Lua came to differ from that is the subject of the next chapter.
 `,
     },
     {
       title: 'Making Of 2. The Interpretation Documents',
       markdown: `# Making Of 2. The Interpretation Documents
 
-The first source that the records can confirm is a set of card interpretation documents written in January 2026. That month Luke ran an "AI-Taro project" with the coding agent Caret, and these documents came out of it. Twenty-six files survive.
+The first work that the records can confirm is a set of card interpretation documents written in January 2026. That month Luke ran an "AI-Taro project" with the coding agent Caret, and these documents came out of it. Twenty-six files survive.
 
-The documents are built around a rule for translating symbols. The four tarot suits become things found at Cafe Lua: wands become books and pens, cups become coffee and tea, swords become keyboards and computers, and pentacles become the Cafe Lua logo. The document that sets the direction for all twenty-two cards says the interpretation is balanced at "50% tradition, 50% Cafe Lua."
+The documents are built around a rule for translating symbols. The four tarot suits become things found at Cafe Lua: wands are books and pens, cups are coffee and tea, swords are keyboards and computers, and pentacles are the Cafe Lua logo. The document that sets the direction for all twenty-two cards sets the balance of the interpretation at "50% tradition, 50% Cafe Lua."
 
-The per-card documents go one card at a time, from the Fool to Judgement, setting the traditional symbols of the Rider-Waite deck beside their Cafe Lua counterparts. For the Fool, the cliff becomes the stone steps of the garden, the little dog at his heels becomes Luna the black cat, and the bundle over his shoulder becomes a laptop bag.
+The per-card documents go one card at a time, from the Fool to Judgement, setting the traditional symbols of the Rider-Waite deck beside their Cafe Lua counterparts. For the Fool, the cliff becomes the stone steps of the garden, the little dog at his heels becomes Luna the black cat, and the bundle over his shoulder becomes a laptop bag. Drawing the meaning out by pointing to each prop in the picture is exactly how the original's interpretation guide read its cards.
 
-Here the record breaks off. These documents are written against the traditional Rider-Waite symbols, and not one line quotes or points to the Nownuri material. Nowhere does it say how the palm-sized printout found its way into them. For now, the claim that the interpretations were based on that material is something the site's text says, and no record connects the two. Only Luke's memory can fill this gap.
+Luke says he rebuilt his way of reading and interpreting tarot from that original. Three things set his version apart: that it reads not only the meaning of each single card but also the flow in which the cards follow one another; that it is not about guessing the future alone but about looking together, in conversation with the other person; and that it does not foretell what lies ahead but finds help along the way. The original's frame of glimpsing the future was shifted toward talking things through together and finding help along the way.
+
+The interpretation documents themselves take the traditional Rider-Waite symbols as their basis, and not one line quotes or refers to the original. There is no written record of how the original posting led to these documents; what connects the two is the shared way of reading and Luke's own account.
 `,
     },
     {
@@ -298,17 +306,17 @@ After smoothing each other's work, each model translated its own story into Engl
       title: 'Making Of 7. The Gaps That Remain',
       markdown: `# Making Of 7. The Gaps That Remain
 
-This book carries the two stories from the gallery as they are. The text of Parts I and II is the same as the revised versions published in the gallery. This introduction and the making-of chapters were drafted by Claude Opus 5.5 from the work notes, the commits, and the text left on the site, and polished by muse-spark-1.3.
+This book carries the two stories from the gallery as they are. The text of Parts I and II is the same as the revised versions published in the gallery. This introduction and the making-of chapters were drafted by Claude Opus 5.5 from the work notes, the commits, the text left on the site, and the recovered original, and polished by muse-spark-1.3.
 
-Following the records, some places could not be filled.
+Even following the records as far as they go, some gaps remain.
 
-- The printout said to have come from Nownuri, and the HWP file it was kept in, were not found. Where, when, and from whom the material came is not recorded either.
-- Nothing records how that material led to the interpretation documents of January 2026.
+- Who wrote the original is unknown. There is no name on the posting, and no record of which club it came from or when.
+- There is no written record of how the original posting led to the interpretation documents of January 2026; it can only be inferred from the shared way of reading and Luke's account.
 - The February 15 recovery is described by a single commit message.
 - What the July fallback data was based on, and who wrote the first stories of July 3, are not recorded.
-- Because the public repository keeps no history before March, the date tarot and the v1.0 illustrations first came to the site is unknown.
+- Because the public repository keeps no history before March, the date when tarot and the v1.0 illustrations first appeared on the site is unknown.
 
-These gaps have been left empty rather than made up. They are places to fill in if memories or materials turn up.
+These gaps have been left empty rather than made up. They are places to fill in if memories or materials surface.
 `,
     },
   ],
