@@ -854,7 +854,8 @@ function ReaderIllustration({
   onOpen: (image: { src: string; alt: string }) => void;
 }) {
   if (!src) return null;
-  const source = src.startsWith("http")
+  // 사이트 루트에서 시작하는 경로(/tarot/... 처럼 다른 공간의 그림)는 그대로 쓴다.
+  const source = src.startsWith("http") || /^\/(?!\/)/.test(src)
     ? src
     : `/library-books/${sourceSlug}/${src.replace(/^(?:(?:\.\.)?\/)+/, "")}`;
   return (

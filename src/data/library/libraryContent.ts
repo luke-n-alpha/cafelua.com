@@ -1,4 +1,5 @@
 import snapshot from './library-content.generated.json';
+import { tarotLibraryBook } from './tarotBook';
 
 export type LibraryChapter = { title: string; path: string; markdown: string };
 export type LibraryEdition = {
@@ -20,4 +21,5 @@ export type LibraryEdition = {
 export type LibraryCoverTone = 'navy' | 'rust' | 'moss' | 'plum' | 'dusk';
 export type LibraryBook = { id: string; coverTone: LibraryCoverTone; editions: LibraryEdition[] };
 
-export const libraryBooks = snapshot.books as LibraryBook[];
+// 스냅샷은 다른 원천에서 생성되는 책들이고, 타로 이야기는 갤러리 원고에서 바로 엮는다.
+export const libraryBooks: LibraryBook[] = [...(snapshot.books as LibraryBook[]), tarotLibraryBook];

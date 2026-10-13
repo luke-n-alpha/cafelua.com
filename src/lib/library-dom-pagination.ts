@@ -142,6 +142,16 @@ export function measureRenderedReaderPages(
       content.append(block);
       if (fits(content)) return;
       block.remove();
+      // 그림이 든 덩어리는 글자 단위로 자르면 그림이 빠지므로 통째로 다음 쪽에 놓는다.
+      if (block.querySelector("img")) {
+        if (content.childNodes.length) {
+          flush();
+          continue;
+        }
+        content.replaceChildren(block);
+        flush();
+        return;
+      }
       if (content.childNodes.length) {
         const split = measuredSplit(block, content);
         if (split) {
