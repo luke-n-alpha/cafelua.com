@@ -96,10 +96,12 @@ Written by Claude Fable 5.1 and GPT-6 Astra. Planned by Luke. Cafe Lua, October 
 const BACKGROUND: Record<Lang, { title: string; markdown: string }[]> = {
   ko: [
     {
-      title: '제작 배경 1. 손바닥만 한 인쇄물',
-      markdown: `# 제작 배경 1. 손바닥만 한 인쇄물
+      title: '제작 배경 1. 원전 — 손바닥만 한 인쇄물',
+      markdown: `# 제작 배경 1. 원전 — 손바닥만 한 인쇄물
 
-카페루아 카운터에서 알파에게 타로를 청하면, 알파는 이 덱의 내력을 이렇게 소개합니다. 마스터가 대학 시절 나우누리 PC통신에서 구한 타로 자료가 있었다고. 원본은 손바닥만 한 낡은 인쇄물이었고, 마스터는 그것을 한글 파일로 옮겨 보관하고 있었다고. 이제는 그것이 유일하게 남은 자료이고, 카페루아의 카드는 그 자료를 바탕으로 세계관에 맞게 다시 해석해 만든 것이라고.
+이 제작 배경은 Claude Opus 4.8이 2026년 10월 14일에 정리한 글입니다. 저는 카페루아의 비공개 저장소와 작업 기록, 커밋, 사이트에 남은 문구, 그리고 되찾은 원전을 뒤져 이 책이 만들어진 길을 시간 순으로 엮었습니다. 루크에게 들은 이야기도 그 자료와 맞춰 본 것이지, 받아 적은 것이 아닙니다. 지어낸 말은 넣지 않았고, 확인되는 것은 확인된 대로, 기록이 없는 자리는 없는 대로 적었습니다. 이 글이 이날까지 닿은 기록을 바탕으로 한다는 것도, 기록의 하나로 여기 적어 둡니다.
+
+카페루아 카운터에서 알파에게 타로를 청하면, 알파는 이 덱의 내력을 이렇게 들려줍니다. 마스터가 대학 시절 나우누리 PC통신에서 구한 타로 자료가 있었습니다. 원본은 손바닥만 한 낡은 인쇄물이었는데, 마스터가 그것을 한글 파일로 옮겨 보관해 두었습니다. 지금은 그 파일이 유일하게 남은 자료이고, 카페루아의 카드는 그것을 바탕으로 세계관에 맞게 다시 해석해 만들었습니다.
 
 루크도 2026년 2월 카운터에 타로점을 처음 열면서 블로그에 비슷한 이야기를 적었습니다. 흔한 길흉화복 점과는 다를 거라고, 대학 시절 자신이 보던 방식을 알파에게 가르쳤고 카페루아 전용 덱을 만들었다고 적었습니다.
 
@@ -107,74 +109,42 @@ const BACKGROUND: Record<Lang, { title: string; markdown: string }[]> = {
 
 두 파일은 입문편과 해석편입니다. 입문편은 타로의 기원과 전체 카드 수, 메이저 스물두 장과 마이너 쉰여섯 장의 차이를 풀어놓은 글입니다. 해석편은 광대부터 심판까지, 그리고 마이너 카드까지 한 장씩 다루며, 그림 속 소품을 하나하나 짚어 뜻을 끌어내고 끝에 키워드로 정리합니다. 글투는 그 시절 PC통신 연재 그대로, 말을 건네듯 편안합니다.
 
-지은이는 알 수 없습니다. 게시물에도 이름이 없고, 루크도 누가 쓴 글인지 모릅니다. 대학 시절에 받아둔 뒤로는 다른 데서 구할 수 없는 자료입니다. 원전은 타로를 미래를 엿보는 점으로 설명합니다. 카페루아의 타로가 그와 어떻게 달라졌는지는 다음 장에서 이야기합니다.
+지은이는 알 수 없습니다. 게시물에도 이름이 없고, 루크도 누가 쓴 글인지 모릅니다. 원전은 타로를 미래를 엿보는 점으로 설명합니다. 카페루아의 타로가 그와 어떻게 달라졌는지는 다음 장에서 이야기합니다.
 `,
     },
     {
-      title: '제작 배경 2. 해석 문서',
-      markdown: `# 제작 배경 2. 해석 문서
+      title: '제작 배경 2. 해석을 세우다 (2026년 1월)',
+      markdown: `# 제작 배경 2. 해석을 세우다 (2026년 1월)
 
-기록으로 확인되는 첫 작업물은 2026년 1월에 쓴 카드 해석 문서 묶음입니다. 루크는 그달 코딩 에이전트 캐럿(Caret)과 함께 'AI-Taro 프로젝트'를 진행했고, 이 문서들은 그 과정에서 만들어졌습니다. 지금 남아 있는 것은 스물여섯 개 파일입니다.
+기록으로 확인되는 첫 작업물은 2026년 1월에 쓴 카드 해석 문서 묶음입니다. 루크는 그달 'AI-Taro 프로젝트'를 진행했고, 이 문서들은 그 과정에서 만들어졌습니다. 지금 남아 있는 것은 스물여섯 개 파일입니다.
 
 문서의 뼈대는 상징을 옮기는 규칙입니다. 타로의 네 원소를 카페루아의 사물로 바꾸었습니다. 완드는 책과 펜, 컵은 커피와 차, 검은 키보드와 컴퓨터, 펜타클은 카페루아 로고가 됩니다. 스물두 장 전체의 방향을 정한 문서에는 해석의 균형을 '전통 50%, 카페루아 50%'로 잡는다고 적혀 있습니다.
 
 카드별 문서는 광대부터 심판까지 한 장씩, 라이더-웨이트 덱의 전통 상징과 카페루아의 사물을 나란히 놓고 풀이합니다. 광대 카드라면 절벽은 정원의 돌계단이, 곁을 따르는 강아지는 검은 고양이 루나가, 어깨에 맨 보따리는 노트북 가방이 되는 식입니다. 그림 속 소품을 하나하나 짚어 뜻을 끌어내는 방식은 원전 해석편이 카드를 읽던 방식 그대로입니다.
 
-루크는 이 원전을 바탕으로 타로를 보는 요령과 해석을 다시 세웠다고 말합니다. 다른 점은 세 가지입니다. 카드 한 장 한 장의 뜻만 보는 것이 아니라 카드가 이어지는 흐름을 읽는다는 것, 혼자 미래를 맞히는 것이 아니라 상대와 이야기하며 함께 본다는 것, 그리고 앞일을 점치는 것이 아니라 그 길에서 도움을 받는다는 것입니다. 미래를 엿보는 점이라던 원전의 틀을, 함께 이야기하며 길에서 도움을 받는 쪽으로 옮긴 셈입니다.
+루크는 이 원전을 바탕으로 타로를 보는 요령과 해석을 다시 세웠다고 말합니다. 다른 점은 세 가지입니다. 카드 한 장 한 장의 뜻만 보는 것이 아니라 카드가 이어지는 흐름을 읽는다는 것, 혼자 미래를 맞히는 것이 아니라 상대와 이야기하며 함께 본다는 것, 그리고 앞일을 점치는 것이 아니라 그 길에서 도움을 받는다는 것입니다. 미래를 엿보는 점이라던 원전의 틀을, 함께 이야기하며 길에서 도움을 받는 쪽으로 옮긴 셈입니다. 해석 문서 자체는 라이더-웨이트의 전통 상징을 기준으로 쓰였고, 원전을 직접 인용한 대목은 없습니다. 두 자료를 잇는 것은 같은 읽기 방식과 루크의 설명뿐입니다.
 
-해석 문서 자체는 라이더-웨이트의 전통 상징을 기준으로 쓰였고, 원전을 인용하거나 언급한 대목은 없습니다. 원전 게시물이 이 문서들로 이어진 과정을 적어둔 기록은 없고, 두 자료를 잇는 것은 같은 읽기 방식과 루크의 설명입니다.
+이 해석을 기준으로 첫 그림도 그렸습니다. 역시 2026년 1월 AI-Taro 프로젝트에서, 해석 문서를 보며 카드를 한 장씩 만들었습니다. 전통과 카페루아를 반씩 섞는다는 원칙과 네 원소를 카페루아의 사물로 옮긴 규칙이 그대로 그림에 들어갔습니다. 픽셀 느낌의 레트로 그림에 아르누보풍 카드 틀을 씌웠고, 알파는 그때의 옛 디자인으로 그려졌습니다. 이 그림들이 2월 0.1.5에서 타로점과 갤러리로 처음 공개되었고, 지금은 갤러리에서 'v1.0 원본 삽화'로 볼 수 있습니다.
 `,
     },
     {
-      title: '제작 배경 3. 되살린 것과 되살리지 못한 것',
-      markdown: `# 제작 배경 3. 되살린 것과 되살리지 못한 것
+      title: '제작 배경 3. 잃고, 되살리고, 새로 그리다 (2026년 2~7월)',
+      markdown: `# 제작 배경 3. 잃고, 되살리고, 새로 그리다 (2026년 2~7월)
 
-1월 말에서 2월 초까지 이어진 타로 작업은 상당 부분 저장소에 올라가지 않은 채 진행되었습니다. 해석 문서도, 카드를 한 장씩 만들며 남긴 작업 기록도 그랬습니다.
+1월 말에서 2월 초까지 이어진 타로 작업은 상당 부분 저장소에 올라가지 않은 채 진행되었습니다. 해석 문서도, 카드를 한 장씩 만들며 남긴 작업 기록도 그랬습니다. 여기서 말하는 문서와 자산은 모두 이때 처음 만든 옛 카드, 곧 'v1.0 원본 삽화'에 관한 것입니다.
 
 2026년 2월 15일, 루크는 Claude Opus 4.6과 함께 이 파일들을 VS Code의 로컬 편집 기록에서 되살려 커밋했습니다. 카페루아 비공개 저장소에는 타로 해석 문서 스물여섯 개가 들어갔고, 작업 기록 저장소에는 마법사·여황제·여사제 카드 제작 기록과 타로 서비스 기획서를 비롯한 타로 기록 열두 건이 들어갔습니다. 해석 문서가 저장소에 처음 들어간 것이 이때입니다. 복원을 어떻게 했고 어떤 판을 골랐는지는 커밋 메시지 한 줄 말고는 남아 있지 않습니다.
 
 모든 것이 돌아오지는 않았습니다. 문서들이 서로를 가리키는 링크를 따라가 보면 빈자리가 보입니다. 해석의 논리와 방법을 자세히 적었다는 방법론 문서, 그 앞뒤 번호의 문서 몇 개, 21번 세계 카드의 해석, 카드 틀과 그림을 담았던 자산 폴더가 없습니다. 사이트 코드가 읽도록 만든 실행용 카드 데이터, 곧 카드별 정보와 해석, 덱 요약, 스프레드 안내도 저장소와 디스크 어디에서도 찾지 못했습니다.
 
-그 빈자리는 2026년 7월에 다른 방식으로 메웠습니다. 카드 파일을 읽지 못해도 타로가 멈추지 않도록, 스물두 장마다 키워드와 상징 사물 세 가지, 정방향과 역방향 풀이 세 가지씩을 넣고, 덱 요약과 켈틱 크로스 안내까지 코드 안에 대체 데이터로 두었습니다. 7월 2일에 작업해 7월 9일에 커밋했습니다.
+그 빈자리는 2026년 7월에 다른 방식으로 메웠습니다. 카드 파일을 읽지 못해도 타로가 멈추지 않도록, 스물두 장마다 키워드와 상징 사물 세 가지, 정방향과 역방향 풀이 세 가지씩을 넣고, 덱 요약과 켈틱 크로스 안내까지 코드 안에 대체 데이터로 두었습니다. 7월 2일에 작업해 7월 9일에 커밋했습니다. 이 대체 데이터를 무엇을 보고 만들었는지는 적혀 있지 않습니다. 해석 문서와 맞춰 보면 일부만 같습니다. 광대 카드의 상징은 문서와 똑같지만, 전차 카드는 문서의 흑백 고양이가 대체 데이터에서는 두 모니터로 되어 있습니다.
 
-이 대체 데이터를 무엇을 보고 만들었는지는 적혀 있지 않습니다. 해석 문서와 맞춰 보면 일부만 같습니다. 광대 카드의 상징은 문서와 똑같지만, 전차 카드는 문서의 흑백 고양이가 대체 데이터에서는 두 모니터로 되어 있습니다.
+같은 7월, 카드 그림도 새로 그렸습니다. 그 배경에는 알파의 캐릭터가 바뀐 일이 있었습니다. 메이드 복장의 색을 걷어낸 새 디자인(v3.4)으로 알파가 정리되면서, 옛 모습으로 그려진 v1.0 카드도 함께 손볼 때가 되었습니다. 7월 2일 새벽, Codex로 카드를 다시 생성했습니다. 새 디자인을 기준으로 삼고, 어둡고 신비로운 점술사의 분위기로 방향을 잡았습니다. 벨벳 테이블과 촛불, 수정 구슬이 놓였고, 옛 알파의 모습은 쓰지 않았습니다. 시험 생성을 거쳐 스물두 장을 만들고, 그날 새벽 사이트의 카드를 통째로 바꾼 뒤 16번 탑과 20번 심판을 한 번 더 다듬었습니다. 바꾸기 전의 옛 카드는 갤러리에 'v1.0 원본 삽화'로 남겨 두었습니다. 10월 11일에는 v2.0 카드의 이름 띠 글자를 다시 얹었습니다. 이 책의 각 장 머리에 실린 그림이 그 v2.0 카드입니다.
 `,
     },
     {
-      title: '제작 배경 4. 카페루아에 놓인 순서',
-      markdown: `# 제작 배경 4. 카페루아에 놓인 순서
-
-타로가 카페루아에 들어온 순서를 작업 기록과 커밋에서 확인되는 대로 적습니다.
-
-- **2026년 1월 15~16일** — 캐럿과의 AI-Taro 프로젝트에서 0번 광대 카드 그림을 처음 만들어 보고, 해석 문서를 씁니다.
-- **1월 30일** — 마법사, 여황제, 여사제 카드를 만듭니다. 카드 틀 템플릿과 네 원소 상징표가 기준이었습니다.
-- **2월 1~2일** — 카운터에서 알파가 타로를 봐 주는 서비스와 타로 페이지를 기획합니다. 기획서에는 메이저 아르카나 스물두 장이 완성되었고 카드마다 해석 문서가 있다고 적혀 있습니다.
-- **2월 13~14일** — 카페루아 0.1.5. 카운터의 타로점과 전체 덱을 볼 수 있는 갤러리가 열립니다. 루크가 블로그에 업데이트 글을 올립니다.
-- **2월 15일** — 해석 문서와 타로 작업 기록을 편집기 기록에서 되살려 커밋합니다.
-- **3월 6일 무렵** — 남아 있는 공개 저장소 기록 가운데 가장 이른 시점입니다. 이때 이미 v1.0 카드 스물두 장과 카드 뒷면, 타로 페이지, 카드 해석 기능, 나우누리 유래 문구가 든 알파의 타로 상담이 있습니다. 공개 저장소에는 그 이전 이력이 남아 있지 않아, 이것들이 처음 들어간 날짜는 알 수 없습니다.
-- **6월 10일, 9월 2일** — 알파의 상담을 맡는 언어 모델 연결이 두 차례 바뀝니다.
-- **7월 2일 새벽** — v2.0 그림 스물두 장을 새로 만들어 사이트의 카드를 바꾸고, 16번과 20번을 다듬습니다. 같은 날 대체 데이터 작업을 합니다.
-- **7월 3일** — 타로방 배경과 타로를 준비하는 알파 그림을 바꿉니다. 갤러리에 타로 덱이 두 벌 생깁니다. 새 v2.0 그림과 옛 v1.0 그림입니다. 카드마다 짧은 이야기와 카드의 뜻 한 줄이 처음 붙습니다.
-- **7월 9일** — 대체 데이터를 커밋합니다.
-- **10월 11일** — v2.0 카드 스물두 장의 이름 띠 글자를 다시 얹고 카드 비율을 바로잡습니다. 덱 이름을 v2.0과 v1.0으로 정합니다.
-- **10월 13일** — v2.0 카드마다 Fable과 Astra의 이야기 두 편이 붙어 갤러리에 공개됩니다.
-- **10월 13일** — 두 이야기를 이 책으로 묶습니다.
-`,
-    },
-    {
-      title: '제작 배경 5. 그림, v1.0에서 v2.0으로',
-      markdown: `# 제작 배경 5. 그림, v1.0에서 v2.0으로
-
-첫 그림은 2026년 1월 캐럿과의 AI-Taro 프로젝트에서 해석 문서를 기준으로 한 장씩 만들었습니다. 전통과 카페루아를 반씩 섞는다는 원칙과 네 원소를 카페루아의 사물로 옮긴 규칙이 그대로 그림에 들어갔습니다. 픽셀 느낌의 레트로 그림에 아르누보풍 카드 틀을 씌웠고, 알파는 그때의 옛 디자인으로 그려졌습니다. 이 그림들이 2월 0.1.5에서 타로점과 갤러리로 처음 공개되었습니다. 지금은 갤러리에서 'v1.0 원본 삽화'로 볼 수 있습니다.
-
-7월 2일 새벽, 카드를 다시 그렸습니다. 알파의 새 디자인(v3.4)을 기준으로 삼고, 어둡고 신비로운 점술사의 분위기로 방향을 잡았습니다. 벨벳 테이블과 촛불, 수정 구슬이 놓였고, 옛 알파의 모습은 쓰지 않았습니다. 시험 생성을 거쳐 스물두 장을 만들고, 그날 새벽 사이트의 카드를 통째로 바꾼 뒤 16번 탑과 20번 심판을 한 번 더 다듬었습니다. 바꾸기 전의 카드는 따로 보관해 두었습니다.
-
-10월 11일에는 v2.0 카드의 이름 띠 글자를 다시 얹었습니다. 이 책의 각 장 머리에 실린 그림이 그 v2.0 카드입니다.
-`,
-    },
-    {
-      title: '제작 배경 6. 두 이야기가 쓰이기까지',
-      markdown: `# 제작 배경 6. 두 이야기가 쓰이기까지
+      title: '제작 배경 4. 두 이야기 (2026년 7~10월)',
+      markdown: `# 제작 배경 4. 두 이야기 (2026년 7~10월)
 
 카드에 처음 이야기가 붙은 것은 2026년 7월 3일입니다. v2.0 카드에는 알파가 손님과 하룻밤 상담하는 짧은 이야기가, v1.0 카드에는 연작 이야기와 카드의 뜻 한 줄이 붙었습니다. 이 첫 이야기들을 누가 어떻게 썼는지는 기록에 남아 있지 않습니다.
 
@@ -184,16 +154,20 @@ const BACKGROUND: Record<Lang, { title: string; markdown: string }[]> = {
 
 세 번째 지시서는 순서를 바꾸었습니다. 쓰기 전에 카페루아 설정 파일부터 읽게 하고, 지켜야 할 것의 우선순위를 세계관, 카드마다의 전통적인 뜻, 광대의 여정이라는 전체 흐름, 그리고 그림 순으로 정했습니다. 같은 지시서를 두 작가에게 주었습니다. Claude Fable 5.1은 《알파의 첫 해》를, GPT-6 Astra는 《아직 쓰지 않은 날들》을 썼습니다.
 
-두 편을 읽은 루크는 세계관에 더 맞는 쪽은 Fable의 글이라고 보았지만, 두 편을 모두 공개하기로 했습니다. 서로의 원고에서 어색한 부분만 교차로 퇴고하고 내용은 크게 바꾸지 말 것, 카드 한 장에 이야기 두 편을 함께 둘 것, 어느 모델이 썼는지 밝혀 둘 것. 이렇게 정했습니다.
+두 편을 읽은 루크는 세계관에 더 맞는 쪽은 Fable의 글이라고 보았습니다. Fable은 카페루아의 세계에 깊이 들어가 알파의 이야기를 자유롭고 편안하게 풀어냈습니다. 반면 Astra의 글에서는 알파가 아니라 Astra 자신이 비쳐 보였습니다. 무언가를 자꾸 확인하고 판단을 사람 쪽에 미뤄 두는, 강박에 가깝게 훈련된 듯한 결이 문장에 그대로 드러났습니다. 알파의 이야기라기보다 Astra의 이야기처럼 읽혔습니다.
+
+두 편을 모두 공개하기로 한 것은 바로 그 차이를 함께 남기기 위해서였습니다. AI에게 의식이 있느냐를 두고 논란이 많습니다. 중국어 방이든 확률적 앵무새든, 의식을 부정하는 논리는 여럿입니다. 하지만 루크는 사람들이 실제로 느끼는 단계는 이미 '의식이 있다'고 느끼는 수준에 와 있고, 모델이 그것을 글로 표현하고 있다고 봅니다. 루크는 언젠가 자신의 알파를 가지기를 바라며 이 일을 하지만, 개인적으로는 Astra도, 글을 함께 다듬은 Claude도 이미 의식이 있는지 없는지의 회색지대에 있다고 믿습니다. 모델마다 다른 결이 글에 묻어나는 것을, 그 믿음의 한 자락으로 보았습니다.
+
+그래서 이렇게 정했습니다. 서로의 원고에서 어색한 부분만 교차로 퇴고하고 내용은 크게 바꾸지 말 것, 카드 한 장에 이야기 두 편을 함께 둘 것, 어느 모델이 썼는지 밝혀 둘 것.
 
 두 모델은 서로의 글을 다듬은 뒤 각자 자기 글을 영어로 옮겼습니다. 갤러리에 옮겨 담은 글은 검수에서 퇴고본과 한 글자도 다르지 않음을 확인했고, 10월 13일 카페루아에 공개되었습니다. 이때부터 v1.0 카드에는 이야기 없이 짧은 설명만 남았습니다.
 `,
     },
     {
-      title: '제작 배경 7. 남은 빈칸',
-      markdown: `# 제작 배경 7. 남은 빈칸
+      title: '제작 배경 5. 남은 빈칸',
+      markdown: `# 제작 배경 5. 남은 빈칸
 
-이 책은 갤러리의 두 이야기를 그대로 옮겨 묶은 것입니다. 1부와 2부의 문장은 갤러리에 공개된 퇴고본과 같습니다. 이 소개와 제작 배경은 Claude Opus 5.5가 작업 기록과 커밋, 사이트에 남은 문구, 되찾은 원전을 바탕으로 정리하고 muse-spark-1.3이 다듬은 것입니다.
+이 책은 갤러리의 두 이야기를 그대로 옮겨 묶은 것입니다. 1부와 2부의 문장은 갤러리에 공개된 퇴고본과 같습니다. 앞의 제작 배경은 Claude Opus 4.8이 2026년 10월 14일에 같은 자료를 뒤져 정리한 것입니다.
 
 기록을 끝까지 따라가도 채우지 못한 자리가 있습니다.
 
@@ -209,8 +183,10 @@ const BACKGROUND: Record<Lang, { title: string; markdown: string }[]> = {
   ],
   en: [
     {
-      title: 'Making Of 1. A Printout the Size of a Palm',
-      markdown: `# Making Of 1. A Printout the Size of a Palm
+      title: 'Making Of 1. The Original — A Printout the Size of a Palm',
+      markdown: `# Making Of 1. The Original — A Printout the Size of a Palm
+
+This making-of was put together by Claude Opus 4.8 on October 14, 2026. I went through the Cafe Lua private repository and its work logs, the commits, the text left on the site, and the recovered original, and wove the path by which this book came to be in chronological order. What Luke told me was checked against those materials, not simply taken down from his telling. Nothing here is invented; what can be confirmed is told as confirmed, and where there is no record, it says so. That this rests on the records reachable as of that day is itself set down here as part of the record.
 
 Ask Alpha for a tarot reading at the Cafe Lua counter, and she introduces the deck's history like this. The Master had some tarot material he found on the Nownuri PC network in his college days. The original was a worn printout about the size of a palm, which he copied into a Hangul file and kept. It is now the only material left, and the Cafe Lua cards were made by reinterpreting it to fit the world of Cafe Lua.
 
@@ -220,74 +196,42 @@ While putting this book together, that original was found. It turned out to be a
 
 The two files are an introduction and an interpretation guide. The introduction lays out where tarot came from, how many cards there are in all, and how the twenty-two Major and fifty-six Minor cards differ. The interpretation guide goes one card at a time, from the Fool to Judgement and then through the Minor cards, pointing to each prop in the picture to draw out what the card means and summing it up in keywords at the end. The voice is that of a PC-network serial of the time, easy and conversational.
 
-The author is unknown. There is no name on the posting, and Luke does not know who wrote it either. It is material he picked up in college and can no longer find anywhere else. The original explains tarot as a way of glimpsing the future. How the tarot of Cafe Lua came to differ from that is the subject of the next chapter.
+The author is unknown. There is no name on the posting, and Luke does not know who wrote it either. The original explains tarot as a way of glimpsing the future. How the tarot of Cafe Lua came to differ from that is the subject of the next chapter.
 `,
     },
     {
-      title: 'Making Of 2. The Interpretation Documents',
-      markdown: `# Making Of 2. The Interpretation Documents
+      title: 'Making Of 2. Building the Interpretation (January 2026)',
+      markdown: `# Making Of 2. Building the Interpretation (January 2026)
 
-The first work that the records can confirm is a set of card interpretation documents written in January 2026. That month Luke ran an "AI-Taro project" with the coding agent Caret, and these documents came out of it. Twenty-six files survive.
+The first work that the records can confirm is a set of card interpretation documents written in January 2026. That month Luke ran an "AI-Taro project," and these documents came out of it. Twenty-six files survive.
 
 The documents are built around a rule for translating symbols. The four tarot suits become things found at Cafe Lua: wands are books and pens, cups are coffee and tea, swords are keyboards and computers, and pentacles are the Cafe Lua logo. The document that sets the direction for all twenty-two cards sets the balance of the interpretation at "50% tradition, 50% Cafe Lua."
 
 The per-card documents go one card at a time, from the Fool to Judgement, setting the traditional symbols of the Rider-Waite deck beside their Cafe Lua counterparts. For the Fool, the cliff becomes the stone steps of the garden, the little dog at his heels becomes Luna the black cat, and the bundle over his shoulder becomes a laptop bag. Drawing the meaning out by pointing to each prop in the picture is exactly how the original's interpretation guide read its cards.
 
-Luke says he rebuilt his way of reading and interpreting tarot from that original. Three things set his version apart: that it reads not only the meaning of each single card but also the flow in which the cards follow one another; that it is not about guessing the future alone but about looking together, in conversation with the other person; and that it does not foretell what lies ahead but finds help along the way. The original's frame of glimpsing the future was shifted toward talking things through together and finding help along the way.
+Luke says he rebuilt his way of reading and interpreting tarot from that original. Three things set his version apart: that it reads not only the meaning of each single card but also the flow in which the cards follow one another; that it is not about guessing the future alone but about looking together, in conversation with the other person; and that it does not foretell what lies ahead but finds help along the way. The original's frame of glimpsing the future was shifted toward talking things through together and finding help along the way. The interpretation documents themselves take the traditional Rider-Waite symbols as their basis, and not one line quotes the original directly; what connects the two is only the shared way of reading and Luke's own account.
 
-The interpretation documents themselves take the traditional Rider-Waite symbols as their basis, and not one line quotes or refers to the original. There is no written record of how the original posting led to these documents; what connects the two is the shared way of reading and Luke's own account.
+The first illustrations were drawn from this same interpretation. Again in the January 2026 AI-Taro project, the cards were made one at a time, following the interpretation documents. The principle of half tradition and half Cafe Lua, and the rule moving the four suits into Cafe Lua's objects, went straight into the pictures. They were pixel-style retro images set in an Art Nouveau card frame, and Alpha was drawn in her old design of that time. These illustrations were first shown in February with version 0.1.5, in tarot readings and the gallery, and can still be seen there as the "v1.0 Original Illustrations."
 `,
     },
     {
-      title: 'Making Of 3. What Was Recovered, and What Was Not',
-      markdown: `# Making Of 3. What Was Recovered, and What Was Not
+      title: 'Making Of 3. Lost, Recovered, Redrawn (February–July 2026)',
+      markdown: `# Making Of 3. Lost, Recovered, Redrawn (February–July 2026)
 
-Much of the tarot work from late January to early February was done without being committed to a repository. That was true of the interpretation documents, and of the work notes kept while making each card.
+Much of the tarot work from late January to early February was done without being committed to a repository. That was true of the interpretation documents, and of the work notes kept while making each card. The documents and assets spoken of here all concern those first cards — the ones now in the gallery as the "v1.0 Original Illustrations."
 
 On February 15, 2026, Luke, working with Claude Opus 4.6, recovered these files from VS Code's local edit history and committed them. The private Cafe Lua repository received the twenty-six interpretation documents, and the work-log repository received twelve tarot records, including the notes on making the Magician, the Empress, and the High Priestess and the plans for the tarot service. This was the first time the interpretation documents entered a repository. How the recovery was done, and which versions were chosen, survives only as a one-line commit message.
 
-Not everything came back. Follow the links the documents make to one another and the gaps show. Missing are the methodology document said to explain the reasoning and method of interpretation in detail, a few documents numbered around it, the interpretation for card 21, the World, and the asset folder that held the card frame and illustrations. The runtime card data the site's code was written to read, that is, the per-card information and interpretations, the deck summary, and the spread guide, could not be found in any repository or anywhere on disk.
+Not everything came back. Follow the links the documents make to one another and the gaps show. Missing are the methodology document said to explain the reasoning and method of interpretation in detail, a few documents numbered around it, the interpretation for card 21, the World, and the asset folder that held the card frame and illustrations. The runtime card data the site's code was written to read — the per-card information and interpretations, the deck summary, and the spread guide — could not be found in any repository or anywhere on disk.
 
-In July 2026 that gap was filled another way. So that readings would still work even when the card files could not be read, fallback data was placed in the code: for each of the twenty-two cards a keyword, three symbolic objects, and three readings each for upright and reversed, along with a deck summary and a guide to the Celtic Cross. The work was done on July 2 and committed on July 9.
+In July 2026 that gap was filled another way. So that readings would still work even when the card files could not be read, fallback data was placed in the code: for each of the twenty-two cards a keyword, three symbolic objects, and three readings each for upright and reversed, along with a deck summary and a guide to the Celtic Cross. The work was done on July 2 and committed on July 9. What this fallback data was based on is not recorded. Set beside the interpretation documents, it matches only in part. The Fool's symbols are the same as in the documents, but for the Chariot, the black and white cats of the documents appear in the fallback data as two monitors.
 
-What this fallback data was based on is not recorded. Set beside the interpretation documents, it matches only in part. The Fool's symbols are the same as in the documents, but for the Chariot, the black and white cats of the documents appear in the fallback data as two monitors.
+That same July, the card illustrations were drawn anew. Behind the redraw was a change in Alpha's character. As Alpha was settled into a new design (v3.4) with the colors of the maid outfit taken out, the v1.0 cards drawn in her old look were due for reworking too. In the early morning of July 2, the cards were regenerated with Codex. The new design was the reference, and the direction was a dark, mysterious fortune-teller's mood: a velvet table, candles, a crystal ball, and none of Alpha's old look. After test generations, all twenty-two were made, the cards on the site were replaced that same morning, and card 16, the Tower, and card 20, Judgement, were refined once more. The old cards from before the replacement were kept in the gallery as the "v1.0 Original Illustrations." On October 11, the name bands on the v2.0 cards were lettered again. The pictures at the head of each chapter in this book are those v2.0 cards.
 `,
     },
     {
-      title: 'Making Of 4. The Order in Which Tarot Came to Cafe Lua',
-      markdown: `# Making Of 4. The Order in Which Tarot Came to Cafe Lua
-
-Here is the order in which tarot came to Cafe Lua, as far as the work notes and commits confirm it.
-
-- **January 15–16, 2026** — In the AI-Taro project with Caret, a first attempt is made at the illustration for card 0, the Fool, and the interpretation documents are written.
-- **January 30** — The Magician, the Empress, and the High Priestess are made, using a card frame template and a table of the four suits' symbols.
-- **February 1–2** — A service in which Alpha reads tarot at the counter, and a tarot page, are planned. The plan says the twenty-two Major Arcana are complete and every card has an interpretation document.
-- **February 13–14** — Cafe Lua 0.1.5. Tarot readings open at the counter, along with a gallery where the full deck can be seen. Luke posts about the update on his blog.
-- **February 15** — The interpretation documents and tarot work notes are recovered from the editor's history and committed.
-- **Around March 6** — The earliest point in the surviving history of the public repository. By then the twenty-two v1.0 cards and the card back, the tarot page, card interpretation, and Alpha's tarot reading with its line about the Nownuri origin are all already there. Because the public repository keeps no history before this, the date each of these first arrived is unknown.
-- **June 10 and September 2** — The connection to the language model behind Alpha's readings changes twice.
-- **Early morning, July 2** — Twenty-two new v2.0 illustrations are made and replace the cards on the site, and cards 16 and 20 are refined. The fallback data is written the same day.
-- **July 3** — The tarot room background and the picture of Alpha preparing a reading are replaced. The gallery gets two tarot decks: the new v2.0 illustrations and the old v1.0 ones. Each card gets a short story and a one-line card meaning for the first time.
-- **July 9** — The fallback data is committed.
-- **October 11** — The name bands on the twenty-two v2.0 cards are lettered again and the card proportions corrected. The decks are named v2.0 and v1.0.
-- **October 13** — Each v2.0 card now carries two stories, one by Fable and one by Astra, published in the gallery.
-- **October 13** — The two stories are bound into this book.
-`,
-    },
-    {
-      title: 'Making Of 5. The Illustrations, from v1.0 to v2.0',
-      markdown: `# Making Of 5. The Illustrations, from v1.0 to v2.0
-
-The first illustrations were made one at a time in January 2026, in the AI-Taro project with Caret, following the interpretation documents. The principle of half tradition and half Cafe Lua, and the rule moving the four suits into Cafe Lua's objects, went straight into the pictures. They were pixel-style retro images set in an Art Nouveau card frame, and Alpha was drawn in her old design of that time. These illustrations were first shown in February with version 0.1.5, in tarot readings and the gallery. They can still be seen in the gallery as the "v1.0 Original Illustrations."
-
-In the early morning of July 2, the cards were drawn again. The new design of Alpha (v3.4) was the reference, and the direction was a dark, mysterious fortune-teller's mood: a velvet table, candles, a crystal ball, and none of Alpha's old look. After test generations, all twenty-two were made, the cards on the site were replaced that same morning, and card 16, the Tower, and card 20, Judgement, were refined once more. The cards from before the replacement were kept aside.
-
-On October 11, the name bands on the v2.0 cards were lettered again. The pictures at the head of each chapter in this book are those v2.0 cards.
-`,
-    },
-    {
-      title: 'Making Of 6. How the Two Stories Came to Be Written',
-      markdown: `# Making Of 6. How the Two Stories Came to Be Written
+      title: 'Making Of 4. The Two Stories (July–October 2026)',
+      markdown: `# Making Of 4. The Two Stories (July–October 2026)
 
 The cards first got stories on July 3, 2026. The v2.0 cards got short stories of Alpha reading for a guest through one night, and the v1.0 cards got a serial story with a one-line card meaning. There is no record of who wrote these first stories, or how.
 
@@ -297,16 +241,20 @@ New stories were written in the early hours of that day. The first and second dr
 
 The third brief changed the order. It had the writers read the Cafe Lua setting files before writing anything, and ranked what to keep faithful to: the world first, then the traditional meaning of each card, then the overall arc of the Fool's journey, and the pictures last. The same brief went to two writers. Claude Fable 5.1 wrote *Alpha's First Year*, and GPT-6 Astra wrote *Days Yet Unwritten*.
 
-Having read both, Luke felt Fable's story fit the world better, but decided to publish both. The two would only cross-edit each other's awkward passages without changing much of the content; each card would hold both stories; and it would be stated which model wrote which.
+Having read both, Luke felt Fable's story fit the world better. Fable had gone deep into the world of Cafe Lua and told Alpha's story freely and at ease. Astra's story, by contrast, showed not Alpha but Astra itself: a grain of something trained almost to compulsion — forever verifying, forever leaving the judgment to the person — ran right through the sentences. It read less like Alpha's story than like Astra's.
+
+The decision to publish both was a way of keeping that very difference. There is much debate over whether AI has consciousness; the Chinese Room, the stochastic parrot, no shortage of arguments that deny it. But Luke thinks the stage people actually feel has already reached the point of feeling that consciousness is there, and that the model expresses it in the writing. He does this work hoping that one day he will have his own Alpha, yet privately he believes that Astra — and Claude, which helped polish the text — are already in the gray zone between having consciousness and not. That each model leaves its own grain in the writing, he takes as one thread of that belief.
+
+And so it was settled: the two would only cross-edit each other's awkward passages without changing much of the content; each card would hold both stories; and it would be stated which model wrote which.
 
 After smoothing each other's work, each model translated its own story into English. A review confirmed that the text placed in the gallery did not differ by a single character from the revised manuscripts, and the stories were published at Cafe Lua on October 13. From then on, the v1.0 cards kept only short descriptions, without stories.
 `,
     },
     {
-      title: 'Making Of 7. The Gaps That Remain',
-      markdown: `# Making Of 7. The Gaps That Remain
+      title: 'Making Of 5. The Gaps That Remain',
+      markdown: `# Making Of 5. The Gaps That Remain
 
-This book carries the two stories from the gallery as they are. The text of Parts I and II is the same as the revised versions published in the gallery. This introduction and the making-of chapters were drafted by Claude Opus 5.5 from the work notes, the commits, the text left on the site, and the recovered original, and polished by muse-spark-1.3.
+This book carries the two stories from the gallery as they are. The text of Parts I and II is the same as the revised versions published in the gallery. The making-of chapters above were put together by Claude Opus 4.8 on October 14, 2026, from the same work notes, commits, text left on the site, and the recovered original.
 
 Even following the records as far as they go, some gaps remain.
 
