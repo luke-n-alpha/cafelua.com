@@ -10,8 +10,10 @@ export type MeasuredReaderPage = {
 };
 
 /**
- * 두 쪽 펼침에서 장이 늘 펼침의 왼쪽 쪽에서 시작하도록, 앞 장이 왼쪽 쪽에서
- * 끝나면 오른쪽에 빈 쪽을 하나 넣는다. 한 쪽 보기(step 1)에서는 그대로 둔다.
+ * 두 쪽 펼침에서 각 장이 펼침을 온전히 채우도록, 장의 쪽 수가 홀수면 장 끝에
+ * 빈 쪽을 더해 짝수(펼침 단위)로 맞춘다. 이렇게 하면 넘쳐서 반 펼침만 찬 장의
+ * 빈 자리가 빈 쪽으로 채워지고, 다음 장은 늘 펼침의 왼쪽 쪽에서 시작한다.
+ * 한 쪽 보기(step 1)에서는 그대로 둔다.
  */
 export function alignChapterStartsToSpreads(
   pages: MeasuredReaderPage[],
@@ -19,23 +21,31 @@ export function alignChapterStartsToSpreads(
 ): MeasuredReaderPage[] {
   if (step < 2) return pages;
   const aligned: MeasuredReaderPage[] = [];
-  pages.forEach((page, index) => {
-    const previous = pages[index - 1];
-    const startsChapter = !previous || previous.chapterIndex !== page.chapterIndex;
-    if (startsChapter && aligned.length % step !== 0) {
-      const last = aligned[aligned.length - 1];
-      aligned.push({
-        chapterIndex: last.chapterIndex,
-        chapterTitle: last.chapterTitle,
-        pageInChapter: last.pageInChapter + 1,
-        html: "",
-        usedHeight: 0,
-        availableHeight: last.availableHeight,
-        blank: true,
-      });
+  let index = 0;
+  while (index < pages.length) {
+    const chapterIndex = pages[index].chapterIndex;
+    const group: MeasuredReaderPage[] = [];
+    while (index < pages.length && pages[index].chapterIndex === chapterIndex) {
+      group.push(pages[index]);
+      index += 1;
     }
-    aligned.push(page);
-  });
+    group.forEach((page) => aligned.push(page));
+    const remainder = group.length % step;
+    if (remainder !== 0) {
+      const last = group[group.length - 1];
+      for (let pad = 0; pad < step - remainder; pad += 1) {
+        aligned.push({
+          chapterIndex: last.chapterIndex,
+          chapterTitle: last.chapterTitle,
+          pageInChapter: last.pageInChapter + 1 + pad,
+          html: "",
+          usedHeight: 0,
+          availableHeight: last.availableHeight,
+          blank: true,
+        });
+      }
+    }
+  }
   return aligned;
 }
 
@@ -126,6 +136,19 @@ function shrinkTableToFit(table: HTMLTableElement, content: HTMLElement) {
   }
 }
 
+// 그림이 쪽에 다 안 들어가면 가로 폭을 줄여(세로도 비율대로 줄어든다) 한 쪽에 담는다.
+// 제목 바로 밑 그림이 제목과 갈라져 다음 쪽으로 넘어가는 것을 막는 데 쓴다.
+function shrinkImageToFit(block: Element, content: HTMLElement) {
+  const img = block.querySelector("img");
+  if (!img) return;
+  let scale = 0.95;
+  while (!fits(content) && scale >= 0.4) {
+    img.style.maxWidth = `${Math.round(scale * 100)}%`;
+    img.style.height = "auto";
+    scale -= 0.05;
+  }
+}
+
 export function measureRenderedReaderPages(
   sourceRoot: HTMLElement,
   templatePage: HTMLElement,
@@ -174,19 +197,54 @@ export function measureRenderedReaderPages(
     content.replaceChildren();
   };
 
+  const isHeading = (el: Element | null): el is HTMLElement =>
+    el instanceof HTMLElement && /^H[1-6]$/.test(el.tagName);
+  // 쪽 끝에 제목만 남는 것을 막는다. 쪽의 끝이 제목(들)뿐이면 떼어서 다음
+  // 블록과 같은 쪽으로 옮긴다. 장은 `# 제목` 다음에 그림이 오므로, 이렇게 하면
+  // 제목과 그림이 갈라져 다음 쪽으로 넘어가지 않는다.
+  const detachTrailingHeadings = (): Element[] => {
+    const carried: Element[] = [];
+    while (isHeading(content.lastElementChild)) {
+      const heading = content.lastElementChild as Element;
+      heading.remove();
+      carried.unshift(heading);
+    }
+    return carried;
+  };
+
   const appendBlock = (sourceBlock: Element) => {
     let block: Element | null = sourceBlock.cloneNode(true) as Element;
+    let carriedHeadings = false;
     while (block) {
       content.append(block);
       if (fits(content)) return;
       block.remove();
-      // 그림이 든 덩어리는 글자 단위로 자르면 그림이 빠지므로 통째로 다음 쪽에 놓는다.
+      // 제목을 뒤 블록과 같은 쪽에 붙인다. 한 번만 옮겨 무한 반복을 막는다.
+      if (!carriedHeadings && content.childNodes.length) {
+        const carried = detachTrailingHeadings();
+        if (carried.length) {
+          if (content.childNodes.length) flush();
+          carried.forEach((heading) => content.append(heading));
+          carriedHeadings = true;
+          continue;
+        }
+      }
+      // 그림이 든 덩어리는 글자 단위로 자르면 그림이 빠지므로 통째로 둔다.
       if (block.querySelector("img")) {
+        // 제목이 이 그림과 함께 넘어온 경우: 제목만 남은 쪽을 비워내 갈라놓지 말고,
+        // 그림을 줄여서라도 제목 바로 밑에 붙여 같은 쪽에 담는다.
+        if (carriedHeadings) {
+          content.append(block);
+          shrinkImageToFit(block, content);
+          flush();
+          return;
+        }
         if (content.childNodes.length) {
           flush();
           continue;
         }
         content.replaceChildren(block);
+        shrinkImageToFit(block, content);
         flush();
         return;
       }

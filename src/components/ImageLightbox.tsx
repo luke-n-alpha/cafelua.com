@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import "./ImageLightbox.css";
 
@@ -34,7 +35,21 @@ export default function ImageLightbox({
     return () => window.removeEventListener("keydown", handleKeyDown, true);
   }, [onClose]);
 
-  return (
+  // 라이트박스는 position: fixed 이지만, 리더 패널에 걸린 backdrop-filter 가
+  // 고정 위치의 기준 상자를 만들고 overflow: hidden 이 잘라낸다. 포털로 빼내
+  // 뷰포트(또는 전체화면 요소) 바로 아래에 그려 위아래 잘림을 없앤다.
+  const [mountTarget, setMountTarget] = useState<Element | null>(null);
+  useEffect(() => {
+    const resolveTarget = () => document.fullscreenElement ?? document.body;
+    setMountTarget(resolveTarget());
+    const sync = () => setMountTarget(resolveTarget());
+    document.addEventListener("fullscreenchange", sync);
+    return () => document.removeEventListener("fullscreenchange", sync);
+  }, []);
+
+  if (!mountTarget) return null;
+
+  return createPortal(
     <div
       className={`image-lightbox${detailsLayout ? " image-lightbox-with-info" : ""}`}
       role="dialog"
@@ -61,6 +76,7 @@ export default function ImageLightbox({
         <X size={17} />
         <span>{closeLabel}</span>
       </button>
-    </div>
+    </div>,
+    mountTarget,
   );
 }
