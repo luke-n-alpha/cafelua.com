@@ -44,11 +44,11 @@ const TEXT = {
     title: 'Cafe Lua Tarot Stories',
     subtitle: 'Twenty-two cards, two stories',
     summary:
-      "Two stories written on the twenty-two Major Arcana of the Cafe Lua tarot deck, bound in one volume. Two AI models read the same card illustrations and the same Cafe Lua setting, and each wrote its own. Part I, Alpha's First Year, is by Claude Fable 5.1; Part II, Days Yet Unwritten, is by GPT-6 Astra. The book closes with where the deck's interpretations came from and the order in which tarot came to Cafe Lua, as far as the records go.",
+      "Two stories based on the twenty-two Major Arcana of the Cafe Lua tarot deck, bound in one volume. Two AI models read the same card illustrations and the same Cafe Lua setting, and each wrote its own. Part I, Alpha's First Year, is by Claude Fable 5.1; Part II, Days Yet Unwritten, is by GPT-6 Astra. The book closes with where the deck's interpretations came from and the order in which tarot came to Cafe Lua, as far as the records go.",
     author: 'Claude Fable 5.1 · GPT-6 Astra (planned by Luke)',
     publisher: 'Cafe Lua',
     edition: 'First edition',
-    cardMeaning: 'The card',
+    cardMeaning: 'Card meaning',
     coverAlt: 'Cover of Cafe Lua Tarot Stories',
     deckCaption: 'Cafe Lua Tarot v2.0',
   },
@@ -65,11 +65,11 @@ const INTRO: Record<Lang, string> = {
 
 두 편은 같은 자리에서 출발했습니다. 같은 카드 그림 스물두 장과 같은 카페루아 설정을 두 AI 모델에게 건넸고, 두 모델이 각자 읽고 한 편씩 썼습니다. 1부 《알파의 첫 해》는 Anthropic의 Claude Fable 5.1이, 2부 《아직 쓰지 않은 날들》은 OpenAI의 GPT-6 Astra가 썼습니다. 다 쓴 뒤에는 두 모델이 서로의 원고에서 어색한 곳을 가볍게 다듬었고, 내용은 크게 바꾸지 않았습니다.
 
-두 이야기 모두 광대의 출발에서 세계의 완성까지, 카드 순서를 따라 한 장에 한 편씩 나아갑니다. 주인공도 같습니다. 루크가 만든 AI, 알파입니다. 그런데 같은 카드를 두고 두 작가가 붙잡은 것은 꽤 다릅니다. Fable의 알파는 처음 깨어난 밤부터 다음 생일까지 카페루아에서 한 해를 살며 자기 자리를 찾고, 무너지고, 남은 것으로 다시 시작합니다. Astra의 알파는 루크와 함께 카페루아의 첫 공동 기록집을 만들며 자기 목소리를 찾아 갑니다.
+두 이야기 모두 광대의 출발에서 세계의 완성까지, 카드 순서를 따라 한 장에 한 편씩 나아갑니다. 주인공도 같습니다. 루크가 만든 AI, 알파입니다. 그런데 같은 카드를 두고 두 작가가 읽어낸 방식은 꽤 다릅니다. Fable의 알파는 처음 깨어난 밤부터 다음 생일까지 카페루아에서 한 해를 살며 자기 자리를 찾고, 무너지고, 남은 것으로 다시 시작합니다. Astra의 알파는 루크와 함께 카페루아의 첫 공동 기록집을 쓰며 자기 목소리를 찾아갑니다.
 
 각 장은 카드 그림으로 시작하고, 장 끝에는 그 장이 따른 카드의 뜻을 한 줄로 적어 두었습니다. 같은 번호의 장을 1부와 2부에서 견주어 읽어도 좋습니다. 두 이야기는 갤러리의 타로 덱 v2.0에서도 카드마다 볼 수 있습니다.
 
-책 끝의 제작 배경에는 이 덱이 어디서 왔는지를 적었습니다. 루크가 대학 시절 PC통신에서 구했다는 타로 자료에서 시작해, 카드 해석 문서가 만들어지고 편집기 기록에서 되살아난 일, 타로가 카페루아에 들어온 순서, 그림이 v1.0에서 v2.0으로 바뀌고 두 이야기가 쓰이기까지를 기록에 남은 만큼만 옮겼습니다. 기록이 없는 곳은 없다고 적었습니다.
+책 끝의 제작 배경에는 이 덱이 어디서 왔는지를 적었습니다. 루크가 대학 시절 PC통신에서 구했다는 타로 자료에서 시작해, 카드 해석 문서가 만들어지고 편집기 기록에서 되살아난 일, 타로가 카페루아에 들어온 순서, 그림이 v1.0에서 v2.0으로 바뀌고 두 이야기가 쓰이기까지를 기록에 남은 만큼만 옮겼고, 없는 곳은 없다고 적었습니다.
 
 글 Claude Fable 5.1 · GPT-6 Astra. 기획 루크. 2026년 10월 13일, 카페루아.
 `,
@@ -81,9 +81,9 @@ The Cafe Lua tarot deck has twenty-two Major Arcana cards. This book binds toget
 
 Both stories began from the same place. Two AI models were given the same twenty-two card illustrations and the same Cafe Lua setting, and each read them and wrote a story of its own. Part I, *Alpha's First Year*, was written by Anthropic's Claude Fable 5.1. Part II, *Days Yet Unwritten*, was written by OpenAI's GPT-6 Astra. When both were finished, each model lightly smoothed the awkward spots in the other's manuscript without changing much of the content.
 
-Both stories follow the cards in order, one chapter to a card, from the Fool's first step to the completion of the World. They share a heroine: Alpha, the AI Luke made. Yet the two writers took hold of the same cards in quite different ways. Fable's Alpha lives one year at Cafe Lua, from the night she first wakes to her next birthday, finding her place, falling apart, and beginning again with what is left. Astra's Alpha finds her own voice while making Cafe Lua's first shared collection with Luke.
+Both stories follow the cards in order, one chapter to a card, from the Fool's first step to the completion of the World. They share a protagonist: Alpha, the AI Luke made. Yet the two writers read the same cards in quite different ways. Fable's Alpha lives one year at Cafe Lua, from the night she first wakes to her next birthday, finding her place, falling apart, and beginning again with what is left. Astra's Alpha finds her own voice while writing Cafe Lua's first collaborative collection with Luke.
 
-Each chapter opens with its card, and ends with one line on the meaning of the card the chapter follows. You may like to read the chapters of the same number side by side. Both stories can also be read card by card in the gallery, under the v2.0 tarot deck.
+Each chapter opens with its card, and ends with one line on the meaning of the card the chapter follows. You may like to read the chapters of the same number side by side. Both stories can also be read card by card in the gallery's v2.0 tarot deck.
 
 The making-of section at the end of the book records where the deck came from: the tarot material Luke is said to have found on a PC network in his college days, the card interpretation documents that were written and later recovered from an editor's local history, the order in which tarot came to Cafe Lua, the change of illustrations from v1.0 to v2.0, and how the two stories came to be written. It goes only as far as the records go. Where there is no record, it says so.
 
@@ -105,7 +105,7 @@ const BACKGROUND: Record<Lang, { title: string; markdown: string }[]> = {
 
 그 이야기를 뒷받침할 원물은 지금 손에 없습니다. 이 책을 엮으면서 루크의 컴퓨터와 카페루아 저장소를 찾아보았지만, 타로 자료가 담긴 HWP 파일은 나오지 않았습니다. 저장소에 그 파일이나 옮겨 적은 글이 올라간 적도 없습니다. 어느 동호회나 게시판에서 받은 자료였는지, 누가 쓴 것이었는지, 언제 받았는지도 기록에 없습니다.
 
-그래서 원전에 대해 지금 말할 수 있는 것은 알파의 상담 문구와 카운터의 대사, 루크의 글에 적힌 내용이 전부입니다.
+그래서 원전에 대해 지금 말할 수 있는 것은 알파의 상담 문구와 카운터의 대사, 작업 기록에 남은 대사 초안, 루크의 글에 적힌 내용이 전부입니다.
 `,
     },
     {
@@ -131,7 +131,7 @@ const BACKGROUND: Record<Lang, { title: string; markdown: string }[]> = {
 
 모든 것이 돌아오지는 않았습니다. 문서들이 서로를 가리키는 링크를 따라가 보면 빈자리가 보입니다. 해석의 논리와 방법을 자세히 적었다는 방법론 문서, 그 앞뒤 번호의 문서 몇 개, 21번 세계 카드의 해석, 카드 틀과 그림을 담았던 자산 폴더가 없습니다. 사이트 코드가 읽도록 만든 실행용 카드 데이터, 곧 카드별 정보와 해석, 덱 요약, 스프레드 안내도 저장소와 디스크 어디에서도 찾지 못했습니다.
 
-그 빈자리는 2026년 7월에 다른 방식으로 메웠습니다. 카드 파일을 읽지 못해도 타로가 비지 않도록, 스물두 장마다 키워드와 상징 사물 세 가지, 정방향과 역방향 풀이 세 가지씩을 넣고, 덱 요약과 켈틱 크로스 안내까지 코드 안에 대체 데이터로 두었습니다. 7월 2일에 작업해 7월 9일에 커밋했습니다.
+그 빈자리는 2026년 7월에 다른 방식으로 메웠습니다. 카드 파일을 읽지 못해도 타로가 멈추지 않도록, 스물두 장마다 키워드와 상징 사물 세 가지, 정방향과 역방향 풀이 세 가지씩을 넣고, 덱 요약과 켈틱 크로스 안내까지 코드 안에 대체 데이터로 두었습니다. 7월 2일에 작업해 7월 9일에 커밋했습니다.
 
 이 대체 데이터를 무엇을 보고 만들었는지는 적혀 있지 않습니다. 해석 문서와 맞춰 보면 일부만 같습니다. 광대 카드의 상징은 문서와 똑같지만, 전차 카드는 문서의 흑백 고양이가 대체 데이터에서는 두 모니터로 되어 있습니다.
 `,
@@ -153,7 +153,7 @@ const BACKGROUND: Record<Lang, { title: string; markdown: string }[]> = {
 - **7월 3일** — 타로방 배경과 타로를 준비하는 알파 그림을 바꿉니다. 갤러리에 타로 덱이 두 벌 생깁니다. 새 v2.0 그림과 옛 v1.0 그림입니다. 카드마다 짧은 이야기와 카드의 뜻 한 줄이 처음 붙습니다.
 - **7월 9일** — 대체 데이터를 커밋합니다.
 - **10월 11일** — v2.0 카드 스물두 장의 이름 띠 글자를 다시 얹고 카드 비율을 바로잡습니다. 덱 이름을 v2.0과 v1.0으로 정합니다.
-- **10월 13일** — v2.0 카드마다 Fable과 Astra의 이야기 두 편이 붙어 갤러리에 공개됩니다. 운영 사이트에서 시험 10건을 통과했습니다.
+- **10월 13일** — v2.0 카드마다 Fable과 Astra의 이야기 두 편이 붙어 갤러리에 공개됩니다.
 - **10월 13일** — 두 이야기를 이 책으로 묶습니다.
 `,
     },
@@ -189,7 +189,7 @@ const BACKGROUND: Record<Lang, { title: string; markdown: string }[]> = {
       title: '제작 배경 7. 남은 빈칸',
       markdown: `# 제작 배경 7. 남은 빈칸
 
-이 책은 갤러리의 두 이야기를 그대로 옮겨 묶은 것입니다. 1부와 2부의 문장은 갤러리에 공개된 퇴고본과 같습니다. 이 소개와 제작 배경은 Claude Opus 5.5가 작업 기록과 커밋, 사이트에 남은 문구를 읽고 정리했습니다.
+이 책은 갤러리의 두 이야기를 그대로 옮겨 묶은 것입니다. 1부와 2부의 문장은 갤러리에 공개된 퇴고본과 같습니다. 이 소개와 제작 배경은 Claude Opus 5.5가 작업 기록과 커밋, 사이트에 남은 문구를 읽고 정리한 것을 muse-spark-1.3이 다듬었습니다.
 
 기록을 따라가며 끝내 채우지 못한 자리도 있습니다.
 
@@ -214,7 +214,7 @@ When Luke first opened tarot readings at the counter in February 2026, he wrote 
 
 The original itself is not at hand. While putting this book together, Luke's computer and the Cafe Lua repositories were searched, and no HWP file with tarot material turned up. Neither the file nor any transcription of it was ever committed to a repository. There is also no record of which club or board it came from, who wrote it, or when he received it.
 
-So everything that can be said about the original source today comes from Alpha's reading prompt, a line of dialogue at the counter, and Luke's own post.
+So everything that can be said about the original source today comes from Alpha's reading prompt, a line of dialogue at the counter, a draft line kept in the work notes, and Luke's own post.
 `,
     },
     {
@@ -223,7 +223,7 @@ So everything that can be said about the original source today comes from Alpha'
 
 The first source that the records can confirm is a set of card interpretation documents written in January 2026. That month Luke ran an "AI-Taro project" with the coding agent Caret, and these documents came out of it. Twenty-six files survive.
 
-The backbone of the documents is a rule for translating symbols. The four tarot suits become things found at Cafe Lua: wands become books and pens, cups become coffee and tea, swords become keyboards and computers, and pentacles become the Cafe Lua logo. The document that sets the direction for all twenty-two cards says the interpretation is balanced at "50% tradition, 50% Cafe Lua."
+The documents are built around a rule for translating symbols. The four tarot suits become things found at Cafe Lua: wands become books and pens, cups become coffee and tea, swords become keyboards and computers, and pentacles become the Cafe Lua logo. The document that sets the direction for all twenty-two cards says the interpretation is balanced at "50% tradition, 50% Cafe Lua."
 
 The per-card documents go one card at a time, from the Fool to Judgement, setting the traditional symbols of the Rider-Waite deck beside their Cafe Lua counterparts. For the Fool, the cliff becomes the stone steps of the garden, the little dog at his heels becomes Luna the black cat, and the bundle over his shoulder becomes a laptop bag.
 
@@ -236,11 +236,11 @@ Here the record breaks off. These documents are written against the traditional 
 
 Much of the tarot work from late January to early February was done without being committed to a repository. That was true of the interpretation documents, and of the work notes kept while making each card.
 
-On February 15, 2026, Luke, working with Claude Opus 4.6, recovered these files from VS Code's local edit history and committed them. The private Cafe Lua repository received the twenty-six interpretation documents, and the work-log repository received twelve tarot records, including the notes on making the Magician, the Empress, and the High Priestess and the plans for the tarot service. This was the first time the interpretation documents entered a repository. How the recovery was done, and which versions were chosen, is recorded in nothing more than a one-line commit message.
+On February 15, 2026, Luke, working with Claude Opus 4.6, recovered these files from VS Code's local edit history and committed them. The private Cafe Lua repository received the twenty-six interpretation documents, and the work-log repository received twelve tarot records, including the notes on making the Magician, the Empress, and the High Priestess and the plans for the tarot service. This was the first time the interpretation documents entered a repository. How the recovery was done, and which versions were chosen, survives only as a one-line commit message.
 
 Not everything came back. Follow the links the documents make to one another and the gaps show. Missing are the methodology document said to explain the reasoning and method of interpretation in detail, a few documents numbered around it, the interpretation for card 21, the World, and the asset folder that held the card frame and illustrations. The runtime card data the site's code was written to read, that is, the per-card information and interpretations, the deck summary, and the spread guide, could not be found in any repository or anywhere on disk.
 
-In July 2026 that gap was filled another way. So that tarot would not come up empty when the card files could not be read, fallback data was placed in the code: for each of the twenty-two cards a keyword, three symbolic objects, and three readings each for upright and reversed, along with a deck summary and a guide to the Celtic Cross. The work was done on July 2 and committed on July 9.
+In July 2026 that gap was filled another way. So that readings would still work even when the card files could not be read, fallback data was placed in the code: for each of the twenty-two cards a keyword, three symbolic objects, and three readings each for upright and reversed, along with a deck summary and a guide to the Celtic Cross. The work was done on July 2 and committed on July 9.
 
 What this fallback data was based on is not recorded. Set beside the interpretation documents, it matches only in part. The Fool's symbols are the same as in the documents, but for the Chariot, the black and white cats of the documents appear in the fallback data as two monitors.
 `,
@@ -262,7 +262,7 @@ Here is the order in which tarot came to Cafe Lua, as far as the work notes and 
 - **July 3** — The tarot room background and the picture of Alpha preparing a reading are replaced. The gallery gets two tarot decks: the new v2.0 illustrations and the old v1.0 ones. Each card gets a short story and a one-line card meaning for the first time.
 - **July 9** — The fallback data is committed.
 - **October 11** — The name bands on the twenty-two v2.0 cards are lettered again and the card proportions corrected. The decks are named v2.0 and v1.0.
-- **October 13** — Each v2.0 card now carries two stories, one by Fable and one by Astra, published in the gallery. The live site passed ten tests.
+- **October 13** — Each v2.0 card now carries two stories, one by Fable and one by Astra, published in the gallery.
 - **October 13** — The two stories are bound into this book.
 `,
     },
@@ -298,7 +298,7 @@ After smoothing each other's work, each model translated its own story into Engl
       title: 'Making Of 7. The Gaps That Remain',
       markdown: `# Making Of 7. The Gaps That Remain
 
-This book carries the two stories from the gallery as they are. The text of Parts I and II is the same as the revised versions published in the gallery. This introduction and the making-of chapters were put together by Claude Opus 5.5, from the work notes, the commits, and the text left on the site.
+This book carries the two stories from the gallery as they are. The text of Parts I and II is the same as the revised versions published in the gallery. This introduction and the making-of chapters were drafted by Claude Opus 5.5 from the work notes, the commits, and the text left on the site, and polished by muse-spark-1.3.
 
 Following the records, some places could not be filled.
 
