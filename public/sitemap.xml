@@ -140,9 +140,25 @@
     <loc>https://www.cafelua.com/en/desk</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://www.cafelua.com/ko/desk"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.cafelua.com/en/desk"/>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.cafelua.com/ko/desk/20261105-ai-end-of-human-numbers-korea-crisis</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.cafelua.com/ko/desk/20261105-ai-end-of-human-numbers-korea-crisis"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.cafelua.com/en/desk/20261105-ai-end-of-human-numbers-korea-crisis"/>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.cafelua.com/en/desk/20261105-ai-end-of-human-numbers-korea-crisis</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.cafelua.com/ko/desk/20261105-ai-end-of-human-numbers-korea-crisis"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.cafelua.com/en/desk/20261105-ai-end-of-human-numbers-korea-crisis"/>
+    <lastmod>2026-11-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.cafelua.com/ko/desk/20261101-ai-coding-2-years</loc>
