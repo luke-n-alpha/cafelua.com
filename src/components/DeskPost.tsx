@@ -627,7 +627,14 @@ const DeskPost: React.FC<Props> = ({ post, prevPost, nextPost, fallbackPosts }) 
                                         (() => {
                                             const safeHref = href || '';
                                             const ytId = getYouTubeId(safeHref);
-                                            if (ytId) {
+                                            const linkText = flattenText(children).trim();
+                                            const isInlineNamedYtLink =
+                                                !!ytId &&
+                                                !!linkText &&
+                                                !/^https?:\/\//i.test(linkText) &&
+                                                !linkText.includes('youtube.com') &&
+                                                !linkText.includes('youtu.be');
+                                            if (ytId && !isInlineNamedYtLink) {
                                                 return (
                                                     <div className="desk-youtube">
                                                         <iframe
